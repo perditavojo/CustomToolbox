@@ -1,0 +1,140 @@
+﻿<Window x:Class="CustomToolbox.WMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        mc:Ignorable="d"
+        Title="FWindow"
+        MinHeight="600"
+        Height="600"
+        MinWidth="900"
+        Width="900"
+        Loaded="WMain_Loaded"
+        Closing="WMain_Closing">
+    <Grid x:Name="GFrame">
+        <Menu x:Name="MMenuBar" 
+              MinHeight="25"
+              Height="Auto"
+              Width="Auto"
+              VerticalAlignment="Top">
+            <MenuItem Header="功能">
+                <MenuItem x:Name="MILoadPlaylistFile"
+                          Header="載入播放清單"
+                          Click="MILoadPlaylistFile_Click"/>
+                <MenuItem x:Name="MISavePlaylistFile"
+                          Header="儲存播放清單"
+                          Click="MISavePlaylistFile_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="MIAbuot" 
+                      Header="關於"
+                      Click="MIAbuot_Click"/>
+        </Menu>
+        <Grid x:Name="GContent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TabControl Grid.Row="0" 
+                        Grid.RowSpan="2" 
+                        Grid.Column="0" 
+                        Margin="0,25,0,35">
+                <TabItem Header="下載影片">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="播放影片">
+                    <Grid Background="#FFE5E5E5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <WindowsFormsHost x:Name="WFHContainer"
+                                          Grid.Row="0" 
+                                          MinHeight="240" 
+                                          MinWidth="426"
+                                          Height="Auto"
+                                          Width="Auto"
+                                          Margin="0,0,0,0">
+                            <windowsForms:Panel x:Name="PlayerHost"
+                                                BackColor="Black"
+                                                Dock="Fill"
+                                                MouseDoubleClick="PlayerHost_MouseDoubleClick"/>
+                        </WindowsFormsHost>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="燒錄字幕">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="設定選項">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+            </TabControl>
+            <DataGrid x:Name="DGClipList"
+                      Grid.Row="0"
+                      Grid.Column="1"
+                      Margin="0,25,0,0"
+                      CanUserAddRows="True"
+                      CanUserDeleteRows="True"
+                      ItemsSource="{Binding}"
+                      AutoGenerateColumns="False"
+                      VerticalScrollBarVisibility="Visible"
+                      HorizontalScrollBarVisibility="Auto"
+                      MouseDoubleClick="DGClipList_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="影片 ID／網址" Binding="{Binding VideoUrlOrID}"/>
+                    <DataGridTextColumn Header="編號" Binding="{Binding No}"/>
+                    <DataGridTextColumn Header="名稱" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="開始時間" Binding="{Binding StartTime}"/>
+                    <DataGridTextColumn Header="結束時間" Binding="{Binding EndTime}"/>
+                    <DataGridTextColumn Header="字幕檔網址" Binding="{Binding SubtitleFileUrl}"/>
+                    <DataGridCheckBoxColumn Header="僅音訊" Binding="{Binding IsAudioOnly}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBox x:Name="TBLog" 
+                    Grid.Row="1"
+                    Grid.Column="1" 
+                    AcceptsReturn="True"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Visible"
+                    Height="Auto"
+                    Width="Auto"
+                    TextWrapping="Wrap"
+                    ToolTip="日誌紀錄" 
+                    Margin="0,0,0,35"
+                    IsReadOnly="True"/>
+        </Grid>
+        <StatusBar x:Name="SBStatusBar" 
+                   MinHeight="35"
+                   MaxHeight="35"
+                   Height="35"
+                   Width="Auto"
+                   VerticalAlignment="Bottom">
+            <StatusBarItem>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="版本："/>
+                    <Label x:Name="LVersion"/>
+                    <Label Content="yt-dlp："/>
+                    <Label x:Name="LYtDlpVersion"/>
+                </StackPanel>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Label x:Name="LOperation" Margin="0,0,10,0"/>
+                    <ProgressBar x:Name="PBProgress"
+                                 MinHeight="10" 
+                                 MaxHeight="10" 
+                                 Height="10" 
+                                 MinWidth="100" 
+                                 Width="Auto" />
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
