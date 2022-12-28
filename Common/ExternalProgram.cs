@@ -530,28 +530,27 @@ internal class ExternalProgram
             if (stream.StreamType == StreamType.Video)
             {
                 // 將 IStream 轉換成 IVideoStream。
-                IVideoStream? videoStream = stream as IVideoStream;
-
-                if (!isSubtitleAdded)
+                if (stream is IVideoStream videoStream)
                 {
-                    // 判斷是否有套用字型設定。
-                    if (!applyFontSetting)
+                    // 用以避免對於多個 IVideoStream 加入字幕。
+                    if (!isSubtitleAdded)
                     {
-                        subtitleStyle = null;
+                        // 判斷是否有套用字型設定。
+                        if (!applyFontSetting)
+                        {
+                            subtitleStyle = null;
+                        }
+
+                        // 針對該 IVideoStream 燒錄字幕。
+                        videoStream.AddSubtitles(
+                            subtitlePath,
+                            encode: subtitleEncode,
+                            style: subtitleStyle);
+
+                        // 變更開關作用變數的值。
+                        isSubtitleAdded = true;
                     }
 
-                    // 針對該 IVideoStream 燒錄字幕。
-                    videoStream?.AddSubtitles(
-                        subtitlePath,
-                        encode: subtitleEncode,
-                        style: subtitleStyle);
-
-                    // 變更開關作用變數的值。
-                    isSubtitleAdded = true;
-                }
-
-                if (videoStream != null)
-                {
                     // 將 IVideoStream 加入 outputStreams。
                     outputStreams.Add(videoStream);
                 }
@@ -562,6 +561,11 @@ internal class ExternalProgram
                 outputStreams.Add(stream);
             }
         }
+
+        // 2022-12-28 目前發現使用此方式燒錄字幕檔案時，
+        // 若使用 mpv 來播放燒錄完成的視訊檔，將會無法正常的顯示字幕。
+
+        // TODO: 2022-12-28 可能需要再調整燒錄字幕檔案的方式。
 
         IConversion conversion = FFmpeg.Conversions.New()
             // 來源：https://trac.ffmpeg.org/wiki/Encode/YouTube
