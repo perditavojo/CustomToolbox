@@ -20,6 +20,7 @@
     KeyDown="WMain_KeyDown">
     <Window.Resources>
         <converters:WidthConverter x:Key="WidthConverter" />
+        <converters:WidthToMarginConverter x:Key="WidthToMarginConverter" />
     </Window.Resources>
     <Grid x:Name="GFrame">
         <Grid.RowDefinitions>
@@ -830,7 +831,10 @@
                                         </GroupBox>
                                         <GroupBox x:Name="GBHardwareAcceleration"
                                             Header="{DynamicResource GBHardwareAcceleration}"
-                                            Margin="170,5,5,5"
+                                            Margin="{Binding ElementName=GBSubtitleOptions,
+                                            Path=ActualWidth,
+                                            Converter={StaticResource WidthToMarginConverter},
+                                            ConverterParameter=15}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top">
                                             <Grid>

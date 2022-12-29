@@ -111,11 +111,11 @@ public partial class WMain
                         applyFontSetting = Properties.Settings.Default
                             .FFmpegApplyFontSetting;
 
-                        subtitleStyle = $"FontName='{CBFontList.Text}'";
+                        subtitleStyle = CBFontList.Text;
 
                         if (!string.IsNullOrEmpty(TBCustomFont.Text))
                         {
-                            subtitleStyle = $"FontName='{TBCustomFont.Text}'";
+                            subtitleStyle = TBCustomFont.Text;
                         }
 
                         subtitleEncoding = CBEncodingList.Text;

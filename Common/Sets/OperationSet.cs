@@ -234,9 +234,9 @@ internal class OperationSet
     /// <param name="videoFilePath">字串，視訊檔案的路徑</param>
     /// <param name="subtitleFilePath">字串，字幕檔案的路徑</param>
     /// <param name="outputPath">字串，輸出檔案的路徑</param>
-    /// <param name="subtitleEncode">字串，字幕的文字編碼，預設值為 "UTF-8"</param>
+    /// <param name="encoding">字串，字幕檔案的文字編碼，預設值為 "UTF-8"</param>
     /// <param name="applyFontSetting">布林值，套用字型設定，預設值為 false</param>
-    /// <param name="subtitleStyle">字串，字幕的覆寫風格，預設值為 null</param>
+    /// <param name="fontName">字串，字型名稱，預設值為 null</param>
     /// <param name="useHardwareAcceleration">布林值，是否使用硬體加速解編碼，預設值為 false</param>
     /// <param name="hardwareAcceleratorType">EnumSet.HardwareAcceleratorType，硬體的類型，預設是 EnumSet.HardwareAcceleratorType.Intel</param>
     /// <param name="deviceNo">數值，GPU 裝置的 ID 值，預設為 0</param>
@@ -246,9 +246,9 @@ internal class OperationSet
         string videoFilePath,
         string subtitleFilePath,
         string outputPath,
-        string subtitleEncode = "UTF-8",
+        string encoding = "UTF-8",
         bool applyFontSetting = false,
-        string? subtitleStyle = null,
+        string? fontName = null,
         bool useHardwareAcceleration = false,
         HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel,
         int deviceNo = 0,
@@ -271,9 +271,9 @@ internal class OperationSet
                             mediaInfo,
                             subtitleFilePath,
                             outputPath,
-                            subtitleEncode,
+                            encoding,
                             applyFontSetting,
-                            subtitleStyle,
+                            fontName,
                             useHardwareAcceleration,
                             hardwareAcceleratorType,
                             deviceNo);

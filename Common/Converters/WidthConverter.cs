@@ -12,8 +12,8 @@ class WidthConverter : IValueConverter
     {
         double output = 0.0d;
 
-        string sValue = value?.ToString() ?? string.Empty;
-        string sParam = parameter?.ToString() ?? string.Empty;
+        string sValue = value?.ToString() ?? string.Empty,
+            sParam = parameter?.ToString() ?? string.Empty;
 
         if (double.TryParse(sValue, out double oValue))
         {

@@ -502,9 +502,9 @@ internal class ExternalProgram
     /// <param name="mediaInfo">IMediaInfo，影片的資訊</param>
     /// <param name="subtitlePath">字串，字幕檔案的路徑</param>
     /// <param name="outputPath">字串，輸出檔案的路徑</param>
-    /// <param name="subtitleEncode">字串，字幕的文字編碼，預設值為 "UTF-8"</param>
+    /// <param name="encoding">字串，字幕檔的文字編碼，預設值為 "UTF-8"</param>
     /// <param name="applyFontSetting">布林值，套用字型設定，預設值為 false</param>
-    /// <param name="subtitleStyle">字串，字幕的覆寫風格，預設值為 null</param>
+    /// <param name="fontName">字串，字型名稱，預設值為 null</param>
     /// <param name="useHardwareAcceleration">布林值，是否使用硬體加速解編碼，預設值為 false</param>
     /// <param name="hardwareAcceleratorType">EnumSet.HardwareAcceleratorType，硬體的類型，預設是 EnumSet.HardwareAcceleratorType.Intel</param>
     /// <param name="deviceNo">數值，GPU 裝置的 ID 值，預設為 0</param>
@@ -513,66 +513,35 @@ internal class ExternalProgram
         IMediaInfo mediaInfo,
         string subtitlePath,
         string outputPath,
-        string subtitleEncode = "UTF-8",
+        string encoding = "UTF-8",
         bool applyFontSetting = false,
-        string? subtitleStyle = null,
+        string? fontName = null,
         bool useHardwareAcceleration = false,
         HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel,
         int deviceNo = 0)
     {
-        bool isSubtitleAdded = false;
+        // 先處理字幕檔案的路徑。
+        subtitlePath = subtitlePath.Replace("\\", "\\\\").Replace(":", "\\:");
 
-        List<IStream> outputStreams = new();
+        string subtitleParam = $"-vf \"subtitles='{subtitlePath}'";
 
-        // 循例每一個 IStream。
-        foreach (IStream stream in mediaInfo.Streams)
+        // 預設使用 UTF-8 文字編碼。
+        subtitleParam += applyFontSetting ? $":charenc='{encoding}'" : ":charenc='UTF-8'";
+
+        if (applyFontSetting)
         {
-            if (stream.StreamType == StreamType.Video)
+            if (!string.IsNullOrEmpty(fontName))
             {
-                // 將 IStream 轉換成 IVideoStream。
-                if (stream is IVideoStream videoStream)
-                {
-                    // 用以避免對於多個 IVideoStream 加入字幕。
-                    if (!isSubtitleAdded)
-                    {
-                        // 判斷是否有套用字型設定。
-                        if (!applyFontSetting)
-                        {
-                            subtitleStyle = null;
-                        }
-
-                        // 針對該 IVideoStream 燒錄字幕。
-                        videoStream.AddSubtitles(
-                            subtitlePath,
-                            encode: subtitleEncode,
-                            style: subtitleStyle);
-
-                        // 變更開關作用變數的值。
-                        isSubtitleAdded = true;
-                    }
-
-                    // 將 IVideoStream 加入 outputStreams。
-                    outputStreams.Add(videoStream);
-                }
-            }
-            else
-            {
-                // 將 IStream 加入 outputStreams。
-                outputStreams.Add(stream);
+                subtitleParam += $":force_style='FontName='{fontName}''";
             }
         }
 
-        // 2022-12-28 目前發現使用此方式燒錄字幕檔案時，
-        // 若使用 mpv 來播放燒錄完成的視訊檔，將會無法正常的顯示字幕。
-
-        // TODO: 2022-12-28 可能需要再調整燒錄字幕檔案的方式。
+        subtitleParam += "\"";
 
         IConversion conversion = FFmpeg.Conversions.New()
-            // 來源：https://trac.ffmpeg.org/wiki/Encode/YouTube
-            // 因會產生錯誤，故取消。
-            //.AddParameter("-pix_fmt yuv420p")
             .AddParameter("-movflags +faststart")
-            .AddStream(outputStreams)
+            .AddStream(mediaInfo.Streams)
+            .AddParameter(subtitleParam)
             .SetOutput(outputPath)
             .SetOverwriteOutput(true);
 
@@ -612,9 +581,6 @@ internal class ExternalProgram
         IEnumerable<ISubtitleStream> subtitleStream = subtitleInfo.SubtitleStreams;
 
         IConversion conversion = FFmpeg.Conversions.New()
-            // 來源：https://trac.ffmpeg.org/wiki/Encode/YouTube
-            // 因會產生錯誤，故取消。
-            //.AddParameter("-pix_fmt yuv420p")
             .AddParameter("-movflags +faststart")
             .AddStream(mediaInfo.Streams)
             .AddStream(subtitleStream)
