@@ -175,7 +175,7 @@ public partial class WMain
 
                 await OperationSet.DoGenerateB23ClipList(
                     TBB23UserMID.Text,
-                    CBExportJsonc.IsChecked ?? false,
+                    CBB23ClipListExportJsonc.IsChecked ?? false,
                     GetGlobalCT());
 
                 // 重設控制項。
@@ -184,7 +184,7 @@ public partial class WMain
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         TBB23UserMID.Text = string.Empty;
-                        CBExportJsonc.IsChecked = false;
+                        CBB23ClipListExportJsonc.IsChecked = false;
                     }));
                 });
 

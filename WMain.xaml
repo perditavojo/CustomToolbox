@@ -328,27 +328,30 @@
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox x:Name="GBB23ClipListGenerator"
-                                    Header="B23 clip list generator"
-                                    Margin="150,5,5,5"
+                                    Header="{DynamicResource GBB23ClipListGenerator}"
+                                    Margin="{Binding ElementName=GBClipList,
+                                    Path=ActualWidth,
+                                    Converter={StaticResource WidthToMarginConverter},
+                                    ConverterParameter=15}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
                                         <Label Margin="0,0,0,0"
-                                            Content="Bilibili user mid"
+                                            Content="{DynamicResource LB23UserMID}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBB23UserMID"
                                             Margin="0,25,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
-                                        <CheckBox x:Name="CBExportJsonc"
+                                        <CheckBox x:Name="CBB23ClipListExportJsonc"
                                             Margin="0,65,0,0"
-                                            Content="Export *.jsonc"
+                                            Content="{DynamicResource CBB23ClipListExportJsonc}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <Button x:Name="BtnGenerateB23ClipList"
                                             Margin="0,105,0,0"
-                                            Content="Generate B23 clip list"
+                                            Content="{DynamicResource BtnGenerateB23ClipList}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnGenerateB23ClipList_Click" />

@@ -89,6 +89,10 @@
     <sys:String x:Key="CBEnableAutoLyricToolTip">Only works for playlists from YoutubeClipPlaylist.</sys:String>
     <sys:String x:Key="BtnRefreshNetResurce">Refresh</sys:String>
     <sys:String x:Key="BtnLoadClipList">Load clip list</sys:String>
+    <sys:String x:Key="GBB23ClipListGenerator">Bilibili clip list generator</sys:String>
+    <sys:String x:Key="LB23UserMID">User mid</sys:String>
+    <sys:String x:Key="CBB23ClipListExportJsonc">Export as *.jsonc</sys:String>
+    <sys:String x:Key="BtnGenerateB23ClipList">Generate</sys:String>
     <sys:String x:Key="GBWebTools">Web tools</sys:String>
     <sys:String x:Key="BtnSubtitleCreator">Subtitle creator</sys:String>
     <sys:String x:Key="BtnSubtitleCreatorToolTip">Only available in Traditional Chinese</sys:String>

@@ -89,6 +89,10 @@
     <sys:String x:Key="CBEnableAutoLyricToolTip">僅對來自 YoutubeClipPlaylist 的播放清單生效。</sys:String>
     <sys:String x:Key="BtnRefreshNetResurce">重新整理</sys:String>
     <sys:String x:Key="BtnLoadClipList">載入短片清單</sys:String>
+    <sys:String x:Key="GBB23ClipListGenerator">Bilibili 短片清單產生器</sys:String>
+    <sys:String x:Key="LB23UserMID">使用者 mid</sys:String>
+    <sys:String x:Key="CBB23ClipListExportJsonc">匯出成 *.jsonc</sys:String>
+    <sys:String x:Key="BtnGenerateB23ClipList">產生</sys:String>
     <sys:String x:Key="GBWebTools">網頁工具</sys:String>
     <sys:String x:Key="BtnSubtitleCreator">陽春字幕產生器</sys:String>
     <sys:String x:Key="BtnSubtitleCreatorToolTip">僅提供正體中文</sys:String>
