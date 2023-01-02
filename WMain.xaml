@@ -20,7 +20,7 @@
     KeyDown="WMain_KeyDown">
     <Window.Resources>
         <converters:WidthConverter x:Key="WidthConverter" />
-        <converters:WidthToMarginLeftConverter x:Key="WidthToMarginConverter" />
+        <converters:WidthToMarginLeftConverter x:Key="WidthToMarginLeftConverter" />
     </Window.Resources>
     <Grid x:Name="GFrame">
         <Grid.RowDefinitions>
@@ -327,11 +327,12 @@
                                             Click="BtnLoadClipList_Click" />
                                     </Grid>
                                 </GroupBox>
+                                <!-- TODO: 2023-01-02 待調整。 -->
                                 <GroupBox x:Name="GBB23ClipListGenerator"
                                     Header="{DynamicResource GBB23ClipListGenerator}"
                                     Margin="{Binding ElementName=GBClipList,
                                     Path=ActualWidth,
-                                    Converter={StaticResource WidthToMarginConverter},
+                                    Converter={StaticResource WidthToMarginLeftConverter},
                                     ConverterParameter=15}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
@@ -836,7 +837,7 @@
                                             Header="{DynamicResource GBHardwareAcceleration}"
                                             Margin="{Binding ElementName=GBSubtitleOptions,
                                             Path=ActualWidth,
-                                            Converter={StaticResource WidthToMarginConverter},
+                                            Converter={StaticResource WidthToMarginLeftConverter},
                                             ConverterParameter=15}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top">
