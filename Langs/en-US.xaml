@@ -277,4 +277,13 @@
     <sys:String x:Key="MsgEnableDiscordRichPresence">Enable Discord Rich Presence.</sys:String>
     <sys:String x:Key="MsgDisableDiscordRichPresence">Disable Discord Rich Presence.</sys:String>
     <sys:String x:Key="MsgSelectedVideoNonSupported">The video file you selected is in a non-supported format.</sys:String>
+    <sys:String x:Key="MsgJobFailedAndErrorOccurred">The job failed and an unintended error occurred.</sys:String>
+    <sys:String x:Key="MsgDataParsingFailedAndCanceled">Data parsing failed, no valid tag information was retrieved. The clip list file for Bilibili users ({0}) was cancelled.</sys:String>
+    <sys:String x:Key="MsgPrepToProduceClipListFile">We are preparing to produce a list of Bilibili user ({0}) videos.</sys:String>
+    <sys:String x:Key="MsgProcessingDataForTag">The tag data "{0}({1})" is being processed.</sys:String>
+    <sys:String x:Key="MsgProcessingDataForPage">The information on page {0}/{1} is being processed.</sys:String>
+    <sys:String x:Key="MsgProcessingDataForVideo">The data of the {0}/{1}th video is being processed.</sys:String>
+    <sys:String x:Key="MsgProcessResult">Bilibili user ({0}) has {2} videos under this tid ({1}) and has successfully processed the data of {3} videos.</sys:String>
+    <sys:String x:Key="MsgDataParsingFailedAndCantCreateClipListFile">Data parsing failed to generate the clip list file for Bilibili users ({0}).</sys:String>
+    <sys:String x:Key="MsgClipListFileGeneratedFor">The clip list file for Bilibili users ({0}) has been generated: {1}</sys:String>
 </ResourceDictionary>

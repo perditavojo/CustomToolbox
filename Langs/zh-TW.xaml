@@ -284,6 +284,6 @@
     <sys:String x:Key="MsgProcessingDataForPage">正在處裡第 {0}/{1} 頁的資料。</sys:String>
     <sys:String x:Key="MsgProcessingDataForVideo">正在處裡第 {0}/{1} 部影片的資料。</sys:String>
     <sys:String x:Key="MsgProcessResult">Bilibili 使用者（{0}）在此 tid（{1}）下共有 {2} 部影片，已成功處理 {3} 部影片的資料。</sys:String>
-    <sys:String x:Key="MsgDataParsingFailedAndCantCreateClipListFile">資料解析失敗，無法產生 Bilibili 使用者（{0}）的秒數播放清單檔案。</sys:String>
+    <sys:String x:Key="MsgDataParsingFailedAndCantCreateClipListFile">資料解析失敗，無法產生 Bilibili 使用者（{0}）的短片清單檔案。</sys:String>
     <sys:String x:Key="MsgClipListFileGeneratedFor">已產生 Bilibili 使用者（{0}）的短片清單檔案：{1}</sys:String>
 </ResourceDictionary>

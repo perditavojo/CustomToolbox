@@ -20,7 +20,7 @@
     KeyDown="WMain_KeyDown">
     <Window.Resources>
         <converters:WidthConverter x:Key="WidthConverter" />
-        <converters:WidthToMarginConverter x:Key="WidthToMarginConverter" />
+        <converters:WidthToMarginLeftConverter x:Key="WidthToMarginConverter" />
     </Window.Resources>
     <Grid x:Name="GFrame">
         <Grid.RowDefinitions>

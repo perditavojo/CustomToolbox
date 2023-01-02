@@ -339,7 +339,7 @@ internal class OperationSet
 
             if (receivedTList.Code != 0)
             {
-                string message = receivedTList.Message ?? "作業失敗，發生非預期的錯誤";
+                string message = receivedTList.Message ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
                 _WMain?.WriteLog(message);
 
@@ -353,7 +353,9 @@ internal class OperationSet
             // 當 tlist 等於 null，則表示沒有取到有效的標籤資訊。
             if (tlist == null)
             {
-                _WMain?.WriteLog($"資料解析失敗，沒有取到有效的標籤資訊。已取消產製 Bilibili 使用者（{mid}）的短片清單檔案");
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgDataParsingFailedAndCanceled,
+                    mid));
 
                 return;
             }
@@ -363,12 +365,16 @@ internal class OperationSet
 
             if (tidDataSet.Count <= 0)
             {
-                _WMain?.WriteLog($"資料解析失敗，沒有取到有效的標籤資訊。已取消產製 Bilibili 使用者（{mid}）的短片清單檔案");
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgDataParsingFailedAndCanceled,
+                    mid));
 
                 return;
             }
 
-            _WMain?.WriteLog($"正在準備產製 Bilibili 使用者（{mid}）的短片清單檔案。");
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgPrepToProduceClipListFile,
+                mid));
 
             List<ClipData> originDataSource = new();
 
@@ -380,14 +386,17 @@ internal class OperationSet
 
                 int tid = tidData.TID, ps = 50;
 
-                _WMain?.WriteLog($"正在處裡標籤「{tidData.Name}（{tidData.TID}）」的資料。");
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgProcessingDataForTag,
+                    tidData.Name ?? string.Empty,
+                    tidData.TID.ToString()));
 
                 // 取得分頁資訊。
                 ReceivedObject<Page> receivedPage = await SpaceFunction.GetPage(mid, tid);
 
                 if (receivedPage.Code != 0)
                 {
-                    string message = receivedPage.Message ?? "作業失敗，發生非預期的錯誤";
+                    string message = receivedPage.Message ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
                     _WMain?.WriteLog(message);
 
@@ -415,14 +424,17 @@ internal class OperationSet
                 {
                     ct.ThrowIfCancellationRequested();
 
-                    _WMain?.WriteLog($"正在處裡第 {pn}/{pages} 頁的資料。");
+                    _WMain?.WriteLog(MsgSet.GetFmtStr(
+                        MsgSet.MsgProcessingDataForPage,
+                        pn.ToString(),
+                        pages.ToString()));
 
                     ReceivedObject<List<VList>> receivedVLists = await SpaceFunction.GetVList(mid, tid, pn, ps);
 
                     if (receivedVLists.Code != 0 ||
                         receivedVLists.Data == null)
                     {
-                        string message = receivedPage.Message ?? "作業失敗，發生非預期的錯誤";
+                        string message = receivedPage.Message ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
                         _WMain?.WriteLog(message);
 
@@ -433,7 +445,10 @@ internal class OperationSet
                     {
                         ct.ThrowIfCancellationRequested();
 
-                        _WMain?.WriteLog($"正在處裡第 {processCount}/{videoCount} 部影片的資料。");
+                        _WMain?.WriteLog(MsgSet.GetFmtStr(
+                            MsgSet.MsgProcessingDataForVideo,
+                            processCount.ToString(),
+                            videoCount.ToString()));
 
                         processCount++;
 
@@ -493,14 +508,19 @@ internal class OperationSet
                     }
                 }
 
-                _WMain?.WriteLog(
-                    $"Bilibili 使用者（{mid}）在此 tid（{tid}）下共有 {videoCount} 部影片，" +
-                    $"已成功處理 {originDataSource.Count} 部影片的資料。");
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgProcessResult,
+                    mid,
+                    tid.ToString(),
+                    videoCount.ToString(),
+                    originDataSource.Count.ToString()));
             }
 
             if (originDataSource.Count <= 0)
             {
-                _WMain?.WriteLog($"資料解析失敗，無法產生 Bilibili 使用者（{mid}）的秒數播放清單檔案。");
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgDataParsingFailedAndCantCreateClipListFile,
+                    mid));
 
                 return;
             }
@@ -544,7 +564,10 @@ internal class OperationSet
 
             await fileStream.DisposeAsync();
 
-            _WMain?.WriteLog($"已產生 Bilibili 使用者（{mid}）的短片清單檔案：{savedPath}");
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgClipListFileGeneratedFor,
+                mid,
+                savedPath));
 
             // 開啟 ClipLists 資料夾。
             CustomFunction.OpenFolder(VariableSet.ClipListsFolderPath);

@@ -1,14 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
 namespace CustomToolbox.Common.Converters;
 
 /// <summary>
-/// 寬度至 Margin 轉換器
+/// 寬度至 Margin 的 Left 轉換器
 /// </summary>
-class WidthToMarginConverter : IValueConverter
+class WidthToMarginLeftConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

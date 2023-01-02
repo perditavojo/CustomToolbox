@@ -277,4 +277,13 @@
     <sys:String x:Key="MsgEnableDiscordRichPresence">已激活 Discord 丰富状态。</sys:String>
     <sys:String x:Key="MsgDisableDiscordRichPresence">已停用 Discord 丰富状态。</sys:String>
     <sys:String x:Key="MsgSelectedVideoNonSupported">您选择的视频文件为不支持的格式。</sys:String>
+    <sys:String x:Key="MsgJobFailedAndErrorOccurred">作业失败，发生非预期的错误。</sys:String>
+    <sys:String x:Key="MsgDataParsingFailedAndCanceled">数据解析失败，没有取到有效的标签信息。已取消产制 Bilibili 用户（{0}）的短片清单文件。</sys:String>
+    <sys:String x:Key="MsgPrepToProduceClipListFile">正在准备产制 Bilibili 用户（{0}）的短片清单文件。</sys:String>
+    <sys:String x:Key="MsgProcessingDataForTag">正在处里标签「{0}（{1}）」的数据。</sys:String>
+    <sys:String x:Key="MsgProcessingDataForPage">正在处里第 {0}/{1} 页的数据。</sys:String>
+    <sys:String x:Key="MsgProcessingDataForVideo">正在处里第 {0}/{1} 部视频的数据。</sys:String>
+    <sys:String x:Key="MsgProcessResult">Bilibili 用户（{0}）在此 tid（{1}）下共有 {2} 部视频，已成功处理 {3} 部视频的数据。</sys:String>
+    <sys:String x:Key="MsgDataParsingFailedAndCantCreateClipListFile">数据解析失败，无法产生 Bilibili 用户（{0}）的短片清单文件。</sys:String>
+    <sys:String x:Key="MsgClipListFileGeneratedFor">已产生 Bilibili 用户（{0}）的短片清单文件：{1}</sys:String>
 </ResourceDictionary>

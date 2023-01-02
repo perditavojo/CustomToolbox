@@ -959,6 +959,69 @@ internal class MsgSet
         .FindResource("MsgSelectedVideoNonSupported").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 訊息：作業失敗，發生非預期的錯誤
+    /// </summary>
+    public static readonly string MsgJobFailedAndErrorOccurred = Application.Current
+        .FindResource("MsgJobFailedAndErrorOccurred").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：資料解析失敗，沒有取到有效的標籤資訊。已取消產製 Bilibili 使用者（？）的短片清單檔案
+    /// </summary>
+    public static readonly string MsgDataParsingFailedAndCanceled = Application.Current
+        .FindResource("MsgDataParsingFailedAndCanceled").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：正在準備產製 Bilibili 使用者（？）的短片清單檔案
+    /// </summary>
+    public static readonly string MsgPrepToProduceClipListFile = Application.Current
+        .FindResource("MsgPrepToProduceClipListFile").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：正在處裡標籤「？（？）」的資料
+    /// </summary>
+    public static readonly string MsgProcessingDataForTag = Application.Current
+        .FindResource("MsgProcessingDataForTag").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：正在處裡第 ？/？ 頁的資料
+    /// </summary>
+    public static readonly string MsgProcessingDataForPage = Application.Current
+        .FindResource("MsgProcessingDataForPage").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：正在處裡第 ？/？ 部影片的資料
+    /// </summary>
+    public static readonly string MsgProcessingDataForVideo = Application.Current
+        .FindResource("MsgProcessingDataForVideo").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：Bilibili 使用者（？）在此 tid（？）下共有 ？ 部影片，已成功處理 ？ 部影片的資料
+    /// </summary>
+    public static readonly string MsgProcessResult = Application.Current
+        .FindResource("MsgProcessResult").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：資料解析失敗，無法產生 Bilibili 使用者（？）的短片清單檔案
+    /// </summary>
+    public static readonly string MsgDataParsingFailedAndCantCreateClipListFile = Application.Current
+        .FindResource("MsgDataParsingFailedAndCantCreateClipListFile").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已產生 Bilibili 使用者（？）的短片清單檔案：？
+    /// </summary>
+    public static readonly string MsgClipListFileGeneratedFor = Application.Current
+        .FindResource("MsgClipListFileGeneratedFor").ToString() ??
+        string.Empty;
+
     #endregion
 
     /// <summary>
