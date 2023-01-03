@@ -1,4 +1,5 @@
-﻿using ButtonBase = System.Windows.Controls.Primitives.ButtonBase;
+﻿using Brushes = System.Windows.Media.Brushes;
+using ButtonBase = System.Windows.Controls.Primitives.ButtonBase;
 using Control = System.Windows.Controls.Control;
 using CustomToolbox.Common;
 using CustomToolbox.Common.Extensions;
@@ -555,6 +556,32 @@ public partial class WMain : Window
             WindowState = WindowState.Normal;
 
             ShutdownApp(sender);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void MICancel_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                bool value = MICancel.IsEnabled;
+
+                if (value)
+                {
+                    MICancel.Foreground = Brushes.Red;
+                }
+                else
+                {
+                    MICancel.Foreground = Brushes.Gray;
+                }
+            }));
         }
         catch (Exception ex)
         {

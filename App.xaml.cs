@@ -3,6 +3,7 @@ using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Utils;
 using MessageBox = System.Windows.MessageBox;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace CustomToolbox;
 
@@ -30,6 +31,8 @@ public partial class App : Application
     {
         try
         {
+            InitUnhandledExceptionEventHandler();
+
             base.OnStartup(e);
 
             CustomInit();
@@ -63,6 +66,36 @@ public partial class App : Application
     }
 
     /// <summary>
+    /// 初始化 UnhandledException 的 EventHandler
+    /// <para>參考：https://blog.csdn.net/Iron_Ye/article/details/82913025 </para>
+    /// </summary>
+    private static void InitUnhandledExceptionEventHandler()
+    {
+        AppDomain currentDomain = AppDomain.CurrentDomain;
+
+        currentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs args) =>
+        {
+            Exception ex = (Exception)args.ExceptionObject;
+
+            ShowErrorMsg(ex.ToString());
+        };
+
+        Application.Current.DispatcherUnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) =>
+        {
+            ShowErrorMsg(e.Exception.ToString());
+
+            e.Handled = true;
+        };
+
+        TaskScheduler.UnobservedTaskException += (object? sender, UnobservedTaskExceptionEventArgs e) =>
+        {
+            ShowErrorMsg(e.Exception.ToString());
+
+            e.SetObserved();
+        };
+    }
+
+    /// <summary>
     /// 自定義初始化
     /// </summary>
     private static void CustomInit()
@@ -85,10 +118,19 @@ public partial class App : Application
 
         errMsg += AppLangUtil.SetAppLang();
 
-        if (!string.IsNullOrEmpty(errMsg))
+        ShowErrorMsg(errMsg);
+    }
+
+    /// <summary>
+    /// 顯示錯誤訊息
+    /// </summary>
+    /// <param name="message">字串，錯誤訊息</param>
+    private static void ShowErrorMsg(string message)
+    {
+        if (!string.IsNullOrEmpty(message))
         {
             // 使用 MessageBox 輸出錯誤訊息。
-            MessageBox.Show(errMsg,
+            MessageBox.Show(message,
                 DefaultTitle,
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);

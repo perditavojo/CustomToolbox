@@ -46,6 +46,7 @@
             <MenuItem x:Name="MICancel"
                 Header="{DynamicResource MICancel}"
                 IsEnabled="False"
+                IsEnabledChanged="MICancel_IsEnabledChanged"      
                 Click="MICancel_Click" />
             <MenuItem x:Name="MIAbout"
                 Header="{DynamicResource MIAbout}"
@@ -327,7 +328,6 @@
                                             Click="BtnLoadClipList_Click" />
                                     </Grid>
                                 </GroupBox>
-                                <!-- TODO: 2023-01-02 待調整。 -->
                                 <GroupBox x:Name="GBB23ClipListGenerator"
                                     Header="{DynamicResource GBB23ClipListGenerator}"
                                     Margin="{Binding ElementName=GBClipList,
