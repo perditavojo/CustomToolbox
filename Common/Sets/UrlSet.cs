@@ -13,7 +13,7 @@ internal class UrlSet
     /// <summary>
     /// AutoUpdater.xml 的網址
     /// </summary>
-    public static readonly string AutoUpdaterXmlUrl = "https://github.com/fadeiris/CustomToolbox/blob/updater/AutoUpdater.xml";
+    public static readonly string AutoUpdaterXmlUrl = "https://github.com/rubujo/CustomToolbox/blob/updater/AutoUpdater.xml";
 
     /// <summary>
     /// FFmpeg 的壓縮檔名稱

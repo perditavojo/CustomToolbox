@@ -85,11 +85,11 @@ internal class ClipListUtil
                             if (playlists.Tag != null &&
                                 playlists.Tag.Contains("bilibili"))
                             {
-                                text = $"[fadeiris/CustomPlaylist] (Bilibili) {text}";
+                                text = $"[rubujo/CustomPlaylist] (Bilibili) {text}";
                             }
                             else
                             {
-                                text = $"[fadeiris/CustomPlaylist] {text}";
+                                text = $"[rubujo/CustomPlaylist] {text}";
                             }
 
                             playlistFileUrl = $"{PlaylistUrlSet.FCPBaseUrl}{playlists.Route}";

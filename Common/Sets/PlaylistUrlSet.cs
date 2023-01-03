@@ -36,17 +36,17 @@ internal class PlaylistUrlSet
     public static readonly string YCPLrcFileTemplateUrl = $"{YCPLyricsBaseUrl}Lyrics/[SongId].lrc";
 
     /// <summary>
-    /// fadeiris/CustomPlaylist 的基礎網址
+    /// rubujo/CustomPlaylist 的基礎網址
     /// </summary>
-    public static readonly string FCPBaseUrl = $"{GitHubBaseUrl}fadeiris/CustomPlaylist/main/";
+    public static readonly string FCPBaseUrl = $"{GitHubBaseUrl}rubujo/CustomPlaylist/main/";
 
     /// <summary>
-    /// fadeiris/CustomPlaylist 的 Playlists.jsonc 的網址
+    /// rubujo/CustomPlaylist 的 Playlists.jsonc 的網址
     /// </summary>
     public static readonly string FCPPlaylistsJsonUrl = $"{FCPBaseUrl}Playlists.jsonc";
 
     /// <summary>
-    /// fadeiris/CustomPlaylist 的 B23Playlists.jsonc 的網址
+    /// rubujo/CustomPlaylist 的 B23Playlists.jsonc 的網址
     /// </summary>
     public static readonly string FCPB23PlaylistsJsonUrl = $"{FCPBaseUrl}B23Playlists.jsonc";
 }
