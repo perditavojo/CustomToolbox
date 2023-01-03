@@ -4,8 +4,8 @@ using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
-using System.Windows;
 using System.IO;
+using System.Windows;
 
 namespace CustomToolbox;
 

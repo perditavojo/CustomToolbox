@@ -633,7 +633,12 @@ public partial class WMain : Window
                     this,
                     disableEfficiencyMode: true);
 
-                WindowState = WindowState.Normal;
+                // 只有在 WindowState 是 WindowState.Minimized 時，
+                // 才重新設定 WindowState 至 WindowState.Normal。
+                if (WindowState == WindowState.Minimized)
+                {
+                    WindowState = WindowState.Normal;
+                }
 
                 string appAbout = MsgSet.GetFmtStr(
                     MsgSet.AppAbout,

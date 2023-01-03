@@ -169,7 +169,19 @@ public partial class WMain
 
                 if (string.IsNullOrEmpty(TBB23UserMID.Text))
                 {
-                    // TODO: 2022-12-27 待完成。
+                    // TODO: 2023-01-03 待完成語句 i18n 化。
+                    ShowMsgBox("Please entry the Bilibili user mid.");
+
+                    // 重設控制項。
+                    await Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        TBB23UserMID.Text = string.Empty;
+                        CBB23ClipListExportJsonc.IsChecked = false;
+                    }));
+
+                    CustomFunction.BatchSetEnabled(ctrlSet1, true);
+                    CustomFunction.BatchSetEnabled(ctrlSet2, false);
+
                     return;
                 }
 
