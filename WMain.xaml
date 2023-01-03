@@ -118,8 +118,7 @@
                         </asf:AirspacePanel>
                         <GridSplitter Grid.Row="1"
                             Grid.Column="2"
-                            Height="8"
-                            Background="Transparent"
+                            Height="3"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center" />
                         <StackPanel Grid.Row="2"
@@ -372,7 +371,7 @@
                                     Header="{DynamicResource GBWebTools}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
-                                    <Grid Margin="5,5,5,5">
+                                    <Grid>
                                         <Button x:Name="BtnSubtitleCreator"
                                             Margin="0,0,0,0"
                                             Content="{DynamicResource BtnSubtitleCreator}"
@@ -409,6 +408,15 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                         VerticalScrollBarVisibility="Auto">
                         <Grid>
+                            <GroupBox x:Name="GBSubscriberCounterTool"
+                                      Header="Subscriber Counter Tool"
+                                      Margin="5,5,5,5"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Top">
+                                <Grid>
+                                    <Label Margin="0,0,0,0" />
+                                </Grid>
+                            </GroupBox>
                             <Label Content="{DynamicResource MsgUnderConstruction}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
@@ -417,7 +425,7 @@
                 </TabItem>
                 <TabItem x:Name="TIMisc"
                     Header="{DynamicResource TIMisc}">
-                    <Grid Margin="5,5,5,5">
+                    <Grid>
                         <ScrollViewer HorizontalScrollBarVisibility="Auto"
                             VerticalScrollBarVisibility="Auto">
                             <Grid>
@@ -426,7 +434,7 @@
                                     Margin="5,5,5,5"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
-                                    <Grid Margin="5,5,5,5">
+                                    <Grid>
                                         <Label x:Name="LLanguages"
                                             Margin="0,0,0,0"
                                             Content="{DynamicResource LLanguages}"
@@ -670,7 +678,7 @@
                                     Header="{DynamicResource GBDependencyFiles}"
                                     Margin="5,750,5,5" HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
-                                    <Grid Margin="5,5,5,5">
+                                    <Grid>
                                         <Button x:Name="BtnForceDLDeps"
                                             Content="{DynamicResource BtnForceDLDeps}"
                                             Margin="0,0,0,0"
@@ -872,7 +880,7 @@
                                     Margin="290,750,5,5"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
-                                    <Grid Margin="5,5,5,5">
+                                    <Grid>
                                         <Button x:Name="BtnOpenBinsFolder"
                                             Margin="0,0,0,5"
                                             Content="{DynamicResource BtnOpenBinsFolder}"
@@ -919,8 +927,7 @@
             <GridSplitter Grid.Row="0"
                 Grid.RowSpan="3"
                 Grid.Column="1"
-                Width="8"
-                Background="Transparent"
+                Width="3"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Stretch" />
             <DataGrid x:Name="DGClipList"
@@ -1021,8 +1028,7 @@
             </DataGrid>
             <GridSplitter Grid.Row="1"
                 Grid.Column="2"
-                Height="8"
-                Background="Transparent"
+                Height="3"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center" />
             <TextBox x:Name="TBLog"
