@@ -6,7 +6,6 @@ using ModernWpf;
 using System.Drawing.Text;
 using System.IO;
 using System.Windows.Controls;
-using System.Windows.Resources;
 using YoutubeDLSharp.Options;
 
 namespace CustomToolbox;
@@ -251,11 +250,13 @@ public partial class WMain
 
                 if (CBSplitChapters.IsChecked == true)
                 {
+                    optionSet.ForceKeyframesAtCuts = true;
                     optionSet.SplitChapters = true;
                     optionSet.Output = VariableSet.YtDlpSplitChaptersOutput;
                 }
                 else
                 {
+                    optionSet.ForceKeyframesAtCuts = false;
                     optionSet.SplitChapters = false;
                     optionSet.Output = VariableSet.YtDlpDefaultOutput;
                 }

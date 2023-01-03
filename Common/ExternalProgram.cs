@@ -340,6 +340,7 @@ internal class ExternalProgram
             {
                 ConcurrentFragments = Properties.Settings.Default.YtDlpConcurrentFragments,
                 FfmpegLocation = VariableSet.FFmpegPath,
+                ForceKeyframesAtCuts = false,
                 Format = Properties.Settings.Default.YtDlpDefaultFormat,
                 Output = VariableSet.YtDlpDefaultOutput,
                 RemoveCacheDir = true,
@@ -389,6 +390,7 @@ internal class ExternalProgram
             // 參考來源：https://www.reddit.com/r/youtubedl/wiki/howdoidownloadpartsofavideo/
             optionSet.Downloader = "ffmpeg";
             optionSet.DownloaderArgs = $"ffmpeg_i:-ss {startSeconds} -to {endSeconds}";
+            optionSet.ForceKeyframesAtCuts = true;
 
             // 為避免 Xabe.FFmpeg 轉檔時發生錯誤，故停用下列設定。
             optionSet.EmbedMetadata = false;
