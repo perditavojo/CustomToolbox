@@ -960,6 +960,13 @@ internal class MsgSet
         string.Empty;
 
     /// <summary>
+    /// 訊息：請輸入 Bilibili 使用者 mid
+    /// </summary>
+    public static readonly string MsgB23UserMidCantBeEmpty = Application.Current
+        .FindResource("MsgB23UserMidCantBeEmpty").ToString() ??
+        string.Empty;
+
+    /// <summary>
     /// 訊息：作業失敗，發生非預期的錯誤
     /// </summary>
     public static readonly string MsgJobFailedAndErrorOccurred = Application.Current

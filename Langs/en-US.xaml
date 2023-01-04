@@ -277,6 +277,7 @@
     <sys:String x:Key="MsgEnableDiscordRichPresence">Enable Discord Rich Presence.</sys:String>
     <sys:String x:Key="MsgDisableDiscordRichPresence">Disable Discord Rich Presence.</sys:String>
     <sys:String x:Key="MsgSelectedVideoNonSupported">The video file you selected is in a non-supported format.</sys:String>
+    <sys:String x:Key="MsgB23UserMidCantBeEmpty">Please enter Bilibili user mid.</sys:String>
     <sys:String x:Key="MsgJobFailedAndErrorOccurred">The job failed and an unintended error occurred.</sys:String>
     <sys:String x:Key="MsgDataParsingFailedAndCanceled">Data parsing failed, no valid tag information was retrieved. The clip list file for Bilibili users ({0}) was cancelled.</sys:String>
     <sys:String x:Key="MsgPrepToProduceClipListFile">We are preparing to produce a list of Bilibili user ({0}) videos.</sys:String>

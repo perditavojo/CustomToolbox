@@ -277,6 +277,7 @@
     <sys:String x:Key="MsgEnableDiscordRichPresence">已激活 Discord 丰富状态。</sys:String>
     <sys:String x:Key="MsgDisableDiscordRichPresence">已停用 Discord 丰富状态。</sys:String>
     <sys:String x:Key="MsgSelectedVideoNonSupported">您选择的视频文件为不支持的格式。</sys:String>
+    <sys:String x:Key="MsgB23UserMidCantBeEmpty">请输入 Bilibili 用户 mid。</sys:String>
     <sys:String x:Key="MsgJobFailedAndErrorOccurred">作业失败，发生非预期的错误。</sys:String>
     <sys:String x:Key="MsgDataParsingFailedAndCanceled">数据解析失败，没有取到有效的标签信息。已取消产制 Bilibili 用户（{0}）的短片清单文件。</sys:String>
     <sys:String x:Key="MsgPrepToProduceClipListFile">正在准备产制 Bilibili 用户（{0}）的短片清单文件。</sys:String>

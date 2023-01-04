@@ -169,8 +169,7 @@ public partial class WMain
 
                 if (string.IsNullOrEmpty(TBB23UserMID.Text))
                 {
-                    // TODO: 2023-01-03 待完成語句 i18n 化。
-                    ShowMsgBox("Please entry the Bilibili user mid.");
+                    ShowMsgBox(MsgSet.MsgB23UserMidCantBeEmpty);
 
                     // 重設控制項。
                     await Dispatcher.BeginInvoke(new Action(() =>
