@@ -150,7 +150,6 @@ public partial class WMain
         {
             Dispatcher.BeginInvoke(new Action(async () =>
             {
-
                 Control[] ctrlSet1 =
                 {
                     MIFetchClip,
@@ -183,7 +182,6 @@ public partial class WMain
 
                     return;
                 }
-
                 await OperationSet.DoGenerateB23ClipList(
                     TBB23UserMID.Text,
                     CBB23ClipListExportJsonc.IsChecked ?? false,

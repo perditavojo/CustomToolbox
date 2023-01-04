@@ -331,7 +331,6 @@ internal class OperationSet
     {
         try
         {
-            // TODO: 2022-12-27 待修改完成。
             ct.ThrowIfCancellationRequested();
 
             // 取標籤資訊。
@@ -339,7 +338,7 @@ internal class OperationSet
 
             if (receivedTList.Code != 0)
             {
-                string message = receivedTList.Message ?? MsgSet.MsgJobFailedAndErrorOccurred;
+                string message = $"[{receivedTList.Code}] {receivedTList.Message}" ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
                 _WMain?.WriteLog(message);
 
@@ -429,7 +428,11 @@ internal class OperationSet
                         pn.ToString(),
                         pages.ToString()));
 
-                    ReceivedObject<List<VList>> receivedVLists = await SpaceFunction.GetVList(mid, tid, pn, ps);
+                    ReceivedObject<List<VList>> receivedVLists = await SpaceFunction.GetVList(
+                        mid,
+                        tid,
+                        pn,
+                        ps);
 
                     if (receivedVLists.Code != 0 ||
                         receivedVLists.Data == null)
@@ -470,6 +473,12 @@ internal class OperationSet
                             }
                         }
 
+                        // 檢查影片的標題是否包含排除字詞。
+                        if (!CheckVideoTitle(title))
+                        {
+                            continue;
+                        }
+
                         string length = vlist?.Length ?? string.Empty;
 
                         length = CommonFunction.GetFormattedLength(length);
@@ -480,7 +489,7 @@ internal class OperationSet
 
                         // 有多個 Part 的影片，時間會全部加總在一起。
                         // 根據網路資料取平均值，一首歌大約 4 分鐘。
-                        if (endTime.TotalMinutes > 4)
+                        if (endTime.TotalMinutes > Properties.Settings.Default.B23ClipListMaxMinutes)
                         {
                             // 將結束秒數直接歸零。
                             endSeconds = 0;
@@ -641,5 +650,33 @@ internal class OperationSet
                 Name = tlist.Tag29.Name
             });
         }
+    }
+
+    /// <summary>
+    /// 檢查標題
+    /// </summary>
+    /// <param name="value">字串，影片的標題</param>
+    /// <returns>布林值</returns>
+    private static bool CheckVideoTitle(string value)
+    {
+        bool isOkay = true;
+
+        string[] excludedPhrases = Properties.Settings.Default
+            .B23ClipListExcludedPhrases
+            .Split(
+                ",".ToCharArray(),
+                StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (string phrase in excludedPhrases)
+        {
+            if (value.Contains(phrase))
+            {
+                isOkay = false;
+
+                break;
+            }
+        }
+
+        return isOkay;
     }
 }

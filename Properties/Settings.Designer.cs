@@ -490,5 +490,26 @@ namespace CustomToolbox.Properties {
                 this["FFmpegApplyFontSetting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("銳評")]
+        public string B23ClipListExcludedPhrases {
+            get {
+                return ((string)(this["B23ClipListExcludedPhrases"]));
+            }
+            set {
+                this["B23ClipListExcludedPhrases"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int B23ClipListMaxMinutes {
+            get {
+                return ((int)(this["B23ClipListMaxMinutes"]));
+            }
+        }
     }
 }

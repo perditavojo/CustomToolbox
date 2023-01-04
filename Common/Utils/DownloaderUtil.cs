@@ -1,12 +1,13 @@
 ﻿using Application = System.Windows.Application;
 using CustomToolbox.Common.Sets;
 using Downloader;
+using Humanizer;
 using Label = System.Windows.Controls.Label;
 using ProgressBar = ModernWpf.Controls.ProgressBar;
 using SevenZipExtractor;
 using System.IO;
 using YoutubeDLSharp;
-using Humanizer;
+using System.Net;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -366,7 +367,7 @@ internal class DownloaderUtil
             {
                 downloadConfiguration.RequestConfiguration = new RequestConfiguration()
                 {
-                    UserAgent = Properties.Settings.Default.UserAgent
+                    UserAgent = CustomFunction.GetUserAgent()
                 };
             }
             else
@@ -488,5 +489,41 @@ internal class DownloaderUtil
         };
 
         return downloadService;
+    }
+
+    /// <summary>
+    /// 取得針對 Bilibili 網站使用的 DownloadConfiguration
+    /// </summary>
+    /// <returns>DownloadConfiguration</returns>
+    public static DownloadConfiguration GetB23DownloadConfiguration()
+    {
+        DownloadConfiguration downloadConfiguration = new();
+
+        WebHeaderCollection headerCollection = new()
+        {
+            { "Origin", "https://space.bilibili.com" }
+        };
+
+        // 當使用者代理字串值不為空時才設定。
+        if (!string.IsNullOrEmpty(Properties.Settings.Default.UserAgent))
+        {
+            downloadConfiguration.RequestConfiguration = new RequestConfiguration()
+            {
+                UserAgent = CustomFunction.GetUserAgent(),
+                Referer = "https://www.bilibili.com",
+                Headers = headerCollection
+            };
+        }
+        else
+        {
+            // 使用預設的 RequestConfiguration。
+            downloadConfiguration.RequestConfiguration = new RequestConfiguration()
+            {
+                Referer = "https://www.bilibili.com",
+                Headers = headerCollection
+            };
+        }
+
+        return downloadConfiguration;
     }
 }

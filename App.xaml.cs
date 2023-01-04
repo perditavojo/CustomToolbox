@@ -2,6 +2,8 @@
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Utils;
 using MessageBox = System.Windows.MessageBox;
+using Microsoft.Extensions.DependencyInjection;
+using ServiceCollection = Microsoft.Extensions.DependencyInjection.ServiceCollection;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -12,6 +14,11 @@ namespace CustomToolbox;
 /// </summary>
 public partial class App : Application
 {
+    /// <summary>
+    /// IServiceProvider
+    /// </summary>
+    private IServiceProvider? ServiceProvider { get; set; }
+
     /// <summary>
     /// 應用程式預設的 LangData
     /// </summary>
@@ -27,24 +34,14 @@ public partial class App : Application
     /// </summary>
     private static readonly string DefaultTitle = "CustomToolbox";
 
-    protected override void OnStartup(StartupEventArgs e)
+    public App()
     {
-        try
-        {
-            InitUnhandledExceptionEventHandler();
+        // 參考來源：https://executecommands.com/dependency-injection-in-wpf-net-core-csharp/
+        ServiceCollection serviceCollection = new();
 
-            base.OnStartup(e);
+        ConfigureServices(serviceCollection);
 
-            CustomInit();
-        }
-        catch (Exception ex)
-        {
-            // 使用 MessageBox 輸出錯誤訊息。
-            MessageBox.Show(ex.ToString(),
-                caption: DefaultTitle,
-                button: MessageBoxButton.OK,
-                icon: MessageBoxImage.Error);
-        }
+        ServiceProvider = serviceCollection.BuildServiceProvider();
     }
 
     /// <summary>
@@ -66,6 +63,42 @@ public partial class App : Application
     }
 
     /// <summary>
+    /// 設定服務
+    /// </summary>
+    /// <param name="services">ServiceCollection</param>
+    private static void ConfigureServices(ServiceCollection services)
+    {
+        services.AddHttpClient().AddSingleton<WMain>();
+    }
+
+    /// <summary>
+    /// 啟動
+    /// </summary>
+    /// <param name="sender">StartupEventArgs</param>
+    /// <param name="e">object</param>
+    private void OnStartup(object sender, StartupEventArgs e)
+    {
+        try
+        {
+            InitUnhandledExceptionEventHandler();
+
+            CustomInit();
+
+            WMain? wMain = ServiceProvider?.GetService<WMain>();
+
+            wMain?.Show();
+        }
+        catch (Exception ex)
+        {
+            // 使用 MessageBox 輸出錯誤訊息。
+            MessageBox.Show(ex.ToString(),
+                caption: DefaultTitle,
+                button: MessageBoxButton.OK,
+                icon: MessageBoxImage.Error);
+        }
+    }
+
+    /// <summary>
     /// 初始化 UnhandledException 的 EventHandler
     /// <para>參考：https://blog.csdn.net/Iron_Ye/article/details/82913025 </para>
     /// </summary>
@@ -80,7 +113,7 @@ public partial class App : Application
             ShowErrorMsg(ex.ToString());
         };
 
-        Application.Current.DispatcherUnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) =>
+        Current.DispatcherUnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) =>
         {
             ShowErrorMsg(e.Exception.ToString());
 
