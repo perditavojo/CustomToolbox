@@ -294,6 +294,7 @@
                                             VerticalAlignment="Top" />
                                         <ComboBox x:Name="CBNetPlaylists"
                                             Margin="0,25,0,0"
+                                            MaxWidth="{Binding ElementName=GBClipList, Path=ActualWidth}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <CheckBox x:Name="CBAutoLyric"
@@ -311,6 +312,7 @@
                                             VerticalAlignment="Top" />
                                         <ComboBox x:Name="CBLocalClipLists"
                                             Margin="0,130,0,0"
+                                            MaxWidth="{Binding ElementName=GBClipList, Path=ActualWidth}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <Button x:Name="BtnRefreshNetResurce"
@@ -329,10 +331,7 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBB23ClipListGenerator"
                                     Header="{DynamicResource GBB23ClipListGenerator}"
-                                    Margin="{Binding ElementName=GBClipList,
-                                    Path=ActualWidth,
-                                    Converter={StaticResource WidthToMarginLeftConverter},
-                                    ConverterParameter=15}"
+                                    Margin="150,5,5,5"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
@@ -442,6 +441,7 @@
                                             VerticalAlignment="Top" />
                                         <ComboBox x:Name="CBLanguages"
                                             Margin="0,25,0,0"
+                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             SelectionChanged="CBLanguages_SelectionChanged" />
@@ -452,6 +452,7 @@
                                             VerticalAlignment="Top" />
                                         <ComboBox x:Name="CBThemes"
                                             Margin="0,90,0,5"
+                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             SelectionChanged="CBThemes_SelectionChanged">
@@ -467,7 +468,7 @@
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBUserAgent"
                                             Margin="0,155,0,5"
-                                            MaxWidth="{Binding ElementName=TBUnsupportedDomains, Path=ActualWidth}"
+                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             HorizontalScrollBarVisibility="Auto"
@@ -489,7 +490,7 @@
                                             Margin="0,270,0,5"
                                             MinHeight="150"
                                             MaxHeight="{Binding ElementName=TBUnsupportedDomains, Path=MinHeight}"
-                                            MaxWidth="230"
+                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
                                             ToolTip="{DynamicResource TBUnsupportedDomainsToolTip}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
@@ -505,6 +506,7 @@
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBAppendSeconds"
                                             Margin="0,450,0,5"
+                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
                                             ToolTip="{DynamicResource TBAppendSecondsToolTip}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
@@ -546,6 +548,57 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
+                                        <Label x:Name="LFormat"
+                                            Content="{DynamicResource LFormat}"
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top" />
+                                        <TextBox x:Name="TBFormat"
+                                            Margin="0,30,0,0"
+                                            MaxWidth="180"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            TextChanged="TBFormat_TextChanged" />
+                                        <CheckBox x:Name="CBUseAria2"
+                                            Content="{DynamicResource CBUseAria2}"
+                                            ToolTip="{DynamicResource CBUseAria2ToolTip}"
+                                            Margin="0,70,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Checked="CBUseAria2_Checked"
+                                            Unchecked="CBUseAria2_Unchecked" />
+                                        <CheckBox x:Name="CBEmbedMetadata"
+                                            Content="{DynamicResource CBEmbedMetadata}"
+                                            ToolTip="{DynamicResource CBEmbedMetadataToolTip}"
+                                            Margin="0,110,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Checked="CBEmbedMetadata_Checked"
+                                            Unchecked="CBEmbedMetadata_Unchecked" />
+                                        <CheckBox x:Name="CBLiveFromStart"
+                                            Content="{DynamicResource CBLiveFromStart}"
+                                            ToolTip="{DynamicResource CBLiveFromStartToolTip}"
+                                            Margin="0,150,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Checked="CBLiveFromStart_Checked"
+                                            Unchecked="CBLiveFromStart_Unchecked" />
+                                        <CheckBox x:Name="CBWaitForVideo"
+                                            Content="{DynamicResource CBWaitForVideo}"
+                                            ToolTip="{DynamicResource CBWaitForVideoToolTip}"
+                                            Margin="0,190,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Checked="CBWaitForVideo_Checked"
+                                            Unchecked="CBWaitForVideo_Unchecked" />
+                                        <CheckBox x:Name="CBSplitChapters"
+                                            Content="{DynamicResource CBSplitChapters}"
+                                            ToolTip="{DynamicResource CBSplitChaptersToolTip}"
+                                            Margin="0,230,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Checked="CBSplitChapters_Checked"
+                                            Unchecked="CBSplitChapters_Unchecked" />
                                         <GroupBox x:Name="GBCookies"
                                             Header="Cookies"
                                             Margin="190,5,5,5"
@@ -558,6 +611,7 @@
                                                     VerticalAlignment="Top" />
                                                 <ComboBox x:Name="CBBrowserName"
                                                     Margin="0,25,0,0"
+                                                    MaxWidth="{Binding ElementName=GBCookies, Path=ActualWidth}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
                                                     SelectionChanged="CBBrowserName_SelectionChanged">
@@ -621,57 +675,6 @@
                                                     Unchecked="CBCookieFromBrowser_Unchecked" />
                                             </Grid>
                                         </GroupBox>
-                                        <Label x:Name="LFormat"
-                                            Content="{DynamicResource LFormat}"
-                                            Margin="0,5,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" />
-                                        <TextBox x:Name="TBFormat"
-                                            Margin="0,30,0,0"
-                                            MaxWidth="180"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            TextChanged="TBFormat_TextChanged" />
-                                        <CheckBox x:Name="CBUseAria2"
-                                            Content="{DynamicResource CBUseAria2}"
-                                            ToolTip="{DynamicResource CBUseAria2ToolTip}"
-                                            Margin="0,70,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Checked="CBUseAria2_Checked"
-                                            Unchecked="CBUseAria2_Unchecked" />
-                                        <CheckBox x:Name="CBEmbedMetadata"
-                                            Content="{DynamicResource CBEmbedMetadata}"
-                                            ToolTip="{DynamicResource CBEmbedMetadataToolTip}"
-                                            Margin="0,110,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Checked="CBEmbedMetadata_Checked"
-                                            Unchecked="CBEmbedMetadata_Unchecked" />
-                                        <CheckBox x:Name="CBLiveFromStart"
-                                            Content="{DynamicResource CBLiveFromStart}"
-                                            ToolTip="{DynamicResource CBLiveFromStartToolTip}"
-                                            Margin="0,150,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Checked="CBLiveFromStart_Checked"
-                                            Unchecked="CBLiveFromStart_Unchecked" />
-                                        <CheckBox x:Name="CBWaitForVideo"
-                                            Content="{DynamicResource CBWaitForVideo}"
-                                            ToolTip="{DynamicResource CBWaitForVideoToolTip}"
-                                            Margin="0,190,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Checked="CBWaitForVideo_Checked"
-                                            Unchecked="CBWaitForVideo_Unchecked" />
-                                        <CheckBox x:Name="CBSplitChapters"
-                                            Content="{DynamicResource CBSplitChapters}"
-                                            ToolTip="{DynamicResource CBSplitChaptersToolTip}"
-                                            Margin="0,230,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Checked="CBSplitChapters_Checked"
-                                            Unchecked="CBSplitChapters_Unchecked" />
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox x:Name="GBDependencyFiles"
@@ -760,6 +763,7 @@
                                                     VerticalAlignment="Top" />
                                                 <ComboBox x:Name="CBFontList"
                                                     Margin="0,25,0,0"
+                                                    MaxWidth="{Binding ElementName=GBSubtitleOptions, Path=ActualWidth}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top" />
                                                 <TextBox x:Name="TBCustomFont"
@@ -799,6 +803,7 @@
                                                     VerticalAlignment="Top" />
                                                 <ComboBox x:Name="CBEncodingList"
                                                     Margin="0,135,0,0"
+                                                    MaxWidth="{Binding ElementName=GBSubtitleOptions, Path=ActualWidth}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top">
                                                 </ComboBox>
@@ -843,15 +848,13 @@
                                         </GroupBox>
                                         <GroupBox x:Name="GBHardwareAcceleration"
                                             Header="{DynamicResource GBHardwareAcceleration}"
-                                            Margin="{Binding ElementName=GBSubtitleOptions,
-                                            Path=ActualWidth,
-                                            Converter={StaticResource WidthToMarginLeftConverter},
-                                            ConverterParameter=15}"
+                                            Margin="160,5,5,5"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top">
                                             <Grid>
                                                 <ComboBox x:Name="CBHardwareAccelerationType"
                                                     Margin="0,0,0,0"
+                                                    MaxWidth="{Binding ElementName=GBHardwareAcceleration, Path=ActualWidth}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
                                                     SelectionChanged="CBHardwareAccelerationType_SelectionChanged">
@@ -861,6 +864,7 @@
                                                 </ComboBox>
                                                 <ComboBox x:Name="CBGpuDevice"
                                                     Margin="0,40,0,0"
+                                                    MaxWidth="{Binding ElementName=GBHardwareAcceleration, Path=ActualWidth}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
                                                     SelectionChanged="CBGpuDevice_SelectionChanged" />
