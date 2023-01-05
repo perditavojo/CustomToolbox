@@ -426,18 +426,74 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                         VerticalScrollBarVisibility="Auto">
                         <Grid>
-                            <GroupBox x:Name="GBSubscriberCounterTool"
-                                      Header="Subscriber Counter Tool"
+                            <GroupBox x:Name="GBYtSubscriberCounterTool"
+                                      Header="YouTube channel subscriber counter tool"
                                       Margin="5,5,5,5"
                                       HorizontalAlignment="Left"
                                       VerticalAlignment="Top">
                                 <Grid>
-                                    <Label Margin="0,0,0,0" />
+                                    <Label Margin="0,0,0,0"
+                                        Content="YouTube Channel ID"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <TextBox x:Name="TBYtChannelID" 
+                                        Margin="0,25,0,0"
+                                        MaxWidth="{Binding ElementName=GBYtSubscriberCounterTool, Path=ActualWidth}"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <Label Margin="0,65,0,0"
+                                        Content="Custom subscriber amount"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <ui:NumberBox x:Name="NBCustomSubscriberAmount" 
+                                        Margin="0,90,0,0"
+                                        Value="-1"
+                                        Minimum="-1"
+                                        SpinButtonPlacementMode="Inline"                                       
+                                        MaxWidth="{Binding ElementName=GBYtSubscriberCounterTool, Path=ActualWidth}"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <DatePicker x:Name="DPCustomDate"
+                                        Margin="0,130,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <CheckBox x:Name="CBUseTranslate"
+                                        Margin="0,170,0,0"
+                                        Content="Use translate"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <CheckBox x:Name="CBAddTimestamp"
+                                        Margin="0,210,0,0"
+                                        Content="Add timestamp"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <CheckBox x:Name="CBForceChromium"
+                                        Margin="0,250,0,0"
+                                        Content="Force Chromium"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <CheckBox x:Name="CBUseClip"
+                                        Margin="0,290,0,0"
+                                        Content="Use clip"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <CheckBox x:Name="CBBlurBackground"
+                                        Margin="0,330,0,0"
+                                        Content="Blur background"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <Button x:Name="BtnReset"
+                                        Margin="0,370,0,0"
+                                        Content="Reset"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
+                                    <Button x:Name="BtnTakeScreensshot"
+                                        Margin="0,410,0,0"
+                                        Content="Reset"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top" />
                                 </Grid>
                             </GroupBox>
-                            <Label Content="{DynamicResource MsgUnderConstruction}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center" />
                         </Grid>
                     </ScrollViewer>
                 </TabItem>
