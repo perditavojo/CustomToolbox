@@ -489,7 +489,7 @@
                                         VerticalAlignment="Top" />
                                     <Button x:Name="BtnTakeScreensshot"
                                         Margin="0,410,0,0"
-                                        Content="Reset"
+                                        Content="Take screensshot"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                 </Grid>
