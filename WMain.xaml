@@ -341,23 +341,29 @@
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBB23UserMID"
                                             Margin="0,25,0,0"
+                                            MinWidth="{Binding ElementName=GBB23ClipListGenerator, Path=ActualWidth}"
+                                            MaxWidth="{Binding ElementName=GBB23ClipListGenerator, Path=ActualWidth}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <Label Margin="0,65,0,0"
-                                            Content="{DynamicResource LB23UserMID}"
+                                            Content="{DynamicResource LB23ClipListExcludedPhrases}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBB23ClipListExcludedPhrases"
                                             Margin="0,90,0,0"
                                             MinHeight="150"
+                                            MinWidth="{Binding ElementName=GBB23ClipListGenerator, Path=ActualWidth}"
+                                            MaxWidth="{Binding ElementName=GBB23ClipListGenerator, Path=ActualWidth}"
+                                            ToolTip="{DynamicResource LB23ClipListExcludedPhrasesToolTip}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             TextWrapping="NoWrap"
                                             AcceptsReturn="True"
                                             HorizontalScrollBarVisibility="Auto"
-                                            VerticalScrollBarVisibility="Visible" />
+                                            VerticalScrollBarVisibility="Visible"
+                                            TextChanged="TBB23ClipListExcludedPhrases_TextChanged" />
                                         <CheckBox x:Name="CBB23ClipListExportJsonc"
-                                            Margin="0,245,0,0"
+                                            Margin="0,247,0,0"
                                             Content="{DynamicResource CBB23ClipListExportJsonc}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />

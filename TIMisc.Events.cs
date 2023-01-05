@@ -171,11 +171,14 @@ public partial class WMain
 
                         WriteLog(MsgSet.MsgUpdateUnsupportedDomains);
 
-                        IsInitializing = true;
+                        Task.Delay(1500).ContinueWith(t => 
+                        {
+                            IsInitializing = true;
 
-                        InitUnsupportedDomains();
+                            InitUnsupportedDomains();
 
-                        Task.Delay(1500).ContinueWith(t => IsInitializing = false);
+                            IsInitializing = false;
+                        });
                     }
                 }
             }));

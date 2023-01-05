@@ -6,6 +6,8 @@ using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using System.Windows;
+using System.Windows.Controls;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
 
@@ -135,6 +137,46 @@ public partial class WMain
                     }
                 }
             }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void TBB23ClipListExcludedPhrases_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            if (!IsInitializing)
+            {
+                TextBox control = (TextBox)sender;
+
+                string[] tempValue = control.Text.Split(
+                    Environment.NewLine.ToCharArray(),
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                string value = string.Join(";", tempValue);
+
+                if (Properties.Settings.Default.B23ClipListExcludedPhrases != value)
+                {
+                    Properties.Settings.Default.B23ClipListExcludedPhrases = value;
+                    Properties.Settings.Default.Save();
+
+                    WriteLog(MsgSet.MsgUpdateLB23ClipListExcludedPhrases);
+
+                    Task.Delay(1500).ContinueWith(t => 
+                    {
+                        IsInitializing = true;
+
+                        InitB23ClipListExcludedPhrases();
+
+                        IsInitializing = false;
+                    });
+                }
+            }
         }
         catch (Exception ex)
         {

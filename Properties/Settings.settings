@@ -126,7 +126,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="B23ClipListExcludedPhrases" Type="System.String" Scope="User">
-      <Value Profile="(Default)">銳評</Value>
+      <Value Profile="(Default)">锐评;銳評</Value>
     </Setting>
     <Setting Name="B23ClipListMaxMinutes" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">4</Value>

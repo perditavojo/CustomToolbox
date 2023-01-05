@@ -172,4 +172,31 @@ public partial class WMain
             offsetSeconds
         };
     }
+
+    /// <summary>
+    /// 初始化排除字詞
+    /// </summary>
+    private void InitB23ClipListExcludedPhrases()
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                string[] tempValue = Properties.Settings.Default
+                    .B23ClipListExcludedPhrases.Split(
+                        new char[] { ';' },
+                        StringSplitOptions.RemoveEmptyEntries);
+
+                string value = string.Join(Environment.NewLine, tempValue);
+
+                TBB23ClipListExcludedPhrases.Text = value;
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
 }

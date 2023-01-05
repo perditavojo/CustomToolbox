@@ -91,6 +91,8 @@
     <sys:String x:Key="BtnLoadClipList">加载短片清单</sys:String>
     <sys:String x:Key="GBB23ClipListGenerator">Bilibili 短片清单产生器</sys:String>
     <sys:String x:Key="LB23UserMID">用户 mid</sys:String>
+    <sys:String x:Key="LB23ClipListExcludedPhrases">排除字詞</sys:String>
+    <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">一行一个排除字词</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">导出成 *.jsonc</sys:String>
     <sys:String x:Key="BtnGenerateB23ClipList">产生短片清单文件</sys:String>
     <sys:String x:Key="GBWebTools">网页工具</sys:String>
@@ -287,4 +289,6 @@
     <sys:String x:Key="MsgProcessResult">Bilibili 用户（{0}）在此 tid（{1}）下共有 {2} 部视频，已成功处理 {3} 部视频的数据。</sys:String>
     <sys:String x:Key="MsgDataParsingFailedAndCantCreateClipListFile">数据解析失败，无法产生 Bilibili 用户（{0}）的短片清单文件。</sys:String>
     <sys:String x:Key="MsgClipListFileGeneratedFor">已产生 Bilibili 用户（{0}）的短片清单文件：{1}</sys:String>
+    <sys:String x:Key="MsgUpdateLB23ClipListExcludedPhrases">已更新排除字词。</sys:String>
+    <sys:String x:Key="MsgSkipThisVideo">侦测到排除字词，已忽略此视频：{0}</sys:String>
 </ResourceDictionary>

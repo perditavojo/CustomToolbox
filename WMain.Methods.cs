@@ -117,6 +117,8 @@ public partial class WMain
                 CBNoVideo.IsChecked = Properties.Settings.Default.MpvNetLibNoVideo;
                 CBAutoLyric.IsChecked = Properties.Settings.Default.NetPlaylistAutoLyric;
 
+                InitB23ClipListExcludedPhrases();
+
                 TaskbarIconUtil.Init(this, TITaskbarIcon);
 
                 Version? version = Assembly.GetExecutingAssembly().GetName().Version;

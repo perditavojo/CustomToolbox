@@ -476,6 +476,8 @@ internal class OperationSet
                         // 檢查影片的標題是否包含排除字詞。
                         if (!CheckVideoTitle(title))
                         {
+                            _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgSkipThisVideo, title));
+
                             continue;
                         }
 
@@ -532,6 +534,15 @@ internal class OperationSet
                     mid));
 
                 return;
+            }
+
+            // 反向排序 List，讓最舊的資料排第一筆。
+            originDataSource.Reverse();
+
+            // 重新更新 no。
+            for (int i = 0; i < originDataSource.Count; i++)
+            {
+                originDataSource[i].No = i + 1;
             }
 
             // 短片清單檔案儲存的路徑。
@@ -664,7 +675,7 @@ internal class OperationSet
         string[] excludedPhrases = Properties.Settings.Default
             .B23ClipListExcludedPhrases
             .Split(
-                ",".ToCharArray(),
+                ";".ToCharArray(),
                 StringSplitOptions.RemoveEmptyEntries);
 
         foreach (string phrase in excludedPhrases)

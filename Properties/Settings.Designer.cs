@@ -493,7 +493,7 @@ namespace CustomToolbox.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("銳評")]
+        [global::System.Configuration.DefaultSettingValueAttribute("锐评;銳評")]
         public string B23ClipListExcludedPhrases {
             get {
                 return ((string)(this["B23ClipListExcludedPhrases"]));

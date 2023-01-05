@@ -1029,6 +1029,20 @@ internal class MsgSet
         .FindResource("MsgClipListFileGeneratedFor").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 訊息：已更新排除字詞
+    /// </summary>
+    public static readonly string MsgUpdateLB23ClipListExcludedPhrases = Application.Current
+        .FindResource("MsgUpdateLB23ClipListExcludedPhrases").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：偵測到排除字詞，已忽略此影片：？
+    /// </summary>
+    public static readonly string MsgSkipThisVideo = Application.Current
+        .FindResource("MsgSkipThisVideo").ToString() ??
+        string.Empty;
+
     #endregion
 
     /// <summary>
