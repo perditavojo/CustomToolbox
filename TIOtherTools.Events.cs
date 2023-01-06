@@ -77,6 +77,14 @@ public partial class WMain
                     await OperationSet.DoTakeYtChSubsCntScrnshot(
                         TBYtChannelID.Text,
                         saveFileDialog.FileName,
+                        Convert.ToInt32(NBCustomSubscriberAmount.Value),
+                        CBUseTranslate.IsChecked ?? false,
+                        CBUseClip.IsChecked ?? false,
+                        CBAddTimestamp.IsChecked ?? false,
+                        DPCustomDate.SelectedDate?.ToShortDateString() ?? string.Empty,
+                        CBBlurBackground.IsChecked ?? false,
+                        CBForceChromium.IsChecked ?? false,
+                        CBIsDevelopmentMode.IsChecked ?? false,
                         ct: GetGlobalCT());
                 }
 
