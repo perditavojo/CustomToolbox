@@ -101,8 +101,9 @@ public partial class WMain
                 DiscordRichPresenceUtil.Init(this);
                 LyricsUtil.Init(this);
                 DiscordRichPresenceUtil.Init(this);
+                PlaywrightUtil.Init(this);
                 OperationSet.Init(this);
-
+                
                 // 設定 FFmpeg 的路徑。
                 FFmpeg.SetExecutablesPath(VariableSet.BinsFolderPath);
 

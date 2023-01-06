@@ -13,7 +13,7 @@ internal class UrlSet
     /// <summary>
     /// AutoUpdater.xml 的網址
     /// </summary>
-    public static readonly string AutoUpdaterXmlUrl = "https://github.com/rubujo/CustomToolbox/blob/updater/AutoUpdater.xml";
+    public static readonly string AutoUpdaterXmlUrl = "https://raw.githubusercontent.com/rubujo/CustomToolbox/updater/AutoUpdater.xml";
 
     /// <summary>
     /// FFmpeg 的壓縮檔名稱
@@ -60,4 +60,19 @@ internal class UrlSet
     /// <para>來源：https://trac.ffmpeg.org/attachment/ticket/2431/sub_charenc_parameters.txt </para>
     /// </summary>
     public static readonly string SubCharencParametersTxtUrl = "https://trac.ffmpeg.org/raw-attachment/ticket/2431/sub_charenc_parameters.txt";
+
+    /// <summary>
+    /// YouTube 頻道網址
+    /// </summary>
+    public static readonly string YTChannelUrl = "https://www.youtube.com/channel/";
+
+    /// <summary>
+    /// YouTube 自定義頻道網址
+    /// </summary>
+    public static readonly string YTCustomChannelUrl = "https://www.youtube.com/c/";
+
+    /// <summary>
+    /// YouTube Subscriber Counter 網站網址
+    /// </summary>
+    public static readonly string YTSubscriberCounterUrl = "https://subscribercounter.com/fullscreen/";
 }

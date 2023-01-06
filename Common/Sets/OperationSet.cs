@@ -1,9 +1,12 @@
 ﻿using ConsoleTableExt;
 using CustomToolbox.BiliBili.Funcs;
 using CustomToolbox.Bilibili.Models;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
+using CustomToolbox.Common.Utils;
 using static CustomToolbox.Common.Sets.EnumSet;
 using Humanizer;
+using Microsoft.Playwright;
 using OpenCCNET;
 using System.IO;
 using System.Text.Json;
@@ -591,6 +594,247 @@ internal class OperationSet
 
             // 開啟 ClipLists 資料夾。
             CustomFunction.OpenFolder(VariableSet.ClipListsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// 拍攝 YouTube 頻道訂閱者數量截圖
+    /// </summary>
+    /// <param name="channelId">字串，YouTube 頻道的 ID</param>
+    /// <param name="inputSavedPath">字串，截圖的儲存路徑，預設值為空白</param>
+    /// <param name="customSubscriberAmount">數值，自定義頻道訂閱者數量，預設值為 -1</param>
+    /// <param name="useTranslate">布林值，套用中文翻譯，預設值為 false</param>
+    /// <param name="useClip">布林值，將截圖裁切成正方形，預設值為 false</param>
+    /// <param name="addTimestamp">布林值，加入日期戳記，預設值為 false</param>
+    /// <param name="customTimestamp">字串，自定義的日期戳記，預設值為空白</param>
+    /// <param name="blurBackground">布林值，模糊背景，預設值為 false</param>
+    /// <param name="forceChromium">布林值，強制使用 Chromium，預設值為 false</param>
+    /// <param name="isDevelopmentMode">布林值，開發模式，預設值為 false</param>
+    /// <param name="ct">CancellationToken</param>
+    /// <returns>Task</returns>
+    public static async Task DoTakeYtChSubsCntScrnshot(
+        string channelId,
+        string inputSavedPath = "",
+        decimal customSubscriberAmount = -1,
+        bool useTranslate = false,
+        bool useClip = false,
+        bool addTimestamp = false,
+        string customTimestamp = "",
+        bool blurBackground = false,
+        bool forceChromium = false,
+        bool isDevelopmentMode = false,
+        CancellationToken ct = default)
+    {
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+
+            // 偵測 Playwright 使用的網頁瀏覽器。
+            string browserChannel = await PlaywrightUtil.DetectBrowser(forceChromium);
+
+            _WMain?.WriteLog($"Playwright 使用的網頁瀏覽器頻道：{browserChannel}");
+
+            using IPlaywright playwright = await Playwright.CreateAsync();
+
+            await using IBrowser browser = await playwright.Chromium.LaunchAsync(new()
+            {
+                Channel = browserChannel,
+                Headless = !isDevelopmentMode
+            });
+
+            IPage page = await browser.NewPageAsync();
+
+            // 瀏覽 YouTube Subscriber Counter 網站。
+            await page.GotoAsync($"{UrlSet.YTSubscriberCounterUrl}{channelId}");
+
+            // 隱藏 Header 區塊。
+            await page.EvalOnSelectorAsync(
+                SelectorSet.HeaderBlock,
+                ExpressionSet.HideElement);
+
+            // 判斷是否要裁切截圖。
+            if (useClip)
+            {
+                // 取頁面上的頻道名稱文字。
+                string channelName = await page.InnerTextAsync(SelectorSet.ChannelNameBlock);
+
+                channelName = channelName.TrimEnd();
+
+                // 判斷是否需要截斷頻道名稱。
+                if (channelName.Length > VariableSet.SplitLength)
+                {
+                    int[] intArray = PlaywrightUtil.GetIntArray(channelName);
+
+                    string[]? nameArray = channelName.Split(intArray);
+
+                    if (nameArray != null)
+                    {
+                        if (nameArray.Length < VariableSet.ChannelNameRowLimit)
+                        {
+                            string newChannelName = string.Empty;
+
+                            foreach (string str in nameArray)
+                            {
+                                newChannelName += $"<div>{str}</div>";
+                            }
+
+                            if (!string.IsNullOrEmpty(newChannelName))
+                            {
+                                // 替換文字。
+                                await page.EvalOnSelectorAsync(
+                                    SelectorSet.ChannelNameBlock,
+                                    ExpressionSet.ChangeChannelNameBlock.Replace("{Value}", newChannelName));
+                            }
+                        }
+                        else
+                        {
+                            // 當超出限制列數時，取消裁切截圖。
+                            useClip = false;
+
+                            _WMain?.WriteLog($"因頻道名稱長度超過 {VariableSet.ChannelNameRowLimit} 列，故取消裁切截圖。");
+                        }
+                    }
+                }
+            }
+
+            // 判斷是否要翻譯文字。
+            if (useTranslate)
+            {
+                // 替換文字。
+                await page.EvalOnSelectorAsync(
+                    SelectorSet.PrefixText,
+                    ExpressionSet.ChangePrefixText);
+
+                // 替換文字。
+                await page.EvalOnSelectorAsync(
+                    SelectorSet.SuffixText,
+                    ExpressionSet.ChangeSuffixText);
+            }
+
+            // 判斷是否要加入日期戳記
+            if (addTimestamp)
+            {
+                // 當 customTimestamp 為空值時，使用今日。
+                if (string.IsNullOrEmpty(customTimestamp))
+                {
+                    customTimestamp = DateTime.Now.ToShortDateString();
+                }
+
+                // 統一使用 "."。
+                customTimestamp = customTimestamp
+                    .Replace("/", ".")
+                    .Replace("-", ".")
+                    .Replace(" ", ".");
+
+                // 替換文字。
+                await page.EvalOnSelectorAsync(
+                    useTranslate ? SelectorSet.TranslateSuffixText : SelectorSet.SuffixText,
+                    ExpressionSet.ChangeSuffixText1Dot5.Replace("{Value}", customTimestamp));
+            }
+
+            // 點選對話視窗的按鈕。
+            await page.ClickAsync(SelectorSet.AlertDialogButton);
+
+            // 判斷是否要模糊背景。
+            if (blurBackground)
+            {
+                // 點選設定按鈕。
+                await page.EvalOnSelectorAsync(SelectorSet.SettingButton, ExpressionSet.ClickElement);
+
+                // 點選模糊背景。
+                await page.EvalOnSelectorAsync(SelectorSet.BlurBackgroundCheckbox, ExpressionSet.ClickElement);
+
+                // 點選關閉按鈕。
+                await page.EvalOnSelectorAsync(SelectorSet.CloseButton, ExpressionSet.ClickElement);
+            }
+
+            // 隱藏 Chart 區塊。
+            await page.EvalOnSelectorAsync(
+                SelectorSet.ChartBlock,
+                ExpressionSet.HideElement);
+
+            // 判斷是否有設定自定義訂閱數。
+            if (customSubscriberAmount > 0)
+            {
+                string acutalNumber = string.Format("{0:N0}", customSubscriberAmount);
+
+                string tempHtml = string.Empty;
+
+                foreach (char c in acutalNumber.ToCharArray())
+                {
+                    tempHtml += $"{PlaywrightUtil.SetHTML(c)}";
+                }
+
+                string expression = ExpressionSet.ChangeSubscribersBlock
+                    .Replace("{Value}", tempHtml);
+
+                // 設定自定義訂閱數。
+                await page.EvalOnSelectorAsync(SelectorSet.SubscribersBlock, expression);
+            }
+            else
+            {
+                // 取頁面上的訂閱者數字。
+                string subscriberAmount = await page.InnerTextAsync(SelectorSet.SubscribersBlock);
+
+                // 將字串後處理。
+                // 將字串後處理。
+                subscriberAmount = subscriberAmount
+                    .Replace("\r", string.Empty)
+                    .Replace("\n", string.Empty)
+                    .Replace("\t", string.Empty)
+                    .Replace(",", string.Empty);
+
+                // 將處理過的字串轉換成 decimal。
+                customSubscriberAmount = decimal.TryParse(subscriberAmount, out decimal parsedResult) ?
+                    parsedResult : -1;
+            }
+
+            // 延後執行，讓對話視窗有時間關閉。
+            Thread.Sleep(VariableSet.SleepMs);
+
+            // 截圖的儲存路徑。
+            string savedPath = string.IsNullOrEmpty(inputSavedPath) ?
+                Path.Combine(
+                    $@"C:\Users\{Environment.UserName}\Desktop",
+                    $"Screenshot_{DateTime.Now:yyyyMMddHHmmss}.png") :
+                inputSavedPath;
+
+            // 當變數值相等時才判斷目的地的資料夾是否存在。
+            if (savedPath == inputSavedPath)
+            {
+                string? folderPath = Path.GetDirectoryName(savedPath) ?? string.Empty;
+
+                if (!string.IsNullOrEmpty(folderPath) &
+                    !Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+            }
+
+            // 取得副檔名。
+            string extName = Path.GetExtension(savedPath);
+
+            // 拍攝頁面的截圖。
+            await page.ScreenshotAsync(new()
+            {
+                Path = savedPath,
+                Timeout = VariableSet.ScreenshotTimeout,
+                Clip = useClip ? PlaywrightUtil.GetClip(customSubscriberAmount) : null,
+                Type = extName == ".png" ? ScreenshotType.Png : ScreenshotType.Jpeg
+            });
+
+            _WMain?.WriteLog("已完成截圖的拍攝。");
+            _WMain?.WriteLog($"截圖檔案位於：{savedPath}");
+
+            // 僅供測試使用。
+            if (isDevelopmentMode)
+            {
+                Thread.Sleep(VariableSet.DevSleepMs);
+            }
         }
         catch (Exception ex)
         {

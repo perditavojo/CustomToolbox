@@ -286,4 +286,29 @@ internal class VariableSet
     /// </summary>
     [SuppressMessage("GeneratedRegex", "SYSLIB1045:轉換為 'GeneratedRegexAttribute'。", Justification = "<暫止>")]
     public static readonly Regex RegexAscii = new(@"(\r\n|\r|\n)+");
+
+    /// <summary>
+    /// 截圖的 Timeout
+    /// </summary>
+    public static readonly int ScreenshotTimeout = Properties.Settings.Default.PlaywrightScreenshotTimeout;
+
+    /// <summary>
+    /// 暫停執行毫秒
+    /// </summary>
+    public static readonly int SleepMs = Properties.Settings.Default.PlaywrightSleepMs;
+
+    /// <summary>
+    /// 開發模式的暫停執行毫秒
+    /// </summary>
+    public static readonly int DevSleepMs = Properties.Settings.Default.PlaywrightDevSleepMs;
+
+    /// <summary>
+    /// 頻道名稱字串分割長度
+    /// </summary>
+    public static readonly int SplitLength = Properties.Settings.Default.PlaywrightSplitLength;
+
+    /// <summary>
+    /// 分割後的頻道名稱列數限制
+    /// </summary>
+    public static readonly int ChannelNameRowLimit = Properties.Settings.Default.PlaywrightChannelNameRowLimit;
 }

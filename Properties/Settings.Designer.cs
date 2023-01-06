@@ -511,5 +511,50 @@ namespace CustomToolbox.Properties {
                 return ((int)(this["B23ClipListMaxMinutes"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30000")]
+        public int PlaywrightScreenshotTimeout {
+            get {
+                return ((int)(this["PlaywrightScreenshotTimeout"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int PlaywrightSleepMs {
+            get {
+                return ((int)(this["PlaywrightSleepMs"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("120000")]
+        public int PlaywrightDevSleepMs {
+            get {
+                return ((int)(this["PlaywrightDevSleepMs"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("22")]
+        public int PlaywrightSplitLength {
+            get {
+                return ((int)(this["PlaywrightSplitLength"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int PlaywrightChannelNameRowLimit {
+            get {
+                return ((int)(this["PlaywrightChannelNameRowLimit"]));
+            }
+        }
     }
 }

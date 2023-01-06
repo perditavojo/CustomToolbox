@@ -863,6 +863,7 @@ public partial class WMain : Window
                 MIDLClip,
                 BtnGenerateB23ClipList,
                 BtnBurnInSubtitle,
+                BtnYtSctTakeScreensshot
             };
 
             Control[] ctrlSet2 =
@@ -908,6 +909,7 @@ public partial class WMain : Window
                 MIDLClip,
                 BtnGenerateB23ClipList,
                 BtnBurnInSubtitle,
+                BtnYtSctTakeScreensshot
             };
 
             Control[] ctrlSet2 =

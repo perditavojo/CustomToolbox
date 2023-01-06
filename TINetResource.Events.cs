@@ -198,6 +198,7 @@ public partial class WMain
                     MIDLClip,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
+                    BtnYtSctTakeScreensshot
                 };
 
                 Control[] ctrlSet2 =
