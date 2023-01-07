@@ -614,7 +614,6 @@ internal class OperationSet
     /// <param name="blurBackground">布林值，模糊背景，預設值為 false</param>
     /// <param name="forceChromium">布林值，強制使用 Chromium，預設值為 false</param>
     /// <param name="isDevelopmentMode">布林值，開發模式，預設值為 false</param>
-    /// <param name="ct">CancellationToken</param>
     /// <returns>Task</returns>
     public static async Task DoTakeYtChSubsCntScrnshot(
         string channelId,
@@ -626,13 +625,10 @@ internal class OperationSet
         string customTimestamp = "",
         bool blurBackground = false,
         bool forceChromium = false,
-        bool isDevelopmentMode = false,
-        CancellationToken ct = default)
+        bool isDevelopmentMode = false)
     {
         try
         {
-            ct.ThrowIfCancellationRequested();
-
             // 偵測 Playwright 使用的網頁瀏覽器。
             string browserChannel = await PlaywrightUtil.DetectBrowser(forceChromium);
 

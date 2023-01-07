@@ -58,8 +58,7 @@ public partial class WMain
                     MIFetchClip,
                     MIDLClip,
                     BtnGenerateB23ClipList,
-                    BtnBurnInSubtitle,
-                    BtnYtSctTakeScreensshot
+                    BtnBurnInSubtitle
                 };
 
                 Control[] ctrlSet2 =

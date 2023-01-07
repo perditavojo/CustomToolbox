@@ -1219,7 +1219,6 @@ public partial class WMain
                 MIFetchClip,
                 MIDLClip,
                 BtnBurnInSubtitle,
-                BtnYtSctTakeScreensshot,
                 MICancel
             };
 

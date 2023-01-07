@@ -41,20 +41,10 @@ public partial class WMain
             {
                 Control[] ctrlSet1 =
                 {
-                    MIFetchClip,
-                    MIDLClip,
-                    BtnGenerateB23ClipList,
-                    BtnBurnInSubtitle,
                     BtnYtSctTakeScreensshot
                 };
 
-                Control[] ctrlSet2 =
-                {
-                    MICancel
-                };
-
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
-                CustomFunction.BatchSetEnabled(ctrlSet2, true);
 
                 if (string.IsNullOrEmpty(TBYtChannelID.Text))
                 {
@@ -84,12 +74,10 @@ public partial class WMain
                         DPCustomDate.SelectedDate?.ToShortDateString() ?? string.Empty,
                         CBBlurBackground.IsChecked ?? false,
                         CBForceChromium.IsChecked ?? false,
-                        CBIsDevelopmentMode.IsChecked ?? false,
-                        ct: GetGlobalCT());
+                        CBIsDevelopmentMode.IsChecked ?? false);
                 }
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, true);
-                CustomFunction.BatchSetEnabled(ctrlSet2, false);
             }));
         }
         catch (Exception ex)

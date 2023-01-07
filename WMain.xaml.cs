@@ -862,8 +862,7 @@ public partial class WMain : Window
                 MIFetchClip,
                 MIDLClip,
                 BtnGenerateB23ClipList,
-                BtnBurnInSubtitle,
-                BtnYtSctTakeScreensshot
+                BtnBurnInSubtitle
             };
 
             Control[] ctrlSet2 =
@@ -908,8 +907,7 @@ public partial class WMain : Window
                 MIFetchClip,
                 MIDLClip,
                 BtnGenerateB23ClipList,
-                BtnBurnInSubtitle,
-                BtnYtSctTakeScreensshot
+                BtnBurnInSubtitle
             };
 
             Control[] ctrlSet2 =
