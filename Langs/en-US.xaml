@@ -102,6 +102,17 @@
     <sys:String x:Key="BtnYTSecConverterToolTip">Only available in Traditional Chinese</sys:String>
     <sys:String x:Key="BtnBurnInSubtitle">Burn in subtitle file</sys:String>
     <sys:String x:Key="BtnCancel">Cancel</sys:String>
+    <sys:String x:Key="GBYtSubscriberCounterTool">YouTube channel subscriber counter tool</sys:String>
+    <sys:String x:Key="LYouTubeChannelID">YouTube Channel ID</sys:String>
+    <sys:String x:Key="LCustomYtChSubscriberAmount">Custom subscriber amount</sys:String>
+    <sys:String x:Key="CBAddTimestamp">Add timestamp</sys:String>
+    <sys:String x:Key="CBUseClip">Use clip</sys:String>
+    <sys:String x:Key="CBBlurBackground">Blur background</sys:String>
+    <sys:String x:Key="CBUseTranslate">Use translate</sys:String>
+    <sys:String x:Key="CBForceChromium">Force Chromium</sys:String>
+    <sys:String x:Key="CBIsDevelopmentMode">Development mode</sys:String>
+    <sys:String x:Key="BtnResetYtSct">Reset</sys:String>
+    <sys:String x:Key="BtnYtSctTakeScreensshot">Take screensshot</sys:String>
     <sys:String x:Key="GBAppOptions">Application Options</sys:String>
     <sys:String x:Key="LLanguages">Language</sys:String>
     <sys:String x:Key="LThemes">Theme</sys:String>
