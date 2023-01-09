@@ -103,7 +103,7 @@ public partial class WMain
                 DiscordRichPresenceUtil.Init(this);
                 PlaywrightUtil.Init(this);
                 OperationSet.Init(this);
-                
+
                 // 設定 FFmpeg 的路徑。
                 FFmpeg.SetExecutablesPath(VariableSet.BinsFolderPath);
 
@@ -127,6 +127,21 @@ public partial class WMain
                 if (version != null)
                 {
                     LVersion.Content = version.ToString();
+                }
+
+                ResourceDictionary? curResDict = AppLangUtil.GetCurrentLangResDict();
+
+                string langCode = AppLangUtil.GetLangCode(curResDict);
+
+                string[] targetLangArray =
+                {
+                    "en-US", "en-GB"
+                };
+
+                if (targetLangArray.Contains(langCode))
+                {
+                    // 針對特定與語系不啟用此按鈕。
+                    CBUseTranslate.IsEnabled = false;
                 }
 
                 CBApplyFontSetting.IsChecked = Properties.Settings.Default.FFmpegApplyFontSetting;

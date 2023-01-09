@@ -36,9 +36,9 @@ internal class SelectorSet
     public static readonly string SuffixText = "text=YOUTUBE SUBSCRIBERS";
 
     /// <summary>
-    /// 套用中文翻譯的後綴文字
+    /// 套用 i18n 翻譯的後綴文字
     /// </summary>
-    public static readonly string TranslateSuffixText = "text=位 YouTube 訂閱者";
+    public static readonly string TranslateSuffixText = $"text={MsgSet.YtscToolSuffixText}";
 
     /// <summary>
     /// 訂閱者數字區塊

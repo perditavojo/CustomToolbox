@@ -13,12 +13,12 @@ internal class ExpressionSet
     /// <summary>
     /// 變更前綴文字
     /// </summary>
-    public static readonly string ChangePrefixText = "(element) => { element.innerHTML = \"目前已有\"; }";
+    public static readonly string ChangePrefixText = $"(element) => {{ element.innerHTML = \"{MsgSet.YtscToolPrefixText}\"; }}";
 
     /// <summary>
     /// 變更後綴文字
     /// </summary>
-    public static readonly string ChangeSuffixText = "(element) => { element.innerHTML = \"位 YouTube 訂閱者\"; }";
+    public static readonly string ChangeSuffixText = $"(element) => {{ element.innerHTML = \"{MsgSet.YtscToolSuffixText}\"; }}";
 
     /// <summary>
     /// 變更後綴文字 1.5

@@ -42,6 +42,8 @@
     <sys:String x:Key="VideoDataViewCount">觀看次數：</sys:String>
     <sys:String x:Key="VideoDataDescription">描述：</sys:String>
     <sys:String x:Key="VideoDataFormats">格式：</sys:String>
+    <sys:String x:Key="YtscToolPrefixText">目前已有</sys:String>
+    <sys:String x:Key="YtscToolSuffixText">位 YouTube 訂閱者</sys:String>
     <!-- 字串模板 -->
     <sys:String x:Key="TemplateMaintainer">[維護者：{0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1}（{2}）]：（{3}）{4}</sys:String>
@@ -102,17 +104,17 @@
     <sys:String x:Key="BtnYTSecConverterToolTip">僅提供正體中文</sys:String>
     <sys:String x:Key="BtnBurnInSubtitle">燒錄字幕檔</sys:String>
     <sys:String x:Key="BtnCancel">取消</sys:String>
-    <sys:String x:Key="GBYtSubscriberCounterTool">YouTube 頻道訂閲者數量計數工具</sys:String>
+    <sys:String x:Key="GBYtscTool">YouTube 訂閱者計數器工具</sys:String>
     <sys:String x:Key="LYouTubeChannelID">YouTube 頻道 ID</sys:String>
     <sys:String x:Key="LCustomYtChSubscriberAmount">自定義頻道訂閲者數量</sys:String>
     <sys:String x:Key="CBAddTimestamp">加入日期戳記</sys:String>
     <sys:String x:Key="CBUseClip">裁切截圖（正方形）</sys:String>
     <sys:String x:Key="CBBlurBackground">模糊背景</sys:String>
-    <sys:String x:Key="CBUseTranslate">套用中文翻譯</sys:String>
+    <sys:String x:Key="CBUseTranslate">套用翻譯</sys:String>
     <sys:String x:Key="CBForceChromium">強制使用 Chromium</sys:String>
     <sys:String x:Key="CBIsDevelopmentMode">開發模式</sys:String>
-    <sys:String x:Key="BtnResetYtSct">重設</sys:String>
-    <sys:String x:Key="BtnYtSctTakeScreensshot">儲存截圖</sys:String>
+    <sys:String x:Key="BtnYtscToolReset">重設</sys:String>
+    <sys:String x:Key="BtnYtscToolTakeScreenshot">儲存截圖</sys:String>
     <sys:String x:Key="GBAppOptions">應用程式選項</sys:String>
     <sys:String x:Key="LLanguages">語系</sys:String>
     <sys:String x:Key="LThemes">主題</sys:String>
@@ -208,6 +210,8 @@
     <sys:String x:Key="SelectSubtitleFileFilter">SupRip Text|*.srt|WebVTT|*.vtt|SubStation Alpha|*.ssa|Advanced SubStation Alpha|*.ass</sys:String>
     <sys:String x:Key="ContentDialogBtnOk">確認</sys:String>
     <sys:String x:Key="ContentDialogBtnCancel">取消</sys:String>
+    <sys:String x:Key="SaveImageFile">儲存檔案</sys:String>
+    <sys:String x:Key="SaveImageFileFilter">PNG 影像檔 (*.png)|*.png|JPEG 影像檔 (*.jpg)|*.jpg</sys:String>
     <!-- 訊息 -->
     <sys:String x:Key="MsgUnderConstruction">功能建置中……</sys:String>
     <sys:String x:Key="MsgStartDownloading">開始下載 {0}。</sys:String>
@@ -302,4 +306,12 @@
     <sys:String x:Key="MsgClipListFileGeneratedFor">已產生 Bilibili 使用者（{0}）的短片清單檔案：{1}</sys:String>
     <sys:String x:Key="MsgUpdateLB23ClipListExcludedPhrases">已更新排除字詞。</sys:String>
     <sys:String x:Key="MsgSkipThisVideo">偵測到排除字詞，已忽略此影片：{0}</sys:String>
+    <sys:String x:Key="MsgYtChannelIDCCantNoBeEmpty">請輸入 YouTube 頻道 ID。</sys:String>
+    <sys:String x:Key="MsgYtscToolUsedBrowserChannel">Playwright 使用的網頁瀏覽器頻道：{0}</sys:String>
+    <sys:String x:Key="MsgYtscToolChNameTooLongCancelCut">因頻道名稱長度超過 {0} 列，故取消裁切截圖。</sys:String>
+    <sys:String x:Key="MsgYtscToolTakeScreenshotFinished">已完成截圖的拍攝。</sys:String>
+    <sys:String x:Key="MsgYtscToolFileSaveAt">截圖檔案位於：{0}</sys:String>
+    <sys:String x:Key="MsgYtscToolSubscribersTooLongCancelClip">訂閱者數字已超過可以顯示的範圍，故不將截圖裁切成正方形。</sys:String>
+    <sys:String x:Key="MsgPlaywrightException">Playwright 已結束，離開碼：{0}</sys:String>
+    <sys:String x:Key="MsgPlaywrightBrowserPath">Playwright 瀏覽器的路徑：</sys:String>
 </ResourceDictionary>

@@ -632,7 +632,9 @@ internal class OperationSet
             // 偵測 Playwright 使用的網頁瀏覽器。
             string browserChannel = await PlaywrightUtil.DetectBrowser(forceChromium);
 
-            _WMain?.WriteLog($"Playwright 使用的網頁瀏覽器頻道：{browserChannel}");
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgYtscToolUsedBrowserChannel,
+                browserChannel));
 
             using IPlaywright playwright = await Playwright.CreateAsync();
 
@@ -691,7 +693,9 @@ internal class OperationSet
                             // 當超出限制列數時，取消裁切截圖。
                             useClip = false;
 
-                            _WMain?.WriteLog($"因頻道名稱長度超過 {VariableSet.ChannelNameRowLimit} 列，故取消裁切截圖。");
+                            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                                MsgSet.MsgYtscToolChNameTooLongCancelCut,
+                                VariableSet.ChannelNameRowLimit.ToString()));
                         }
                     }
                 }
@@ -823,8 +827,10 @@ internal class OperationSet
                 Type = extName == ".png" ? ScreenshotType.Png : ScreenshotType.Jpeg
             });
 
-            _WMain?.WriteLog("已完成截圖的拍攝。");
-            _WMain?.WriteLog($"截圖檔案位於：{savedPath}");
+            _WMain?.WriteLog(MsgSet.MsgYtscToolTakeScreenshotFinished);
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgYtscToolFileSaveAt,
+                savedPath));
 
             // 僅供測試使用。
             if (isDevelopmentMode)
@@ -834,7 +840,8 @@ internal class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            // 只有可以 Cancel 的才只輸出 ex.Message.ToString()。
+            _WMain?.WriteLog(ex.ToString());
         }
     }
 

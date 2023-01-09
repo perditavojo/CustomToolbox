@@ -237,6 +237,20 @@ internal class MsgSet
         .FindResource("VideoDataFormats").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 字詞：目前已有
+    /// </summary>
+    public static readonly string YtscToolPrefixText = Application.Current
+        .FindResource("YtscToolPrefixText").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字詞：位 YouTube 訂閱者
+    /// </summary>
+    public static readonly string YtscToolSuffixText = Application.Current
+        .FindResource("YtscToolSuffixText").ToString() ??
+        string.Empty;
+
     #endregion
 
     #region 字串模板
@@ -394,6 +408,20 @@ internal class MsgSet
     /// </summary>
     public static readonly string ContentDialogBtnCancel = Application.Current
         .FindResource("ContentDialogBtnCancel").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 對話視窗：儲存檔案
+    /// </summary>
+    public static readonly string SaveImageFile = Application.Current
+        .FindResource("SaveImageFile").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 對話視窗：PNG 影像檔 (*.png)|*.png|JPEG 影像檔 (*.jpg)|*.jpg
+    /// </summary>
+    public static readonly string SaveImageFileFilter = Application.Current
+        .FindResource("SaveImageFileFilter").ToString() ??
         string.Empty;
 
     #endregion
@@ -1015,7 +1043,7 @@ internal class MsgSet
         .FindResource("MsgProcessResult").ToString() ??
         string.Empty;
 
-    /// <summary>
+    /// <summary>MsgYtscToolTMsg02
     /// 訊息：資料解析失敗，無法產生 Bilibili 使用者（？）的短片清單檔案
     /// </summary>
     public static readonly string MsgDataParsingFailedAndCantCreateClipListFile = Application.Current
@@ -1041,6 +1069,62 @@ internal class MsgSet
     /// </summary>
     public static readonly string MsgSkipThisVideo = Application.Current
         .FindResource("MsgSkipThisVideo").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：請輸入 YouTube 頻道 ID
+    /// </summary>
+    public static readonly string MsgYtChannelIDCCantNoBeEmpty = Application.Current
+        .FindResource("MsgYtChannelIDCCantNoBeEmpty").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：Playwright 使用的網頁瀏覽器頻道：？
+    /// </summary>
+    public static readonly string MsgYtscToolUsedBrowserChannel = Application.Current
+        .FindResource("MsgYtscToolUsedBrowserChannel").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：因頻道名稱長度超過 ？ 列，故取消裁切截圖
+    /// </summary>
+    public static readonly string MsgYtscToolChNameTooLongCancelCut = Application.Current
+        .FindResource("MsgYtscToolChNameTooLongCancelCut").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已完成截圖的拍攝。
+    /// </summary>
+    public static readonly string MsgYtscToolTakeScreenshotFinished = Application.Current
+        .FindResource("MsgYtscToolTakeScreenshotFinished").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：截圖檔案位於：？
+    /// </summary>
+    public static readonly string MsgYtscToolFileSaveAt = Application.Current
+        .FindResource("MsgYtscToolFileSaveAt").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：訂閱者數字已超過可以顯示的範圍，故不將截圖裁切成正方形
+    /// </summary>
+    public static readonly string MsgYtscToolSubscribersTooLongCancelClip = Application.Current
+        .FindResource("MsgYtscToolSubscribersTooLongCancelClip").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：Playwright 已結束，離開碼：？
+    /// </summary>
+    public static readonly string MsgPlaywrightException = Application.Current
+        .FindResource("MsgPlaywrightException").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：Playwright 瀏覽器的路徑：
+    /// </summary>
+    public static readonly string MsgPlaywrightBrowserPath = Application.Current
+        .FindResource("MsgPlaywrightBrowserPath").ToString() ??
         string.Empty;
 
     #endregion

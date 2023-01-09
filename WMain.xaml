@@ -426,8 +426,8 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto"
                         VerticalScrollBarVisibility="Auto">
                         <Grid>
-                            <GroupBox x:Name="GBYtSubscriberCounterTool"
-                                      Header="{DynamicResource GBYtSubscriberCounterTool}"
+                            <GroupBox x:Name="GBYtscTool"
+                                      Header="{DynamicResource GBYtscTool}"
                                       Margin="5,5,5,5"
                                       HorizontalAlignment="Left"
                                       VerticalAlignment="Top">
@@ -438,9 +438,10 @@
                                         VerticalAlignment="Top" />
                                     <TextBox x:Name="TBYtChannelID" 
                                         Margin="0,25,0,0"
-                                        MaxWidth="{Binding ElementName=GBYtSubscriberCounterTool, Path=ActualWidth}"
+                                        MaxWidth="{Binding ElementName=GBYtscTool, Path=ActualWidth}"
                                         HorizontalAlignment="Left"
-                                        VerticalAlignment="Top" />
+                                        VerticalAlignment="Top"
+                                        TextChanged="TBYtChannelID_TextChanged" />
                                     <Label Margin="0,65,0,0"
                                         Content="{DynamicResource LCustomYtChSubscriberAmount}"
                                         HorizontalAlignment="Left"
@@ -450,7 +451,7 @@
                                         Value="-1"
                                         Minimum="-1"
                                         SpinButtonPlacementMode="Inline"                                       
-                                        MaxWidth="{Binding ElementName=GBYtSubscriberCounterTool, Path=ActualWidth}"
+                                        MaxWidth="{Binding ElementName=GBYtscTool, Path=ActualWidth}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                     <DatePicker x:Name="DPCustomDate"
@@ -487,18 +488,18 @@
                                         Content="{DynamicResource CBIsDevelopmentMode}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
-                                    <Button x:Name="BtnResetYtSct"
+                                    <Button x:Name="BtnYtscToolReset"
                                         Margin="0,410,0,0"
-                                        Content="{DynamicResource BtnResetYtSct}"
+                                        Content="{DynamicResource BtnYtscToolReset}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
-                                        Click="BtnResetYtSct_Click" />
-                                    <Button x:Name="BtnYtSctTakeScreensshot"
+                                        Click="BtnYtscToolReset_Click" />
+                                    <Button x:Name="BtnYtscToolTakeScreenshot"
                                         Margin="0,450,0,0"
-                                        Content="{DynamicResource BtnYtSctTakeScreensshot}"
+                                        Content="{DynamicResource BtnYtscToolTakeScreenshot}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
-                                        Click="BtnYtSctTakeScreensshot_Click" />
+                                        Click="BtnYtscToolTakeScreenshot_Click" />
                                 </Grid>
                             </GroupBox>
                         </Grid>

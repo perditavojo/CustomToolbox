@@ -1,14 +1,64 @@
 ﻿using Control = System.Windows.Controls.Control;
 using CustomToolbox.Common;
 using CustomToolbox.Common.Sets;
-using System.Windows;
+using CustomToolbox.Common.Utils;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using System.Windows;
+using System.Windows.Controls;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
 
 public partial class WMain
 {
-    private void BtnResetYtSct_Click(object sender, RoutedEventArgs e)
+    private void TBYtChannelID_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                TextBox control = (TextBox)sender;
+
+                string value = control.Text;
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
+                if (value.StartsWith("@"))
+                {
+                    control.Text = PlaywrightUtil.GetYTChannelID($"{UrlSet.YTUrl}{value}");
+
+                    return;
+                }
+                else if (value.Contains('@'))
+                {
+                    control.Text = PlaywrightUtil.GetYTChannelID(value);
+
+                    return;
+                }
+                else if (value.Contains(UrlSet.YTChannelUrl))
+                {
+                    control.Text = value.Contains(UrlSet.YTCustomChannelUrl) ?
+                        PlaywrightUtil.GetYTChannelID(value) :
+                        value.Replace(UrlSet.YTChannelUrl, string.Empty);
+                }
+                else
+                {
+                    return;
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void BtnYtscToolReset_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -16,7 +66,7 @@ public partial class WMain
             {
                 TBYtChannelID.Text = string.Empty;
                 NBCustomSubscriberAmount.Value = -1;
-                DPCustomDate.SelectedDate = DateTime.Now;
+                DPCustomDate.SelectedDate = null;
                 CBAddTimestamp.IsChecked = false;
                 CBUseClip.IsChecked = false;
                 CBBlurBackground.IsChecked = false;
@@ -33,7 +83,7 @@ public partial class WMain
         }
     }
 
-    private void BtnYtSctTakeScreensshot_Click(object sender, RoutedEventArgs e)
+    private void BtnYtscToolTakeScreenshot_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -41,13 +91,35 @@ public partial class WMain
             {
                 Control[] ctrlSet1 =
                 {
-                    BtnYtSctTakeScreensshot
+                    TBYtChannelID,
+                    NBCustomSubscriberAmount,
+                    DPCustomDate,
+                    CBAddTimestamp,
+                    CBUseClip,
+                    CBBlurBackground,
+                    CBForceChromium,
+                    CBIsDevelopmentMode,
+                    BtnYtscToolReset,
+                    BtnYtscToolTakeScreenshot
                 };
+
+                if (CBUseTranslate.IsEnabled)
+                {
+                    List<Control> tempList = ctrlSet1.ToList();
+
+                    tempList.Add(CBUseTranslate);
+
+                    ctrlSet1 = tempList.ToArray();
+                }
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
 
                 if (string.IsNullOrEmpty(TBYtChannelID.Text))
                 {
+                    ShowMsgBox(MsgSet.MsgYtChannelIDCCantNoBeEmpty);
+
+                    CustomFunction.BatchSetEnabled(ctrlSet1, true);
+
                     return;
                 }
 
@@ -55,9 +127,10 @@ public partial class WMain
                 {
                     AddExtension = true,
                     DefaultExt = ".png",
-                    FileName = $"Screenshot_{DateTime.Now:yyyyMMddHHmmss}",
-                    Filter = "PNG 影像檔 (*.png)|*.png|JPEG 影像檔 (*.jpg)|*.jpg",
-                    FilterIndex = 1
+                    FileName = $"{TBYtChannelID.Text}_Screenshot_{DateTime.Now:yyyyMMddHHmmss}",
+                    Filter = MsgSet.SaveImageFileFilter,
+                    FilterIndex = 1,
+                    Title = MsgSet.SaveImageFile
                 };
 
                 bool? dialogResult = saveFileDialog.ShowDialog();

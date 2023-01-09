@@ -2,8 +2,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <!-- Lang Info -->
-    <sys:String x:Key="LangName">English (United States)</sys:String>
-    <sys:String x:Key="LangCode">en-US</sys:String>
+    <sys:String x:Key="LangName">English (United Kingdom)</sys:String>
+    <sys:String x:Key="LangCode">en-GB</sys:String>
     <sys:String x:Key="DefaultEncoding">UTF-8</sys:String>
     <sys:String x:Key="DefaultFont">Segoe UI</sys:String>
     <!-- Monospaced font -->

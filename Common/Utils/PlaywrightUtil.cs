@@ -99,7 +99,7 @@ internal class PlaywrightUtil
         {
             clip = null;
 
-            _WMain?.WriteLog("訂閱者數字已超過可以顯示的範圍，故不將截圖裁切成正方形。");
+            _WMain?.WriteLog(MsgSet.MsgYtscToolSubscribersTooLongCancelClip);
         }
 
         return clip;
@@ -191,10 +191,12 @@ internal class PlaywrightUtil
 
                 if (exitCode != 0)
                 {
-                    throw new Exception($"Playwright 已結束，離開碼：{exitCode}");
+                    throw new Exception(MsgSet.GetFmtStr(
+                        MsgSet.MsgPlaywrightException,
+                        exitCode.ToString()));
                 }
 
-                _WMain?.WriteLog("Playwright 瀏覽器的路徑：");
+                _WMain?.WriteLog(MsgSet.MsgPlaywrightBrowserPath);
                 _WMain?.WriteLog($@"C:\Users\{Environment.UserName}\AppData\Local\ms-playwright");
             }
             catch (Exception ex)

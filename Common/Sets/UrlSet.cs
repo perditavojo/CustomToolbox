@@ -62,6 +62,11 @@ internal class UrlSet
     public static readonly string SubCharencParametersTxtUrl = "https://trac.ffmpeg.org/raw-attachment/ticket/2431/sub_charenc_parameters.txt";
 
     /// <summary>
+    /// YouTube 網址
+    /// </summary>
+    public static readonly string YTUrl = "https://www.youtube.com/";
+
+    /// <summary>
     /// YouTube 頻道網址
     /// </summary>
     public static readonly string YTChannelUrl = "https://www.youtube.com/channel/";
