@@ -102,6 +102,17 @@
     <sys:String x:Key="BtnYTSecConverterToolTip">仅提供正体中文</sys:String>
     <sys:String x:Key="BtnBurnInSubtitle">刻录字幕档</sys:String>
     <sys:String x:Key="BtnCancel">取消</sys:String>
+    <sys:String x:Key="GBYtSubscriberCounterTool">YouTube 频道订阅者数量计数工具</sys:String>
+    <sys:String x:Key="LYouTubeChannelID">YouTube 频道 ID</sys:String>
+    <sys:String x:Key="LCustomYtChSubscriberAmount">自定义频道订阅者数量</sys:String>
+    <sys:String x:Key="CBAddTimestamp">加入日期戳记</sys:String>
+    <sys:String x:Key="CBUseClip">裁切截屏（正方形）</sys:String>
+    <sys:String x:Key="CBBlurBackground">模糊背景</sys:String>
+    <sys:String x:Key="CBUseTranslate">套用中文翻译</sys:String>
+    <sys:String x:Key="CBForceChromium">强制使用 Chromium</sys:String>
+    <sys:String x:Key="CBIsDevelopmentMode">开发模式</sys:String>
+    <sys:String x:Key="BtnResetYtSct">重设</sys:String>
+    <sys:String x:Key="BtnYtSctTakeScreensshot">保存截屏</sys:String>
     <sys:String x:Key="GBAppOptions">应用程序选项</sys:String>
     <sys:String x:Key="LLanguages">语系</sys:String>
     <sys:String x:Key="LThemes">主题</sys:String>
