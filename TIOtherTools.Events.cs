@@ -9,6 +9,9 @@ using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// TIOtherTools 的控制項事件
+/// </summary>
 public partial class WMain
 {
     private void TBYtChannelID_TextChanged(object sender, TextChangedEventArgs e)

@@ -11,6 +11,9 @@ using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// TINetResource 的控制項事件
+/// </summary>
 public partial class WMain
 {
     private void CBAutoLyric_Checked(object sender, RoutedEventArgs e)

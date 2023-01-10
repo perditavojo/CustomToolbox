@@ -12,6 +12,9 @@ using Mpv.NET.Player;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// MpvPlayer 的相關方法
+/// </summary>
 public partial class WMain
 {
     /// <summary>

@@ -14,6 +14,9 @@ using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// TIMisc 的控制項事件
+/// </summary>
 public partial class WMain
 {
     #region 應用程式選項

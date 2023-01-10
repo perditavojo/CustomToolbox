@@ -9,6 +9,9 @@ using System.Windows;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// TIClipTools 的控制項事件
+/// </summary>
 public partial class WMain
 {
     private void BtnSubtitleCreator_Click(object sender, RoutedEventArgs e)

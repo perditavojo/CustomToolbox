@@ -17,6 +17,9 @@ using System.Windows.Controls;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// TIClipPlayer 的控制項事件
+/// </summary>
 public partial class WMain
 {
     private void ClipData_PropertyChanged(object? sender, PropertyChangedEventArgs e)

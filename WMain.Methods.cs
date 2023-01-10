@@ -11,7 +11,9 @@ using ModernWpf.Controls;
 using OpenCCNET;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.Json;
@@ -20,6 +22,9 @@ using Xabe.FFmpeg;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// WMain 的方法
+/// </summary>
 public partial class WMain
 {
     /// <summary>
@@ -576,5 +581,29 @@ public partial class WMain
                 MsgSet.MsgErrorOccured,
                 ex.ToString()));
         }
+    }
+
+    /// <summary>
+    /// 寫紀錄
+    /// </summary>
+    /// <param name="message">字串，訊息</param>
+    [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
+    public void WriteLog(string message) => CustomFunction.WriteLog(message);
+
+    /// <summary>
+    /// 取得 HttpClient
+    /// </summary>
+    /// <returns>HttpClient</returns>
+    private HttpClient? GetHttpClient()
+    {
+        HttpClient? httpClient = GlobalHCFactory?.CreateClient();
+
+        // 參考來源：https://github.com/RayWangQvQ/BiliBiliToolPro/pull/350
+        // 設定 HttpClient 的標頭資訊。
+        //httpClient?.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com");
+        //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
+        httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
+
+        return httpClient;
     }
 }

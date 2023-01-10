@@ -10,6 +10,9 @@ using YoutubeDLSharp.Options;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// TIMisc 的方法
+/// </summary>
 public partial class WMain
 {
     /// <summary>

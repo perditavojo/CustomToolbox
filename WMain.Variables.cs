@@ -7,6 +7,9 @@ using System.Net.Http;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// WMain 的變數
+/// </summary>
 public partial class WMain
 {
     /// <summary>

@@ -1,6 +1,6 @@
 ﻿using ConsoleTableExt;
-using CustomToolbox.BiliBili.Funcs;
-using CustomToolbox.Bilibili.Models;
+using CustomToolbox.BilibiliApi.Funcs;
+using CustomToolbox.BilibiliApi.Models;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Utils;

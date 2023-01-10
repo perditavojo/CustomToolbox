@@ -8,6 +8,9 @@ using Mpv.NET.Player;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// MpvPlayer 的相關事件
+/// </summary>
 public partial class WMain
 {
     public void PlayerHost_MouseDoubleClick(object? sender, MouseEventArgs? e)

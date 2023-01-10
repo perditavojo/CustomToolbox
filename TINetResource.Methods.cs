@@ -7,6 +7,9 @@ using System.Text.Json;
 
 namespace CustomToolbox;
 
+/// <summary>
+/// TINetResource 的方法
+/// </summary>
 public partial class WMain
 {
     /// <summary>
