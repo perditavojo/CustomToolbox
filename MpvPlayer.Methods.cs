@@ -117,6 +117,8 @@ public partial class WMain
 
                 string lyricFilePath = string.Empty;
 
+                // 判斷 clipData.SubtitleFileUrl 是否為空值或 null
+                // 且是否有啟用自動歌詞。
                 if (string.IsNullOrEmpty(clipData.SubtitleFileUrl) &&
                     Properties.Settings.Default.NetPlaylistAutoLyric)
                 {
@@ -131,8 +133,7 @@ public partial class WMain
                     // 轉換成正體中文。
                     bool translateToTChinese = Properties.Settings.Default.OpenCCS2TWP;
 
-                    // 不更新回 clipData.SubtitleFileUrl，
-                    // 讓短片清單持續顯示原始字幕檔案的網址。
+                    // 取得處理過 *.lrc 檔案的路徑。
                     lyricFilePath = await LyricsUtil.GetProcessedLrcFilePath(
                         lyricFileUrl,
                         translateToTChinese);
@@ -153,6 +154,7 @@ public partial class WMain
                 {
                     try
                     {
+                        // 當 clipData.SubtitleFileUrl 不為空值或 null 時才載入字幕檔。
                         if (!string.IsNullOrEmpty(clipData.SubtitleFileUrl))
                         {
                             // 判斷是載入處理過的 *.lrc 檔案還是原始的 *.lrc 檔案。
