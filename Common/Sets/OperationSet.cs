@@ -1,4 +1,5 @@
-﻿using ConsoleTableExt;
+﻿using Application = System.Windows.Application;
+using ConsoleTableExt;
 using CustomToolbox.BilibiliApi.Funcs;
 using CustomToolbox.BilibiliApi.Models;
 using CustomToolbox.Common.Extensions;
@@ -6,13 +7,16 @@ using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Utils;
 using static CustomToolbox.Common.Sets.EnumSet;
 using Humanizer;
+using Label = System.Windows.Controls.Label;
 using Microsoft.Playwright;
 using OpenCCNET;
+using ProgressBar = ModernWpf.Controls.ProgressBar;
 using System.IO;
 using System.Text.Json;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
+using YoutubeDLSharp.Options;
 
 namespace CustomToolbox.Common.Sets;
 
@@ -27,21 +31,33 @@ internal class OperationSet
     private static WMain? _WMain = null;
 
     /// <summary>
+    /// LOperation
+    /// </summary>
+    private static Label? _LOperation = null;
+
+    /// <summary>
+    /// PBProgress
+    /// </summary>
+    private static ProgressBar? _PBProgress = null;
+
+    /// <summary>
     /// 初始化
     /// </summary>
     /// <param name="wMain">WMain</param>
     public static void Init(WMain wMain)
     {
         _WMain = wMain;
+        _LOperation = _WMain.LOperation;
+        _PBProgress = _WMain.PBProgress;
     }
 
     /// <summary>
-    /// 獲取短片資訊
+    /// 執行獲取短片資訊
     /// </summary>
     /// <param name="url">字串，影片的網址</param>
     /// <param name="ct">CancellationToken</param>
     /// <returns>Task</returns>
-    public static async Task FetchClipInfo(string url, CancellationToken ct = default)
+    public static async Task DoFetchClipInfo(string url, CancellationToken ct = default)
     {
         try
         {
@@ -232,7 +248,69 @@ internal class OperationSet
     }
 
     /// <summary>
-    /// 燒錄字幕檔
+    /// 執行下載短片
+    /// </summary>
+    /// <param name="clipData">ClipData</param>
+    /// <param name="ct">CancellationToken</param>
+    /// <returns>Task</returns>
+    public static async Task DoDownloadClip(ClipData clipData, CancellationToken ct = default)
+    {
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+
+            YoutubeDL ytdl = ExternalProgram.GetYoutubeDL();
+
+            OptionSet configuredOptionSet = ExternalProgram.GetConfiguredOptionSet(
+                clipData.StartTime.TotalSeconds,
+                clipData.EndTime.TotalSeconds);
+
+            RunResult<string> runResult = await ytdl.RunVideoDownload(
+                url: clipData.VideoUrlOrID,
+                mergeFormat: DownloadMergeFormat.Unspecified,
+                recodeFormat: VideoRecodeFormat.None,
+                progress: GetDownloadProgress(),
+                output: GetOutputProgress(),
+                ct: ct,
+                overrideOptions: configuredOptionSet);
+
+            if (runResult.Success)
+            {
+                _WMain?.WriteLog(runResult.Data);
+            }
+            else
+            {
+                if (runResult.ErrorOutput.Any())
+                {
+                    string errMsg = string.Join(
+                        Environment.NewLine,
+                        runResult.ErrorOutput);
+
+                    _WMain?.WriteLog(errMsg);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(ex.Message);
+        }
+        finally
+        {
+            await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (_LOperation == null || _PBProgress == null)
+                {
+                    return;
+                }
+
+                _LOperation.Content = string.Empty;
+                _PBProgress.Value = 0.0d;
+            }));
+        }
+    }
+
+    /// <summary>
+    /// 執行燒錄字幕檔
     /// </summary>
     /// <param name="videoFilePath">字串，視訊檔案的路徑</param>
     /// <param name="subtitleFilePath">字串，字幕檔案的路徑</param>
@@ -602,7 +680,7 @@ internal class OperationSet
     }
 
     /// <summary>
-    /// 拍攝 YouTube 頻道訂閱者數量截圖
+    /// 執行拍攝 YouTube 訂閱者數量截圖
     /// </summary>
     /// <param name="channelId">字串，YouTube 頻道的 ID</param>
     /// <param name="inputSavedPath">字串，截圖的儲存路徑，預設值為空白</param>
@@ -615,7 +693,7 @@ internal class OperationSet
     /// <param name="forceChromium">布林值，強制使用 Chromium，預設值為 false</param>
     /// <param name="isDevelopmentMode">布林值，開發模式，預設值為 false</param>
     /// <returns>Task</returns>
-    public static async Task DoTakeYtChSubsCntScrnshot(
+    public static async Task DoTakeYtscScrnshot(
         string channelId,
         string inputSavedPath = "",
         decimal customSubscriberAmount = -1,
@@ -936,5 +1014,95 @@ internal class OperationSet
         }
 
         return isOkay;
+    }
+
+    /// <summary>
+    /// 取得 Progress&lt;DownloadProgress&gt;
+    /// </summary>
+    /// <returns>Progress&lt;DownloadProgress&gt;</returns>
+    private static Progress<DownloadProgress> GetDownloadProgress()
+    {
+        return new Progress<DownloadProgress>(downloadProgress =>
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (_LOperation == null || _PBProgress == null)
+                {
+                    return;
+                }
+
+                double currentPercent = downloadProgress.Progress * 100;
+
+                _PBProgress.Value = currentPercent;
+
+                string message = $"({downloadProgress.State})";
+
+                message += $" 影片索引值：{downloadProgress.VideoIndex}";
+
+                if (!string.IsNullOrEmpty(downloadProgress.DownloadSpeed))
+                {
+                    message += $" 下載速度：{downloadProgress.DownloadSpeed}";
+                }
+
+                if (!string.IsNullOrEmpty(downloadProgress.ETA))
+                {
+                    message += $" 剩餘時間：{downloadProgress.ETA}";
+                }
+
+                if (!string.IsNullOrEmpty(downloadProgress.TotalDownloadSize))
+                {
+                    message += $" 檔案大小：{downloadProgress.TotalDownloadSize}";
+                }
+
+                if (!string.IsNullOrEmpty(downloadProgress.Data))
+                {
+                    message += $" 資料：{downloadProgress.Data}";
+                }
+
+                _LOperation.Content = message;
+            }));
+        });
+    }
+
+    /// <summary>
+    /// 取得 Progress&lt;string&gt;
+    /// </summary>
+    /// <returns>Progress&lt;string&gt;</returns>
+    private static Progress<string> GetOutputProgress()
+    {
+        string tempFrag = string.Empty,
+            tempValue = string.Empty;
+
+        return new Progress<string>(value =>
+        {
+            value = value.TrimEnd();
+
+            // 手動減速機制，針對 "(frag " 開的字串進行減速。
+            int starIdx = value.LastIndexOf("(frag ");
+
+            if (starIdx > -1)
+            {
+                string fragPart = value[starIdx..]
+                    .Replace("(frag ", string.Empty)
+                    .Replace(")", string.Empty);
+
+                if (tempFrag != fragPart)
+                {
+                    _WMain?.WriteLog(value);
+
+                    tempFrag = fragPart;
+                }
+            }
+            else
+            {
+                // 手動減速機制，讓前後一樣的字串不輸出。
+                if (value != tempValue)
+                {
+                    _WMain?.WriteLog(value);
+                }
+            }
+
+            tempValue = value;
+        });
     }
 }

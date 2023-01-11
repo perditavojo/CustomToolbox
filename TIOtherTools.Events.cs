@@ -140,7 +140,7 @@ public partial class WMain
 
                 if (dialogResult == true)
                 {
-                    await OperationSet.DoTakeYtChSubsCntScrnshot(
+                    await OperationSet.DoTakeYtscScrnshot(
                         TBYtChannelID.Text,
                         saveFileDialog.FileName,
                         Convert.ToInt32(NBCustomSubscriberAmount.Value),

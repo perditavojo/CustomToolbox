@@ -672,7 +672,7 @@ public partial class WMain : Window
 
             if (clipData != null && !string.IsNullOrEmpty(clipData.VideoUrlOrID))
             {
-                await OperationSet.FetchClipInfo(clipData.VideoUrlOrID, GetGlobalCT());
+                await OperationSet.DoFetchClipInfo(clipData.VideoUrlOrID, GetGlobalCT());
             }
             else
             {
@@ -690,7 +690,7 @@ public partial class WMain : Window
         }
     }
 
-    private void MIDLClip_Click(object sender, RoutedEventArgs e)
+    private async void MIDLClip_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -722,6 +722,8 @@ public partial class WMain : Window
                 // 4. 批次直接下載此片段。 (yt-dlp + FFmpeg)
                 // 5. 先下載全片，再批次分割片段。
                 // *. 是否在下載或分割後刪除原本下載的檔案。
+
+                await OperationSet.DoDownloadClip(clipData, GetGlobalCT());
             }
             else
             {
