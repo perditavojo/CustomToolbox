@@ -251,19 +251,37 @@ internal class OperationSet
     /// 執行下載短片
     /// </summary>
     /// <param name="clipData">ClipData</param>
+    /// <param name="isFullDownloadFirst">布林值，是否先下載完整短片，預設值為 false</param>
+    /// <param name="useHardwareAcceleration">布林值，是否使用硬體加速解編碼，預設值為 false</param>
+    /// <param name="hardwareAcceleratorType">HardwareAcceleratorType，硬體加速的類型，預設值為 HardwareAcceleratorType.Intel</param>
+    /// <param name="deviceNo">數值，GPU 裝置的 ID 值，預設為 0</param>
     /// <param name="ct">CancellationToken</param>
     /// <returns>Task</returns>
-    public static async Task DoDownloadClip(ClipData clipData, CancellationToken ct = default)
+    public static async Task DoDownloadClip(
+        ClipData clipData,
+        bool isFullDownloadFirst = false,
+        bool useHardwareAcceleration = false,
+        HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel,
+        int deviceNo = 0,
+        CancellationToken ct = default)
     {
         try
         {
             ct.ThrowIfCancellationRequested();
 
+            string fileName = string.Join(
+                "_",
+                $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
+                Array.Empty<string>());
+
             YoutubeDL ytdl = ExternalProgram.GetYoutubeDL();
 
             OptionSet configuredOptionSet = ExternalProgram.GetConfiguredOptionSet(
-                clipData.StartTime.TotalSeconds,
-                clipData.EndTime.TotalSeconds);
+                    startSeconds: clipData.StartTime.TotalSeconds,
+                    endSeconds: clipData.EndTime.TotalSeconds,
+                    fileName: fileName,
+                    isAudioOnly: clipData.IsAudioOnly,
+                    isFullDownloadFirst: isFullDownloadFirst);
 
             RunResult<string> runResult = await ytdl.RunVideoDownload(
                 url: clipData.VideoUrlOrID,
@@ -277,6 +295,49 @@ internal class OperationSet
             if (runResult.Success)
             {
                 _WMain?.WriteLog(runResult.Data);
+
+                // 計算間隔秒數。
+                double durationSeconds = clipData.EndTime.TotalSeconds -
+                    clipData.StartTime.TotalSeconds;
+
+                // 當為下載完整短片且 durationSeconds 的值大於 0 時，
+                // 需要再透過 FFmpeg 來分割短片檔案。
+                if (isFullDownloadFirst)
+                {
+                    if (durationSeconds > 0)
+                    {
+                        string sourceFilePath = Path.GetFullPath(runResult.Data),
+                            sourceFileName = Path.GetFileNameWithoutExtension(sourceFilePath),
+                            sourceExtName = Path.GetExtension(sourceFilePath),
+                            outputFileName = string.IsNullOrEmpty(fileName) ?
+                                $"{sourceFileName}_Fixed{sourceExtName}" :
+                                $"{fileName}_Fixed{sourceExtName}",
+                            outputFilePath = Path.Combine(VariableSet.DownloadsFolderPath, outputFileName);
+
+                        IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(sourceFilePath, ct);
+
+                        IConversion conversion = ExternalProgram.GetConversion(
+                               mediaInfo,
+                               clipData.StartTime.TotalSeconds,
+                               clipData.EndTime.TotalSeconds,
+                               outputFilePath,
+                               fixDuration: true,
+                               useCodecCopy: false,
+                               useHardwareAcceleration,
+                               hardwareAcceleratorType,
+                               deviceNo,
+                               clipData.IsAudioOnly);
+
+                        // 移除全部的 Meta 資料，以利傻瓜式操作。
+                        //conversion.AddParameter("-map_metadata -1");
+
+                        IConversionResult conversionResult = await conversion.Start(ct);
+
+                        ExternalProgram.WriteConversionResult(conversionResult);
+
+                        // TODO: 2023-01-13 待完成。
+                    }
+                }
             }
             else
             {

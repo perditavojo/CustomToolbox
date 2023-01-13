@@ -79,9 +79,8 @@ internal class VariableSet
 
     /// <summary>
     /// yt-dlp 預設的 Output
-    /// <para>因 yt-dlp.exe 的文字編碼機制問題，故採用下列格式的名稱。</para>
     /// </summary>
-    public static readonly string YtDlpDefaultOutput = Path.Combine(DownloadsFolderPath, "%(id)s.%(ext)s");
+    public static readonly string YtDlpDefaultOutput = Path.Combine(DownloadsFolderPath, "%(uploader)s_%(title)s-%(id)s.%(ext)s");
 
     /// <summary>
     /// yt-dlp 使用 --split-chapters 時的 Output

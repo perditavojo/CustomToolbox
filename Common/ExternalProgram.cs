@@ -366,36 +366,78 @@ internal class ExternalProgram
     /// </summary>
     /// <param name="startSeconds">數值，開始秒數，預設值為 0.0d</param>
     /// <param name="endSeconds">數值，結束秒數，預設值為 0.0d</param>
+    /// <param name="endSeconds">字串，檔案名稱，預設值為空白</param>
+    /// <param name="isAudioOnly">布林值，是否為僅音訊，預設值為 false</param>
+    /// <param name="isFullDownloadFirst">布林值，是否先下載完整短片，預設值為 false</param>
     /// <returns>OptionSet</returns>
     public static OptionSet GetConfiguredOptionSet(
         double startSeconds = 0.0d,
-        double endSeconds = 0.0d)
+        double endSeconds = 0.0d,
+        string? fileName = "",
+        bool isAudioOnly = false,
+        bool isFullDownloadFirst = false)
     {
         OptionSet optionSet = GetOptionSet();
 
-        // 因 yt-dlp.exe 的文字編碼機制問題，故採用下列格式的名稱。
-        string newOutput = Path.Combine(
-            VariableSet.DownloadsFolderPath,
-            $"%(id)s_{DateTime.Now:yyyyMMddHHmmss}.%(ext)s");
+        // 先清理過 fileName。
+        fileName = string.Join("_", fileName?.Split(Path.GetInvalidFileNameChars()) ?? Array.Empty<string>());
 
-        // 暫時替換掉預設的設定值。
-        optionSet.Output = newOutput;
+        // 判斷是否為僅音訊。
+        if (isAudioOnly)
+        {
+            optionSet.Format = "ba";
+        }
 
         // 計算間隔秒數。
-        double durationSeconds = startSeconds - endSeconds;
+        double durationSeconds = endSeconds - startSeconds;
 
-        // 當 durationSeconds 為負數時，執行下載影片的片段。
-        if (durationSeconds < 0)
+        // 判斷是否先下載完整影片。
+        if (isFullDownloadFirst)
         {
-            // 參考來源：https://www.reddit.com/r/youtubedl/wiki/howdoidownloadpartsofavideo/
-            optionSet.Downloader = "ffmpeg";
-            optionSet.DownloaderArgs = $"ffmpeg_i:-ss {startSeconds} -to {endSeconds}";
-            optionSet.ForceKeyframesAtCuts = true;
+            // 當 durationSeconds 為正整數時，即表示還有後續操作，
+            // 故套用下列設定。
+            if (durationSeconds > 0)
+            {
+                // 為了以利 FFmpeg 的作業，故採用下列設定。
+                optionSet.Output = Path.Combine(
+                    VariableSet.DownloadsFolderPath,
+                    $"%(id)s_{DateTime.Now:yyyyMMddHHmmss}.%(ext)s");
+                optionSet.EmbedMetadata = false;
+                optionSet.EmbedThumbnail = false;
+                optionSet.EmbedSubs = false;
+                optionSet.SplitChapters = false;
+            }
+            else
+            {
+                // 當 fileName 不為空白或 null 時才可以覆寫 Output。
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    optionSet.Output = Path.Combine(
+                        VariableSet.DownloadsFolderPath,
+                        $"%(id)s_{fileName}_{DateTime.Now:yyyyMMddHHmmss}.%(ext)s");
+                }
+            }
+        }
+        else
+        {
+            // 當 durationSeconds 為正整數時，
+            // 則使用 FFmpeg 作為外部下載器來下載短片片段。
+            if (durationSeconds > 0)
+            {
+                // 當 fileName 不為空白或 null 時才可以覆寫 Output。
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    optionSet.Output = Path.Combine(
+                        VariableSet.DownloadsFolderPath,
+                        $"%(id)s_{fileName}_{DateTime.Now:yyyyMMddHHmmss}.%(ext)s");
+                }
 
-            // 為避免 Xabe.FFmpeg 轉檔時發生錯誤，故停用下列設定。
-            optionSet.EmbedMetadata = false;
-            optionSet.EmbedThumbnail = false;
-            optionSet.EmbedSubs = false;
+                // 參考來源：https://www.reddit.com/r/youtubedl/wiki/howdoidownloadpartsofavideo/
+                optionSet.Downloader = "ffmpeg";
+                optionSet.DownloaderArgs = $"ffmpeg_i:-ss {startSeconds} -to {endSeconds}";
+                optionSet.ForceKeyframesAtCuts = true;
+                optionSet.SplitChapters = false;
+            }
         }
 
         return optionSet;

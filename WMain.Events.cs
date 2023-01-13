@@ -22,6 +22,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TabControl = System.Windows.Controls.TabControl;
+using static CustomToolbox.Common.Sets.EnumSet;
 
 namespace CustomToolbox;
 
@@ -690,48 +691,79 @@ public partial class WMain : Window
         }
     }
 
-    private async void MIDLClip_Click(object sender, RoutedEventArgs e)
+    private void MIDLClip_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            Control[] ctrlSet1 =
-{
-                MIFetchClip,
-                MIDLClip,
-                BtnGenerateB23ClipList,
-                BtnBurnInSubtitle
-            };
-
-            Control[] ctrlSet2 =
+            Dispatcher.BeginInvoke(new Action(async () =>
             {
-                MICancel
-            };
+                Control[] ctrlSet1 =
+                {
+                    MIFetchClip,
+                    MIDLClip,
+                    BtnGenerateB23ClipList,
+                    BtnBurnInSubtitle
+                };
 
-            CustomFunction.BatchSetEnabled(ctrlSet1, false);
-            CustomFunction.BatchSetEnabled(ctrlSet2, true);
+                Control[] ctrlSet2 =
+                {
+                    MICancel
+                };
 
-            ClipData? clipData = GetDGClipListSelectedItem();
+                CustomFunction.BatchSetEnabled(ctrlSet1, false);
+                CustomFunction.BatchSetEnabled(ctrlSet2, true);
 
-            if (clipData != null)
-            {
-                // TODO: 2023-01-10 待完成相關功能。
+                ClipData? clipData = GetDGClipListSelectedItem();
 
-                // 1. 下載全片。
-                // 2. 下載此片段。 (先載下全片，再分割出要的片段)
-                // 3. 直接下載此片段。 (yt-dlp + FFmpeg)
-                // 4. 批次直接下載此片段。 (yt-dlp + FFmpeg)
-                // 5. 先下載全片，再批次分割片段。
-                // *. 是否在下載或分割後刪除原本下載的檔案。
+                if (clipData != null)
+                {
+                    // TODO: 2023-01-10 待完成相關功能。
 
-                await OperationSet.DoDownloadClip(clipData, GetGlobalCT());
-            }
-            else
-            {
-                ShowMsgBox(MsgSet.MsgSelectTheClipToDownload);
-            }
+                    // 1. 下載全片。
+                    // 2. 下載此片段。 (先載下全片，再分割出要的片段)
+                    // 3. 直接下載此片段。 (yt-dlp + FFmpeg)
+                    // 4. 批次直接下載此片段。 (yt-dlp + FFmpeg)
+                    // 5. 先下載全片，再批次分割片段。
+                    // *. 是否在下載或分割後刪除原本下載的檔案。
 
-            CustomFunction.BatchSetEnabled(ctrlSet1, true);
-            CustomFunction.BatchSetEnabled(ctrlSet2, false);
+                    bool useHardwareAcceleration = Properties.Settings.Default
+                            .FFmpegEnableHardwareAcceleration,
+                        // TODO: 2023-01-13 需要找地方設定此值。
+                        isFullDownloadFirst = false;
+
+                    HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel;
+
+                    if (!string.IsNullOrEmpty(CBHardwareAccelerationType.Text))
+                    {
+                        hardwareAcceleratorType = CBHardwareAccelerationType.Text switch
+                        {
+                            nameof(HardwareAcceleratorType.AMD) => HardwareAcceleratorType.AMD,
+                            nameof(HardwareAcceleratorType.Intel) => HardwareAcceleratorType.Intel,
+                            nameof(HardwareAcceleratorType.NVIDIA) => HardwareAcceleratorType.NVIDIA,
+                            _ => HardwareAcceleratorType.Intel
+                        };
+                    }
+
+                    VideoCardData videoCardData = (VideoCardData)CBGpuDevice.SelectedItem;
+
+                    int deviceNo = videoCardData.DeviceNo;
+
+                    await OperationSet.DoDownloadClip(
+                        clipData: clipData,
+                        isFullDownloadFirst: isFullDownloadFirst,
+                        useHardwareAcceleration: useHardwareAcceleration,
+                        hardwareAcceleratorType: hardwareAcceleratorType,
+                        deviceNo: deviceNo,
+                        ct: GetGlobalCT());
+                }
+                else
+                {
+                    ShowMsgBox(MsgSet.MsgSelectTheClipToDownload);
+                }
+
+                CustomFunction.BatchSetEnabled(ctrlSet1, true);
+                CustomFunction.BatchSetEnabled(ctrlSet2, false);
+            }));
         }
         catch (Exception ex)
         {
