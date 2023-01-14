@@ -385,7 +385,8 @@ internal class ExternalProgram
         // 判斷是否為僅音訊。
         if (isAudioOnly)
         {
-            optionSet.Format = "ba";
+            // 限制只載最好音質的 m4a 音訊檔。
+            optionSet.Format = "ba[ext=m4a]";
         }
 
         // 計算間隔秒數。
@@ -436,6 +437,10 @@ internal class ExternalProgram
                 optionSet.Downloader = "ffmpeg";
                 optionSet.DownloaderArgs = $"ffmpeg_i:-ss {startSeconds} -to {endSeconds}";
                 optionSet.ForceKeyframesAtCuts = true;
+                // 因為需要透過 FFmpeg 再處裡，所以要取消下列設定。
+                optionSet.EmbedMetadata = false;
+                optionSet.EmbedThumbnail = false;
+                optionSet.EmbedSubs = false;
                 optionSet.SplitChapters = false;
             }
         }

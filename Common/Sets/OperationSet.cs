@@ -255,6 +255,7 @@ internal class OperationSet
     /// <param name="useHardwareAcceleration">布林值，是否使用硬體加速解編碼，預設值為 false</param>
     /// <param name="hardwareAcceleratorType">HardwareAcceleratorType，硬體加速的類型，預設值為 HardwareAcceleratorType.Intel</param>
     /// <param name="deviceNo">數值，GPU 裝置的 ID 值，預設為 0</param>
+    /// <param name="isDeleteSourceFile">布林值，是否刪除來源檔案，預設為 false</param>
     /// <param name="ct">CancellationToken</param>
     /// <returns>Task</returns>
     public static async Task DoDownloadClip(
@@ -263,6 +264,7 @@ internal class OperationSet
         bool useHardwareAcceleration = false,
         HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel,
         int deviceNo = 0,
+        bool isDeleteSourceFile = false,
         CancellationToken ct = default)
     {
         try
@@ -300,42 +302,41 @@ internal class OperationSet
                 double durationSeconds = clipData.EndTime.TotalSeconds -
                     clipData.StartTime.TotalSeconds;
 
-                // 當為下載完整短片且 durationSeconds 的值大於 0 時，
-                // 需要再透過 FFmpeg 來分割短片檔案。
+                // 判斷是否為下載完整短片。
                 if (isFullDownloadFirst)
                 {
+                    // 當 durationSeconds 的值大於 0 時，
+                    // 需要再透過 FFmpeg 來分割短片檔案。
                     if (durationSeconds > 0)
                     {
-                        string sourceFilePath = Path.GetFullPath(runResult.Data),
-                            sourceFileName = Path.GetFileNameWithoutExtension(sourceFilePath),
-                            sourceExtName = Path.GetExtension(sourceFilePath),
-                            outputFileName = string.IsNullOrEmpty(fileName) ?
-                                $"{sourceFileName}_Fixed{sourceExtName}" :
-                                $"{fileName}_Fixed{sourceExtName}",
-                            outputFilePath = Path.Combine(VariableSet.DownloadsFolderPath, outputFileName);
-
-                        IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(sourceFilePath, ct);
-
-                        IConversion conversion = ExternalProgram.GetConversion(
-                               mediaInfo,
-                               clipData.StartTime.TotalSeconds,
-                               clipData.EndTime.TotalSeconds,
-                               outputFilePath,
-                               fixDuration: true,
-                               useCodecCopy: false,
-                               useHardwareAcceleration,
-                               hardwareAcceleratorType,
-                               deviceNo,
-                               clipData.IsAudioOnly);
-
-                        // 移除全部的 Meta 資料，以利傻瓜式操作。
-                        //conversion.AddParameter("-map_metadata -1");
-
-                        IConversionResult conversionResult = await conversion.Start(ct);
-
-                        ExternalProgram.WriteConversionResult(conversionResult);
-
-                        // TODO: 2023-01-13 待完成。
+                        await DoFFmpegTask(
+                            runResult: runResult,
+                            fileName: fileName,
+                            clipData: clipData,
+                            isFullDownloadFirst: isFullDownloadFirst,
+                            useHardwareAcceleration: useHardwareAcceleration,
+                            hardwareAcceleratorType: hardwareAcceleratorType,
+                            deviceNo: deviceNo,
+                            isDeleteSourceFile: isDeleteSourceFile,
+                            ct: ct);
+                    }
+                }
+                else
+                {
+                    // 當 durationSeconds 的值大於 0 時，
+                    // 需要再透過 FFmpeg 來處理短片檔案。
+                    if (durationSeconds > 0)
+                    {
+                        await DoFFmpegTask(
+                            runResult: runResult,
+                            fileName: fileName,
+                            clipData: clipData,
+                            isFullDownloadFirst: isFullDownloadFirst,
+                            useHardwareAcceleration: useHardwareAcceleration,
+                            hardwareAcceleratorType: hardwareAcceleratorType,
+                            deviceNo: deviceNo,
+                            isDeleteSourceFile: isDeleteSourceFile,
+                            ct: ct);
                     }
                 }
             }
@@ -367,6 +368,87 @@ internal class OperationSet
                 _LOperation.Content = string.Empty;
                 _PBProgress.Value = 0.0d;
             }));
+        }
+    }
+
+    /// <summary>
+    /// 執行 FFmpeg 作業
+    /// </summary>
+    /// <param name="runResult"></param>
+    /// <param name="fileName"></param>
+    /// <param name="clipData">ClipData</param>
+    /// <param name="isFullDownloadFirst">布林值，是否先下載完整短片，預設值為 false</param>
+    /// <param name="useHardwareAcceleration">布林值，是否使用硬體加速解編碼，預設值為 false</param>
+    /// <param name="hardwareAcceleratorType">HardwareAcceleratorType，硬體加速的類型，預設值為 HardwareAcceleratorType.Intel</param>
+    /// <param name="deviceNo">數值，GPU 裝置的 ID 值，預設為 0</param>
+    /// <param name="isDeleteSourceFile">布林值，是否刪除來源檔案，預設為 false</param>
+    /// <param name="ct">CancellationToken</param>
+    public static async Task DoFFmpegTask(
+        RunResult<string> runResult,
+        string fileName,
+        ClipData clipData,
+        bool isFullDownloadFirst = false,
+        bool useHardwareAcceleration = false,
+        HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel,
+        int deviceNo = 0,
+        bool isDeleteSourceFile = false,
+        CancellationToken ct = default)
+    {
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+
+            // TODO: 2023-01-04 分割 WebM 格式的影片會出錯。
+
+            // 當為下載完整短片時，不需要修正 duration。
+            bool isFixDuration = !isFullDownloadFirst;
+
+            string fileNameSuffix = isFixDuration ? "Fixed" : "Clip",
+                sourceFilePath = Path.GetFullPath(runResult.Data),
+                sourceFileName = Path.GetFileNameWithoutExtension(sourceFilePath),
+                sourceExtName = Path.GetExtension(sourceFilePath),
+                outputFileName = string.IsNullOrEmpty(fileName) ?
+                    $"{sourceFileName}_{fileNameSuffix}{sourceExtName}" :
+                    $"{fileName}_{fileNameSuffix}{sourceExtName}",
+                newFilePathRoot = Path.Combine(VariableSet.DownloadsFolderPath, sourceFileName),
+                outputFilePath = Path.Combine(newFilePathRoot, outputFileName);
+
+            IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(sourceFilePath, ct);
+
+            IConversion conversion = ExternalProgram.GetConversion(
+                   mediaInfo,
+                   clipData.StartTime.TotalSeconds,
+                   clipData.EndTime.TotalSeconds,
+                   outputFilePath,
+                   fixDuration: isFixDuration,
+                   useCodecCopy: false,
+                   useHardwareAcceleration,
+                   hardwareAcceleratorType,
+                   deviceNo,
+                   clipData.IsAudioOnly);
+
+            // 判斷是否為下載完整短片。
+            if (isFullDownloadFirst)
+            {
+                // 移除全部的後設資料，以利進行傻瓜式 FFmpeg 操作。
+                conversion.AddParameter("-map_metadata -1");
+            }
+
+            IConversionResult conversionResult = await conversion.Start(ct);
+
+            ExternalProgram.WriteConversionResult(conversionResult);
+
+            if (isDeleteSourceFile)
+            {
+                if (File.Exists(sourceFilePath))
+                {
+                    File.Delete(sourceFilePath);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(ex.Message);
         }
     }
 

@@ -729,7 +729,8 @@ public partial class WMain : Window
                     bool useHardwareAcceleration = Properties.Settings.Default
                             .FFmpegEnableHardwareAcceleration,
                         // TODO: 2023-01-13 需要找地方設定此值。
-                        isFullDownloadFirst = false;
+                        isFullDownloadFirst = true,
+                        isDeleteSourceFile = true;
 
                     HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel;
 
@@ -754,6 +755,7 @@ public partial class WMain : Window
                         useHardwareAcceleration: useHardwareAcceleration,
                         hardwareAcceleratorType: hardwareAcceleratorType,
                         deviceNo: deviceNo,
+                        isDeleteSourceFile: isDeleteSourceFile,
                         ct: GetGlobalCT());
                 }
                 else
