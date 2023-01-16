@@ -244,6 +244,8 @@ public partial class WMain
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, true);
                 CustomFunction.BatchSetEnabled(ctrlSet2, false);
+
+                // TODO: 2023-01-16 待加入提示資訊。
             }));
         }
         catch (Exception ex)

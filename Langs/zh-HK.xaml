@@ -44,6 +44,11 @@
     <sys:String x:Key="VideoDataFormats">格式：</sys:String>
     <sys:String x:Key="YtscToolPrefixText">目前已有</sys:String>
     <sys:String x:Key="YtscToolSuffixText">位 YouTube 訂閱者</sys:String>
+    <sys:String x:Key="YtdlSharpVideoIndex" xml:space="preserve"> 影片索引值：</sys:String>
+    <sys:String x:Key="YtdlSharpDownloadSpeed" xml:space="preserve"> 下載速度：</sys:String>
+    <sys:String x:Key="YtdlSharpRemainTimes" xml:space="preserve"> 剩餘時間：</sys:String>
+    <sys:String x:Key="YtdlSharpFileSize" xml:space="preserve"> 檔案大小：</sys:String>
+    <sys:String x:Key="YtdlSharpData" xml:space="preserve"> 資料：</sys:String>
     <!-- 字串模板 -->
     <sys:String x:Key="TemplateMaintainer">[維護者：{0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1}（{2}）]：（{3}）{4}</sys:String>
@@ -189,6 +194,9 @@
     <sys:String x:Key="MIPlayClip">播放此短片</sys:String>
     <sys:String x:Key="MIFetchClip">獲取此短片的資訊</sys:String>
     <sys:String x:Key="MIDLClip">下載此短片</sys:String>
+    <sys:String x:Key="MIDownloadOptions">下載選項</sys:String>
+    <sys:String x:Key="MIFullDownloadFirst">先下載完整影片</sys:String>
+    <sys:String x:Key="MIDeleteSourceFile">刪除來源檔案</sys:String>
     <sys:String x:Key="MIRandomPlayClip">隨機播放短片</sys:String>
     <sys:String x:Key="MIReorderClipList">隨機排列短片清單</sys:String>
     <sys:String x:Key="MIClearClipList">清除短片清單</sys:String>

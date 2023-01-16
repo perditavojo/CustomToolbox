@@ -1099,6 +1099,19 @@
                         <MenuItem x:Name="MIDLClip"
                             Header="{DynamicResource MIDLClip}"
                             Click="MIDLClip_Click" />
+                        <MenuItem x:Name="MIDownloadOptions" 
+                            Header="{DynamicResource MIDownloadOptions}">
+                            <MenuItem x:Name="MIFullDownloadFirst" 
+                                Header="{DynamicResource MIFullDownloadFirst}"
+                                IsCheckable="True"
+                                Checked="MIFullDownloadFirst_Checked"
+                                Unchecked="MIFullDownloadFirst_Unchecked" />
+                            <MenuItem x:Name="MIDeleteSourceFile" 
+                                Header="{DynamicResource MIDeleteSourceFile}"
+                                IsCheckable="True"
+                                Checked="MIDeleteSourceFile_Checked"
+                                Unchecked="MIDeleteSourceFile_Unchecked" />
+                        </MenuItem>
                         <Separator />
                         <MenuItem x:Name="MIRandomPlayClip"
                             Header="{DynamicResource MIRandomPlayClip}"

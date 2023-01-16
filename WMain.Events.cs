@@ -717,20 +717,14 @@ public partial class WMain : Window
 
                 if (clipData != null)
                 {
-                    // TODO: 2023-01-10 待完成相關功能。
-
-                    // 1. 下載全片。
-                    // 2. 下載此片段。 (先載下全片，再分割出要的片段)
-                    // 3. 直接下載此片段。 (yt-dlp + FFmpeg)
-                    // 4. 批次直接下載此片段。 (yt-dlp + FFmpeg)
-                    // 5. 先下載全片，再批次分割片段。
-                    // *. 是否在下載或分割後刪除原本下載的檔案。
+                    // TODO: 2023-01-16 待完成相關功能。
+                    // 1. 批次直接下載此片段。 (yt-dlp + FFmpeg)
+                    // 2. 先下載全片，再批次分割片段。
 
                     bool useHardwareAcceleration = Properties.Settings.Default
                             .FFmpegEnableHardwareAcceleration,
-                        // TODO: 2023-01-13 需要找地方設定此值。
-                        isFullDownloadFirst = true,
-                        isDeleteSourceFile = true;
+                        isFullDownloadFirst = Properties.Settings.Default.FullDownloadFirst,
+                        isDeleteSourceFile = Properties.Settings.Default.DeleteSourceFile;
 
                     HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel;
 
@@ -765,6 +759,118 @@ public partial class WMain : Window
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, true);
                 CustomFunction.BatchSetEnabled(ctrlSet2, false);
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void MIFullDownloadFirst_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (!IsInitializing)
+                {
+                    MenuItem control = (MenuItem)sender;
+
+                    bool value = control.IsChecked;
+
+                    if (Properties.Settings.Default.FullDownloadFirst != value)
+                    {
+                        Properties.Settings.Default.FullDownloadFirst = value;
+                        Properties.Settings.Default.Save();
+                    }
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void MIFullDownloadFirst_Unchecked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (!IsInitializing)
+                {
+                    MenuItem control = (MenuItem)sender;
+
+                    bool value = control.IsChecked;
+
+                    if (Properties.Settings.Default.FullDownloadFirst != value)
+                    {
+                        Properties.Settings.Default.FullDownloadFirst = value;
+                        Properties.Settings.Default.Save();
+                    }
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void MIDeleteSourceFile_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (!IsInitializing)
+                {
+                    MenuItem control = (MenuItem)sender;
+
+                    bool value = control.IsChecked;
+
+                    if (Properties.Settings.Default.DeleteSourceFile != value)
+                    {
+                        Properties.Settings.Default.DeleteSourceFile = value;
+                        Properties.Settings.Default.Save();
+                    }
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void MIDeleteSourceFile_Unchecked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (!IsInitializing)
+                {
+                    MenuItem control = (MenuItem)sender;
+
+                    bool value = control.IsChecked;
+
+                    if (Properties.Settings.Default.DeleteSourceFile != value)
+                    {
+                        Properties.Settings.Default.DeleteSourceFile = value;
+                        Properties.Settings.Default.Save();
+                    }
+                }
             }));
         }
         catch (Exception ex)

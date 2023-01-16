@@ -251,6 +251,41 @@ internal class MsgSet
         .FindResource("YtscToolSuffixText").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 字詞：影片索引值：
+    /// </summary>
+    public static readonly string YtdlSharpVideoIndex = Application.Current
+        .FindResource("YtdlSharpVideoIndex").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字詞：下載速度：
+    /// </summary>
+    public static readonly string YtdlSharpDownloadSpeed = Application.Current
+        .FindResource("YtdlSharpDownloadSpeed").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字詞：剩餘時間：
+    /// </summary>
+    public static readonly string YtdlSharpRemainTimes = Application.Current
+        .FindResource("YtdlSharpRemainTimes").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字詞：檔案大小：
+    /// </summary>
+    public static readonly string YtdlSharpFileSize = Application.Current
+        .FindResource("YtdlSharpFileSize").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字詞：資料：
+    /// </summary>
+    public static readonly string YtdlSharpData = Application.Current
+        .FindResource("YtdlSharpData").ToString() ??
+        string.Empty;
+
     #endregion
 
     #region 字串模板

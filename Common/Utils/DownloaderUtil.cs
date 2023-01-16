@@ -414,15 +414,19 @@ internal class DownloaderUtil
                     if (_PBProgress != null)
                     {
                         _PBProgress.Value = currentPercentageValue;
+                        _PBProgress.ToolTip = $"{currentPercentageValue}%";
                     }
 
                     if (_LOperation != null)
                     {
-                        _LOperation.Content = $"[{e.ProgressId}] " +
+                        string stringValue = $"[{e.ProgressId}] " +
                             $"{e.ReceivedBytesSize.Bytes().LargestWholeNumberValue:#.##}/" +
                             $"{e.TotalBytesToReceive.Bytes()} " +
                             $"({currentPercentageValue}%) " +
                             $"{e.BytesPerSecondSpeed.Bytes()}/s";
+
+                        _LOperation.Content = stringValue;
+                        _LOperation.ToolTip = stringValue;
                     }
                 }));
             }
@@ -441,11 +445,13 @@ internal class DownloaderUtil
                 if (_PBProgress != null)
                 {
                     _PBProgress.Value = 0;
+                    _PBProgress.ToolTip = string.Empty;
                 }
 
                 if (_LOperation != null)
                 {
                     _LOperation.Content = string.Empty;
+                    _LOperation.ToolTip = string.Empty;
                 }
             }));
 

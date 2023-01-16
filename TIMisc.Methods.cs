@@ -178,8 +178,7 @@ public partial class WMain
                 if (CBUseAria2.IsChecked == true)
                 {
                     optionSet.Downloader = new MultiValue<string>(VariableSet.Aria2Path);
-                    // TODO: 2022-12-21 不確定是否還需要此設定值。
-                    optionSet.DownloaderArgs = "aria2c:--no-netrc=false";
+                    optionSet.DownloaderArgs = "aria2c:--allow-overwrite=true";
                 }
                 else
                 {
@@ -228,8 +227,7 @@ public partial class WMain
                     if (CBUseAria2.IsChecked == true)
                     {
                         optionSet.Downloader = new MultiValue<string>(VariableSet.Aria2Path);
-                        // TODO: 2022-12-21 不確定是否還需要此設定值。
-                        optionSet.DownloaderArgs = "aria2c:--no-netrc=false";
+                        optionSet.DownloaderArgs = "aria2c:--allow-overwrite=true";
                     }
                 }
 

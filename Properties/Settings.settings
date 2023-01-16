@@ -146,5 +146,14 @@
     <Setting Name="PlaywrightChannelNameRowLimit" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">3</Value>
     </Setting>
+    <Setting Name="FullDownloadFirst" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DeleteSourceFile" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="LOperationLimitLength" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

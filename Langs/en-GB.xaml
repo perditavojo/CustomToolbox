@@ -44,6 +44,11 @@
     <sys:String x:Key="VideoDataFormats">Formats:</sys:String>
     <sys:String x:Key="YtscToolPrefixText">CURRENTLY HAS</sys:String>
     <sys:String x:Key="YtscToolSuffixText">YOUTUBE SUBSCRIBERS</sys:String>
+    <sys:String x:Key="YtdlSharpVideoIndex" xml:space="preserve"> Index: </sys:String>
+    <sys:String x:Key="YtdlSharpDownloadSpeed" xml:space="preserve"> Download speed: </sys:String>
+    <sys:String x:Key="YtdlSharpRemainTimes" xml:space="preserve"> Remain times: </sys:String>
+    <sys:String x:Key="YtdlSharpFileSize" xml:space="preserve"> File size: </sys:String>
+    <sys:String x:Key="YtdlSharpData" xml:space="preserve"> Data: </sys:String>
     <!-- String template -->
     <sys:String x:Key="TemplateMaintainer">[Maintainer: {0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1} ({2})]: ({3}) {4}</sys:String>
@@ -189,6 +194,9 @@
     <sys:String x:Key="MIPlayClip">Play this clip</sys:String>
     <sys:String x:Key="MIFetchClip">Fetch info of this clip</sys:String>
     <sys:String x:Key="MIDLClip">Download this clip</sys:String>
+    <sys:String x:Key="MIDownloadOptions">Download options</sys:String>
+    <sys:String x:Key="MIFullDownloadFirst">Full download first</sys:String>
+    <sys:String x:Key="MIDeleteSourceFile">Delete source file</sys:String>
     <sys:String x:Key="MIRandomPlayClip">Random play clip</sys:String>
     <sys:String x:Key="MIReorderClipList">Reorder clip list</sys:String>
     <sys:String x:Key="MIClearClipList">Clear clip list</sys:String>

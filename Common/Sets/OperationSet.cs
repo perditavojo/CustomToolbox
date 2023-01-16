@@ -271,10 +271,13 @@ internal class OperationSet
         {
             ct.ThrowIfCancellationRequested();
 
-            string fileName = string.Join(
-                "_",
-                $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
-                Array.Empty<string>());
+            // 先處裡檔案名稱。
+            string fileName = string.IsNullOrEmpty(clipData.Name) ?
+                string.Empty :
+                string.Join(
+                    "_",
+                    $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
+                    Array.Empty<string>());
 
             YoutubeDL ytdl = ExternalProgram.GetYoutubeDL();
 
@@ -398,7 +401,7 @@ internal class OperationSet
         {
             ct.ThrowIfCancellationRequested();
 
-            // TODO: 2023-01-04 分割 WebM 格式的影片會出錯。
+            // WONTFIX: 2023-01-04 分割 WebM 格式的影片會出錯。
 
             // 當為下載完整短片時，不需要修正 duration。
             bool isFixDuration = !isFullDownloadFirst;
@@ -445,6 +448,8 @@ internal class OperationSet
                     File.Delete(sourceFilePath);
                 }
             }
+
+            // TODO: 2023-01-16 待加入提示資訊。
         }
         catch (Exception ex)
         {
@@ -1177,32 +1182,44 @@ internal class OperationSet
                 double currentPercent = downloadProgress.Progress * 100;
 
                 _PBProgress.Value = currentPercent;
+                _PBProgress.ToolTip = $"{currentPercent}%";
 
                 string message = $"({downloadProgress.State})";
 
-                message += $" 影片索引值：{downloadProgress.VideoIndex}";
+                message += MsgSet.GetFmtStr(MsgSet.YtdlSharpVideoIndex, downloadProgress.VideoIndex.ToString());
 
                 if (!string.IsNullOrEmpty(downloadProgress.DownloadSpeed))
                 {
-                    message += $" 下載速度：{downloadProgress.DownloadSpeed}";
+                    message += MsgSet.GetFmtStr(MsgSet.YtdlSharpDownloadSpeed, downloadProgress.DownloadSpeed);
                 }
 
                 if (!string.IsNullOrEmpty(downloadProgress.ETA))
                 {
-                    message += $" 剩餘時間：{downloadProgress.ETA}";
+                    message += MsgSet.GetFmtStr(MsgSet.YtdlSharpRemainTimes, downloadProgress.ETA);
                 }
 
                 if (!string.IsNullOrEmpty(downloadProgress.TotalDownloadSize))
                 {
-                    message += $" 檔案大小：{downloadProgress.TotalDownloadSize}";
+                    message += MsgSet.GetFmtStr(MsgSet.YtdlSharpFileSize, downloadProgress.TotalDownloadSize);
                 }
 
                 if (!string.IsNullOrEmpty(downloadProgress.Data))
                 {
-                    message += $" 資料：{downloadProgress.Data}";
+                    message += MsgSet.GetFmtStr(MsgSet.YtdlSharpData, downloadProgress.Data);
                 }
 
-                _LOperation.Content = message;
+                // 避免字串太長，造成顯示問題。
+                string reducedMessage = message;
+
+                int limitLength = Properties.Settings.Default.LOperationLimitLength;
+
+                if (reducedMessage.Length > limitLength)
+                {
+                    reducedMessage = $"{reducedMessage[..limitLength]}...";
+                }
+
+                _LOperation.Content = reducedMessage;
+                _LOperation.ToolTip = message;
             }));
         });
     }

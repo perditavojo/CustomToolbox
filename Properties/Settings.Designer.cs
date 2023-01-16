@@ -556,5 +556,38 @@ namespace CustomToolbox.Properties {
                 return ((int)(this["PlaywrightChannelNameRowLimit"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FullDownloadFirst {
+            get {
+                return ((bool)(this["FullDownloadFirst"]));
+            }
+            set {
+                this["FullDownloadFirst"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DeleteSourceFile {
+            get {
+                return ((bool)(this["DeleteSourceFile"]));
+            }
+            set {
+                this["DeleteSourceFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int LOperationLimitLength {
+            get {
+                return ((int)(this["LOperationLimitLength"]));
+            }
+        }
     }
 }

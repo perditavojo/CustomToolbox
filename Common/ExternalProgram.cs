@@ -379,9 +379,6 @@ internal class ExternalProgram
     {
         OptionSet optionSet = GetOptionSet();
 
-        // 先清理過 fileName。
-        fileName = string.Join("_", fileName?.Split(Path.GetInvalidFileNameChars()) ?? Array.Empty<string>());
-
         // 判斷是否為僅音訊。
         if (isAudioOnly)
         {
@@ -709,11 +706,13 @@ internal class ExternalProgram
             if (_PBProgress != null)
             {
                 _PBProgress.Value = 0;
+                _PBProgress.ToolTip = string.Empty;
             }
 
             if (_LOperation != null)
             {
                 _LOperation.Content = string.Empty;
+                _LOperation.ToolTip = string.Empty;
             }
         }));
 
@@ -744,16 +743,30 @@ internal class ExternalProgram
             if (_PBProgress != null)
             {
                 _PBProgress.Value = percent;
+                _PBProgress.ToolTip = $"{percent}%";
             }
 
             if (_LOperation != null)
             {
-                _LOperation.Content = MsgSet.GetFmtStr(
+                string stringValue = MsgSet.GetFmtStr(
                     MsgSet.TemplateXabeFFmpegOnProgress,
                     args.ProcessId.ToString(),
                     args.Duration.ToString(),
                     args.TotalLength.ToString(),
                     percent.ToString());
+
+                // 避免字串太長，造成顯示問題。
+                string reducedStringValue = stringValue;
+
+                int limitLength = Properties.Settings.Default.LOperationLimitLength;
+
+                if (reducedStringValue.Length > limitLength)
+                {
+                    reducedStringValue = $"{reducedStringValue[..limitLength]}...";
+                }
+
+                _LOperation.Content = reducedStringValue;
+                _LOperation.ToolTip = stringValue;
             }
         }));
     }

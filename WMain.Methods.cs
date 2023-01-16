@@ -62,7 +62,7 @@ public partial class WMain
                     }
                     catch (Exception ex)
                     {
-                        // TODO: (wontfix) 2022-12-20 目前無好方法以避免此例外。
+                        // WONTFIX: 2022-12-20 目前無好方法以避免此例外。
                         Debug.WriteLine(ex.ToString());
                     }
                 });
@@ -122,6 +122,8 @@ public partial class WMain
                 SVolume.Value = Convert.ToDouble(Properties.Settings.Default.MpvNetLibVolume.ToString());
                 CBNoVideo.IsChecked = Properties.Settings.Default.MpvNetLibNoVideo;
                 CBAutoLyric.IsChecked = Properties.Settings.Default.NetPlaylistAutoLyric;
+                MIFullDownloadFirst.IsChecked = Properties.Settings.Default.FullDownloadFirst;
+                MIDeleteSourceFile.IsChecked = Properties.Settings.Default.DeleteSourceFile;
 
                 InitB23ClipListExcludedPhrases();
 
@@ -569,7 +571,7 @@ public partial class WMain
                     }
                     catch (Exception ex)
                     {
-                        // TODO: (wontfix) 2022-12-20 目前無好方法以避免此例外。
+                        // WONTFIX: 2022-12-20 目前無好方法以避免此例外。
                         Debug.WriteLine(ex.ToString());
                     }
                 });
