@@ -1186,26 +1186,36 @@ internal class OperationSet
 
                 string message = $"({downloadProgress.State})";
 
-                message += MsgSet.GetFmtStr(MsgSet.YtdlSharpVideoIndex, downloadProgress.VideoIndex.ToString());
+                message += MsgSet.GetFmtStr(
+                    MsgSet.YtdlSharpVideoIndex,
+                    downloadProgress.VideoIndex.ToString());
 
                 if (!string.IsNullOrEmpty(downloadProgress.DownloadSpeed))
                 {
-                    message += MsgSet.GetFmtStr(MsgSet.YtdlSharpDownloadSpeed, downloadProgress.DownloadSpeed);
+                    message += MsgSet.GetFmtStr(
+                        MsgSet.YtdlSharpDownloadSpeed,
+                        downloadProgress.DownloadSpeed);
                 }
 
                 if (!string.IsNullOrEmpty(downloadProgress.ETA))
                 {
-                    message += MsgSet.GetFmtStr(MsgSet.YtdlSharpRemainTimes, downloadProgress.ETA);
+                    message += MsgSet.GetFmtStr(
+                        MsgSet.YtdlSharpETA,
+                        downloadProgress.ETA);
                 }
 
                 if (!string.IsNullOrEmpty(downloadProgress.TotalDownloadSize))
                 {
-                    message += MsgSet.GetFmtStr(MsgSet.YtdlSharpFileSize, downloadProgress.TotalDownloadSize);
+                    message += MsgSet.GetFmtStr(
+                        MsgSet.YtdlSharpTotalDownloadSize,
+                        downloadProgress.TotalDownloadSize);
                 }
 
                 if (!string.IsNullOrEmpty(downloadProgress.Data))
                 {
-                    message += MsgSet.GetFmtStr(MsgSet.YtdlSharpData, downloadProgress.Data);
+                    message += MsgSet.GetFmtStr(
+                        MsgSet.YtdlSharpData,
+                        downloadProgress.Data);
                 }
 
                 // 避免字串太長，造成顯示問題。

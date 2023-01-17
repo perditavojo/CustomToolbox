@@ -44,11 +44,11 @@
     <sys:String x:Key="VideoDataFormats">Formats:</sys:String>
     <sys:String x:Key="YtscToolPrefixText">CURRENTLY HAS</sys:String>
     <sys:String x:Key="YtscToolSuffixText">YOUTUBE SUBSCRIBERS</sys:String>
-    <sys:String x:Key="YtdlSharpVideoIndex" xml:space="preserve"> Index: </sys:String>
-    <sys:String x:Key="YtdlSharpDownloadSpeed" xml:space="preserve"> Download speed: </sys:String>
-    <sys:String x:Key="YtdlSharpRemainTimes" xml:space="preserve"> Remain times: </sys:String>
-    <sys:String x:Key="YtdlSharpFileSize" xml:space="preserve"> File size: </sys:String>
-    <sys:String x:Key="YtdlSharpData" xml:space="preserve"> Data: </sys:String>
+    <sys:String x:Key="YtdlSharpVideoIndex" xml:space="preserve"> Video index: {0}</sys:String>
+    <sys:String x:Key="YtdlSharpDownloadSpeed" xml:space="preserve"> Download speed: {0}</sys:String>
+    <sys:String x:Key="YtdlSharpETA" xml:space="preserve"> ETA: {0}</sys:String>
+    <sys:String x:Key="YtdlSharpTotalDownloadSize" xml:space="preserve"> Total download size: {0}</sys:String>
+    <sys:String x:Key="YtdlSharpData" xml:space="preserve"> Data: {0}</sys:String>
     <!-- String template -->
     <sys:String x:Key="TemplateMaintainer">[Maintainer: {0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1} ({2})]: ({3}) {4}</sys:String>

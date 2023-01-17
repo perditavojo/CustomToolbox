@@ -252,35 +252,35 @@ internal class MsgSet
         string.Empty;
 
     /// <summary>
-    /// 字詞：影片索引值：
+    /// 字詞：影片索引值：？
     /// </summary>
     public static readonly string YtdlSharpVideoIndex = Application.Current
         .FindResource("YtdlSharpVideoIndex").ToString() ??
         string.Empty;
 
     /// <summary>
-    /// 字詞：下載速度：
+    /// 字詞：下載速度：？
     /// </summary>
     public static readonly string YtdlSharpDownloadSpeed = Application.Current
         .FindResource("YtdlSharpDownloadSpeed").ToString() ??
         string.Empty;
 
     /// <summary>
-    /// 字詞：剩餘時間：
+    /// 字詞：剩餘時間：？
     /// </summary>
-    public static readonly string YtdlSharpRemainTimes = Application.Current
-        .FindResource("YtdlSharpRemainTimes").ToString() ??
+    public static readonly string YtdlSharpETA = Application.Current
+        .FindResource("YtdlSharpETA").ToString() ??
         string.Empty;
 
     /// <summary>
-    /// 字詞：檔案大小：
+    /// 字詞：檔案大小：？
     /// </summary>
-    public static readonly string YtdlSharpFileSize = Application.Current
-        .FindResource("YtdlSharpFileSize").ToString() ??
+    public static readonly string YtdlSharpTotalDownloadSize = Application.Current
+        .FindResource("YtdlSharpTotalDownloadSize").ToString() ??
         string.Empty;
 
     /// <summary>
-    /// 字詞：資料：
+    /// 字詞：資料：？
     /// </summary>
     public static readonly string YtdlSharpData = Application.Current
         .FindResource("YtdlSharpData").ToString() ??

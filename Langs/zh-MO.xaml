@@ -44,11 +44,11 @@
     <sys:String x:Key="VideoDataFormats">格式：</sys:String>
     <sys:String x:Key="YtscToolPrefixText">目前已有</sys:String>
     <sys:String x:Key="YtscToolSuffixText">位 YouTube 訂閱者</sys:String>
-    <sys:String x:Key="YtdlSharpVideoIndex" xml:space="preserve"> 影片索引值：</sys:String>
-    <sys:String x:Key="YtdlSharpDownloadSpeed" xml:space="preserve"> 下載速度：</sys:String>
-    <sys:String x:Key="YtdlSharpRemainTimes" xml:space="preserve"> 剩餘時間：</sys:String>
-    <sys:String x:Key="YtdlSharpFileSize" xml:space="preserve"> 檔案大小：</sys:String>
-    <sys:String x:Key="YtdlSharpData" xml:space="preserve"> 資料：</sys:String>
+    <sys:String x:Key="YtdlSharpVideoIndex" xml:space="preserve"> 影片索引值：{0}</sys:String>
+    <sys:String x:Key="YtdlSharpDownloadSpeed" xml:space="preserve"> 下載速度：{0}</sys:String>
+    <sys:String x:Key="YtdlSharpETA" xml:space="preserve"> 剩餘時間：{0}</sys:String>
+    <sys:String x:Key="YtdlSharpTotalDownloadSize" xml:space="preserve"> 檔案大小：{0}</sys:String>
+    <sys:String x:Key="YtdlSharpData" xml:space="preserve"> 資料：{0}</sys:String>
     <!-- 字串模板 -->
     <sys:String x:Key="TemplateMaintainer">[維護者：{0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1}（{2}）]：（{3}）{4}</sys:String>
