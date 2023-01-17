@@ -507,7 +507,16 @@ internal class DownloaderUtil
 
         WebHeaderCollection headerCollection = new()
         {
-            { "Origin", "https://space.bilibili.com" }
+            { "Origin", "https://space.bilibili.com" },
+            { "DNT", "1" },
+            // TODO: 2023-01-17 待測試 Client Hints。
+            { "Sec-CH-UA", "\"Chromium\";v=\"108\", \"Not?A_Brand\";v=\"8\"" },
+            { "Sec-CH-UA-Mobile", "?0" },
+            { "Sec-CH-UA-Platform", "Windows" },
+            { "Sec-Fetch-Dest", "document" },
+            { "Sec-Fetch-Mode", "navigate" },
+            { "Sec-Fetch-Site", "none" },
+            { "Sec-Fetch-User", "?1" }
         };
 
         // 當使用者代理字串值不為空時才設定。

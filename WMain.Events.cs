@@ -505,7 +505,7 @@ public partial class WMain : Window
     {
         try
         {
-            // TODO: 2022-12-12 暫時先不利用。
+            // 2022-12-12 暫時先不利用。
 
             TabControl control = (TabControl)sender;
             TabItem tabItem = (TabItem)control.SelectedItem;
@@ -702,7 +702,9 @@ public partial class WMain : Window
                     MIFetchClip,
                     MIDLClip,
                     BtnGenerateB23ClipList,
-                    BtnBurnInSubtitle
+                    BtnBurnInSubtitle,
+                    MIFullDownloadFirst,
+                    MIDeleteSourceFile
                 };
 
                 Control[] ctrlSet2 =

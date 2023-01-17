@@ -369,7 +369,9 @@ internal class OperationSet
                 }
 
                 _LOperation.Content = string.Empty;
+                _LOperation.ToolTip = string.Empty;
                 _PBProgress.Value = 0.0d;
+                _PBProgress.ToolTip = string.Empty;
             }));
         }
     }
@@ -400,8 +402,6 @@ internal class OperationSet
         try
         {
             ct.ThrowIfCancellationRequested();
-
-            // WONTFIX: 2023-01-04 分割 WebM 格式的影片會出錯。
 
             // 當為下載完整短片時，不需要修正 duration。
             bool isFixDuration = !isFullDownloadFirst;
@@ -448,8 +448,6 @@ internal class OperationSet
                     File.Delete(sourceFilePath);
                 }
             }
-
-            // TODO: 2023-01-16 待加入提示資訊。
         }
         catch (Exception ex)
         {

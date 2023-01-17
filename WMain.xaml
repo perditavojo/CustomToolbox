@@ -1096,6 +1096,7 @@
                         <MenuItem x:Name="MIFetchClip"
                             Header="{DynamicResource MIFetchClip}"
                             Click="MIFetchClip_Click" />
+                        <Separator />
                         <MenuItem x:Name="MIDLClip"
                             Header="{DynamicResource MIDLClip}"
                             Click="MIDLClip_Click" />

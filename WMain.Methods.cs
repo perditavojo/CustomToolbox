@@ -605,6 +605,14 @@ public partial class WMain
         //httpClient?.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com");
         //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
         httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
+        // TODO: 2023-01-17 待測試 Client Hints。
+        //httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA", "\"Chromium\";v=\"108\", \"Not?A_Brand\";v=\"8\"");
+        //httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA-Mobile", "?0");
+        //httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA-Platform", "Windows");
+        //httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Dest", "document");
+        //httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Mode", "navigate");
+        //httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Site", "none");
+        //httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-User", "?1");
 
         return httpClient;
     }

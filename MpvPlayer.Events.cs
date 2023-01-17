@@ -20,7 +20,7 @@ public partial class WMain
             WPPPlayer.Close();
             WPPPlayer = null;
 
-            // TODO: 2022-12-18 待考慮是否要改為雙擊放大到全螢幕。
+            // 雙擊放大到全螢幕。
             /*
             WMain_KeyDown(sender, new KeyEventArgs(
                 Keyboard.PrimaryDevice,
