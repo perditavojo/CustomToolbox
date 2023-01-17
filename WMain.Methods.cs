@@ -339,6 +339,20 @@ public partial class WMain
     }
 
     /// <summary>
+    /// 取得與指定 ClipData 有關的 ClipData 資料。
+    /// </summary>
+    /// <returns>List&lt;ClipData&gt;?</returns>
+    private List<ClipData>? GetClipDataRelatedItems(ClipData? clipData)
+    {
+        if (clipData != null)
+        {
+            return GlobalDataSet.Where(n => n.VideoUrlOrID == clipData.VideoUrlOrID).ToList();
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// 取得 GlobalCT
     /// </summary>
     /// <returns>CancellationToken</returns>

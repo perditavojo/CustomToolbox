@@ -10,9 +10,11 @@ using Humanizer;
 using Label = System.Windows.Controls.Label;
 using Microsoft.Playwright;
 using OpenCCNET;
+using Page = CustomToolbox.BilibiliApi.Models.Page;
 using ProgressBar = ModernWpf.Controls.ProgressBar;
 using System.IO;
 using System.Text.Json;
+using System.Windows.Controls;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
@@ -301,6 +303,19 @@ internal class OperationSet
             {
                 _WMain?.WriteLog(runResult.Data);
 
+                await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (_LOperation == null || _PBProgress == null)
+                    {
+                        return;
+                    }
+
+                    _LOperation.Content = string.Empty;
+                    _LOperation.ToolTip = string.Empty;
+                    _PBProgress.Value = 0.0d;
+                    _PBProgress.ToolTip = string.Empty;
+                }));
+
                 // 計算間隔秒數。
                 double durationSeconds = clipData.EndTime.TotalSeconds -
                     clipData.StartTime.TotalSeconds;
@@ -359,20 +374,308 @@ internal class OperationSet
         {
             _WMain?.WriteLog(ex.Message);
         }
-        finally
+    }
+
+    /// <summary>
+    /// 執行下載同一網址的短片（先下載完整短片）
+    /// </summary>
+    /// <param name="control">DataGrid</param>
+    /// <param name="clipData">ClipData</param>
+    /// <param name="clipDatas">List&lt;ClipData&gt;</param>
+    /// <param name="isFullDownloadFirst">布林值，是否先下載完整短片，預設值為 false</param>
+    /// <param name="useHardwareAcceleration">布林值，是否使用硬體加速解編碼，預設值為 false</param>
+    /// <param name="hardwareAcceleratorType">HardwareAcceleratorType，硬體加速的類型，預設值為 HardwareAcceleratorType.Intel</param>
+    /// <param name="deviceNo">數值，GPU 裝置的 ID 值，預設為 0</param>
+    /// <param name="isDeleteSourceFile">布林值，是否刪除來源檔案，預設為 false</param>
+    /// <param name="ct">CancellationToken</param>
+    /// <returns>Task</returns>
+    public static async Task DoDownloadClip(
+        DataGrid control,
+        ClipData clipData,
+        List<ClipData> clipDatas,
+        bool isFullDownloadFirst = false,
+        bool useHardwareAcceleration = false,
+        HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel,
+        int deviceNo = 0,
+        bool isDeleteSourceFile = false,
+        CancellationToken ct = default)
+    {
+        try
         {
-            await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            ct.ThrowIfCancellationRequested();
+
+            // 先處裡檔案名稱。
+            string fileName = string.IsNullOrEmpty(clipData.Name) ?
+                string.Empty :
+                string.Join(
+                    "_",
+                    $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
+                    Array.Empty<string>());
+
+            YoutubeDL ytdl = ExternalProgram.GetYoutubeDL();
+
+            OptionSet configuredOptionSet = ExternalProgram.GetConfiguredOptionSet(
+                    startSeconds: clipData.StartTime.TotalSeconds,
+                    endSeconds: clipData.EndTime.TotalSeconds,
+                    fileName: fileName,
+                    isAudioOnly: clipData.IsAudioOnly,
+                    isFullDownloadFirst: isFullDownloadFirst);
+
+            RunResult<string> runResult = await ytdl.RunVideoDownload(
+                url: clipData.VideoUrlOrID,
+                mergeFormat: DownloadMergeFormat.Unspecified,
+                recodeFormat: VideoRecodeFormat.None,
+                progress: GetDownloadProgress(),
+                output: GetOutputProgress(),
+                ct: ct,
+                overrideOptions: configuredOptionSet);
+
+            if (runResult.Success)
             {
-                if (_LOperation == null || _PBProgress == null)
+                _WMain?.WriteLog(runResult.Data);
+
+                await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    return;
+                    if (_LOperation == null || _PBProgress == null)
+                    {
+                        return;
+                    }
+
+                    _LOperation.Content = string.Empty;
+                    _LOperation.ToolTip = string.Empty;
+                    _PBProgress.Value = 0.0d;
+                    _PBProgress.ToolTip = string.Empty;
+                }));
+
+                foreach (ClipData childClipData in clipDatas)
+                {
+                    ct.ThrowIfCancellationRequested();
+
+                    // 設定 DataGrid 選擇的項目來當作進度指示。
+                    control.SelectedItem = childClipData;
+
+                    // 再次處裡檔案名稱。
+                    fileName = string.IsNullOrEmpty(childClipData.Name) ?
+                        string.Empty :
+                        string.Join(
+                            "_",
+                            $"{childClipData.No}.{childClipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
+                            Array.Empty<string>());
+
+                    // 計算間隔秒數。
+                    double durationSeconds = childClipData.EndTime.TotalSeconds -
+                        childClipData.StartTime.TotalSeconds;
+
+                    // 判斷是否為下載完整短片。
+                    if (isFullDownloadFirst)
+                    {
+                        // 當 durationSeconds 的值大於 0 時，
+                        // 需要再透過 FFmpeg 來分割短片檔案。
+                        if (durationSeconds > 0)
+                        {
+                            await DoFFmpegTask(
+                                runResult: runResult,
+                                fileName: fileName,
+                                clipData: childClipData,
+                                isFullDownloadFirst: isFullDownloadFirst,
+                                useHardwareAcceleration: useHardwareAcceleration,
+                                hardwareAcceleratorType: hardwareAcceleratorType,
+                                deviceNo: deviceNo,
+                                // 不在此處刪除來源檔案。
+                                isDeleteSourceFile: false,
+                                ct: ct);
+                        }
+                    }
+                    else
+                    {
+                        // 當 durationSeconds 的值大於 0 時，
+                        // 需要再透過 FFmpeg 來處理短片檔案。
+                        if (durationSeconds > 0)
+                        {
+                            await DoFFmpegTask(
+                                runResult: runResult,
+                                fileName: fileName,
+                                clipData: childClipData,
+                                isFullDownloadFirst: isFullDownloadFirst,
+                                useHardwareAcceleration: useHardwareAcceleration,
+                                hardwareAcceleratorType: hardwareAcceleratorType,
+                                deviceNo: deviceNo,
+                                // 不在此處刪除來源檔案。
+                                isDeleteSourceFile: false,
+                                ct: ct);
+                        }
+                    }
                 }
 
-                _LOperation.Content = string.Empty;
-                _LOperation.ToolTip = string.Empty;
-                _PBProgress.Value = 0.0d;
-                _PBProgress.ToolTip = string.Empty;
-            }));
+                // 清除 DataGrid 已選擇的項目。
+                control.SelectedItem = null;
+
+                // 最後才判斷是否要刪除來源檔案。
+                if (isDeleteSourceFile)
+                {
+                    if (File.Exists(runResult.Data))
+                    {
+                        File.Delete(runResult.Data);
+                    }
+                }
+            }
+            else
+            {
+                if (runResult.ErrorOutput.Any())
+                {
+                    string errMsg = string.Join(
+                        Environment.NewLine,
+                        runResult.ErrorOutput);
+
+                    _WMain?.WriteLog(errMsg);
+                }
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// 執行下載同一網址的短片
+    /// </summary>
+    /// <param name="control">DataGrid</param>
+    /// <param name="clipDatas">List&lt;ClipData&gt;</param>
+    /// <param name="isFullDownloadFirst">布林值，是否先下載完整短片，預設值為 false</param>
+    /// <param name="useHardwareAcceleration">布林值，是否使用硬體加速解編碼，預設值為 false</param>
+    /// <param name="hardwareAcceleratorType">HardwareAcceleratorType，硬體加速的類型，預設值為 HardwareAcceleratorType.Intel</param>
+    /// <param name="deviceNo">數值，GPU 裝置的 ID 值，預設為 0</param>
+    /// <param name="isDeleteSourceFile">布林值，是否刪除來源檔案，預設為 false</param>
+    /// <param name="ct">CancellationToken</param>
+    /// <returns>Task</returns>
+    public static async Task DoDownloadClip(
+        DataGrid control,
+        List<ClipData> clipDatas,
+        bool isFullDownloadFirst = false,
+        bool useHardwareAcceleration = false,
+        HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel,
+        int deviceNo = 0,
+        bool isDeleteSourceFile = false,
+        CancellationToken ct = default)
+    {
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+
+            foreach (ClipData clipData in clipDatas)
+            {
+                ct.ThrowIfCancellationRequested();
+
+                // 設定 DataGrid 選擇的項目來當作進度指示。
+                control.SelectedItem = clipData;
+
+                // 先處裡檔案名稱。
+                string fileName = string.IsNullOrEmpty(clipData.Name) ?
+                    string.Empty :
+                    string.Join(
+                        "_",
+                        $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
+                        Array.Empty<string>());
+
+                YoutubeDL ytdl = ExternalProgram.GetYoutubeDL();
+
+                OptionSet configuredOptionSet = ExternalProgram.GetConfiguredOptionSet(
+                        startSeconds: clipData.StartTime.TotalSeconds,
+                        endSeconds: clipData.EndTime.TotalSeconds,
+                        fileName: fileName,
+                        isAudioOnly: clipData.IsAudioOnly,
+                        isFullDownloadFirst: isFullDownloadFirst);
+
+                RunResult<string> runResult = await ytdl.RunVideoDownload(
+                    url: clipData.VideoUrlOrID,
+                    mergeFormat: DownloadMergeFormat.Unspecified,
+                    recodeFormat: VideoRecodeFormat.None,
+                    progress: GetDownloadProgress(),
+                    output: GetOutputProgress(),
+                    ct: ct,
+                    overrideOptions: configuredOptionSet);
+
+                if (runResult.Success)
+                {
+                    _WMain?.WriteLog(runResult.Data);
+
+                    await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        if (_LOperation == null || _PBProgress == null)
+                        {
+                            return;
+                        }
+
+                        _LOperation.Content = string.Empty;
+                        _LOperation.ToolTip = string.Empty;
+                        _PBProgress.Value = 0.0d;
+                        _PBProgress.ToolTip = string.Empty;
+                    }));
+
+                    // 計算間隔秒數。
+                    double durationSeconds = clipData.EndTime.TotalSeconds -
+                        clipData.StartTime.TotalSeconds;
+
+                    // 判斷是否為下載完整短片。
+                    if (isFullDownloadFirst)
+                    {
+                        // 當 durationSeconds 的值大於 0 時，
+                        // 需要再透過 FFmpeg 來分割短片檔案。
+                        if (durationSeconds > 0)
+                        {
+                            await DoFFmpegTask(
+                                runResult: runResult,
+                                fileName: fileName,
+                                clipData: clipData,
+                                isFullDownloadFirst: isFullDownloadFirst,
+                                useHardwareAcceleration: useHardwareAcceleration,
+                                hardwareAcceleratorType: hardwareAcceleratorType,
+                                deviceNo: deviceNo,
+                                isDeleteSourceFile: isDeleteSourceFile,
+                                ct: ct);
+                        }
+                    }
+                    else
+                    {
+                        // 當 durationSeconds 的值大於 0 時，
+                        // 需要再透過 FFmpeg 來處理短片檔案。
+                        if (durationSeconds > 0)
+                        {
+                            await DoFFmpegTask(
+                                runResult: runResult,
+                                fileName: fileName,
+                                clipData: clipData,
+                                isFullDownloadFirst: isFullDownloadFirst,
+                                useHardwareAcceleration: useHardwareAcceleration,
+                                hardwareAcceleratorType: hardwareAcceleratorType,
+                                deviceNo: deviceNo,
+                                isDeleteSourceFile: isDeleteSourceFile,
+                                ct: ct);
+                        }
+                    }
+                }
+                else
+                {
+                    if (runResult.ErrorOutput.Any())
+                    {
+                        string errMsg = string.Join(
+                            Environment.NewLine,
+                            runResult.ErrorOutput);
+
+                        _WMain?.WriteLog(errMsg);
+                    }
+                }
+            }
+
+            // 清除 DataGrid 已選擇的項目。
+            control.SelectedItem = null;
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(ex.Message);
         }
     }
 
@@ -414,7 +717,9 @@ internal class OperationSet
                     $"{sourceFileName}_{fileNameSuffix}{sourceExtName}" :
                     $"{fileName}_{fileNameSuffix}{sourceExtName}",
                 newFilePathRoot = Path.Combine(VariableSet.DownloadsFolderPath, sourceFileName),
-                outputFilePath = Path.Combine(newFilePathRoot, outputFileName);
+                outputFilePath = isFixDuration ?
+                    Path.Combine(VariableSet.DownloadsFolderPath, outputFileName) :
+                    Path.Combine(newFilePathRoot, outputFileName);
 
             IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(sourceFilePath, ct);
 

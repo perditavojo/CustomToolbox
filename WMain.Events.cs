@@ -771,6 +771,111 @@ public partial class WMain : Window
         }
     }
 
+    private void MIDLClipByUrl_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(async () =>
+            {
+                Control[] ctrlSet1 =
+                {
+                    MIFetchClip,
+                    MIDLClip,
+                    BtnGenerateB23ClipList,
+                    BtnBurnInSubtitle,
+                    MIFullDownloadFirst,
+                    MIDeleteSourceFile
+                };
+
+                Control[] ctrlSet2 =
+                {
+                    MICancel
+                };
+
+                CustomFunction.BatchSetEnabled(ctrlSet1, false);
+                CustomFunction.BatchSetEnabled(ctrlSet2, true);
+
+                ClipData? clipData = GetDGClipListSelectedItem();
+
+                if (clipData != null)
+                {
+                    List<ClipData>? clipDatas = GetClipDataRelatedItems(clipData);
+
+                    if (clipDatas == null || !clipDatas.Any())
+                    {
+                        ShowMsgBox(MsgSet.MsgSelectTheClipToDownload);
+
+                        return;
+                    }
+
+                    bool useHardwareAcceleration = Properties.Settings.Default
+                        .FFmpegEnableHardwareAcceleration,
+                    isFullDownloadFirst = Properties.Settings.Default.FullDownloadFirst,
+                    isDeleteSourceFile = Properties.Settings.Default.DeleteSourceFile;
+
+                    HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel;
+
+                    if (!string.IsNullOrEmpty(CBHardwareAccelerationType.Text))
+                    {
+                        hardwareAcceleratorType = CBHardwareAccelerationType.Text switch
+                        {
+                            nameof(HardwareAcceleratorType.AMD) => HardwareAcceleratorType.AMD,
+                            nameof(HardwareAcceleratorType.Intel) => HardwareAcceleratorType.Intel,
+                            nameof(HardwareAcceleratorType.NVIDIA) => HardwareAcceleratorType.NVIDIA,
+                            _ => HardwareAcceleratorType.Intel
+                        };
+                    }
+
+                    VideoCardData videoCardData = (VideoCardData)CBGpuDevice.SelectedItem;
+
+                    int deviceNo = videoCardData.DeviceNo;
+
+                    // TODO: 2023-01-17 待完成相關功能。
+
+                    // 判斷是否為先下載完整短片。
+                    if (isFullDownloadFirst)
+                    {
+                        await OperationSet.DoDownloadClip(
+                            control: DGClipList,
+                            clipData: clipData,
+                            clipDatas: clipDatas,
+                            isFullDownloadFirst: isFullDownloadFirst,
+                            useHardwareAcceleration: useHardwareAcceleration,
+                            hardwareAcceleratorType: hardwareAcceleratorType,
+                            deviceNo: deviceNo,
+                            isDeleteSourceFile: isDeleteSourceFile,
+                            ct: GetGlobalCT());
+                    }
+                    else
+                    {
+                        await OperationSet.DoDownloadClip(
+                            control: DGClipList,
+                            clipDatas: clipDatas,
+                            isFullDownloadFirst: isFullDownloadFirst,
+                            useHardwareAcceleration: useHardwareAcceleration,
+                            hardwareAcceleratorType: hardwareAcceleratorType,
+                            deviceNo: deviceNo,
+                            isDeleteSourceFile: isDeleteSourceFile,
+                            ct: GetGlobalCT());
+                    }
+                }
+                else
+                {
+                    ShowMsgBox(MsgSet.MsgSelectTheClipToDownload);
+                }
+
+                CustomFunction.BatchSetEnabled(ctrlSet1, true);
+                CustomFunction.BatchSetEnabled(ctrlSet2, false);
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
     private void MIFullDownloadFirst_Checked(object sender, RoutedEventArgs e)
     {
         try
