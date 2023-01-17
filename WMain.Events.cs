@@ -654,6 +654,7 @@ public partial class WMain : Window
             {
                 MIFetchClip,
                 MIDLClip,
+                MIDLClipsBySameUrl,
                 BtnGenerateB23ClipList,
                 BtnBurnInSubtitle
             };
@@ -701,10 +702,11 @@ public partial class WMain : Window
                 {
                     MIFetchClip,
                     MIDLClip,
-                    BtnGenerateB23ClipList,
-                    BtnBurnInSubtitle,
+                    MIDLClipsBySameUrl,
                     MIFullDownloadFirst,
-                    MIDeleteSourceFile
+                    MIDeleteSourceFile,
+                    BtnGenerateB23ClipList,
+                    BtnBurnInSubtitle
                 };
 
                 Control[] ctrlSet2 =
@@ -771,7 +773,7 @@ public partial class WMain : Window
         }
     }
 
-    private void MIDLClipByUrl_Click(object sender, RoutedEventArgs e)
+    private void MIDLClipsBySameUrl_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -781,10 +783,11 @@ public partial class WMain : Window
                 {
                     MIFetchClip,
                     MIDLClip,
-                    BtnGenerateB23ClipList,
-                    BtnBurnInSubtitle,
+                    MIDLClipsBySameUrl,
                     MIFullDownloadFirst,
-                    MIDeleteSourceFile
+                    MIDeleteSourceFile,
+                    BtnGenerateB23ClipList,
+                    BtnBurnInSubtitle
                 };
 
                 Control[] ctrlSet2 =

@@ -1100,9 +1100,9 @@
                         <MenuItem x:Name="MIDLClip"
                             Header="{DynamicResource MIDLClip}"
                             Click="MIDLClip_Click" />
-                        <MenuItem x:Name="MIDLClipByUrl"
-                            Header="DL clip by url"
-                            Click="MIDLClipByUrl_Click" />
+                        <MenuItem x:Name="MIDLClipsBySameUrl"
+                            Header="Download clips by same url"
+                            Click="MIDLClipsBySameUrl_Click" />
                         <MenuItem x:Name="MIDownloadOptions" 
                             Header="{DynamicResource MIDownloadOptions}">
                             <MenuItem x:Name="MIFullDownloadFirst" 

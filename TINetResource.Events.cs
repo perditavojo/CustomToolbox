@@ -199,6 +199,7 @@ public partial class WMain
                 {
                     MIFetchClip,
                     MIDLClip,
+                    MIDLClipsBySameUrl,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle
                 };

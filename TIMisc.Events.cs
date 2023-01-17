@@ -1221,6 +1221,7 @@ public partial class WMain
                 BtnMute,
                 MIFetchClip,
                 MIDLClip,
+                MIDLClipsBySameUrl,
                 BtnBurnInSubtitle,
                 MICancel
             };
