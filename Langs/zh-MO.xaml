@@ -2,7 +2,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <!-- 語系資訊 -->
-    <sys:String x:Key="LangName">繁體中文 [澳門特別行政區]</sys:String>
+    <sys:String x:Key="LangName">繁體中文 (澳門特別行政區)</sys:String>
     <sys:String x:Key="LangCode">zh-MO</sys:String>
     <sys:String x:Key="DefaultEncoding">UTF-8</sys:String>
     <sys:String x:Key="DefaultFont">微軟正黑體</sys:String>
@@ -63,6 +63,7 @@
     <sys:String x:Key="MISaveClipListFile">儲存短片清單檔案</sys:String>
     <sys:String x:Key="MIExit">結束</sys:String>
     <sys:String x:Key="MICancel">取消作業</sys:String>
+    <sys:String x:Key="MICheckUpdate">檢查更新</sys:String>
     <sys:String x:Key="MIAbout">關於</sys:String>
     <sys:String x:Key="TIClipPlayer">短片播放器</sys:String>
     <sys:String x:Key="TINetResource">網路資源</sys:String>
@@ -194,6 +195,7 @@
     <sys:String x:Key="MIPlayClip">播放此短片</sys:String>
     <sys:String x:Key="MIFetchClip">獲取此短片的資訊</sys:String>
     <sys:String x:Key="MIDLClip">下載此短片</sys:String>
+    <sys:String x:Key="MIDLClipsByTheSameUrl">依同網址或影片 ID 來下載短片</sys:String>
     <sys:String x:Key="MIDownloadOptions">下載選項</sys:String>
     <sys:String x:Key="MIFullDownloadFirst">先下載完整影片</sys:String>
     <sys:String x:Key="MIDeleteSourceFile">刪除來源檔案</sys:String>
@@ -322,4 +324,14 @@
     <sys:String x:Key="MsgYtscToolSubscribersTooLongCancelClip">訂閱者數字已超過可以顯示的範圍，故不將截圖裁切成正方形。</sys:String>
     <sys:String x:Key="MsgPlaywrightException">Playwright 已結束，離開碼：{0}</sys:String>
     <sys:String x:Key="MsgPlaywrightBrowserPath">Playwright 瀏覽器的路徑：</sys:String>
+    <sys:String x:Key="MsgCantFindTheSameUrlClips">下載失敗，在短片清單內找不到同網址或影片 ID 的短片。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierDownloadNewVersion">您是否要下載新版本 v{0}？</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierDownloadOldVersion">您是否要下載舊版本 v{0}？</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierHttpErrorCode">發生錯誤，HTTP 狀態碼 {0}</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierCantParsedAppVersionJsonFile">發生錯誤，無法解析 AppVersion.json 檔案。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierCantFindAppData">發生錯誤，找不到 {0} 應用程式的資料。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierCantParsedAppVersionData">發生錯誤，無法解析 {0} 應用程式的版本號資料。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierHasNewVersion">有新版本 v{0} 可供下載。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierAlreadyLatestVersion">您使用的是最新版本 v{0}。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierDowngradeNotice">注意！網路的版本（v{0}）比本機的版本（v{1}）還要舊，請注意是否有降版的公告資訊。</sys:String>
 </ResourceDictionary>

@@ -2,7 +2,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <!-- 语系信息 -->
-    <sys:String x:Key="LangName">简体中文 [马来西亚]</sys:String>
+    <sys:String x:Key="LangName">简体中文 (马来西亚)</sys:String>
     <sys:String x:Key="LangCode">zh-MY</sys:String>
     <sys:String x:Key="DefaultEncoding">UTF-8</sys:String>
     <sys:String x:Key="DefaultFont">微软雅黑</sys:String>
@@ -63,6 +63,7 @@
     <sys:String x:Key="MISaveClipListFile">保存短片清单文件</sys:String>
     <sys:String x:Key="MIExit">结束</sys:String>
     <sys:String x:Key="MICancel">取消作业</sys:String>
+    <sys:String x:Key="MICheckUpdate">检查更新</sys:String>
     <sys:String x:Key="MIAbout">关于</sys:String>
     <sys:String x:Key="TIClipPlayer">短片播放器</sys:String>
     <sys:String x:Key="TINetResource">网络资源</sys:String>
@@ -194,6 +195,7 @@
     <sys:String x:Key="MIPlayClip">播放此短片</sys:String>
     <sys:String x:Key="MIFetchClip">获取此短片的信息</sys:String>
     <sys:String x:Key="MIDLClip">下载此短片</sys:String>
+    <sys:String x:Key="MIDLClipsByTheSameUrl">依同网址或视频 ID 来下载短片</sys:String>
     <sys:String x:Key="MIDownloadOptions">下载选项</sys:String>
     <sys:String x:Key="MIFullDownloadFirst">先下载完整视频</sys:String>
     <sys:String x:Key="MIDeleteSourceFile">删除来源文件</sys:String>
@@ -322,4 +324,14 @@
     <sys:String x:Key="MsgYtscToolSubscribersTooLongCancelClip">订阅者数字已超过可以显示的范围，故不将截屏裁切成正方形。</sys:String>
     <sys:String x:Key="MsgPlaywrightException">Playwright 已结束，离开码：{0}</sys:String>
     <sys:String x:Key="MsgPlaywrightBrowserPath">Playwright 浏览器的路径：</sys:String>
+    <sys:String x:Key="MsgCantFindTheSameUrlClips">下载失败，在短片清单内找不到同网址或视频 ID 的短片。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierDownloadNewVersion">您是否要下载新版本 v{0}？</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierDownloadOldVersion">您是否要下载旧版本 v{0}？</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierHttpErrorCode">发生错误，HTTP 状态码 {0}</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierCantParsedAppVersionJsonFile">发生错误，无法解析 AppVersion.json 文件。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierCantFindAppData">发生错误，找不到 {0} 应用程序的数据。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierCantParsedAppVersionData">发生错误，无法解析 {0} 应用程序的版本号数据。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierHasNewVersion">有新版本 v{0} 可供下载。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierAlreadyLatestVersion">您使用的是最新版本 v{0}。</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierDowngradeNotice">注意！网络的版本（v{0}）比本机的版本（v{1}）还要旧，请注意是否有降版的公告信息。</sys:String>
 </ResourceDictionary>

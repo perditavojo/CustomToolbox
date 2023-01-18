@@ -48,9 +48,15 @@
                 IsEnabled="False"
                 IsEnabledChanged="MICancel_IsEnabledChanged"      
                 Click="MICancel_Click" />
-            <MenuItem x:Name="MIAbout"
-                Header="{DynamicResource MIAbout}"
-                Click="MIAbout_Click" />
+            <MenuItem x:Name="MIAboutMenu"
+                Header="{DynamicResource MIAbout}">
+                <MenuItem x:Name="MICheckUpdate"
+                    Header="{DynamicResource MICheckUpdate}"
+                    Click="MICheckUpdate_Click" />
+                <MenuItem x:Name="MIAbout"
+                    Header="{DynamicResource MIAbout}"
+                    Click="MIAbout_Click" />
+            </MenuItem>
         </Menu>
         <Grid x:Name="GContent"
             Grid.Row="1">
@@ -1100,9 +1106,9 @@
                         <MenuItem x:Name="MIDLClip"
                             Header="{DynamicResource MIDLClip}"
                             Click="MIDLClip_Click" />
-                        <MenuItem x:Name="MIDLClipsBySameUrl"
-                            Header="Download clips by same url"
-                            Click="MIDLClipsBySameUrl_Click" />
+                        <MenuItem x:Name="MIDLClipsByTheSameUrl"
+                            Header="{DynamicResource MIDLClipsByTheSameUrl}"
+                            Click="MIDLClipsByTheSameUrl_Click" />
                         <MenuItem x:Name="MIDownloadOptions" 
                             Header="{DynamicResource MIDownloadOptions}">
                             <MenuItem x:Name="MIFullDownloadFirst" 

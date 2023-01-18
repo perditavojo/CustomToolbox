@@ -11,9 +11,9 @@ internal class UrlSet
     public static readonly string QueryUserAgentUrl = "https://www.google.com/search?q=My+User+Agent";
 
     /// <summary>
-    /// AutoUpdater.xml 的網址
+    /// AppVersion.json 檔案的網址
     /// </summary>
-    public static readonly string AutoUpdaterXmlUrl = "https://raw.githubusercontent.com/rubujo/CustomToolbox/updater/AutoUpdater.xml";
+    public static readonly string AppVersionJsonUrl = "https://drive.google.com/uc?id=1cCrvyBTvtDKqK4rqq1wjizqnpTogRN70";
 
     /// <summary>
     /// FFmpeg 的壓縮檔名稱

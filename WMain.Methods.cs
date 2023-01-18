@@ -1,10 +1,10 @@
 ﻿using Application = System.Windows.Application;
-using AutoUpdaterDotNET;
 using ButtonBase = System.Windows.Controls.Primitives.ButtonBase;
 using CustomToolbox.Common;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Models.ImportPlaylist;
+using CustomToolbox.Common.Models.UpdateNotifier;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using ModernWpf.Controls;
@@ -202,7 +202,7 @@ public partial class WMain
                             InitNetResurce();
 
                             // 檢查應用程式是否有新版本。
-                            AutoUpdater.Start(UrlSet.AutoUpdaterXmlUrl);
+                            CheckAppVersion();
                         });
                     }));
             }));
@@ -629,5 +629,55 @@ public partial class WMain
         //httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-User", "?1");
 
         return httpClient;
+    }
+
+    /// <summary>
+    /// 檢查應用程式的版本
+    /// </summary>
+    private async void CheckAppVersion()
+    {
+        using HttpClient? HttpClient = GetHttpClient();
+
+        if (HttpClient == null)
+        {
+            return;
+        }
+
+        CheckResult checkResult = await UpdateNotifier.CheckVersion(HttpClient);
+
+        if (!string.IsNullOrEmpty(checkResult.MessageText))
+        {
+            WriteLog(checkResult.MessageText);
+        }
+
+        if (checkResult.HasNewVersion &&
+            !string.IsNullOrEmpty(checkResult.DownloadUrl))
+        {
+            ShowConfirmMsgBox(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgUpdateNotifierDownloadNewVersion,
+                    checkResult.VersionText ?? string.Empty),
+                primaryAction: new Action(() =>
+                {
+                    CustomFunction.OpenUrl(checkResult.DownloadUrl);
+                }),
+                primaryButtonText: MsgSet.ContentDialogBtnOk,
+                closeButtonText: MsgSet.ContentDialogBtnCancel);
+        }
+
+        if (checkResult.NetVersionIsOdler &&
+            !string.IsNullOrEmpty(checkResult.DownloadUrl))
+        {
+            ShowConfirmMsgBox(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgUpdateNotifierDownloadOldVersion,
+                    checkResult.VersionText ?? string.Empty),
+                primaryAction: new Action(() =>
+                {
+                    CustomFunction.OpenUrl(checkResult.DownloadUrl);
+                }),
+                primaryButtonText: MsgSet.ContentDialogBtnOk,
+                closeButtonText: MsgSet.ContentDialogBtnCancel);
+        }
     }
 }

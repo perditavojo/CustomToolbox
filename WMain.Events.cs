@@ -1,6 +1,7 @@
 ﻿using Brushes = System.Windows.Media.Brushes;
 using Control = System.Windows.Controls.Control;
 using CustomToolbox.Common;
+using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Models.ImportPlaylist;
@@ -22,7 +23,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TabControl = System.Windows.Controls.TabControl;
-using static CustomToolbox.Common.Sets.EnumSet;
 
 namespace CustomToolbox;
 
@@ -464,6 +464,33 @@ public partial class WMain : Window
         }
     }
 
+    public void MICheckUpdate_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // 強制顯示應用程式以顯示對話視窗。
+            WindowExtensions.Show(
+                this,
+                disableEfficiencyMode: true);
+
+            // 只有在 WindowState 是 WindowState.Minimized 時，
+            // 才重新設定 WindowState 至 WindowState.Normal。
+            if (WindowState == WindowState.Minimized)
+            {
+                WindowState = WindowState.Normal;
+            }
+
+            // 檢查應用程式是否有新版本。
+            CheckAppVersion();
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
     public void MIAbout_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -654,7 +681,7 @@ public partial class WMain : Window
             {
                 MIFetchClip,
                 MIDLClip,
-                MIDLClipsBySameUrl,
+                MIDLClipsByTheSameUrl,
                 BtnGenerateB23ClipList,
                 BtnBurnInSubtitle
             };
@@ -702,7 +729,7 @@ public partial class WMain : Window
                 {
                     MIFetchClip,
                     MIDLClip,
-                    MIDLClipsBySameUrl,
+                    MIDLClipsByTheSameUrl,
                     MIFullDownloadFirst,
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
@@ -721,10 +748,6 @@ public partial class WMain : Window
 
                 if (clipData != null)
                 {
-                    // TODO: 2023-01-16 待完成相關功能。
-                    // 1. 批次直接下載此片段。 (yt-dlp + FFmpeg)
-                    // 2. 先下載全片，再批次分割片段。
-
                     bool useHardwareAcceleration = Properties.Settings.Default
                             .FFmpegEnableHardwareAcceleration,
                         isFullDownloadFirst = Properties.Settings.Default.FullDownloadFirst,
@@ -773,7 +796,7 @@ public partial class WMain : Window
         }
     }
 
-    private void MIDLClipsBySameUrl_Click(object sender, RoutedEventArgs e)
+    private void MIDLClipsByTheSameUrl_Click(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -783,7 +806,7 @@ public partial class WMain : Window
                 {
                     MIFetchClip,
                     MIDLClip,
-                    MIDLClipsBySameUrl,
+                    MIDLClipsByTheSameUrl,
                     MIFullDownloadFirst,
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
@@ -806,7 +829,10 @@ public partial class WMain : Window
 
                     if (clipDatas == null || !clipDatas.Any())
                     {
-                        ShowMsgBox(MsgSet.MsgSelectTheClipToDownload);
+                        ShowMsgBox(MsgSet.MsgCantFindTheSameUrlClips);
+
+                        CustomFunction.BatchSetEnabled(ctrlSet1, true);
+                        CustomFunction.BatchSetEnabled(ctrlSet2, false);
 
                         return;
                     }
@@ -833,12 +859,10 @@ public partial class WMain : Window
 
                     int deviceNo = videoCardData.DeviceNo;
 
-                    // TODO: 2023-01-17 待完成相關功能。
-
                     // 判斷是否為先下載完整短片。
                     if (isFullDownloadFirst)
                     {
-                        await OperationSet.DoDownloadClip(
+                        await OperationSet.DoDownloadClips(
                             control: DGClipList,
                             clipData: clipData,
                             clipDatas: clipDatas,
@@ -851,7 +875,7 @@ public partial class WMain : Window
                     }
                     else
                     {
-                        await OperationSet.DoDownloadClip(
+                        await OperationSet.DoDownloadClips(
                             control: DGClipList,
                             clipDatas: clipDatas,
                             isFullDownloadFirst: isFullDownloadFirst,

@@ -73,9 +73,19 @@ internal class TaskbarIconUtil
     private static readonly MenuItem MIStop = new();
 
     /// <summary>
+    /// 關於選單
+    /// </summary>
+    private static readonly MenuItem MIAboutMenu = new();
+
+    /// <summary>
     /// 關於
     /// </summary>
     private static readonly MenuItem MIAbout = new();
+
+    /// <summary>
+    /// 檢查更新
+    /// </summary>
+    private static readonly MenuItem MICheckUpdate = new();
 
     /// <summary>
     /// 結束
@@ -111,6 +121,8 @@ internal class TaskbarIconUtil
             MIPrevious.Header = _WMain.BtnPrevious.Content;
             MINext.Header = _WMain.BtnNext.Content;
             MIStop.Header = _WMain.BtnStop.Content;
+            MIAboutMenu.Header = _WMain.MIAbout.Header;
+            MICheckUpdate.Header = _WMain.MICheckUpdate.Header;
             MIAbout.Header = _WMain.MIAbout.Header;
             MIExit.Header = _WMain.MIExit.Header;
 
@@ -124,6 +136,7 @@ internal class TaskbarIconUtil
             MIPrevious.Click += _WMain.BtnPrevious_Click;
             MINext.Click += _WMain.BtnNext_Click;
             MIStop.Click += _WMain.BtnStop_Click;
+            MICheckUpdate.Click += _WMain.MICheckUpdate_Click;
             MIAbout.Click += _WMain.MIAbout_Click;
             MIExit.Click += _WMain.MIExit_Click;
 
@@ -142,7 +155,11 @@ internal class TaskbarIconUtil
             contextMenu.Items.Add(MINext);
             contextMenu.Items.Add(MIStop);
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(MIAbout);
+
+            MIAboutMenu.Items.Add(MICheckUpdate);
+            MIAboutMenu.Items.Add(MIAbout);
+            
+            contextMenu.Items.Add(MIAboutMenu);
             contextMenu.Items.Add(MIExit);
 
             // 設定 _TaskbarIcon 的右鍵選單。 

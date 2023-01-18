@@ -63,6 +63,7 @@
     <sys:String x:Key="MISaveClipListFile">Save clip list</sys:String>
     <sys:String x:Key="MIExit">Exit</sys:String>
     <sys:String x:Key="MICancel">Cancel job</sys:String>
+    <sys:String x:Key="MICheckUpdate">Check update</sys:String>
     <sys:String x:Key="MIAbout">About</sys:String>
     <sys:String x:Key="TIClipPlayer">Clip player</sys:String>
     <sys:String x:Key="TINetResource">Network resources</sys:String>
@@ -194,6 +195,7 @@
     <sys:String x:Key="MIPlayClip">Play this clip</sys:String>
     <sys:String x:Key="MIFetchClip">Fetch info of this clip</sys:String>
     <sys:String x:Key="MIDLClip">Download this clip</sys:String>
+    <sys:String x:Key="MIDLClipsByTheSameUrl">Download clips by the same URL or Video ID</sys:String>
     <sys:String x:Key="MIDownloadOptions">Download options</sys:String>
     <sys:String x:Key="MIFullDownloadFirst">Full download first</sys:String>
     <sys:String x:Key="MIDeleteSourceFile">Delete source file</sys:String>
@@ -322,4 +324,14 @@
     <sys:String x:Key="MsgYtscToolSubscribersTooLongCancelClip">The subscriber numbers are more than can be displayed, so the screenshot is not cropped to a square.</sys:String>
     <sys:String x:Key="MsgPlaywrightException">Playwright is exited, exit code: {0}</sys:String>
     <sys:String x:Key="MsgPlaywrightBrowserPath">Playwright browser path:</sys:String>
+    <sys:String x:Key="MsgCantFindTheSameUrlClips">Download failed, no clip with the same URL or video ID could be found in the clip list.</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierDownloadNewVersion">Do you want to download the new version v{0}?</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierDownloadOldVersion">Do you want to download the old version v{0}?</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierHttpErrorCode">An error occurred, HTTP status code {0}</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierCantParsedAppVersionJsonFile">An error occurred and the AppVersion.json file could not be parsed.</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierCantFindAppData">An error occurred and the data for application {0} could not be found.</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierCantParsedAppVersionData">An error occurred and the application {0}'s version data could not be resolved.</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierHasNewVersion">A new version v{0} is available for download.</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierAlreadyLatestVersion">You are using the latest version v{0}.</sys:String>
+    <sys:String x:Key="MsgUpdateNotifierDowngradeNotice">Attention! The network version (v{0}) is older than the local version (v{1}), so please pay attention to the announcement information if there is a downgrade.</sys:String>
 </ResourceDictionary>

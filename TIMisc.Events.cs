@@ -35,7 +35,6 @@ public partial class WMain
                     string value = selectedItem.LangCode ?? string.Empty,
                         langName = selectedItem.LangName ?? string.Empty;
 
-
                     // 當值與已儲存值不一樣時才觸發更語系的換行為。
                     if (Properties.Settings.Default.AppLangCode != value)
                     {
@@ -1221,7 +1220,7 @@ public partial class WMain
                 BtnMute,
                 MIFetchClip,
                 MIDLClip,
-                MIDLClipsBySameUrl,
+                MIDLClipsByTheSameUrl,
                 BtnBurnInSubtitle,
                 MICancel
             };

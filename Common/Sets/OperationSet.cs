@@ -389,7 +389,7 @@ internal class OperationSet
     /// <param name="isDeleteSourceFile">布林值，是否刪除來源檔案，預設為 false</param>
     /// <param name="ct">CancellationToken</param>
     /// <returns>Task</returns>
-    public static async Task DoDownloadClip(
+    public static async Task DoDownloadClips(
         DataGrid control,
         ClipData clipData,
         List<ClipData> clipDatas,
@@ -551,7 +551,7 @@ internal class OperationSet
     /// <param name="isDeleteSourceFile">布林值，是否刪除來源檔案，預設為 false</param>
     /// <param name="ct">CancellationToken</param>
     /// <returns>Task</returns>
-    public static async Task DoDownloadClip(
+    public static async Task DoDownloadClips(
         DataGrid control,
         List<ClipData> clipDatas,
         bool isFullDownloadFirst = false,
