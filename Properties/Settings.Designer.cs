@@ -589,5 +589,17 @@ namespace CustomToolbox.Properties {
                 return ((int)(this["LOperationLimitLength"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MpvNetLibChromaKey {
+            get {
+                return ((bool)(this["MpvNetLibChromaKey"]));
+            }
+            set {
+                this["MpvNetLibChromaKey"] = value;
+            }
+        }
     }
 }

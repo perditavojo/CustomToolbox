@@ -310,4 +310,15 @@ internal class VariableSet
     /// 分割後的頻道名稱列數限制
     /// </summary>
     public static readonly int ChannelNameRowLimit = Properties.Settings.Default.PlaywrightChannelNameRowLimit;
+
+    /// <summary>
+    /// 影像濾鏡（綠幕）
+    /// <para>全黑："colorize:120:1:0:0"</para>
+    /// </summary>
+    public static readonly string VideoFilterColorize = "colorize:120:1:0.5:0";
+
+    /// <summary>
+    /// 影像濾鏡（無）
+    /// </summary>
+    public static readonly string VideoFilterNull = "null";
 }

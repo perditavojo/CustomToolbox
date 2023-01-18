@@ -47,6 +47,15 @@ public partial class WMain
                     MPPlayer.API.SetPropertyString("vid", "auto");
                 }
 
+                if (Properties.Settings.Default.MpvNetLibChromaKey)
+                {
+                    MPPlayer.API.SetPropertyString("vf", VariableSet.VideoFilterColorize);
+                }
+                else
+                {
+                    MPPlayer.API.SetPropertyString("vf", VariableSet.VideoFilterNull);
+                }
+
                 MPPlayer.MediaLoaded += MediaLoaded;
                 MPPlayer.MediaFinished += MediaFinished;
                 MPPlayer.MediaPaused += MediaPaused;

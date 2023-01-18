@@ -78,6 +78,7 @@
     <sys:String x:Key="SVolume">音量调整</sys:String>
     <sys:String x:Key="LVolume">目前音量</sys:String>
     <sys:String x:Key="CBNoVideo">不显示影像</sys:String>
+    <sys:String x:Key="CBChromaKey">色度键</sys:String>
     <sys:String x:Key="MIEnableNoVideo">激活不显示影像</sys:String>
     <sys:String x:Key="MIDisableNoVideo">停用不显示影像</sys:String>
     <sys:String x:Key="CBYTQuality">YouTube 视频画质</sys:String>

@@ -121,6 +121,7 @@ public partial class WMain
                 CBPlaybackSpeed.SelectedIndex = Properties.Settings.Default.MpvNetLibPlaybackSpeedIndex;
                 SVolume.Value = Convert.ToDouble(Properties.Settings.Default.MpvNetLibVolume.ToString());
                 CBNoVideo.IsChecked = Properties.Settings.Default.MpvNetLibNoVideo;
+                CBChromaKey.IsChecked = Properties.Settings.Default.MpvNetLibChromaKey;
                 CBAutoLyric.IsChecked = Properties.Settings.Default.NetPlaylistAutoLyric;
                 MIFullDownloadFirst.IsChecked = Properties.Settings.Default.FullDownloadFirst;
                 MIDeleteSourceFile.IsChecked = Properties.Settings.Default.DeleteSourceFile;

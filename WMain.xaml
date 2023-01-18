@@ -76,7 +76,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="CDGContentCol1"
-                    MinWidth="430"
+                    MinWidth="560"
                     Width="{Binding Source={x:Static properties:Settings.Default},
                         Path=CDGContentCol1Width,
                         Mode=TwoWay}" />
@@ -215,6 +215,12 @@
                                         VerticalContentAlignment="Center"
                                         Checked="CBNoVideo_Checked"
                                         Unchecked="CBNoVideo_Unchecked" />
+                                    <CheckBox x:Name="CBChromaKey"
+                                        Margin="5,0,0,0"
+                                        Content="{DynamicResource CBChromaKey}"
+                                        VerticalContentAlignment="Center"
+                                        Checked="CBChromaKey_Checked"
+                                        Unchecked="CBChromaKey_Unchecked" />
                                     <ComboBox x:Name="CBYTQuality"
                                         Margin="5,0,0,0"
                                         ToolTip="{DynamicResource CBYTQuality}"

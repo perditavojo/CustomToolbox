@@ -14,6 +14,7 @@ using Mpv.NET.Player;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using YoutubeDLSharp.Metadata;
 
 namespace CustomToolbox;
 
@@ -226,6 +227,79 @@ public partial class WMain
                             NotificationIcon.Info);
 
                         WriteLog(message);
+                    }
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void CBChromaKey_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                CheckBox control = (CheckBox)sender;
+
+                bool value = control.IsChecked ?? true;
+
+                if (value)
+                {
+                    if (Properties.Settings.Default.MpvNetLibChromaKey != value)
+                    {
+                        Properties.Settings.Default.MpvNetLibChromaKey = value;
+                        Properties.Settings.Default.Save();
+                    }
+
+                    string? vf = MPPlayer?.API.GetPropertyString("vf");
+
+                    if (string.IsNullOrEmpty(vf) ||
+                        !vf.Contains("colorize"))
+                    {
+                        // 綠幕。
+                        MPPlayer?.API.SetPropertyString("vf", VariableSet.VideoFilterColorize);
+                    }
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void CBChromaKey_Unchecked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                CheckBox control = (CheckBox)sender;
+
+                bool value = control.IsChecked ?? false;
+
+                if (!value)
+                {
+                    if (Properties.Settings.Default.MpvNetLibChromaKey != value)
+                    {
+                        Properties.Settings.Default.MpvNetLibChromaKey = value;
+                        Properties.Settings.Default.Save();
+                    }
+
+                    string? vf = MPPlayer?.API.GetPropertyString("vf");
+
+                    if (!string.IsNullOrEmpty(vf) &&
+                        vf != VariableSet.VideoFilterNull)
+                    {
+                        MPPlayer?.API.SetPropertyString("vf", VariableSet.VideoFilterNull);
                     }
                 }
             }));

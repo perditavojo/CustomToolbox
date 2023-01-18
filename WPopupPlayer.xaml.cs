@@ -1,10 +1,8 @@
-﻿using AirspaceFixer;
-using CustomToolbox.Common.Sets;
+﻿using CustomToolbox.Common.Sets;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms.Integration;
-using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
 
@@ -33,16 +31,6 @@ public partial class WPopupPlayer : Window
     /// </summary>
     private readonly ToolTip _TTTips;
 
-    /// <summary>
-    /// TBLog
-    /// </summary>
-    private readonly TextBox _TBLog;
-
-    /// <summary>
-    /// AAPanel
-    /// </summary>
-    private readonly AirspacePanel _AAPanel;
-
     public WPopupPlayer(WMain window)
     {
         InitializeComponent();
@@ -51,8 +39,6 @@ public partial class WPopupPlayer : Window
         _WFHContainer = _WMain.WFHContainer;
         _PlayerHost = _WMain.PlayerHost;
         _TTTips = _WMain.TTTips;
-        _TBLog = _WMain.TBLog;
-        _AAPanel = _WMain.APPanel;
 
         KeyDown += _WMain.WMain_KeyDown;
     }

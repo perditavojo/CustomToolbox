@@ -78,6 +78,7 @@
     <sys:String x:Key="SVolume">Volume</sys:String>
     <sys:String x:Key="LVolume">Current volume</sys:String>
     <sys:String x:Key="CBNoVideo">No video</sys:String>
+    <sys:String x:Key="CBChromaKey">Chroma key</sys:String>
     <sys:String x:Key="MIEnableNoVideo">Enable no video</sys:String>
     <sys:String x:Key="MIDisableNoVideo">Disable no video</sys:String>
     <sys:String x:Key="CBYTQuality">YouTube video quality</sys:String>

@@ -152,13 +152,17 @@ internal class DiscordRichPresenceUtil
     /// </summary>
     public static void Dispose()
     {
-        _GlobalDRClient?.ClearPresence();
-        _GlobalDRClient?.Dispose();
+        if (_GlobalDRClient != null &&
+            !_GlobalDRClient.IsDisposed) 
+        {
+            _GlobalDRClient?.ClearPresence();
+            _GlobalDRClient?.Dispose();
 
-        // 重設 ConnectionFailedCount。
-        ConnectionFailedCount = 0;
+            // 重設 ConnectionFailedCount。
+            ConnectionFailedCount = 0;
 
-        _WMain?.WriteLog(MsgSet.MsgDisableDiscordRichPresence);
+            _WMain?.WriteLog(MsgSet.MsgDisableDiscordRichPresence);
+        }
     }
 
     /// <summary>
