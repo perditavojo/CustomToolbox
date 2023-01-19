@@ -235,7 +235,7 @@ namespace CustomToolbox.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) " +
-            "Chrome/108.0.0.0 Safari/537.36")]
+            "Chrome/109.0.0.0 Safari/537.36")]
         public string UserAgent {
             get {
                 return ((string)(this["UserAgent"]));
@@ -599,6 +599,24 @@ namespace CustomToolbox.Properties {
             }
             set {
                 this["MpvNetLibChromaKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("mpv-dev-x86_64-20210725-git-e2109b6.7z")]
+        public string LibMpvArchiveFileName {
+            get {
+                return ((string)(this["LibMpvArchiveFileName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.36.0")]
+        public string Aria2Version {
+            get {
+                return ((string)(this["Aria2Version"]));
             }
         }
     }
