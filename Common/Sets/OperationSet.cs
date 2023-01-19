@@ -761,6 +761,76 @@ internal class OperationSet
     }
 
     /// <summary>
+    /// 執行 FFmpeg 作業
+    /// </summary>
+    /// <param name="videoFilePath">字串，影片檔案的路徑</param>
+    /// <param name="fileName">字串，檔案名稱</param>
+    /// <param name="clipData">ClipData</param>
+    /// <param name="useHardwareAcceleration">布林值，是否使用硬體加速解編碼，預設值為 false</param>
+    /// <param name="hardwareAcceleratorType">HardwareAcceleratorType，硬體加速的類型，預設值為 HardwareAcceleratorType.Intel</param>
+    /// <param name="deviceNo">數值，GPU 裝置的 ID 值，預設為 0</param>
+    /// <param name="isDeleteSourceFile">布林值，是否刪除來源檔案，預設為 false</param>
+    /// <param name="ct">CancellationToken</param>
+    public static async Task DoFFmpegTask(
+        string videoFilePath,
+        string fileName,
+        ClipData clipData,
+        bool useHardwareAcceleration = false,
+        HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel,
+        int deviceNo = 0,
+        bool isDeleteSourceFile = false,
+        CancellationToken ct = default)
+    {
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+
+            string fileNameSuffix = "Clip",
+                sourceFilePath = Path.GetFullPath(videoFilePath),
+                sourceFileName = Path.GetFileNameWithoutExtension(sourceFilePath),
+                sourceExtName = Path.GetExtension(sourceFilePath),
+                outputFileName = string.IsNullOrEmpty(fileName) ?
+                    $"{sourceFileName}_{fileNameSuffix}{sourceExtName}" :
+                    $"{fileName}_{fileNameSuffix}{sourceExtName}",
+                newFilePathRoot = Path.Combine(VariableSet.DownloadsFolderPath, sourceFileName),
+                outputFilePath = Path.Combine(newFilePathRoot, outputFileName);
+
+            IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(sourceFilePath, ct);
+
+            IConversion conversion = ExternalProgram.GetConversion(
+                   mediaInfo,
+                   clipData.StartTime.TotalSeconds,
+                   clipData.EndTime.TotalSeconds,
+                   outputFilePath,
+                   fixDuration: false,
+                   useCodecCopy: false,
+                   useHardwareAcceleration,
+                   hardwareAcceleratorType,
+                   deviceNo,
+                   clipData.IsAudioOnly);
+
+            // 移除全部的後設資料，以利進行傻瓜式 FFmpeg 操作。
+            conversion.AddParameter("-map_metadata -1");
+
+            IConversionResult conversionResult = await conversion.Start(ct);
+
+            ExternalProgram.WriteConversionResult(conversionResult);
+
+            if (isDeleteSourceFile)
+            {
+                if (File.Exists(sourceFilePath))
+                {
+                    File.Delete(sourceFilePath);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(ex.Message);
+        }
+    }
+
+    /// <summary>
     /// 執行燒錄字幕檔
     /// </summary>
     /// <param name="videoFilePath">字串，視訊檔案的路徑</param>
@@ -842,6 +912,66 @@ internal class OperationSet
 
                     break;
             }
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// 執行分割影片
+    /// </summary>
+    /// <param name="control">DataGrid</param>
+    /// <param name="clipDatas">List&lt;ClipData&gt;</param>
+    /// <param name="videoFilePath">字串，影片檔案的路徑</param>
+    /// <param name="useHardwareAcceleration">布林值，是否使用硬體加速解編碼，預設值為 false</param>
+    /// <param name="hardwareAcceleratorType">HardwareAcceleratorType，硬體加速的類型，預設值為 HardwareAcceleratorType.Intel</param>
+    /// <param name="deviceNo">數值，GPU 裝置的 ID 值，預設為 0</param>
+    /// <param name="ct">CancellationToken</param>
+    /// <returns>Task</returns>
+    public static async Task DoSplitVideo(
+        DataGrid control,
+        List<ClipData> clipDatas,
+        string videoFilePath,
+        bool useHardwareAcceleration = false,
+        HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel,
+        int deviceNo = 0,
+        CancellationToken ct = default)
+    {
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+
+            foreach (ClipData clipData in clipDatas)
+            {
+                ct.ThrowIfCancellationRequested();
+
+                // 設定 DataGrid 選擇的項目來當作進度指示。
+                control.SelectedItem = clipData;
+
+                // 先處裡檔案名稱。
+                string fileName = string.IsNullOrEmpty(clipData.Name) ?
+                    string.Empty :
+                    string.Join(
+                        "_",
+                        $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
+                        Array.Empty<string>());
+
+                await DoFFmpegTask(
+                    videoFilePath: videoFilePath,
+                    fileName: fileName,
+                    clipData: clipData,
+                    useHardwareAcceleration: useHardwareAcceleration,
+                    hardwareAcceleratorType: hardwareAcceleratorType,
+                    deviceNo: deviceNo,
+                    // 此處不刪除來源檔案。
+                    isDeleteSourceFile: false,
+                    ct: ct);
+            }
+
+            // 清除 DataGrid 已選擇的項目。
+            control.SelectedItem = null;
         }
         catch (Exception ex)
         {

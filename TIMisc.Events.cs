@@ -1222,6 +1222,7 @@ public partial class WMain
                 MIDLClip,
                 MIDLClipsByTheSameUrl,
                 BtnBurnInSubtitle,
+                BtnSplitVideo,
                 MICancel
             };
 
@@ -1332,7 +1333,8 @@ public partial class WMain
             Control[] ctrlSet =
             {
                 BtnDLFFmpeg,
-                BtnBurnInSubtitle
+                BtnBurnInSubtitle,
+                BtnSplitVideo
             };
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);

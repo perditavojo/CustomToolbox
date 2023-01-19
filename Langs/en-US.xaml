@@ -110,6 +110,7 @@
     <sys:String x:Key="BtnYTSecConverter">YouTube video seconds converter</sys:String>
     <sys:String x:Key="BtnYTSecConverterToolTip">Only available in Traditional Chinese</sys:String>
     <sys:String x:Key="BtnBurnInSubtitle">Burn in subtitle file</sys:String>
+    <sys:String x:Key="BtnSplitVideo">Split video</sys:String>
     <sys:String x:Key="BtnCancel">Cancel</sys:String>
     <sys:String x:Key="GBYtscTool">YouTube subscriber counter tool</sys:String>
     <sys:String x:Key="LYouTubeChannelID">YouTube Channel ID</sys:String>
@@ -335,4 +336,5 @@
     <sys:String x:Key="MsgUpdateNotifierHasNewVersion">A new version v{0} is available for download.</sys:String>
     <sys:String x:Key="MsgUpdateNotifierAlreadyLatestVersion">You are using the latest version v{0}.</sys:String>
     <sys:String x:Key="MsgUpdateNotifierDowngradeNotice">Attention! The network version (v{0}) is older than the local version (v{1}), so please pay attention to the announcement information if there is a downgrade.</sys:String>
+    <sys:String x:Key="MsgClipListNoData">Clip list has no data.</sys:String>
 </ResourceDictionary>

@@ -110,6 +110,7 @@
     <sys:String x:Key="BtnYTSecConverter">YouTube 影片秒數轉換器</sys:String>
     <sys:String x:Key="BtnYTSecConverterToolTip">僅提供正體中文</sys:String>
     <sys:String x:Key="BtnBurnInSubtitle">燒錄字幕檔</sys:String>
+    <sys:String x:Key="BtnSplitVideo">分割影片</sys:String>
     <sys:String x:Key="BtnCancel">取消</sys:String>
     <sys:String x:Key="GBYtscTool">YouTube 訂閱者計數器工具</sys:String>
     <sys:String x:Key="LYouTubeChannelID">YouTube 頻道 ID</sys:String>
@@ -335,4 +336,5 @@
     <sys:String x:Key="MsgUpdateNotifierHasNewVersion">有新版本 v{0} 可供下載。</sys:String>
     <sys:String x:Key="MsgUpdateNotifierAlreadyLatestVersion">您使用的是最新版本 v{0}。</sys:String>
     <sys:String x:Key="MsgUpdateNotifierDowngradeNotice">注意！網路的版本（v{0}）比本機的版本（v{1}）還要舊，請注意是否有降版的公告資訊。</sys:String>
+    <sys:String x:Key="MsgClipListNoData">短片清單無資料。</sys:String>
 </ResourceDictionary>

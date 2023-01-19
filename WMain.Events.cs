@@ -683,7 +683,8 @@ public partial class WMain : Window
                 MIDLClip,
                 MIDLClipsByTheSameUrl,
                 BtnGenerateB23ClipList,
-                BtnBurnInSubtitle
+                BtnBurnInSubtitle,
+                BtnSplitVideo
             };
 
             Control[] ctrlSet2 =
@@ -733,7 +734,8 @@ public partial class WMain : Window
                     MIFullDownloadFirst,
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
-                    BtnBurnInSubtitle
+                    BtnBurnInSubtitle,
+                    BtnSplitVideo
                 };
 
                 Control[] ctrlSet2 =
@@ -810,7 +812,8 @@ public partial class WMain : Window
                     MIFullDownloadFirst,
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
-                    BtnBurnInSubtitle
+                    BtnBurnInSubtitle,
+                    BtnSplitVideo
                 };
 
                 Control[] ctrlSet2 =

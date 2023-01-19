@@ -1232,6 +1232,13 @@ internal class MsgSet
         .FindResource("MsgUpdateNotifierDowngradeNotice").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 訊息：短片清單無資料。
+    /// </summary>
+    public static readonly string MsgClipListNoData = Application.Current
+        .FindResource("MsgClipListNoData").ToString() ??
+        string.Empty;
+
     #endregion
 
     /// <summary>

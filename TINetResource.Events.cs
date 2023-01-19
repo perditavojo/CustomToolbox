@@ -201,7 +201,8 @@ public partial class WMain
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
                     BtnGenerateB23ClipList,
-                    BtnBurnInSubtitle
+                    BtnBurnInSubtitle,
+                    BtnSplitVideo
                 };
 
                 Control[] ctrlSet2 =
