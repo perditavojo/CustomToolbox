@@ -106,9 +106,7 @@ public partial class WMain
 
                 UpdateClipPlayer(ClipPlayerStatus.Playing, clipData);
 
-                if (!path.StartsWith("http") ||
-                    path.Contains("youtube.com") ||
-                    path.Contains("youtu.be"))
+                if (!path.StartsWith("http"))
                 {
                     path = $"https://www.youtube.com/watch?v={path}";
 

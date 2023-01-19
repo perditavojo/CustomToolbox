@@ -28,7 +28,7 @@ internal class UrlSet
     /// <summary>
     /// aria2 的版本號
     /// </summary>
-    public static readonly string Aria2Version = "1.36.0";
+    public static readonly string Aria2Version = Properties.Settings.Default.Aria2Version;
 
     /// <summary>
     /// aria2 的壓縮檔名稱
@@ -38,7 +38,7 @@ internal class UrlSet
     /// <summary>
     /// libmpv 的壓縮檔名稱
     /// </summary>
-    public static readonly string LibMpvArchiveFileName = "mpv-dev-x86_64-20211212-git-0e76372.7z";
+    public static readonly string LibMpvArchiveFileName = Properties.Settings.Default.LibMpvArchiveFileName;
 
     /// <summary>
     /// aria2 的下載網址
