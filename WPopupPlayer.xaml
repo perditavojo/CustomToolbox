@@ -3,12 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        ui:TitleBar.IsIconVisible="True"
         mc:Ignorable="d"
         Title="WPopupPlayer"
-        MinHeight="255" 
+        MinHeight="255"
+        Height="480" 
         MinWidth="426"
-        Height="255" 
-        Width="426"
+        Width="854"
         Closing="WPopupPlayer_Closing"
         Loaded="WPopupPlayer_Loaded">
     <Grid Background="#FFE5E5E5">
@@ -20,9 +23,9 @@
         </Grid.ColumnDefinitions>
         <WindowsFormsHost x:Name="WFHContainer"
                           Grid.Row="0" 
-                          MinHeight="240" 
-                          MinWidth="426"
+                          MinHeight="240"
                           Height="Auto"
+                          MinWidth="426"
                           Width="Auto"
                           Margin="0,0,0,0">
         </WindowsFormsHost>

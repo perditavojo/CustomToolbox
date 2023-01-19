@@ -1,8 +1,8 @@
 ﻿using CustomToolbox.Common.Sets;
+using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms.Integration;
-using System.Windows.Media;
 
 namespace CustomToolbox;
 
@@ -11,47 +11,106 @@ namespace CustomToolbox;
 /// </summary>
 public partial class WPopupPlayer : Window
 {
-    private readonly WMain oWMain;
-    private readonly WindowsFormsHost oWFHContainer;
-    private readonly Panel oPlayerHost;
- 
+    /// <summary>
+    /// WMain
+    /// </summary>
+    private readonly WMain _WMain;
+
+    /// <summary>
+    /// WFHContainer
+    /// </summary>
+    private readonly WindowsFormsHost _WFHContainer;
+
+    /// <summary>
+    /// PlayerHost
+    /// </summary>
+    private readonly Panel _PlayerHost;
+
+    /// <summary>
+    /// TTTips
+    /// </summary>
+    private readonly ToolTip _TTTips;
+
     public WPopupPlayer(WMain window)
     {
         InitializeComponent();
 
-        oWMain = window;
-        oWFHContainer = oWMain.WFHContainer;
-        oPlayerHost = oWMain.PlayerHost;
+        _WMain = window;
+        _WFHContainer = _WMain.WFHContainer;
+        _PlayerHost = _WMain.PlayerHost;
+        _TTTips = _WMain.TTTips;
+
+        KeyDown += _WMain.WMain_KeyDown;
     }
 
     private void WPopupPlayer_Loaded(object sender, RoutedEventArgs e)
     {
-        WFHContainer.Child = oPlayerHost;
-
-        oWFHContainer.Child = null;
-
-        Panel PPlaceholder = new()
+        try
         {
-            BackColor = System.Drawing.Color.Gray,
-            Dock = DockStyle.Fill
-        };
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                Title = _WMain.Title;
+                Icon = _WMain.Icon;
 
-        PPlaceholder.MouseDoubleClick += PPlaceholder_MouseDoubleClick;
+                WFHContainer.Child = _PlayerHost;
+                _WFHContainer.Child = null;
 
-        oWFHContainer.Child = PPlaceholder;
+                Panel PPlaceholder = new()
+                {
+                    BackColor = Color.Gray,
+                    Dock = DockStyle.Fill
+                };
 
-        // TODO: 2022-11-23 待處裡 Window 的標題。
+                _TTTips.SetToolTip(PPlaceholder, MsgSet.MsgDoubleClickToTogglePopupWindow);
+
+                PPlaceholder.MouseDoubleClick += PPlaceholder_MouseDoubleClick;
+
+                _WFHContainer.Child = PPlaceholder;
+            }));
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
     }
 
     private void WPopupPlayer_Closing(object sender, CancelEventArgs e)
     {
-        oWFHContainer.Child = null;
-        oWFHContainer.Child = WFHContainer.Child;
-        WFHContainer.Child = null;
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                KeyDown -= _WMain.WMain_KeyDown;
+
+                _WFHContainer.Child = null;
+                _WFHContainer.Child = WFHContainer.Child;
+                WFHContainer.Child = null;
+            }));
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
     }
 
     private void PPlaceholder_MouseDoubleClick(object? sender, MouseEventArgs e)
     {
-        oWMain.PlayerHost_MouseDoubleClick(sender, e);
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _WMain.PlayerHost_MouseDoubleClick(sender, e);
+            }));
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
     }
 }
