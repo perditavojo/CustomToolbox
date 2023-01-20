@@ -201,11 +201,11 @@ public partial class WMain
 
                             // 載入網路資源。
                             InitNetResurce();
-
-                            // 檢查應用程式是否有新版本。
-                            CheckAppVersion();
                         });
                     }));
+
+                // 檢查應用程式是否有新版本。
+                CheckAppVersion();
             }));
         }
         catch (Exception ex)
