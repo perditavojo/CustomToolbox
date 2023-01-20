@@ -604,7 +604,7 @@ namespace CustomToolbox.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mpv-dev-x86_64-20210725-git-e2109b6.7z")]
+        [global::System.Configuration.DefaultSettingValueAttribute("mpv-dev-x86_64-20211212-git-0e76372.7z")]
         public string LibMpvArchiveFileName {
             get {
                 return ((string)(this["LibMpvArchiveFileName"]));

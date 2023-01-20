@@ -184,6 +184,18 @@ internal class DiscordRichPresenceUtil
                 !string.IsNullOrEmpty(state) ||
                 assets != null)
             {
+                int magicNum = 43, maxLength = 40;
+
+                if (details.Length > magicNum)
+                {
+                    details = $"{details[..maxLength]}...";
+                }
+
+                if (state.Length > magicNum)
+                {
+                    state = $"{state[..maxLength]}...";
+                }
+
                 _GlobalDRClient?.SetPresence(new()
                 {
                     Details = details,
