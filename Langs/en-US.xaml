@@ -198,6 +198,7 @@
     <sys:String x:Key="MIFetchClip">Fetch info of this clip</sys:String>
     <sys:String x:Key="MIDLClip">Download this clip</sys:String>
     <sys:String x:Key="MIDLClipsByTheSameUrl">Download clips by the same URL or Video ID</sys:String>
+    <sys:String x:Key="MIBatchDLClips">Batch download clips</sys:String>
     <sys:String x:Key="MIDownloadOptions">Download options</sys:String>
     <sys:String x:Key="MIFullDownloadFirst">Full download first</sys:String>
     <sys:String x:Key="MIDeleteSourceFile">Delete source file</sys:String>

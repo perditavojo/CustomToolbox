@@ -682,6 +682,7 @@ public partial class WMain : Window
                 MIFetchClip,
                 MIDLClip,
                 MIDLClipsByTheSameUrl,
+                MIBatchDLClips,
                 BtnGenerateB23ClipList,
                 BtnBurnInSubtitle,
                 BtnSplitVideo
@@ -731,6 +732,7 @@ public partial class WMain : Window
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
+                    MIBatchDLClips,
                     MIFullDownloadFirst,
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
@@ -809,6 +811,117 @@ public partial class WMain : Window
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
+                    MIBatchDLClips,
+                    MIFullDownloadFirst,
+                    MIDeleteSourceFile,
+                    BtnGenerateB23ClipList,
+                    BtnBurnInSubtitle,
+                    BtnSplitVideo
+                };
+
+                Control[] ctrlSet2 =
+                {
+                    MICancel
+                };
+
+                CustomFunction.BatchSetEnabled(ctrlSet1, false);
+                CustomFunction.BatchSetEnabled(ctrlSet2, true);
+
+                ClipData? clipData = GetDGClipListSelectedItem();
+
+                if (clipData != null)
+                {
+                    List<ClipData>? clipDatas = GetClipDataRelatedItems(clipData);
+
+                    if (clipDatas == null || !clipDatas.Any())
+                    {
+                        ShowMsgBox(MsgSet.MsgCantFindTheSameUrlClips);
+
+                        CustomFunction.BatchSetEnabled(ctrlSet1, true);
+                        CustomFunction.BatchSetEnabled(ctrlSet2, false);
+
+                        return;
+                    }
+
+                    bool useHardwareAcceleration = Properties.Settings.Default
+                        .FFmpegEnableHardwareAcceleration,
+                    isFullDownloadFirst = Properties.Settings.Default.FullDownloadFirst,
+                    isDeleteSourceFile = Properties.Settings.Default.DeleteSourceFile;
+
+                    HardwareAcceleratorType hardwareAcceleratorType = HardwareAcceleratorType.Intel;
+
+                    if (!string.IsNullOrEmpty(CBHardwareAccelerationType.Text))
+                    {
+                        hardwareAcceleratorType = CBHardwareAccelerationType.Text switch
+                        {
+                            nameof(HardwareAcceleratorType.AMD) => HardwareAcceleratorType.AMD,
+                            nameof(HardwareAcceleratorType.Intel) => HardwareAcceleratorType.Intel,
+                            nameof(HardwareAcceleratorType.NVIDIA) => HardwareAcceleratorType.NVIDIA,
+                            _ => HardwareAcceleratorType.Intel
+                        };
+                    }
+
+                    VideoCardData videoCardData = (VideoCardData)CBGpuDevice.SelectedItem;
+
+                    int deviceNo = videoCardData.DeviceNo;
+
+                    // 判斷是否為先下載完整短片。
+                    if (isFullDownloadFirst)
+                    {
+                        await OperationSet.DoDownloadClips(
+                            control: DGClipList,
+                            clipData: clipData,
+                            clipDatas: clipDatas,
+                            isFullDownloadFirst: isFullDownloadFirst,
+                            useHardwareAcceleration: useHardwareAcceleration,
+                            hardwareAcceleratorType: hardwareAcceleratorType,
+                            deviceNo: deviceNo,
+                            isDeleteSourceFile: isDeleteSourceFile,
+                            ct: GetGlobalCT());
+                    }
+                    else
+                    {
+                        await OperationSet.DoDownloadClips(
+                            control: DGClipList,
+                            clipDatas: clipDatas,
+                            isFullDownloadFirst: isFullDownloadFirst,
+                            useHardwareAcceleration: useHardwareAcceleration,
+                            hardwareAcceleratorType: hardwareAcceleratorType,
+                            deviceNo: deviceNo,
+                            isDeleteSourceFile: isDeleteSourceFile,
+                            ct: GetGlobalCT());
+                    }
+                }
+                else
+                {
+                    ShowMsgBox(MsgSet.MsgSelectTheClipToDownload);
+                }
+
+                CustomFunction.BatchSetEnabled(ctrlSet1, true);
+                CustomFunction.BatchSetEnabled(ctrlSet2, false);
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void MIBatchDLClips_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // TODO: 2023-01-26 待完成批次下載功能。
+            Dispatcher.BeginInvoke(new Action(async () =>
+            {
+                Control[] ctrlSet1 =
+                {
+                    MIFetchClip,
+                    MIDLClip,
+                    MIDLClipsByTheSameUrl,
+                    MIBatchDLClips,
                     MIFullDownloadFirst,
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,

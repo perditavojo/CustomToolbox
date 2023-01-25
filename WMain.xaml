@@ -1121,6 +1121,9 @@
                         <MenuItem x:Name="MIDLClipsByTheSameUrl"
                             Header="{DynamicResource MIDLClipsByTheSameUrl}"
                             Click="MIDLClipsByTheSameUrl_Click" />
+                        <MenuItem x:Name="MIBatchDLClips"
+                            Header="{DynamicResource MIBatchDLClips}"
+                            Click="MIBatchDLClips_Click" />
                         <MenuItem x:Name="MIDownloadOptions" 
                             Header="{DynamicResource MIDownloadOptions}">
                             <MenuItem x:Name="MIFullDownloadFirst" 
