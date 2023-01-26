@@ -294,8 +294,6 @@ public partial class WMain : Window
                     case 5:
                         // ※輸出的備註內容需保持正體中文。 
 
-
-
                         var grpClipDataSet = dataSource.GroupBy(n => n.VideoUrlOrID);
 
                         foreach (var grpClipData in grpClipDataSet)
@@ -306,7 +304,17 @@ public partial class WMain : Window
                             {
                                 if (countIndex2 == 0)
                                 {
-                                    outputContent += VariableSet.TimestampHeaderTemplate.Replace("{VideoID}", grpClipData.Key);
+                                    if (grpClipData.Key?.StartsWith("http") == true)
+                                    {
+                                        outputContent += VariableSet.TimestampHeaderTemplate
+                                            .Replace("https://www.youtube.com/watch?v={VideoID}", grpClipData.Key);
+                                    }
+                                    else
+                                    {
+                                        outputContent += VariableSet.TimestampHeaderTemplate
+                                            .Replace("{VideoID}", grpClipData.Key);
+                                    }
+
                                     outputContent += $"{VariableSet.Timestamp.StartReadingToken}{Environment.NewLine}";
                                 }
 
