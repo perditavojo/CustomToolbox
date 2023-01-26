@@ -418,23 +418,31 @@
                                             Click="BtnYTSecConverter_Click" />
                                     </Grid>
                                 </GroupBox>
-                                <StackPanel Margin="5,160,5,5"
-                                    Orientation="Horizontal"
+                                <GroupBox x:Name="GBFFmpegFunctions"
+                                    Margin="5,150,5,5"
+                                    Header="{DynamicResource GBFFmpegFunctions}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
-                                    <Button x:Name="BtnBurnInSubtitle"
-                                        Margin="0,0,5,0"
-                                        Content="{DynamicResource BtnBurnInSubtitle}"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Click="BtnBurnInSubtitle_Click" />
-                                    <Button x:Name="BtnSplitVideo"
-                                        Margin="0,0,5,0"
-                                        Content="{DynamicResource BtnSplitVideo}"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Click="BtnSplitVideo_Click" />
-                                </StackPanel>
+                                    <Grid>
+                                        <StackPanel Margin="0,0,0,0"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top">
+                                            <Button x:Name="BtnBurnInSubtitle"
+                                                Margin="0,0,5,0"
+                                                Content="{DynamicResource BtnBurnInSubtitle}"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Click="BtnBurnInSubtitle_Click" />
+                                            <Button x:Name="BtnSplitVideo"
+                                                Margin="0,0,5,0"
+                                                Content="{DynamicResource BtnSplitVideo}"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Click="BtnSplitVideo_Click" />
+                                        </StackPanel>
+                                    </Grid>
+                                </GroupBox>
                             </Grid>
                         </ScrollViewer>
                     </Grid>

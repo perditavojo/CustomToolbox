@@ -105,6 +105,7 @@
     <sys:String x:Key="CBB23ClipListExportJsonc">导出成 *.jsonc</sys:String>
     <sys:String x:Key="BtnGenerateB23ClipList">产生短片清单文件</sys:String>
     <sys:String x:Key="GBWebTools">网页工具</sys:String>
+    <sys:String x:Key="GBFFmpegFunctions">FFmpeg</sys:String>
     <sys:String x:Key="BtnSubtitleCreator">阳春字幕产生器</sys:String>
     <sys:String x:Key="BtnSubtitleCreatorToolTip">仅提供正体中文</sys:String>
     <sys:String x:Key="BtnYTSecConverter">YouTube 视频秒数转换器</sys:String>
@@ -338,4 +339,6 @@
     <sys:String x:Key="MsgUpdateNotifierAlreadyLatestVersion">您使用的是最新版本 v{0}。</sys:String>
     <sys:String x:Key="MsgUpdateNotifierDowngradeNotice">注意！网络的版本（v{0}）比本机的版本（v{1}）还要旧，请注意是否有降版的公告信息。</sys:String>
     <sys:String x:Key="MsgClipListNoData">短片清单无数据。</sys:String>
+    <sys:String x:Key="MsgYtDlpDownloadSucceed">下载成功。</sys:String>
+    <sys:String x:Key="MsgYtDlpDownloadFailure">下载失败。</sys:String>
 </ResourceDictionary>

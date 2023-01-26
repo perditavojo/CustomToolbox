@@ -340,17 +340,43 @@ public partial class WMain
     }
 
     /// <summary>
-    /// 取得與指定 ClipData 有關的 ClipData 資料。
+    /// 取得與指定 ClipData 有關的 ClipData 資料
     /// </summary>
     /// <returns>List&lt;ClipData&gt;?</returns>
     private List<ClipData>? GetClipDataRelatedItems(ClipData? clipData)
     {
         if (clipData != null)
         {
-            return GlobalDataSet.Where(n => n.VideoUrlOrID == clipData.VideoUrlOrID).ToList();
+            return GlobalDataSet
+                .Where(n => n.VideoUrlOrID == clipData.VideoUrlOrID)
+                .OrderBy(n => n.No)
+                .ToList();
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 取得全部的 ClipData（有排序）
+    /// </summary>
+    /// <returns>List&lt;ClipData&gt;</returns>
+    private List<ClipData> GetAllClipDatas()
+    {
+        return GlobalDataSet
+            .OrderBy(n => n.No)
+            .ToList();
+    }
+
+    /// <summary>
+    /// 取得已分組的全部 ClipData（有排序）
+    /// </summary>
+    /// <returns>List&lt;IOrderedEnumerable&lt;ClipData&gt;&gt;</returns>
+    private List<IOrderedEnumerable<ClipData>> GetGroupedAllClipDatas()
+    {
+        return GlobalDataSet
+            .GroupBy(n => n.VideoUrlOrID)
+            .Select(n => n.OrderBy(m => m.No))
+            .ToList();
     }
 
     /// <summary>
