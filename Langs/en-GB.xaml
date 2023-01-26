@@ -105,6 +105,7 @@
     <sys:String x:Key="CBB23ClipListExportJsonc">Export as *.jsonc</sys:String>
     <sys:String x:Key="BtnGenerateB23ClipList">Generate clip list file</sys:String>
     <sys:String x:Key="GBWebTools">Web tools</sys:String>
+    <sys:String x:Key="GBFFmpegFunctions">FFmpeg</sys:String>
     <sys:String x:Key="BtnSubtitleCreator">Subtitle creator</sys:String>
     <sys:String x:Key="BtnSubtitleCreatorToolTip">Only available in Traditional Chinese</sys:String>
     <sys:String x:Key="BtnYTSecConverter">YouTube video seconds converter</sys:String>
@@ -198,6 +199,7 @@
     <sys:String x:Key="MIFetchClip">Fetch info of this clip</sys:String>
     <sys:String x:Key="MIDLClip">Download this clip</sys:String>
     <sys:String x:Key="MIDLClipsByTheSameUrl">Download clips by the same URL or Video ID</sys:String>
+    <sys:String x:Key="MIBatchDLClips">Batch download clips</sys:String>
     <sys:String x:Key="MIDownloadOptions">Download options</sys:String>
     <sys:String x:Key="MIFullDownloadFirst">Full download first</sys:String>
     <sys:String x:Key="MIDeleteSourceFile">Delete source file</sys:String>
@@ -337,4 +339,6 @@
     <sys:String x:Key="MsgUpdateNotifierAlreadyLatestVersion">You are using the latest version v{0}.</sys:String>
     <sys:String x:Key="MsgUpdateNotifierDowngradeNotice">Attention! The network version (v{0}) is older than the local version (v{1}), so please pay attention to the announcement information if there is a downgrade.</sys:String>
     <sys:String x:Key="MsgClipListNoData">Clip list has no data.</sys:String>
+    <sys:String x:Key="MsgYtDlpDownloadSucceed">Download succeed.</sys:String>
+    <sys:String x:Key="MsgYtDlpDownloadFailure">Download failure.</sys:String>
 </ResourceDictionary>

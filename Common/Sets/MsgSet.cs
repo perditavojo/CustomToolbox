@@ -1239,6 +1239,20 @@ internal class MsgSet
         .FindResource("MsgClipListNoData").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 訊息：下載成功。
+    /// </summary>
+    public static readonly string MsgYtDlpDownloadSucceed = Application.Current
+        .FindResource("MsgYtDlpDownloadSucceed").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：下載失敗。
+    /// </summary>
+    public static readonly string MsgYtDlpDownloadFailure = Application.Current
+        .FindResource("MsgYtDlpDownloadFailure").ToString() ??
+        string.Empty;
+
     #endregion
 
     /// <summary>

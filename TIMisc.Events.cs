@@ -1221,6 +1221,7 @@ public partial class WMain
                 MIFetchClip,
                 MIDLClip,
                 MIDLClipsByTheSameUrl,
+                MIBatchDLClips,
                 BtnBurnInSubtitle,
                 BtnSplitVideo,
                 MICancel

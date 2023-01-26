@@ -301,20 +301,10 @@ internal class OperationSet
 
             if (runResult.Success)
             {
+                _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadSucceed);
                 _WMain?.WriteLog(runResult.Data);
 
-                await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    if (_LOperation == null || _PBProgress == null)
-                    {
-                        return;
-                    }
-
-                    _LOperation.Content = string.Empty;
-                    _LOperation.ToolTip = string.Empty;
-                    _PBProgress.Value = 0.0d;
-                    _PBProgress.ToolTip = string.Empty;
-                }));
+                ResetControls();
 
                 // 計算間隔秒數。
                 double durationSeconds = clipData.EndTime.TotalSeconds -
@@ -360,6 +350,10 @@ internal class OperationSet
             }
             else
             {
+                ResetControls();
+
+                _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadFailure);
+
                 if (runResult.ErrorOutput.Any())
                 {
                     string errMsg = string.Join(
@@ -432,20 +426,10 @@ internal class OperationSet
 
             if (runResult.Success)
             {
+                _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadSucceed);
                 _WMain?.WriteLog(runResult.Data);
 
-                await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    if (_LOperation == null || _PBProgress == null)
-                    {
-                        return;
-                    }
-
-                    _LOperation.Content = string.Empty;
-                    _LOperation.ToolTip = string.Empty;
-                    _PBProgress.Value = 0.0d;
-                    _PBProgress.ToolTip = string.Empty;
-                }));
+                ResetControls();
 
                 foreach (ClipData childClipData in clipDatas)
                 {
@@ -521,6 +505,10 @@ internal class OperationSet
             }
             else
             {
+                ResetControls();
+
+                _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadFailure);
+
                 if (runResult.ErrorOutput.Any())
                 {
                     string errMsg = string.Join(
@@ -530,8 +518,6 @@ internal class OperationSet
                     _WMain?.WriteLog(errMsg);
                 }
             }
-
-
         }
         catch (Exception ex)
         {
@@ -600,20 +586,10 @@ internal class OperationSet
 
                 if (runResult.Success)
                 {
+                    _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadSucceed);
                     _WMain?.WriteLog(runResult.Data);
 
-                    await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        if (_LOperation == null || _PBProgress == null)
-                        {
-                            return;
-                        }
-
-                        _LOperation.Content = string.Empty;
-                        _LOperation.ToolTip = string.Empty;
-                        _PBProgress.Value = 0.0d;
-                        _PBProgress.ToolTip = string.Empty;
-                    }));
+                    ResetControls();
 
                     // 計算間隔秒數。
                     double durationSeconds = clipData.EndTime.TotalSeconds -
@@ -659,6 +635,10 @@ internal class OperationSet
                 }
                 else
                 {
+                    ResetControls();
+
+                    _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadFailure);
+
                     if (runResult.ErrorOutput.Any())
                     {
                         string errMsg = string.Join(
@@ -1707,5 +1687,31 @@ internal class OperationSet
 
             tempValue = value;
         });
+    }
+
+    /// <summary>
+    /// 重設控制項
+    /// </summary>
+    private static async void ResetControls()
+    {
+        try
+        {
+            await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (_LOperation == null || _PBProgress == null)
+                {
+                    return;
+                }
+
+                _LOperation.Content = string.Empty;
+                _LOperation.ToolTip = string.Empty;
+                _PBProgress.Value = 0.0d;
+                _PBProgress.ToolTip = string.Empty;
+            }));
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(ex.Message);
+        }
     }
 }

@@ -61,6 +61,7 @@ public partial class WMain
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
+                    MIBatchDLClips,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
                     BtnSplitVideo
@@ -209,6 +210,7 @@ public partial class WMain
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
+                    MIBatchDLClips,
                     MIReorderClipList,
                     MIClearClipList,
                     BtnGenerateB23ClipList,
