@@ -88,6 +88,9 @@ public partial class WMain
         {
             if (MPPlayer != null)
             {
+                // 讓 libmpv 先停止播放，以免在 yt-dlp 發生錯誤後，後續的新播放皆會失效。
+                MPPlayer.Stop();
+
                 string? path = clipData.VideoUrlOrID;
 
                 if (path == null)
