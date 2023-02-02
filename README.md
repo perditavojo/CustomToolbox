@@ -23,6 +23,7 @@
 ## 二、文件
 
 - [使用手冊](MANUAL.md)
+- [Bilibili API](BilibiliApi/README.md)
 
 ## 三、使用的函式庫
 
@@ -30,7 +31,7 @@
 - [minhhungit/ConsoleTableExt](https://github.com/minhhungit/ConsoleTableExt)
 - [Lachee/discord-rpc-csharp](https://github.com/Lachee/discord-rpc-csharp)
 - [bezzad/Downloader](https://github.com/bezzad/Downloader)
-- [HavenDV/H.NotifyIcon](hhttps://github.com/HavenDV/H.NotifyIcon)
+- [HavenDV/H.NotifyIcon](https://github.com/HavenDV/H.NotifyIcon)
 - [zzzprojects/html-agility-pack](https://github.com/zzzprojects/html-agility-pack)
 - [Humanizr/Humanizer](https://github.com/Humanizr/Humanizer)
 - [microsoft/playwright-dotnet](https://github.com/microsoft/playwright-dotnet)
