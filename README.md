@@ -4,275 +4,62 @@
 
 ## 一、功能
 
-- [短片播放器](#1-短片播放器)
+- [短片播放器](MANUAL.md#一短片播放器)
   - 透過 libmpv 以及 yt-dlp 來支援數個影音網站的影片播放。
-- [網路資源](#2-網路資源)
-- [下載短片](#3-下載短片)
+- [網路資源](MANUAL.md#二網路資源)
+- [下載短片](MANUAL.md#三下載短片)
   - 透過 yt-dlp 以及 FFmpeg 或 aria2 來下載影片。
-- [陽春字幕產生器](#4-陽春字幕產生器)
+- [陽春字幕產生器](MANUAL.md#四陽春字幕產生器)
   - 製作 SubRip Text 或 WebVTT 格式的字幕檔案。
-- [YouTube 影片秒數轉換器](#5-youtube-影片秒數轉換器)
+- [YouTube 影片秒數轉換器](MANUAL.md#五youtube-影片秒數轉換器)
   - 將秒數與時間標記互相轉換的轉換器。
-- [燒錄字幕檔](#6-燒錄字幕檔)
+- [燒錄字幕檔](MANUAL.md#六燒錄字幕檔)
   - 透過 FFmpeg 將字幕檔案燒錄至視訊檔案。
-- [分割影片](#7-分割影片)
+- [分割影片](MANUAL.md#七分割影片)
   - 透過 FFmpeg 將指定的視訊檔案分割成數個短片。
-- [YouTube 訂閱者計數器工具](#8-youtube-訂閱者計數器工具)
+- [YouTube 訂閱者計數器工具](MANUAL.md#八youtube-訂閱者計數器工具)
   - 透過 Playwright 來操作模擬人工瀏覽 [YouTube Subscriber Counter](https://subscribercounter.com) 網站，並將網站內容拍攝成截圖。
 
-### 1. 短片播放器
+## 二、文件
 
-#### (1). 一般操作
+- [使用手冊](MANUAL.md)
+- [更新日誌](CHANGELOG.md)
+- [Bilibili API](BilibiliApi/README.md)
 
-1. 先在右側的短片清單中新增內容；或使用 [網路資源](#2-網路資源) 取得內容。
-2. 點選`短片播放器`頁籤。
-3. 點選`播放`按鈕，即可播放短片。
+## 三、使用的函式庫
 
-#### (2). 其他控制項
+- [chris84948/AirspaceFixer](https://github.com/chris84948/AirspaceFixer)
+- [minhhungit/ConsoleTableExt](https://github.com/minhhungit/ConsoleTableExt)
+- [Lachee/discord-rpc-csharp](https://github.com/Lachee/discord-rpc-csharp)
+- [bezzad/Downloader](https://github.com/bezzad/Downloader)
+- [HavenDV/H.NotifyIcon](https://github.com/HavenDV/H.NotifyIcon)
+- [zzzprojects/html-agility-pack](https://github.com/zzzprojects/html-agility-pack)
+- [Humanizr/Humanizer](https://github.com/Humanizr/Humanizer)
+- [microsoft/playwright-dotnet](https://github.com/microsoft/playwright-dotnet)
+- [Kinnara/ModernWpf](https://github.com/Kinnara/ModernWpf)
+- [hudec117/Mpv.NET-lib-](https://github.com/hudec117/Mpv.NET-lib-)
+- [CosineG/OpenCC.NET](https://github.com/CosineG/OpenCC.NET)
+- [adoconnection/SevenZipExtractor](https://github.com/adoconnection/SevenZipExtractor)
+- [tomaszzmuda/Xabe.FFmpeg](https://github.com/tomaszzmuda/Xabe.FFmpeg)
+- [Bluegrams/YoutubeDLSharp](https://github.com/Bluegrams/YoutubeDLSharp)
 
-- 拖曳`時間軸`，即可調整播放的進度。
-- 拖曳`音量調整`，即可調整音量大小。
-- 點選`靜音`按鈕，即可靜音短片。
-  - 點選`取消靜音`按鈕，即可取消靜音短片。
-- 勾選`不顯示影像`，即可不顯示短片的畫面。
-  - 取消勾選`不顯示影像`，即可顯示短片的畫面。
-- 勾選`色度鍵`，即可將短片畫面轉換成綠幕。
-  - 取消勾選`色度鍵`，即可顯示原本的短片畫面。
-- 選則 `YouTube 影片畫值`，即可調整 YouTube 網站影片的畫值。
-  - ※僅對 YouTube 網站有效。
-- 選擇`播放速度`，即可調整短片的播放速度。
-- 點選`上一個`按鈕，即可播放上一個短片。
-- 點選`下一個`按鈕，即可播放下一個短片。
-- 點選`暫停`按鈕，即可暫停播放短片。
-  - 點選`恢復播放`按鈕，即可恢復播放已暫停播放短片。
-- 點選`停止`按鈕，即可停止播放短片。
+## 四、相依性檔案
 
-#### (3.) 短片清單
+- [aria2/aria2](https://github.com/aria2/aria2)
+- [yt-dlp/yt-dlp](https://github.com/yt-dlp/yt-dlp)
+- [yt-dlp/FFmpeg-Builds](https://github.com/yt-dlp/FFmpeg-Builds)
+- [ytdl_jook.lua](https://github.com/mpv-player/mpv/blob/master/player/lua/ytdl_hook.lua)
+- [libmpv](https://sourceforge.net/projects/mpv-player-windows/files/libmpv/)
+  - 限定：mpv-dev-x86_64-20211212-git-0e76372.7z
+- [sub_charenc_parameters.txt](https://trac.ffmpeg.org/attachment/ticket/2431/sub_charenc_parameters.txt)
 
-1. 在`短片清單`上點選滑鼠右鍵，即可叫出操作選單。
-2. 可以直接將支援的短片清單檔案，拖曳至短片清單上以載入該短片清單的內容。
-3. 可以透過`檔案` -> `載入短片清單檔案`，選擇要載入的短片清單檔案，即可載入該檔案。
-
-#### (4). Discord 豐富狀態
-
-本應用程式還另支援 [Discord 豐富狀態](#8-啟用-discord-豐富狀態) [^1]（需要在`雜項`頁籤開啟），可以將短片播放器的播放狀態設為 Discord 豐富狀態。
-
-### 2. 網路資源
-
-點選`網路資源`頁籤。
-
-#### (1). 網路播放清單
-
-目前共支援下列兩個來源：
+## 五、網路資源
 
 - [YoutubeClipPlaylist/Playlists](https://github.com/YoutubeClipPlaylist/Playlists)
+- [YoutubeClipPlaylist/Lyrics](https://github.com/YoutubeClipPlaylist/Lyrics)
 - [rubujo/CustomPlaylist](https://github.com/rubujo/CustomPlaylist)
 
-選擇欲下載的網路播放清單後，再點選`載入短片清單`按鈕，即會在右側的短片清單內顯示下載的內容。
-
-##### (2). 自動歌詞
-
-勾選啟用後，若是播放來自 [YoutubeClipPlaylist/Playlists](https://github.com/YoutubeClipPlaylist/Playlists) 的播放清單中的短片時，若該短片項目沒有字幕檔網址，則會自動搜尋 [YoutubeClipPlaylist/Lyrics](https://github.com/YoutubeClipPlaylist/Lyrics) 此 GitHub 倉庫，並下載對應的 LyRiCs 檔案。
-
-※不一定都找得到對應的 LyRiCs 檔案，詳細請參考[該 GitHub 倉庫](https://github.com/YoutubeClipPlaylist/Lyrics)的 [README.md](https://github.com/YoutubeClipPlaylist/Lyrics/blob/master/README.md) 檔案。
-
-#### (3). 短片清單
-
-此下拉選單會在應用程式開啟時，自動掃描 ClipLists 資料夾，並將該資料夾第一層的短片清單列出。
-選擇欲載入的短片清單檔案後，再點選`載入短片清單`按鈕，即會在右側的短片清單內顯示載入的內容。
-
-#### (4). Bilibili 短片清單產生器
-
-1. 輸入使用者的 mid。
-2. 在`排除字詞`的欄位編輯要排除的字詞。(一行一個字詞)
-3. 點選`產生短片清單檔案`按鈕即可。
-4. 若要取消操作，請點選`取消作業`按鈕即可。
-
-### 3. 下載短片
-
-#### (1). 下載此短片
-
-1. 先在短片清單`點選`要下載的短片項目。
-2. 在該短片項目上點選滑鼠右鍵，然後選擇`下載此短片`。
-3. 等待作業完成即可。
-4. 若要取消操作，請點選`取消作業`按鈕即可。
-
-#### (2). 依同網址或影片 ID 來下載短片
-
-1. 先在短片清單`點選`要下載的短片項目。
-2. 在該短片項目上點選滑鼠右鍵，然後選擇`依同網址或影片 ID 來下載短片`。
-3. 等待作業完成即可。
-4. 若要取消操作，請點選`取消作業`按鈕即可。
-
-#### (3). 批次下載短片
-
-1. 在短片清單上點選滑鼠右鍵，然後選擇`批次下載短片`。
-2. 等待作業完成即可。
-3. 若要取消操作，請點選`取消作業`按鈕即可。
-
-#### (4.) 下載選項
-
-1. 先下載完整影片
-   - 啟用此選項後，則會先下載整部短片，在下載完成後，才會依短片項目的內容決定是否要分割短片。
-2. 刪除來源檔案
-   - 僅會作用於需要分割短片的狀況。
-
-※這兩個設定選項會影響[下載此短片](#1-下載此短片)以及[依同網址或影片 ID 來下載短片](#2-依同網址或影片-id-來下載短片)等功能。
-
-### 4. 陽春字幕產生器
-
-點選`短片工具`頁籤後，再點選`陽春字幕產生器`按鈕，即會透過本機上的網頁瀏覽器開啟該網頁工具。
-
-### 5. YouTube 影片秒數轉換器
-
-點選`短片工具`頁籤後，再點選`YouTube 影片秒數轉換器`按鈕，即會透過本機上的網頁瀏覽器開啟該網頁工具。
-
-### 6. 燒錄字幕檔
-
-1. 先至`雜項`頁籤設定 `FFmpeg 選項`。
-2. 點選`短片工具`頁籤後，再點選`燒錄字幕檔`按鈕。
-3. 選擇視訊檔案。(僅支援 \*.mp4、\*.mkv 等格式)
-4. 選擇字幕檔案。(僅支援 \*.srt、\*.vtt、\*.ssa 以及 \*.ass 等格式)
-5. 等待作業完成即可。
-6. 若要取消操作，請點選`取消作業`按鈕即可。
-
-### 7. 分割影片
-
-1. 先至`雜項`頁籤設定 `FFmpeg 選項`。
-2. 在短片清單加入欲分割成的短片項目。
-3. 點選`短片工具`頁籤後，再點選`分割影片`按鈕。
-4. 選擇視訊檔案。(僅支援 \*.mp4、\*.mkv 等格式)
-5. 等待作業完成即可。
-6. 若要取消操作，請點選`取消作業`按鈕即可。
-
-### 8. YouTube 訂閱者計數器工具
-
-1. 點選`其他工具`頁籤。
-2. 輸入 YouTube 頻道的 ID。
-3. 依照需求勾選以及設定選項。
-4. 點選`儲存截圖`按鈕即可。
-5. 若需要重設，可以透過點選`重設`按鈕來重設相關的控制項。
-
-## 二、雜項
-
-### 1. 應用程式選項
-
-#### (1). 語系
-
-本應用程式預設會自動判斷目前作業系統所使用的語系，但也可以手動選擇想要使用的語系。
-
-1. 選擇想要使用的語系。
-2. 在選擇以及確認後，等待應用程式重新啟動即可。
-
-#### (2). 主題
-
-本應用程式提供兩種主題可以使用，一是`淺色`二是`深色`。
-
-1. 選擇想要使用的主題。
-2. 在選擇後，即會立即套用。
-
-#### (3). 使用者代理字串
-
-此處用於部分下載機制使用，避免讓下載來源認為是非正常行為在下載資源。
-
-1. 在欄位輸入想要的使用者代理字串。
-2. 讓該欄位失焦即可。
-
-※僅會影響新的下載，對正在進行中的下載不會生效，若要使其立即生效，請先取消進行中的下載作業後再重新下載即可。
-
-#### (4). 查詢使用者代理字串
-
-1. 點選`查詢使用者代理字串`按鈕，即會開啟您預設的網頁瀏覽器，並透過 Google 搜尋引擎來查詢該網頁瀏覽器地使用者代理字串。
-
-※可以搭配[使用者代理字串](#3-使用者代理字串)一起使用。
-
-#### (5). 不支援的域名
-
-此功能僅用於載入[網路播放清單](#1-網路播放清單)、[短片清單](#3-短片清單)，在載入相關資料時會排除在此處設定的域名的短片項目。
-
-1. 在欄位輸入想要排除的域名。（一行一個）
-2. 讓該欄位失焦即可。
-
-#### (6). 附加秒數
-
-此功能僅用於載入時間標記資訊檔案，當載入的時間標記資訊檔案僅有開始時間時，則會以此處設定的秒數自動補上結束時間。
-
-1. 在欄位輸入想要秒數。
-2. 讓該欄位失焦即可。
-
-#### (7). 啟用 mpv 記錄詳細資訊
-
-勾選此選項以讓 mpv 輸出詳細資訊。
-
-#### (8). 啟用 Discord 豐富狀態
-
-本應用程式支援將短片播放器的播放狀態，設為 Discord 豐富狀態 [^1]，勾選此選項以啟用此功能。
-
-#### (9). 啟用 OpenCC S2TWP
-
-此選項僅會作用於[Bilibili 短片清單產生器](#4-bilibili-短片清單產生器)。
-
-勾選此選選項後，會自動將影片標題轉換成繁體中文（異體字轉換：臺灣標準、地域用詞轉換：臺灣模式）。
-
-### 2. yt-dlp 選項
-
-本應用程式的短片下載功能是透過 yt-dlp 達成，此處提供簡易的 yt-dlp 選項設定功能。
-
-※若需要下載會員限定的影片，請調整此處的 Cookies 選項。
-
-### 3. FFmpeg 選項
-
-本應用程式的短片分割、[燒錄字幕檔](#6-燒錄字幕檔)以及[分割影片](#7-分割影片)等功能皆是透過 FFmpeg 達成，此處提供簡易的 FFmpeg 選項設定功能。
-
-#### (1). 字幕選項
-
-1. 在`字型清單`選擇想要使用的字型。
-2. 或在其之下的欄位內輸入字型的名稱。
-3. 在`文字編碼清單`選擇想要使用的文字編碼。
-4. 或在其之下的欄位內輸入文字編碼的名稱。
-5. 勾選`套用字型設定`選項。
-
-※若未勾選`套用字型設定`選項的話，在執行相關作業時則不會套用相關設定。
-
-#### (2). 硬體加速
-
-1. 選擇品牌。
-2. 或選擇 GPU 裝置。
-3. 勾選`啟用硬體加速`選項。
-
-※若未勾選`啟用硬體加速`選項的話，在執行相關作業時則不會套用相關設定。
-※使用此選項前，請先確認您使用的裝置支援硬體加速，否則請勿使用此選項，因為可能會造成相關作業失敗。
-
-### 4. 相依性檔案
-
-此處提供本應用程式的相依性檔案的下載、更新以及重建等功能。
-
-### 5. 資料夾
-
-此處提供本應用程式使用的資料夾的開啟捷徑。
-
-## 三、快速鍵
-
-- Q 鍵：結束應用程式
-- W 鍵：重設彈出視窗的大小與位置
-- E 鍵：開／關彈出視窗
-- R 鍵：開／關彈出視窗的全螢幕顯示
-- T 鍵：隱藏應用程式
-- A 鍵：播放短片
-- S 鍵：暫停／恢復播放短片
-- D 鍵：播放上一個短片
-- F 鍵：播放下一個短片
-- G 鍵：停止播放短片
-- Z 鍵：隨機播放短片
-- X 鍵：隨機排列短片清單
-- C 鍵：開／關不顯示影像
-- V 鍵：開／關靜音
-
-※僅在應用程式前景顯示且有焦點時才會生效。
-
-## 四、注意事項
+## 六、注意事項
 
 1. 在發佈時請勿勾選`產生單一檔案`選項，這會造成 H.NotifyIcon.Wpf 函式庫運作不正常。
 2. 在發佈時請勿勾選`啟用 ReadyToRun 編譯`選項，這會造成應用程式在啟動時崩潰。
-
-[^1] 僅支援 Discrod 桌面版。

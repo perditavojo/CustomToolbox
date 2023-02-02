@@ -7,6 +7,7 @@ using CustomToolbox.Common.Models.ImportPlaylist;
 using CustomToolbox.Common.Models.UpdateNotifier;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
+using KeyEventHandler = System.Windows.Input.KeyEventHandler;
 using ModernWpf.Controls;
 using OpenCCNET;
 using System.Collections.ObjectModel;
@@ -125,6 +126,10 @@ public partial class WMain
                 CBAutoLyric.IsChecked = Properties.Settings.Default.NetPlaylistAutoLyric;
                 MIFullDownloadFirst.IsChecked = Properties.Settings.Default.FullDownloadFirst;
                 MIDeleteSourceFile.IsChecked = Properties.Settings.Default.DeleteSourceFile;
+
+                // 為 SSeek 加入 KeyUpEvent、KeyDownEvent 等事件處裡，以讓使用者可以透過方向鍵控制控制項。
+                SSeek.AddHandler(KeyUpEvent, new KeyEventHandler(SSeek_KeyUpEvent), true);
+                SSeek.AddHandler(KeyDownEvent, new KeyEventHandler(SSeek_KeyDownEvent), true);
 
                 InitB23ClipListExcludedPhrases();
 

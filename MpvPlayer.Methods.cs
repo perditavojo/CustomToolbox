@@ -88,6 +88,9 @@ public partial class WMain
         {
             if (MPPlayer != null)
             {
+                // 讓 libmpv 先停止播放，以免在 yt-dlp 發生錯誤後，後續的新播放皆會失效。
+                MPPlayer.Stop();
+
                 string? path = clipData.VideoUrlOrID;
 
                 if (path == null)
@@ -109,6 +112,14 @@ public partial class WMain
                 if (!path.StartsWith("http"))
                 {
                     path = $"https://www.youtube.com/watch?v={path}";
+
+                    MPPlayer.YouTubeDlVideoQuality = CustomFunction
+                        .GetYTQuality(Properties.Settings.Default.MpvNetLibYTQualityIndex);
+                }
+                else if (path.Contains("youtube") || 
+                    path.Contains("youtu.be"))
+                {
+                    // YouTube 網址格式來源：https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
 
                     MPPlayer.YouTubeDlVideoQuality = CustomFunction
                         .GetYTQuality(Properties.Settings.Default.MpvNetLibYTQualityIndex);

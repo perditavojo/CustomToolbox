@@ -9,12 +9,13 @@ using CustomToolbox.Common.Sets;
 using DragCompletedEventArgs = System.Windows.Controls.Primitives.DragCompletedEventArgs;
 using DragStartedEventArgs = System.Windows.Controls.Primitives.DragStartedEventArgs;
 using H.NotifyIcon.Core;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using Mpv.NET.API;
 using Mpv.NET.Player;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using YoutubeDLSharp.Metadata;
+using System.Windows.Input;
 
 namespace CustomToolbox;
 
@@ -34,6 +35,60 @@ public partial class WMain
                     UpdateClipPlayer(
                         CPPlayer.Status,
                         CPPlayer.ClipData);
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void SSeek_KeyUpEvent(object? sender, KeyEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (e.Key == Key.Up ||
+                    e.Key == Key.Left ||
+                    e.Key == Key.Down ||
+                    e.Key == Key.Right)
+                {
+                    CPPlayer.SeekStatus = EnumSet.SSeekStatus.Drag;
+                }
+                else
+                {
+                    CPPlayer.SeekStatus = EnumSet.SSeekStatus.Idle;
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    private void SSeek_KeyDownEvent(object? sender, KeyEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (e.Key == Key.Up ||
+                    e.Key == Key.Left ||
+                    e.Key == Key.Down ||
+                    e.Key == Key.Right)
+                {
+                    CPPlayer.SeekStatus = EnumSet.SSeekStatus.Drag;
+                }
+                else
+                {
+                    CPPlayer.SeekStatus = EnumSet.SSeekStatus.Idle;
                 }
             }));
         }
