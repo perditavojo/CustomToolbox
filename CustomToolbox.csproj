@@ -32,7 +32,7 @@
     <PackageReference Include="Xabe.FFmpeg" Version="5.2.4" />
     <PackageReference Include="YoutubeDLSharp" Version="1.0.0-beta3" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Page Remove="Langs\en-GB.xaml" />
     <Page Remove="Langs\zh-CN.xaml" />
@@ -42,7 +42,7 @@
     <Page Remove="Langs\zh-SG.xaml" />
     <Page Remove="Langs\zh-TW.xaml" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Content Include="Langs\en-GB.xaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -109,5 +109,5 @@
   <PropertyGroup>
     <NoWarn>$(NoWarn);WFAC010</NoWarn>
   </PropertyGroup>
-	
+
 </Project>

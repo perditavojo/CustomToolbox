@@ -24,7 +24,40 @@
 
 - [使用手冊](MANUAL.md)
 
-## 三、注意事項
+## 三、使用的函式庫
+
+- [chris84948/AirspaceFixer](https://github.com/chris84948/AirspaceFixer)
+- [minhhungit/ConsoleTableExt](https://github.com/minhhungit/ConsoleTableExt)
+- [Lachee/discord-rpc-csharp](https://github.com/Lachee/discord-rpc-csharp)
+- [bezzad/Downloader](https://github.com/bezzad/Downloader)
+- [HavenDV/H.NotifyIcon](hhttps://github.com/HavenDV/H.NotifyIcon)
+- [zzzprojects/html-agility-pack](https://github.com/zzzprojects/html-agility-pack)
+- [Humanizr/Humanizer](https://github.com/Humanizr/Humanizer)
+- [microsoft/playwright-dotnet](https://github.com/microsoft/playwright-dotnet)
+- [Kinnara/ModernWpf](https://github.com/Kinnara/ModernWpf)
+- [hudec117/Mpv.NET-lib-](https://github.com/hudec117/Mpv.NET-lib-)
+- [CosineG/OpenCC.NET](https://github.com/CosineG/OpenCC.NET)
+- [adoconnection/SevenZipExtractor](https://github.com/adoconnection/SevenZipExtractor)
+- [tomaszzmuda/Xabe.FFmpeg](https://github.com/tomaszzmuda/Xabe.FFmpeg)
+- [Bluegrams/YoutubeDLSharp](https://github.com/Bluegrams/YoutubeDLSharp)
+
+## 四、相依性檔案
+
+- [aria2/aria2](https://github.com/aria2/aria2)
+- [yt-dlp/yt-dlp](https://github.com/yt-dlp/yt-dlp)
+- [yt-dlp/FFmpeg-Builds](https://github.com/yt-dlp/FFmpeg-Builds)
+- [ytdl_jook.lua](https://github.com/mpv-player/mpv/blob/master/player/lua/ytdl_hook.lua)
+- [libmpv](https://sourceforge.net/projects/mpv-player-windows/files/libmpv/)
+  - 限定：mpv-dev-x86_64-20211212-git-0e76372.7z
+- [sub_charenc_parameters.txt](https://trac.ffmpeg.org/attachment/ticket/2431/sub_charenc_parameters.txt)
+
+## 五、網路資源
+
+- [YoutubeClipPlaylist/Playlists](https://github.com/YoutubeClipPlaylist/Playlists)
+- [YoutubeClipPlaylist/Lyrics](https://github.com/YoutubeClipPlaylist/Lyrics)
+- [rubujo/CustomPlaylist](https://github.com/rubujo/CustomPlaylist)
+
+## 六、注意事項
 
 1. 在發佈時請勿勾選`產生單一檔案`選項，這會造成 H.NotifyIcon.Wpf 函式庫運作不正常。
 2. 在發佈時請勿勾選`啟用 ReadyToRun 編譯`選項，這會造成應用程式在啟動時崩潰。
