@@ -23,6 +23,7 @@
 ## 二、文件
 
 - [使用手冊](MANUAL.md)
+- [更新日誌](CHANGELOG.md)
 - [Bilibili API](BilibiliApi/README.md)
 
 ## 三、使用的函式庫
