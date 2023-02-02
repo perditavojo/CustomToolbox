@@ -116,6 +116,14 @@ public partial class WMain
                     MPPlayer.YouTubeDlVideoQuality = CustomFunction
                         .GetYTQuality(Properties.Settings.Default.MpvNetLibYTQualityIndex);
                 }
+                else if (path.Contains("youtube") || 
+                    path.Contains("youtu.be"))
+                {
+                    // YouTube 網址格式來源：https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
+
+                    MPPlayer.YouTubeDlVideoQuality = CustomFunction
+                        .GetYTQuality(Properties.Settings.Default.MpvNetLibYTQualityIndex);
+                }
                 else
                 {
                     // 非 YouTube 網站的影片套用此設定。 
