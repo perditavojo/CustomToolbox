@@ -57,7 +57,19 @@ public partial class WMain
                     e.Key == Key.Down ||
                     e.Key == Key.Right)
                 {
-                    CPPlayer.SeekStatus = EnumSet.SSeekStatus.Drag;
+                    if (!IsPending)
+                    {
+                        IsPending = true;
+
+                        // 延後 3 秒在執行。
+                        Task.Delay(3000)
+                            .ContinueWith(task =>
+                            {
+                                CPPlayer.SeekStatus = EnumSet.SSeekStatus.Idle;
+
+                                IsPending = false;
+                            });
+                    }
                 }
                 else
                 {

@@ -66,4 +66,9 @@ public partial class WMain
     /// 是否正在初始化中
     /// </summary>
     private bool IsInitializing = false;
+
+    /// <summary>
+    /// 是否正在等待中
+    /// </summary>
+    private bool IsPending = false;
 }
