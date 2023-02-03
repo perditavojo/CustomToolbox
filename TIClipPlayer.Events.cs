@@ -57,7 +57,19 @@ public partial class WMain
                     e.Key == Key.Down ||
                     e.Key == Key.Right)
                 {
-                    CPPlayer.SeekStatus = EnumSet.SSeekStatus.Drag;
+                    if (!IsPending)
+                    {
+                        IsPending = true;
+
+                        // 延後 3 秒在執行。
+                        Task.Delay(3000)
+                            .ContinueWith(task =>
+                            {
+                                CPPlayer.SeekStatus = EnumSet.SSeekStatus.Idle;
+
+                                IsPending = false;
+                            });
+                    }
                 }
                 else
                 {
@@ -117,15 +129,26 @@ public partial class WMain
                         if (newValue >= slider.Minimum &&
                             newValue <= slider.Maximum)
                         {
-                            try
+                            // 在某些特定狀況下 newValue 會大於 MPPlayer.Duration.TotalSeconds，
+                            // 需要排除此狀況。
+                            if (newValue <= MPPlayer.Duration.TotalSeconds)
                             {
-                                MPPlayer.SeekAsync(newValue);
-                            }
-                            catch (MpvAPIException ex)
-                            {
-                                WriteLog(MsgSet.GetFmtStr(
-                                    MsgSet.MsgErrorOccured,
-                                    ex.ToString()));
+                                try
+                                {
+                                    MPPlayer.SeekAsync(newValue);
+                                }
+                                catch (ArgumentOutOfRangeException aoore)
+                                {
+                                    WriteLog(MsgSet.GetFmtStr(
+                                        MsgSet.MsgErrorOccured,
+                                        aoore.ToString()));
+                                }
+                                catch (MpvAPIException mae)
+                                {
+                                    WriteLog(MsgSet.GetFmtStr(
+                                        MsgSet.MsgErrorOccured,
+                                        mae.ToString()));
+                                }
                             }
                         }
                     }
