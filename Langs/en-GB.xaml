@@ -11,7 +11,7 @@
     <!-- Application -->
     <sys:String x:Key="AppName">CustomToolbox</sys:String>
     <sys:String x:Key="AppAbout" xml:space="preserve">Name: {0}&#x0a;Version: v{1}&#x0a;Description: {2}&#x0a;</sys:String>
-    <sys:String x:Key="AppDescription">A toolbox application with several features.</sys:String>
+    <sys:String x:Key="AppDescription">CustomToolbox is an integrated application with several functions.</sys:String>
     <!-- Word, Phrase -->
     <sys:String x:Key="About">About</sys:String>
     <sys:String x:Key="Ellipses">...</sys:String>

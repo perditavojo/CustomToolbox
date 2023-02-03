@@ -11,7 +11,7 @@
     <!-- 应用程序 -->
     <sys:String x:Key="AppName">自定义工具箱</sys:String>
     <sys:String x:Key="AppAbout" xml:space="preserve">名称：{0}&#x0a;版本：v{1}&#x0a;简述：{2}&#x0a;</sys:String>
-    <sys:String x:Key="AppDescription">具有多种功能的工具箱应用程序。</sys:String>
+    <sys:String x:Key="AppDescription">自定义工具箱是一款集成数个功能的集成型应用程序。</sys:String>
     <!-- 字词 -->
     <sys:String x:Key="About">关于</sys:String>
     <sys:String x:Key="Ellipses">……</sys:String>
@@ -198,7 +198,7 @@
     <sys:String x:Key="MIPlayClip">播放此短片</sys:String>
     <sys:String x:Key="MIFetchClip">获取此短片的信息</sys:String>
     <sys:String x:Key="MIDLClip">下载此短片</sys:String>
-    <sys:String x:Key="MIDLClipsByTheSameUrl">依同网址或视频 ID 来下载短片</sys:String>
+    <sys:String x:Key="MIDLClipsByTheSameUrl">依相同网址或视频 ID 来下载短片</sys:String>
     <sys:String x:Key="MIBatchDLClips">批量下载短片</sys:String>
     <sys:String x:Key="MIDownloadOptions">下载选项</sys:String>
     <sys:String x:Key="MIFullDownloadFirst">先下载完整视频</sys:String>
