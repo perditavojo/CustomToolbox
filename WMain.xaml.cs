@@ -1,6 +1,7 @@
 ﻿using ButtonBase = System.Windows.Controls.Primitives.ButtonBase;
 using CustomToolbox.Common;
 using CustomToolbox.Common.Extensions;
+using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using H.NotifyIcon;
@@ -82,6 +83,8 @@ public partial class WMain : Window
                     return;
                 }
             }
+
+            ClipData? clipData = CPPlayer.ClipData;
 
             switch (e.Key)
             {
@@ -204,6 +207,34 @@ public partial class WMain : Window
                     if (BtnMute.IsEnabled)
                     {
                         BtnMute.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                    }
+
+                    break;
+                // TODO: 2023-02-06 待完成時間軸編輯模式。
+                // 還需要阻止 PositionChanged() 此事件方法內的邏輯。
+                case Key.U:
+                    if (clipData != null && MPPlayer != null)
+                    {
+                        double newSeconds = Math.Round(
+                            MPPlayer.Position.TotalSeconds,
+                            MidpointRounding.AwayFromZero);
+
+                        clipData.StartTime = TimeSpan.FromSeconds(newSeconds);
+
+                        WriteLog($"Update start time of clip \"{clipData.Name}\" to {clipData.StartTime}");
+                    }
+
+                    break;
+                case Key.I:
+                    if (clipData != null && MPPlayer != null)
+                    {
+                        double newSeconds = Math.Round(
+                            MPPlayer.Position.TotalSeconds,
+                            MidpointRounding.AwayFromZero);
+
+                        clipData.EndTime = TimeSpan.FromSeconds(newSeconds);
+
+                        WriteLog($"Update end time of clip \"{clipData.Name}\" to {clipData.EndTime}");
                     }
 
                     break;
