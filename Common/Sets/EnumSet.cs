@@ -6,6 +6,21 @@
 public class EnumSet
 {
     /// <summary>
+    /// 列舉：短片播放器的模式
+    /// </summary>
+    public enum ClipPlayerMode
+    {
+        /// <summary>
+        /// 多媒體播放器
+        /// </summary>
+        MediaPlayer,
+        /// <summary>
+        /// 時間標記編輯器
+        /// </summary>
+        TimestampEditor
+    }
+
+    /// <summary>
     /// 列舉：短片播放器的狀態
     /// </summary>
     public enum ClipPlayerStatus

@@ -1,4 +1,5 @@
 ﻿using ButtonBase = System.Windows.Controls.Primitives.ButtonBase;
+using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -161,7 +162,7 @@ public partial class WMain
                     }
 
                     // 當 SSeek 的 SeekStatus 為 SSeekStatus.Idle 時才允許更新。
-                    if (CPPlayer.SeekStatus == EnumSet.SSeekStatus.Idle)
+                    if (CPPlayer.SeekStatus == SSeekStatus.Idle)
                     {
                         if (currentSeconds >= SSeek.Minimum &&
                             currentSeconds <= SSeek.Maximum)
@@ -176,7 +177,11 @@ public partial class WMain
                             currentTime.TotalSeconds,
                             MidpointRounding.AwayFromZero);
 
-                        CPPlayer.ClipData.EndTime = TimeSpan.FromSeconds(newSeconds);
+                        // 當模式為多媒體播放器時，才會自動更新 ClipData 的結束時間。
+                        if (CPPlayer.Mode == ClipPlayerMode.MediaPlayer)
+                        {
+                            CPPlayer.ClipData.EndTime = TimeSpan.FromSeconds(newSeconds);
+                        }
 
                         LDuration.Content = $"{currentTime:hh\\:mm\\:ss} / {durationTime:hh\\:mm\\:ss}";
                     }
@@ -185,8 +190,9 @@ public partial class WMain
                         LDuration.Content = $"{currentTime:hh\\:mm\\:ss} / {durationTime:hh\\:mm\\:ss}";
                     }
 
-                    // 只有不是直播的短片，才會到結束時間時自動停止並切換下一個短片。
-                    if (!CPPlayer.ClipData.IsLivestream &&
+                    // 當模式為多媒體播放器，且只有不是直播的短片，才會到結束時間時自動停止並切換下一個短片。
+                    if (CPPlayer.Mode == ClipPlayerMode.MediaPlayer &&
+                        !CPPlayer.ClipData.IsLivestream &&
                         currentSeconds >= endSeconds)
                     {
                         // 先主動讓 mpv 停止播放短片，以免此事件被重複觸發。
