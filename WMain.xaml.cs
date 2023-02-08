@@ -84,8 +84,6 @@ public partial class WMain : Window
                 }
             }
 
-            ClipData? clipData = CPPlayer.ClipData;
-
             switch (e.Key)
             {
                 case Key.Q:
@@ -210,31 +208,58 @@ public partial class WMain : Window
                     }
 
                     break;
-                // TODO: 2023-02-06 待完成時間軸編輯模式。
-                // 還需要阻止 PositionChanged() 此事件方法內的邏輯。
                 case Key.U:
-                    if (clipData != null && MPPlayer != null)
-                    {
-                        double newSeconds = Math.Round(
-                            MPPlayer.Position.TotalSeconds,
-                            MidpointRounding.AwayFromZero);
-
-                        clipData.StartTime = TimeSpan.FromSeconds(newSeconds);
-
-                        WriteLog($"Update start time of clip \"{clipData.Name}\" to {clipData.StartTime}");
-                    }
-
-                    break;
                 case Key.I:
-                    if (clipData != null && MPPlayer != null)
                     {
+                        // TODO: 2023-02-06 待完成時間軸編輯模式。
+                        // 還需要阻止 PositionChanged() 此事件方法內的邏輯。
+                        
+                        if (CPPlayer.Mode != EnumSet.ClipPlayerMode.TimestampEditor)
+                        {
+                            ShowMsgBox("Enable timestamp mode first!");
+
+                            return;
+                        }
+
+                        ClipData? clipData = CPPlayer.ClipData;
+
+                        if (clipData == null)
+                        {
+                            ShowMsgBox("Play a clip first!");
+
+                            return;
+                        }
+
+                        if (MPPlayer == null)
+                        {
+                            ShowMsgBox("libmpv is not loaded!");
+
+                            return;
+                        }
+
+                        if (!MPPlayer.IsMediaLoaded)
+                        {
+                            ShowMsgBox("Media is not loaded!");
+
+                            return;
+                        }
+
                         double newSeconds = Math.Round(
-                            MPPlayer.Position.TotalSeconds,
-                            MidpointRounding.AwayFromZero);
+                             MPPlayer.Position.TotalSeconds,
+                             MidpointRounding.AwayFromZero);
 
-                        clipData.EndTime = TimeSpan.FromSeconds(newSeconds);
+                        if (e.Key == Key.U)
+                        {
+                            clipData.StartTime = TimeSpan.FromSeconds(newSeconds);
 
-                        WriteLog($"Update end time of clip \"{clipData.Name}\" to {clipData.EndTime}");
+                            WriteLog($"Update start time of clip \"{clipData.Name}\" to {clipData.StartTime}");
+                        }
+                        else if (e.Key == Key.I)
+                        {
+                            clipData.EndTime = TimeSpan.FromSeconds(newSeconds);
+
+                            WriteLog($"Update end time of clip \"{clipData.Name}\" to {clipData.EndTime}");
+                        }
                     }
 
                     break;

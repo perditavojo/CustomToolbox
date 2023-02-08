@@ -249,6 +249,8 @@ public partial class WMain
                         Properties.Settings.Default.Save();
                     }
 
+                    TaskbarIconUtil.UpdateMINoVideoHeader(value);
+
                     string? vid = MPPlayer?.API.GetPropertyString("vid");
 
                     if (vid != "no")
@@ -291,6 +293,8 @@ public partial class WMain
                         Properties.Settings.Default.MpvNetLibNoVideo = value;
                         Properties.Settings.Default.Save();
                     }
+
+                    TaskbarIconUtil.UpdateMINoVideoHeader(value);
 
                     string? vid = MPPlayer?.API.GetPropertyString("vid");
 

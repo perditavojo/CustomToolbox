@@ -6,9 +6,10 @@ using CustomToolbox.Common.Sets;
 using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Utils;
 using H.NotifyIcon.Core;
-using System.Security.Cryptography;
+using ModernWpf.Controls;
 using Mpv.NET.API;
 using Mpv.NET.Player;
+using System.Security.Cryptography;
 
 namespace CustomToolbox;
 
@@ -116,7 +117,7 @@ public partial class WMain
                     MPPlayer.YouTubeDlVideoQuality = CustomFunction
                         .GetYTQuality(Properties.Settings.Default.MpvNetLibYTQualityIndex);
                 }
-                else if (path.Contains("youtube") || 
+                else if (path.Contains("youtube") ||
                     path.Contains("youtu.be"))
                 {
                     // YouTube 網址格式來源：https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
@@ -223,7 +224,7 @@ public partial class WMain
 
                         UpdateClipPlayer(ClipPlayerStatus.Paused, CPPlayer.ClipData);
 
-                        BtnPause.Content = MsgSet.Resume;
+                        BtnPause.Label = MsgSet.Resume;
 
                         message = MsgSet.MsgClipPaused;
 
@@ -233,7 +234,7 @@ public partial class WMain
 
                         UpdateClipPlayer(ClipPlayerStatus.Playing, CPPlayer.ClipData);
 
-                        BtnPause.Content = MsgSet.Pause;
+                        BtnPause.Label = MsgSet.Pause;
 
                         message = MsgSet.MsgClipResumed;
 
@@ -286,10 +287,11 @@ public partial class WMain
             {
                 MPPlayer.Volume = isMuted ? 0 : Properties.Settings.Default.MpvNetLibVolume;
 
-                BtnMute.Content = isMuted ? MsgSet.Unmute : MsgSet.Mute;
+                BtnMute.Label = isMuted ? MsgSet.Unmute : MsgSet.Mute;
+                BtnMute.Icon = isMuted ? new SymbolIcon(Symbol.Volume) : new SymbolIcon(Symbol.Mute);
 
                 // 更新 TaskbarIcon 的 MIMute 的 Header。
-                TaskbarIconUtil.UpdateMIMuteHeader(BtnMute.Content.ToString());
+                TaskbarIconUtil.UpdateMIMuteHeader(BtnMute.Label.ToString(), isMuted);
 
                 Control[] ctrlSet =
                 {

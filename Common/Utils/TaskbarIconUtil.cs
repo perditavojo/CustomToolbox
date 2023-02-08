@@ -2,6 +2,7 @@
 using CustomToolbox.Common.Sets;
 using H.NotifyIcon;
 using H.NotifyIcon.Core;
+using ModernWpf.Controls;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -113,18 +114,31 @@ internal class TaskbarIconUtil
 
             // 設定 MenuItem。
             MIShowOrHide.Header = MsgSet.Hide;
-            MIMute.Header = _WMain.BtnMute.Content;
+            MIShowOrHide.Icon = new SymbolIcon(Symbol.HideBcc);
+            MIMute.Header = _WMain.BtnMute.Label;
+            MIMute.Icon = new SymbolIcon(Symbol.Mute);
             MINoVideo.Header = MsgSet.MIEnableNoVideo;
+            MINoVideo.Icon = new SymbolIcon(Symbol.Video);
             MIRandomPlayClip.Header = _WMain.MIRandomPlayClip.Header;
-            MIPlayClip.Header = _WMain.BtnPlay.Content;
-            MIPause.Header = _WMain.BtnPause.Content;
-            MIPrevious.Header = _WMain.BtnPrevious.Content;
-            MINext.Header = _WMain.BtnNext.Content;
-            MIStop.Header = _WMain.BtnStop.Content;
+            MIRandomPlayClip.Icon = new SymbolIcon(Symbol.Shuffle);
+            MIPlayClip.Header = _WMain.BtnPlay.Label;
+            MIPlayClip.Icon = new SymbolIcon(Symbol.Play);
+            MIPause.Header = _WMain.BtnPause.Label;
+            MIPause.Icon = new SymbolIcon(Symbol.Pause);
+            MIPrevious.Header = _WMain.BtnPrevious.Label;
+            MIPrevious.Icon = new SymbolIcon(Symbol.Previous);
+            MINext.Header = _WMain.BtnNext.Label;
+            MINext.Icon = new SymbolIcon(Symbol.Next);
+            MIStop.Header = _WMain.BtnStop.Label;
+            MIStop.Icon = new SymbolIcon(Symbol.Stop);
             MIAboutMenu.Header = _WMain.MIAbout.Header;
+            MIAboutMenu.Icon = new SymbolIcon(Symbol.Help);
             MICheckUpdate.Header = _WMain.MICheckUpdate.Header;
+            MICheckUpdate.Icon = new SymbolIcon(Symbol.Download);
             MIAbout.Header = _WMain.MIAbout.Header;
+            MIAbout.Icon = new SymbolIcon(Symbol.Help);
             MIExit.Header = _WMain.MIExit.Header;
+            MIExit.Icon = new SymbolIcon(Symbol.Cancel);
 
             // 設定 MenuItem 的點擊事件。
             MIShowOrHide.Click += MIShowOrHide_Click;
@@ -158,7 +172,7 @@ internal class TaskbarIconUtil
 
             MIAboutMenu.Items.Add(MICheckUpdate);
             MIAboutMenu.Items.Add(MIAbout);
-            
+
             contextMenu.Items.Add(MIAboutMenu);
             contextMenu.Items.Add(MIExit);
 
@@ -289,17 +303,20 @@ internal class TaskbarIconUtil
     /// 更新 MIMute 的 Header
     /// </summary>
     /// <param name="value">字串，值</param>
-    public static void UpdateMIMuteHeader(string? value)
+    /// <param name="isMuted">布林值，是否靜音，預設值為 false</param>
+    public static void UpdateMIMuteHeader(string? value, bool isMuted = false)
     {
         try
         {
             if (!string.IsNullOrEmpty(value))
             {
                 MIMute.Header = value;
+                MIMute.Icon = isMuted ? new SymbolIcon(Symbol.Volume) : new SymbolIcon(Symbol.Mute);
             }
             else
             {
-                MIMute.Header = _WMain?.BtnMute.Content;
+                MIMute.Header = _WMain?.BtnMute.Label;
+                MIMute.Icon = isMuted ? new SymbolIcon(Symbol.Volume) : new SymbolIcon(Symbol.Mute);
             }
         }
         catch (Exception ex)
@@ -322,14 +339,17 @@ internal class TaskbarIconUtil
             {
                 case Visibility.Visible:
                     MIShowOrHide.Header = MsgSet.Hide;
+                    MIShowOrHide.Icon = new SymbolIcon(Symbol.HideBcc);
 
                     break;
                 case Visibility.Collapsed:
                     MIShowOrHide.Header = MsgSet.Show;
+                    MIShowOrHide.Icon = new SymbolIcon(Symbol.ShowBcc);
 
                     break;
                 case Visibility.Hidden:
                     MIShowOrHide.Header = MsgSet.Show;
+                    MIShowOrHide.Icon = new SymbolIcon(Symbol.ShowBcc);
 
                     break;
                 default:
@@ -381,6 +401,28 @@ internal class TaskbarIconUtil
 
                 MINoVideo.Header = header;
             }
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    /// <summary>
+    /// 更新 MINoVideo 的 Header
+    /// </summary>
+    /// <param name="isChecked">布林值，預設值為 false</param>
+    public static void UpdateMINoVideoHeader(bool isChecked = false)
+    {
+        try
+        {
+            string header = isChecked == true ?
+                MsgSet.MIDisableNoVideo :
+                MsgSet.MIEnableNoVideo;
+
+            MINoVideo.Header = header;
         }
         catch (Exception ex)
         {

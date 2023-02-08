@@ -117,6 +117,32 @@ public partial class WMain
                 ZhConverter.Initialize();
 
                 // 設定控制項。
+                // 無作用。
+                MIFileMenu.Icon = new SymbolIcon(Symbol.OpenFile);
+                MILoadClipListFile.Icon = new SymbolIcon(Symbol.OpenFile);
+                MISaveClipListFile.Icon = new SymbolIcon(Symbol.Save);
+                MIExit.Icon = new SymbolIcon(Symbol.Cancel);
+                // 無作用。
+                MICancel.Icon = new SymbolIcon(Symbol.Cancel);
+                // 無作用。
+                MIAboutMenu.Icon = new SymbolIcon(Symbol.Help);
+                MICheckUpdate.Icon = new SymbolIcon(Symbol.Download);
+                MIAbout.Icon = new SymbolIcon(Symbol.Help);
+
+                MIPlayClip.Icon = new SymbolIcon(Symbol.Play);
+                MIFetchClip.Icon = new SymbolIcon(Symbol.Zoom);
+                MIDLClip.Icon = new SymbolIcon(Symbol.Download);
+                MIDLClipsByTheSameUrl.Icon = new SymbolIcon(Symbol.Download);
+                MIBatchDLClips.Icon = new SymbolIcon(Symbol.Download);
+                MIDownloadOptions.Icon = new SymbolIcon(Symbol.Setting);
+                MIFullDownloadFirst.Icon = new SymbolIcon(Symbol.Priority);
+                MIDeleteSourceFile.Icon = new SymbolIcon(Symbol.Delete);
+                MIRandomPlayClip.Icon = new SymbolIcon(Symbol.Shuffle);
+                MIReorderClipList.Icon = new SymbolIcon(Symbol.Sort);
+                MIClearClipList.Icon = new SymbolIcon(Symbol.Delete);
+                MIClearLog.Icon = new SymbolIcon(Symbol.Delete);
+                MIExportLog.Icon = new SymbolIcon(Symbol.Save);
+
                 DGClipList.ItemsSource = GlobalDataSet;
                 CBYTQuality.SelectedIndex = Properties.Settings.Default.MpvNetLibYTQualityIndex;
                 CBPlaybackSpeed.SelectedIndex = Properties.Settings.Default.MpvNetLibPlaybackSpeedIndex;

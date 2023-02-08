@@ -1235,4 +1235,23 @@ public partial class WMain : Window
                 ex.ToString()));
         }
     }
+
+    private void TSClipPlayerMode_Toggled(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                CPPlayer.Mode = TSClipPlayerMode.IsOn ?
+                    ClipPlayerMode.TimestampEditor :
+                    ClipPlayerMode.MediaPlayer;
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
 }
