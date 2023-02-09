@@ -211,12 +211,9 @@ public partial class WMain : Window
                 case Key.U:
                 case Key.I:
                     {
-                        // TODO: 2023-02-06 待完成時間軸編輯模式。
-                        // 還需要阻止 PositionChanged() 此事件方法內的邏輯。
-                        
                         if (CPPlayer.Mode != EnumSet.ClipPlayerMode.TimestampEditor)
                         {
-                            ShowMsgBox("Enable timestamp mode first!");
+                            ShowMsgBox(MsgSet.MsgSwitchToTimestampEditorModeFirst);
 
                             return;
                         }
@@ -225,21 +222,21 @@ public partial class WMain : Window
 
                         if (clipData == null)
                         {
-                            ShowMsgBox("Play a clip first!");
+                            ShowMsgBox(MsgSet.MsgPlayAClipFirst);
 
                             return;
                         }
 
                         if (MPPlayer == null)
                         {
-                            ShowMsgBox("libmpv is not loaded!");
+                            ShowMsgBox(MsgSet.MsgLibMpvIsNotLoaded);
 
                             return;
                         }
 
                         if (!MPPlayer.IsMediaLoaded)
                         {
-                            ShowMsgBox("Media is not loaded!");
+                            ShowMsgBox(MsgSet.MsgMediaIsNotLoaded);
 
                             return;
                         }
@@ -252,13 +249,19 @@ public partial class WMain : Window
                         {
                             clipData.StartTime = TimeSpan.FromSeconds(newSeconds);
 
-                            WriteLog($"Update start time of clip \"{clipData.Name}\" to {clipData.StartTime}");
+                            WriteLog(MsgSet.GetFmtStr(
+                                MsgSet.TemplateUpdateStarTimeOfClipTo,
+                                clipData.Name ?? string.Empty,
+                                clipData.StartTime.ToString()));
                         }
                         else if (e.Key == Key.I)
                         {
                             clipData.EndTime = TimeSpan.FromSeconds(newSeconds);
 
-                            WriteLog($"Update end time of clip \"{clipData.Name}\" to {clipData.EndTime}");
+                            WriteLog(MsgSet.GetFmtStr(
+                                MsgSet.TemplateUpdateEndTimeOfClipTo,
+                                clipData.Name ?? string.Empty,
+                                clipData.EndTime.ToString()));
                         }
                     }
 

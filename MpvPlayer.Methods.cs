@@ -387,7 +387,6 @@ public partial class WMain
             }
 
             CPPlayer.NextIndex = nextIndex;
-
             CPPlayer.SeekStatus = SSeekStatus.Idle;
 
             DGClipList.SelectedIndex = CPPlayer.Index;

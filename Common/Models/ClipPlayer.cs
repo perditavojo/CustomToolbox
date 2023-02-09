@@ -21,7 +21,7 @@ public class ClipPlayer
 
     [JsonPropertyName("mode")]
     [Description("模式")]
-    public ClipPlayerMode Mode { get; set; } = ClipPlayerMode.MediaPlayer;
+    public ClipPlayerMode Mode { get; set; } = ClipPlayerMode.ClipPlayer;
 
     [JsonPropertyName("clipData")]
     [Description("短片資料")]

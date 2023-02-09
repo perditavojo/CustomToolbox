@@ -339,6 +339,20 @@ internal class MsgSet
         .FindResource("TemplateXabeFFmpegConversionResult").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 字串模板：已更新短片「{0}」的開始時間至「{1}」。
+    /// </summary>
+    public static readonly string TemplateUpdateStarTimeOfClipTo = Application.Current
+        .FindResource("TemplateUpdateStarTimeOfClipTo").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字串模板：已更新短片「{0}」的結束時間至「{1}」。
+    /// </summary>
+    public static readonly string TemplateUpdateEndTimeOfClipTo = Application.Current
+        .FindResource("TemplateUpdateEndTimeOfClipTo").ToString() ??
+        string.Empty;
+
     #endregion
 
     #region 控制項
@@ -1251,6 +1265,48 @@ internal class MsgSet
     /// </summary>
     public static readonly string MsgYtDlpDownloadFailure = Application.Current
         .FindResource("MsgYtDlpDownloadFailure").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已切換至短片播放器模式。
+    /// </summary>
+    public static readonly string MsgSwitchToClipPlayerMode = Application.Current
+        .FindResource("MsgSwitchToClipPlayerMode").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已切換至時間標記編輯器模式。
+    /// </summary>
+    public static readonly string MsgSwitchToTimestampEditorMode = Application.Current
+        .FindResource("MsgSwitchToTimestampEditorMode").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：請先切換至時間標記編輯器模式。
+    /// </summary>
+    public static readonly string MsgSwitchToTimestampEditorModeFirst = Application.Current
+        .FindResource("MsgSwitchToTimestampEditorModeFirst").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：請先播放短片。
+    /// </summary>
+    public static readonly string MsgPlayAClipFirst = Application.Current
+        .FindResource("MsgPlayAClipFirst").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：未載入 libmpv。
+    /// </summary>
+    public static readonly string MsgLibMpvIsNotLoaded = Application.Current
+        .FindResource("MsgLibMpvIsNotLoaded").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：未載入多媒體。
+    /// </summary>
+    public static readonly string MsgMediaIsNotLoaded = Application.Current
+        .FindResource("MsgMediaIsNotLoaded").ToString() ??
         string.Empty;
 
     #endregion

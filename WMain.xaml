@@ -291,9 +291,9 @@
                                     IsEnabled="False"
                                     Click="BtnStop_Click" />
                                 <ui:ToggleSwitch x:Name="TSClipPlayerMode" 
-                                    Margin="5,0,0,0" 
-                                    OffContent="Media player"
-                                    OnContent="Timestamp editor" 
+                                    Margin="5,0,0,0"
+                                    OffContent="{DynamicResource ClipPlayer}"
+                                    OnContent="{DynamicResource TimestampEditor}"
                                     Toggled="TSClipPlayerMode_Toggled" />
                             </StackPanel>
                         </StackPanel>

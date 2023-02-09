@@ -49,6 +49,8 @@
     <sys:String x:Key="YtdlSharpETA" xml:space="preserve"> 剩余时间：{0}</sys:String>
     <sys:String x:Key="YtdlSharpTotalDownloadSize" xml:space="preserve"> 文件大小：{0}</sys:String>
     <sys:String x:Key="YtdlSharpData" xml:space="preserve"> 数据：{0}</sys:String>
+    <sys:String x:Key="ClipPlayer">短片播放器</sys:String>
+    <sys:String x:Key="TimestampEditor">时间标记编辑器</sys:String>
     <!-- 字符串模板 -->
     <sys:String x:Key="TemplateMaintainer">[维护者：{0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1}（{2}）]：（{3}）{4}</sys:String>
@@ -57,6 +59,8 @@
     <sys:String x:Key="TemplateXabeFFmpegOnDataReceived">[Xabe.FFmpeg][数据接收]：{0}</sys:String>
     <sys:String x:Key="TemplateXabeFFmpegOnProgress">[Xabe.FFmpeg][进度]：处理识别：{0} [{1}/{2}] {3}%</sys:String>
     <sys:String x:Key="TemplateXabeFFmpegConversionResult" xml:space="preserve">[Xabe.FFmpeg] 作业完成。&#x0a;开始时间：{0}&#x0a;结束时间：{1}&#x0a;耗时：{2}&#x0a;使用的参数：{3}</sys:String>
+    <sys:String x:Key="TemplateUpdateStarTimeOfClipTo">已更新短片「{0}」的开始时间至「{1}」。</sys:String>
+    <sys:String x:Key="TemplateUpdateEndTimeOfClipTo">已更新短片「{0}」的结束时间至「{1}」。</sys:String>
     <!-- 控制项 -->
     <sys:String x:Key="MIFile">文件</sys:String>
     <sys:String x:Key="MILoadClipListFile">加载短片清单文件</sys:String>
@@ -341,4 +345,10 @@
     <sys:String x:Key="MsgClipListNoData">短片清单无数据。</sys:String>
     <sys:String x:Key="MsgYtDlpDownloadSucceed">下载成功。</sys:String>
     <sys:String x:Key="MsgYtDlpDownloadFailure">下载失败。</sys:String>
+    <sys:String x:Key="MsgSwitchToClipPlayerMode">已切换至短片播放器模式。</sys:String>
+    <sys:String x:Key="MsgSwitchToTimestampEditorMode">已切换至时间标记编辑器模式。</sys:String>
+    <sys:String x:Key="MsgSwitchToTimestampEditorModeFirst">请先切换至时间标记编辑器模式。</sys:String>
+    <sys:String x:Key="MsgPlayAClipFirst">请先播放短片。</sys:String>
+    <sys:String x:Key="MsgLibMpvIsNotLoaded">未加载 libmpv。</sys:String>
+    <sys:String x:Key="MsgMediaIsNotLoaded">未加载多媒体。</sys:String>
 </ResourceDictionary>

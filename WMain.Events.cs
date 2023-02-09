@@ -1244,7 +1244,16 @@ public partial class WMain : Window
             {
                 CPPlayer.Mode = TSClipPlayerMode.IsOn ?
                     ClipPlayerMode.TimestampEditor :
-                    ClipPlayerMode.MediaPlayer;
+                    ClipPlayerMode.ClipPlayer;
+
+                if (TSClipPlayerMode.IsOn)
+                {
+                    WriteLog(MsgSet.MsgSwitchToTimestampEditorMode);
+                }
+                else
+                {
+                    WriteLog(MsgSet.MsgSwitchToClipPlayerMode);
+                }
             }));
         }
         catch (Exception ex)

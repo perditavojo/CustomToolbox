@@ -11,9 +11,9 @@ public class EnumSet
     public enum ClipPlayerMode
     {
         /// <summary>
-        /// 多媒體播放器
+        /// 短片播放器
         /// </summary>
-        MediaPlayer,
+        ClipPlayer,
         /// <summary>
         /// 時間標記編輯器
         /// </summary>
