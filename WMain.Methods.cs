@@ -117,15 +117,9 @@ public partial class WMain
                 ZhConverter.Initialize();
 
                 // 設定控制項。
-                // 無作用。
-                MIFileMenu.Icon = new SymbolIcon(Symbol.OpenFile);
                 MILoadClipListFile.Icon = new SymbolIcon(Symbol.OpenFile);
                 MISaveClipListFile.Icon = new SymbolIcon(Symbol.Save);
                 MIExit.Icon = new SymbolIcon(Symbol.Cancel);
-                // 無作用。
-                MICancel.Icon = new SymbolIcon(Symbol.Cancel);
-                // 無作用。
-                MIAboutMenu.Icon = new SymbolIcon(Symbol.Help);
                 MICheckUpdate.Icon = new SymbolIcon(Symbol.Download);
                 MIAbout.Icon = new SymbolIcon(Symbol.Help);
 

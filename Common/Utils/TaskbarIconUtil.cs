@@ -31,67 +31,72 @@ internal class TaskbarIconUtil
     /// <summary>
     /// 顯示／隱藏
     /// </summary>
-    private static readonly MenuItem MIShowOrHide = new();
+    private static MenuItem MIShowOrHide = new();
 
     /// <summary>
     /// 靜音／取消靜音
     /// </summary>
-    private static readonly MenuItem MIMute = new();
+    private static MenuItem MIMute = new();
 
     /// <summary>
     /// 不顯示影片
     /// </summary>
-    private static readonly MenuItem MINoVideo = new();
+    private static MenuItem MINoVideo = new();
 
     /// <summary>
     /// 隨機播放短片
     /// </summary>
-    private static readonly MenuItem MIRandomPlayClip = new();
+    private static MenuItem MIRandomPlayClip = new();
 
     /// <summary>
     /// 播放
     /// </summary>
-    private static readonly MenuItem MIPlayClip = new();
+    private static MenuItem MIPlayClip = new();
 
     /// <summary>
     /// 暫停
     /// </summary>
-    private static readonly MenuItem MIPause = new();
+    private static MenuItem MIPause = new();
 
     /// <summary>
     /// 上一個
     /// </summary>
-    private static readonly MenuItem MIPrevious = new();
+    private static MenuItem MIPrevious = new();
 
     /// <summary>
     /// 下一個
     /// </summary>
-    private static readonly MenuItem MINext = new();
+    private static MenuItem MINext = new();
 
     /// <summary>
     /// 停止
     /// </summary>
-    private static readonly MenuItem MIStop = new();
+    private static MenuItem MIStop = new();
 
     /// <summary>
     /// 關於選單
     /// </summary>
-    private static readonly MenuItem MIAboutMenu = new();
+    private static MenuItem MIAboutMenu = new();
 
     /// <summary>
     /// 關於
     /// </summary>
-    private static readonly MenuItem MIAbout = new();
+    private static MenuItem MIAbout = new();
 
     /// <summary>
     /// 檢查更新
     /// </summary>
-    private static readonly MenuItem MICheckUpdate = new();
+    private static MenuItem MICheckUpdate = new();
 
     /// <summary>
     /// 結束
     /// </summary>
-    private static readonly MenuItem MIExit = new();
+    private static MenuItem MIExit = new();
+
+    /// <summary>
+    /// 右鍵選單
+    /// </summary>
+    private static ContextMenu CMContextMenu = new();
 
     /// <summary>
     /// 初始化 TaskbarIcon
@@ -113,32 +118,71 @@ internal class TaskbarIconUtil
             _TaskbarIcon.TrayMouseDoubleClick += TaskbarIcon_TrayMouseDoubleClick;
 
             // 設定 MenuItem。
-            MIShowOrHide.Header = MsgSet.Hide;
-            MIShowOrHide.Icon = new SymbolIcon(Symbol.HideBcc);
-            MIMute.Header = _WMain.BtnMute.Label;
-            MIMute.Icon = new SymbolIcon(Symbol.Mute);
-            MINoVideo.Header = MsgSet.MIEnableNoVideo;
-            MINoVideo.Icon = new SymbolIcon(Symbol.Video);
-            MIRandomPlayClip.Header = _WMain.MIRandomPlayClip.Header;
-            MIRandomPlayClip.Icon = new SymbolIcon(Symbol.Shuffle);
-            MIPlayClip.Header = _WMain.BtnPlay.Label;
-            MIPlayClip.Icon = new SymbolIcon(Symbol.Play);
-            MIPause.Header = _WMain.BtnPause.Label;
-            MIPause.Icon = new SymbolIcon(Symbol.Pause);
-            MIPrevious.Header = _WMain.BtnPrevious.Label;
-            MIPrevious.Icon = new SymbolIcon(Symbol.Previous);
-            MINext.Header = _WMain.BtnNext.Label;
-            MINext.Icon = new SymbolIcon(Symbol.Next);
-            MIStop.Header = _WMain.BtnStop.Label;
-            MIStop.Icon = new SymbolIcon(Symbol.Stop);
-            MIAboutMenu.Header = _WMain.MIAbout.Header;
-            MIAboutMenu.Icon = new SymbolIcon(Symbol.Help);
-            MICheckUpdate.Header = _WMain.MICheckUpdate.Header;
-            MICheckUpdate.Icon = new SymbolIcon(Symbol.Download);
-            MIAbout.Header = _WMain.MIAbout.Header;
-            MIAbout.Icon = new SymbolIcon(Symbol.Help);
-            MIExit.Header = _WMain.MIExit.Header;
-            MIExit.Icon = new SymbolIcon(Symbol.Cancel);
+            MIShowOrHide = new()
+            {
+                Header = MsgSet.Hide,
+                Icon = new SymbolIcon(Symbol.HideBcc)
+            };
+            MIMute = new()
+            {
+                Header = _WMain.BtnMute.Label,
+                Icon = new SymbolIcon(Symbol.Mute)
+            };
+            MINoVideo = new()
+            {
+                Header = MsgSet.MIEnableNoVideo,
+                Icon = new SymbolIcon(Symbol.Video)
+            };
+            MIRandomPlayClip = new()
+            {
+                Header = _WMain.MIRandomPlayClip.Header,
+                Icon = new SymbolIcon(Symbol.Shuffle)
+            };
+            MIPlayClip = new()
+            {
+                Header = _WMain.BtnPlay.Label,
+                Icon = new SymbolIcon(Symbol.Play)
+            };
+            MIPause = new()
+            {
+                Header = _WMain.BtnPause.Label,
+                Icon = new SymbolIcon(Symbol.Pause)
+            };
+            MIPrevious = new()
+            {
+                Header = _WMain.BtnPrevious.Label,
+                Icon = new SymbolIcon(Symbol.Previous)
+            };
+            MINext = new()
+            {
+                Header = _WMain.BtnNext.Label,
+                Icon = new SymbolIcon(Symbol.Next)
+            };
+            MIStop = new()
+            {
+                Header = _WMain.BtnStop.Label,
+                Icon = new SymbolIcon(Symbol.Stop)
+            };
+            MIAboutMenu = new()
+            {
+                Header = _WMain.MIAbout.Header,
+                Icon = new SymbolIcon(Symbol.Help)
+            };
+            MICheckUpdate = new()
+            {
+                Header = _WMain.MICheckUpdate.Header,
+                Icon = new SymbolIcon(Symbol.Download)
+            };
+            MIAbout = new()
+            {
+                Header = _WMain.MIAbout.Header,
+                Icon = new SymbolIcon(Symbol.Help)
+            };
+            MIExit = new()
+            {
+                Header = _WMain.MIExit.Header,
+                Icon = new SymbolIcon(Symbol.Cancel)
+            };
 
             // 設定 MenuItem 的點擊事件。
             MIShowOrHide.Click += MIShowOrHide_Click;
@@ -155,29 +199,31 @@ internal class TaskbarIconUtil
             MIExit.Click += _WMain.MIExit_Click;
 
             // 建立右鍵選單。
-            ContextMenu contextMenu = new();
+            CMContextMenu = new();
 
-            contextMenu.Items.Add(MIShowOrHide);
-            contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(MIMute);
-            contextMenu.Items.Add(MINoVideo);
-            contextMenu.Items.Add(MIRandomPlayClip);
-            contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(MIPlayClip);
-            contextMenu.Items.Add(MIPause);
-            contextMenu.Items.Add(MIPrevious);
-            contextMenu.Items.Add(MINext);
-            contextMenu.Items.Add(MIStop);
-            contextMenu.Items.Add(new Separator());
+            CMContextMenu.Items.Clear();
+            CMContextMenu.Items.Add(MIShowOrHide);
+            CMContextMenu.Items.Add(new Separator());
+            CMContextMenu.Items.Add(MIMute);
+            CMContextMenu.Items.Add(MINoVideo);
+            CMContextMenu.Items.Add(MIRandomPlayClip);
+            CMContextMenu.Items.Add(new Separator());
+            CMContextMenu.Items.Add(MIPlayClip);
+            CMContextMenu.Items.Add(MIPause);
+            CMContextMenu.Items.Add(MIPrevious);
+            CMContextMenu.Items.Add(MINext);
+            CMContextMenu.Items.Add(MIStop);
+            CMContextMenu.Items.Add(new Separator());
 
+            MIAboutMenu.Items.Clear();
             MIAboutMenu.Items.Add(MICheckUpdate);
             MIAboutMenu.Items.Add(MIAbout);
 
-            contextMenu.Items.Add(MIAboutMenu);
-            contextMenu.Items.Add(MIExit);
+            CMContextMenu.Items.Add(MIAboutMenu);
+            CMContextMenu.Items.Add(MIExit);
 
-            // 設定 _TaskbarIcon 的右鍵選單。 
-            _TaskbarIcon.ContextMenu = contextMenu;
+            // 設定 _TaskbarIcon 的右鍵選單。
+            _TaskbarIcon.ContextMenu = CMContextMenu;
 
             // 設定 MenuItem 啟用／禁用。
             SetMenuItems();
@@ -257,7 +303,27 @@ internal class TaskbarIconUtil
     {
         try
         {
-            _TaskbarIcon?.Dispose();
+            if (_WMain != null)
+            {
+                MIShowOrHide.Click -= MIShowOrHide_Click;
+                MIMute.Click -= _WMain.BtnMute_Click;
+                MINoVideo.Click -= MINoVideo_Click;
+                MIRandomPlayClip.Click -= _WMain.MIRandomPlayClip_Click;
+                MIPlayClip.Click -= _WMain.BtnPlay_Click;
+                MIPause.Click -= _WMain.BtnPause_Click;
+                MIPrevious.Click -= _WMain.BtnPrevious_Click;
+                MINext.Click -= _WMain.BtnNext_Click;
+                MIStop.Click -= _WMain.BtnStop_Click;
+                MICheckUpdate.Click -= _WMain.MICheckUpdate_Click;
+                MIAbout.Click -= _WMain.MIAbout_Click;
+                MIExit.Click -= _WMain.MIExit_Click;
+            }
+
+            if (_TaskbarIcon != null)
+            {
+                _TaskbarIcon.Dispose();
+                _TaskbarIcon = null;
+            }
         }
         catch (Exception ex)
         {
@@ -421,8 +487,39 @@ internal class TaskbarIconUtil
             string header = isChecked == true ?
                 MsgSet.MIDisableNoVideo :
                 MsgSet.MIEnableNoVideo;
+            SymbolIcon icon = isChecked == true ?
+                new SymbolIcon(Symbol.Video) :
+                new SymbolIcon(Symbol.Placeholder);
 
             MINoVideo.Header = header;
+            MINoVideo.Icon = icon;
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    /// <summary>
+    /// 更新 MIPause 的 Header
+    /// </summary>
+    /// <param name="isPaused">布林值，預設值為 false</param>
+    public static void UpdateMIPauseHeader(bool isPaused = false)
+    {
+        try
+        {
+            string header = isPaused == true ?
+                MsgSet.Resume :
+                MsgSet.Pause;
+
+            SymbolIcon icon = isPaused == true ?
+                new SymbolIcon(Symbol.Play) :
+                 new SymbolIcon(Symbol.Pause);
+
+            MIPause.Header = header;
+            MIPause.Icon = icon;
         }
         catch (Exception ex)
         {

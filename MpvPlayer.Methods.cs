@@ -225,6 +225,9 @@ public partial class WMain
                         UpdateClipPlayer(ClipPlayerStatus.Paused, CPPlayer.ClipData);
 
                         BtnPause.Label = MsgSet.Resume;
+                        BtnPause.Icon = new SymbolIcon(Symbol.Play);
+
+                        TaskbarIconUtil.UpdateMIPauseHeader(true);
 
                         message = MsgSet.MsgClipPaused;
 
@@ -235,6 +238,9 @@ public partial class WMain
                         UpdateClipPlayer(ClipPlayerStatus.Playing, CPPlayer.ClipData);
 
                         BtnPause.Label = MsgSet.Pause;
+                        BtnPause.Icon = new SymbolIcon(Symbol.Pause);
+
+                        TaskbarIconUtil.UpdateMIPauseHeader(false);
 
                         message = MsgSet.MsgClipResumed;
 
