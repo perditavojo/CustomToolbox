@@ -1,6 +1,7 @@
 ﻿using ButtonBase = System.Windows.Controls.Primitives.ButtonBase;
 using CustomToolbox.Common;
 using CustomToolbox.Common.Extensions;
+using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using H.NotifyIcon;
@@ -204,6 +205,64 @@ public partial class WMain : Window
                     if (BtnMute.IsEnabled)
                     {
                         BtnMute.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+                    }
+
+                    break;
+                case Key.U:
+                case Key.I:
+                    {
+                        if (CPPlayer.Mode != EnumSet.ClipPlayerMode.TimestampEditor)
+                        {
+                            ShowMsgBox(MsgSet.MsgSwitchToTimestampEditorModeFirst);
+
+                            return;
+                        }
+
+                        ClipData? clipData = CPPlayer.ClipData;
+
+                        if (clipData == null)
+                        {
+                            ShowMsgBox(MsgSet.MsgPlayAClipFirst);
+
+                            return;
+                        }
+
+                        if (MPPlayer == null)
+                        {
+                            ShowMsgBox(MsgSet.MsgLibMpvIsNotLoaded);
+
+                            return;
+                        }
+
+                        if (!MPPlayer.IsMediaLoaded)
+                        {
+                            ShowMsgBox(MsgSet.MsgMediaIsNotLoaded);
+
+                            return;
+                        }
+
+                        double newSeconds = Math.Round(
+                             MPPlayer.Position.TotalSeconds,
+                             MidpointRounding.AwayFromZero);
+
+                        if (e.Key == Key.U)
+                        {
+                            clipData.StartTime = TimeSpan.FromSeconds(newSeconds);
+
+                            WriteLog(MsgSet.GetFmtStr(
+                                MsgSet.TemplateUpdateStarTimeOfClipTo,
+                                clipData.Name ?? string.Empty,
+                                clipData.StartTime.ToString()));
+                        }
+                        else if (e.Key == Key.I)
+                        {
+                            clipData.EndTime = TimeSpan.FromSeconds(newSeconds);
+
+                            WriteLog(MsgSet.GetFmtStr(
+                                MsgSet.TemplateUpdateEndTimeOfClipTo,
+                                clipData.Name ?? string.Empty,
+                                clipData.EndTime.ToString()));
+                        }
                     }
 
                     break;

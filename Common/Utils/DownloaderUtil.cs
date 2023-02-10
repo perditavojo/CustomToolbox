@@ -509,8 +509,8 @@ internal class DownloaderUtil
         {
             { "Origin", "https://space.bilibili.com" },
             { "DNT", "1" },
-            // TODO: 2023-01-17 待測試 Client Hints。
-            { "Sec-CH-UA", "\"Chromium\";v=\"108\", \"Not?A_Brand\";v=\"8\"" },
+            // TODO: 2023-02-10 待測試 Client Hints。
+            { "Sec-CH-UA", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"" },
             { "Sec-CH-UA-Mobile", "?0" },
             { "Sec-CH-UA-Platform", "Windows" },
             { "Sec-Fetch-Dest", "document" },

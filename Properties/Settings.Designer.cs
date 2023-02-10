@@ -25,7 +25,7 @@ namespace CustomToolbox.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("onedrive.live.com;gothuedutw-my.sharepoint.com;twitcasting.tv;drive.google.com;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("onedrive.live.com;gothuedutw-my.sharepoint.com;twitcasting.tv;drive.google.com")]
         public string NetPlaylistUnsupportedDomains {
             get {
                 return ((string)(this["NetPlaylistUnsupportedDomains"]));
@@ -235,7 +235,7 @@ namespace CustomToolbox.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) " +
-            "Chrome/109.0.0.0 Safari/537.36")]
+            "Chrome/110.0.0.0 Safari/537.36")]
         public string UserAgent {
             get {
                 return ((string)(this["UserAgent"]));

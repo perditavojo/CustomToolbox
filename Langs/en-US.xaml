@@ -49,6 +49,8 @@
     <sys:String x:Key="YtdlSharpETA" xml:space="preserve"> ETA: {0}</sys:String>
     <sys:String x:Key="YtdlSharpTotalDownloadSize" xml:space="preserve"> Total download size: {0}</sys:String>
     <sys:String x:Key="YtdlSharpData" xml:space="preserve"> Data: {0}</sys:String>
+    <sys:String x:Key="ClipPlayer">Clip player</sys:String>
+    <sys:String x:Key="TimestampEditor">Timestamp editor</sys:String>
     <!-- String template -->
     <sys:String x:Key="TemplateMaintainer">[Maintainer: {0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1} ({2})]: ({3}) {4}</sys:String>
@@ -56,7 +58,9 @@
     <sys:String x:Key="TemplateDiscordRichPresenceOnClose">[{0}][{1}]: {2}</sys:String>
     <sys:String x:Key="TemplateXabeFFmpegOnDataReceived">[Xabe.FFmpeg][Data received]: {0}</sys:String>
     <sys:String x:Key="TemplateXabeFFmpegOnProgress">[Xabe.FFmpeg][Progress]: Process ID: {0} [{1}/{2}] {3}%</sys:String>
-    <sys:String x:Key="TemplateXabeFFmpegConversionResult" xml:space="preserve">[Xabe.FFmpeg] 作業完成。&#x0a;Start time: {0}&#x0a;End time: {1}&#x0a;Duration: {2}&#x0a;Arguments: {3}</sys:String>
+    <sys:String x:Key="TemplateXabeFFmpegConversionResult" xml:space="preserve">[Xabe.FFmpeg] The job is finished.&#x0a;Start time: {0}&#x0a;End time: {1}&#x0a;Duration: {2}&#x0a;Arguments: {3}</sys:String>
+    <sys:String x:Key="TemplateUpdateStarTimeOfClipTo">Updated the start time of the clip "{0}" to "{1}".</sys:String>
+    <sys:String x:Key="TemplateUpdateEndTimeOfClipTo">Updated the end time of the clip "{0}" to "{1}".</sys:String>
     <!-- Control -->
     <sys:String x:Key="MIFile">File</sys:String>
     <sys:String x:Key="MILoadClipListFile">Load clip list</sys:String>
@@ -341,4 +345,10 @@
     <sys:String x:Key="MsgClipListNoData">Clip list has no data.</sys:String>
     <sys:String x:Key="MsgYtDlpDownloadSucceed">Download succeed.</sys:String>
     <sys:String x:Key="MsgYtDlpDownloadFailure">Download failure.</sys:String>
+    <sys:String x:Key="MsgSwitchToClipPlayerMode">Switched to clip player mode.</sys:String>
+    <sys:String x:Key="MsgSwitchToTimestampEditorMode">Switched to timestamp editor mode.</sys:String>
+    <sys:String x:Key="MsgSwitchToTimestampEditorModeFirst">Please switch to timestamp editor mode first.</sys:String>
+    <sys:String x:Key="MsgPlayAClipFirst">Please, play a clip first.</sys:String>
+    <sys:String x:Key="MsgLibMpvIsNotLoaded">Libmpv not loaded.</sys:String>
+    <sys:String x:Key="MsgMediaIsNotLoaded">No media loaded.</sys:String>
 </ResourceDictionary>

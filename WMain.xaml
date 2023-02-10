@@ -31,7 +31,8 @@
         <Menu x:Name="MMenuBar"
             Grid.Row="0"
             VerticalAlignment="Top">
-            <MenuItem Header="{DynamicResource MIFile}">
+            <MenuItem x:Name="MIFileMenu"
+                 Header="{DynamicResource MIFile}">
                 <MenuItem x:Name="MILoadClipListFile"
                     Header="{DynamicResource MILoadClipListFile}"
                     Click="MILoadClipListFile_Click" />
@@ -250,39 +251,50 @@
                                         <ComboBoxItem Content="0.25x" />
                                     </ComboBox>
                                 </StackPanel>
-                                <Button x:Name="BtnMute"
+                                <ui:AppBarButton x:Name="BtnMute"
                                     Grid.Column="1"
                                     Margin="0,0,5,0"
-                                    Content="{DynamicResource BtnMute}"
+                                    Label="{DynamicResource BtnMute}"
+                                    Icon="Mute"
                                     HorizontalAlignment="Right"
                                     Click="BtnMute_Click" />
                             </Grid>
                             <StackPanel Orientation="Horizontal"
                                 Margin="5,5,5,5">
-                                <Button x:Name="BtnPlay"
+                                <ui:AppBarButton x:Name="BtnPlay"
                                     Margin="5,0,0,0"
-                                    Content="{DynamicResource BtnPlay}"
+                                    Label="{DynamicResource BtnPlay}"
+                                    Icon="Play"
                                     Click="BtnPlay_Click" />
-                                <Button x:Name="BtnPrevious"
+                                <ui:AppBarButton x:Name="BtnPrevious"
                                     Margin="5,0,0,0"
-                                    Content="{DynamicResource BtnPrevious}"
+                                    Label="{DynamicResource BtnPrevious}"
+                                    Icon="Previous"
                                     IsEnabled="False"
                                     Click="BtnPrevious_Click" />
-                                <Button x:Name="BtnNext"
+                                <ui:AppBarButton x:Name="BtnNext"
                                     Margin="5,0,0,0"
-                                    Content="{DynamicResource BtnNext}"
+                                    Label="{DynamicResource BtnNext}"
+                                    Icon="Next"
                                     IsEnabled="False"
                                     Click="BtnNext_Click" />
-                                <Button x:Name="BtnPause"
+                                <ui:AppBarButton x:Name="BtnPause"
                                     Margin="5,0,0,0"
-                                    Content="{DynamicResource BtnPause}"
+                                    Label="{DynamicResource BtnPause}"
+                                    Icon="Pause"
                                     IsEnabled="False"
-                                    Click="BtnPause_Click" />
-                                <Button x:Name="BtnStop"
+                                    Click="BtnPause_Click"/>
+                                <ui:AppBarButton x:Name="BtnStop"
                                     Margin="5,0,0,0"
-                                    Content="{DynamicResource BtnStop}"
+                                    Label="{DynamicResource BtnStop}"
+                                    Icon="Stop"
                                     IsEnabled="False"
                                     Click="BtnStop_Click" />
+                                <ui:ToggleSwitch x:Name="TSClipPlayerMode" 
+                                    Margin="5,0,0,0"
+                                    OffContent="{DynamicResource ClipPlayer}"
+                                    OnContent="{DynamicResource TimestampEditor}"
+                                    Toggled="TSClipPlayerMode_Toggled" />
                             </StackPanel>
                         </StackPanel>
                     </Grid>

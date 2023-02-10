@@ -1,12 +1,12 @@
 ﻿using CustomToolbox.Common.Sets;
 using static CustomToolbox.Common.Sets.EnumSet;
 using Mpv.NET.Player;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Collections.ObjectModel;
-using System.Windows.Threading;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace CustomToolbox.Common.Models;
 
@@ -18,6 +18,10 @@ public class ClipPlayer
     [JsonPropertyName("status")]
     [Description("狀態")]
     public ClipPlayerStatus Status { get; set; } = ClipPlayerStatus.Idle;
+
+    [JsonPropertyName("mode")]
+    [Description("模式")]
+    public ClipPlayerMode Mode { get; set; } = ClipPlayerMode.ClipPlayer;
 
     [JsonPropertyName("clipData")]
     [Description("短片資料")]

@@ -117,6 +117,26 @@ public partial class WMain
                 ZhConverter.Initialize();
 
                 // 設定控制項。
+                MILoadClipListFile.Icon = new SymbolIcon(Symbol.OpenFile);
+                MISaveClipListFile.Icon = new SymbolIcon(Symbol.Save);
+                MIExit.Icon = new SymbolIcon(Symbol.Cancel);
+                MICheckUpdate.Icon = new SymbolIcon(Symbol.Download);
+                MIAbout.Icon = new SymbolIcon(Symbol.Help);
+
+                MIPlayClip.Icon = new SymbolIcon(Symbol.Play);
+                MIFetchClip.Icon = new SymbolIcon(Symbol.Zoom);
+                MIDLClip.Icon = new SymbolIcon(Symbol.Download);
+                MIDLClipsByTheSameUrl.Icon = new SymbolIcon(Symbol.Download);
+                MIBatchDLClips.Icon = new SymbolIcon(Symbol.Download);
+                MIDownloadOptions.Icon = new SymbolIcon(Symbol.Setting);
+                MIFullDownloadFirst.Icon = new SymbolIcon(Symbol.Priority);
+                MIDeleteSourceFile.Icon = new SymbolIcon(Symbol.Delete);
+                MIRandomPlayClip.Icon = new SymbolIcon(Symbol.Shuffle);
+                MIReorderClipList.Icon = new SymbolIcon(Symbol.Sort);
+                MIClearClipList.Icon = new SymbolIcon(Symbol.Delete);
+                MIClearLog.Icon = new SymbolIcon(Symbol.Delete);
+                MIExportLog.Icon = new SymbolIcon(Symbol.Save);
+
                 DGClipList.ItemsSource = GlobalDataSet;
                 CBYTQuality.SelectedIndex = Properties.Settings.Default.MpvNetLibYTQualityIndex;
                 CBPlaybackSpeed.SelectedIndex = Properties.Settings.Default.MpvNetLibPlaybackSpeedIndex;
@@ -651,14 +671,15 @@ public partial class WMain
         //httpClient?.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com");
         //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
         httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
-        // TODO: 2023-01-17 待測試 Client Hints。
-        //httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA", "\"Chromium\";v=\"108\", \"Not?A_Brand\";v=\"8\"");
-        //httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA-Mobile", "?0");
-        //httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA-Platform", "Windows");
-        //httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Dest", "document");
-        //httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Mode", "navigate");
-        //httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Site", "none");
-        //httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-User", "?1");
+         httpClient?.DefaultRequestHeaders.Add("DNT", "1");
+        // TODO: 2023-02-10 待測試 Client Hints。
+        httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"");
+        httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA-Mobile", "?0");
+        httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA-Platform", "Windows");
+        httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Dest", "document");
+        httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Mode", "navigate");
+        httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Site", "none");
+        httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-User", "?1");
 
         return httpClient;
     }

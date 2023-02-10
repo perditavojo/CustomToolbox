@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="NetPlaylistUnsupportedDomains" Type="System.String" Scope="User">
-      <Value Profile="(Default)">onedrive.live.com;gothuedutw-my.sharepoint.com;twitcasting.tv;drive.google.com;</Value>
+      <Value Profile="(Default)">onedrive.live.com;gothuedutw-my.sharepoint.com;twitcasting.tv;drive.google.com</Value>
     </Setting>
     <Setting Name="MpvNetLibVolume" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
@@ -57,7 +57,7 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="UserAgent" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36</Value>
+      <Value Profile="(Default)">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36</Value>
     </Setting>
     <Setting Name="RDGContentRow1Height" Type="System.Windows.GridLength" Scope="User">
       <Value Profile="(Default)">2*</Value>
