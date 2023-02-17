@@ -41,7 +41,7 @@ public class VList
     public string? Author { get; set; }
 
     [JsonPropertyName("mid")]
-    public int Mid { get; set; }
+    public long Mid { get; set; }
 
     [JsonPropertyName("created")]
     public int Created { get; set; }
