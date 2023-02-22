@@ -11,6 +11,7 @@ using KeyEventHandler = System.Windows.Input.KeyEventHandler;
 using ModernWpf.Controls;
 using OpenCCNET;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -19,6 +20,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Data;
 using Xabe.FFmpeg;
 
 namespace CustomToolbox;
@@ -432,6 +434,8 @@ public partial class WMain
                 GlobalDataSet[i] = GlobalDataSet[randomIndex];
                 GlobalDataSet[randomIndex] = currentClipData;
             }
+
+            // TODO: 2023-02-22 待測試是否可以手動觸發排序。
         }
         catch (Exception ex)
         {
@@ -671,7 +675,7 @@ public partial class WMain
         //httpClient?.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com");
         //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
         httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
-         httpClient?.DefaultRequestHeaders.Add("DNT", "1");
+        httpClient?.DefaultRequestHeaders.Add("DNT", "1");
         // TODO: 2023-02-10 待測試 Client Hints。
         httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"");
         httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA-Mobile", "?0");
@@ -732,5 +736,94 @@ public partial class WMain
                 primaryButtonText: MsgSet.ContentDialogBtnOk,
                 closeButtonText: MsgSet.ContentDialogBtnCancel);
         }
+    }
+
+    /// <summary>
+    /// 取得在已排序的 GlobalDataSet 中的實際索引值
+    /// </summary>
+    /// <param name="clipData">ClipData</param>
+    /// <returns>數值，索引值</returns>
+    private int GetActualIndexInSortedGlobalDataSet(ClipData? clipData)
+    {
+        return clipData == null ? -1 : GetSortedGlobalDataSet().IndexOf(clipData);
+    }
+
+    /// <summary>
+    /// 取得 DGClipList 的排序狀態
+    /// </summary>
+    /// <returns>SortState</returns>
+    private SortState GetDGClipListSortState()
+    {
+        ListSortDirection? targetSortDirection = null;
+
+        int columnIndex = -1;
+
+        // 理論上同時間只會有一個 ListSortDirection。
+        for (int i = 0; i < DGClipList.Columns.Count; i++)
+        {
+            ListSortDirection? sortDirection = DGClipList.Columns[i].SortDirection;
+
+            if (sortDirection != null)
+            {
+                columnIndex = i;
+
+                targetSortDirection = sortDirection;
+
+                break;
+            }
+        }
+
+        return new SortState()
+        {
+            ColumnIndex = columnIndex,
+            SortDirection = targetSortDirection
+        };
+    }
+
+    /// <summary>
+    /// 取得已排序的 GlobalDataSet
+    /// </summary>
+    /// <returns>List&lt;ClipData&gt;</returns>
+    private List<ClipData> GetSortedGlobalDataSet()
+    {
+        List<ClipData> sortedGlobalDataSet = new();
+
+        // 來源：https://stackoverflow.com/a/7333624
+        ICollectionView collectionView = CollectionViewSource
+            .GetDefaultView(DGClipList.ItemsSource);
+
+        foreach (object? item in collectionView)
+        {
+            if (item is ClipData clipData)
+            {
+                if (clipData != null)
+                {
+                    sortedGlobalDataSet.Add(clipData);
+                }
+            }
+        }
+
+        return sortedGlobalDataSet;
+    }
+
+    /// <summary>
+    /// 取得欄位屬性名稱
+    /// </summary>
+    /// <param name="columnIndex">數值，DGClipList 欄位的索引值</param>
+    /// <returns>字串</returns>
+    private static string GetColumnAttributeNameByColumnIndex(int columnIndex)
+    {
+        return columnIndex switch
+        {
+            0 => ClipData.GetVideoUrlOrIDName(),
+            1 => ClipData.GetNameName(),
+            2 => ClipData.GetNoName(),
+            3 => ClipData.GetStartTimeName(),
+            4 => ClipData.GetEndTimeName(),
+            5 => ClipData.GetSubtitleFileUrlName(),
+            6 => ClipData.GetIsAudioOnlyName(),
+            7 => ClipData.GetIsLivestreamName(),
+            _ => string.Empty
+        };
     }
 }

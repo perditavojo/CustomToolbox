@@ -36,7 +36,7 @@ public class ClipData : INotifyPropertyChanged
 
     [JsonIgnore]
     private bool _IsLivestream = false;
-    
+
     [JsonPropertyName("videoUrlOrID")]
     [Description("影片網址／ID")]
     public string? VideoUrlOrID
@@ -195,4 +195,76 @@ public class ClipData : INotifyPropertyChanged
     /// </summary>
     /// <returns>字串</returns>
     public override string ToString() => JsonSerializer.Serialize(this, VariableSet.SharedJSOptions);
+
+    /// <summary>
+    /// 取得 VideoUrlOrID 的名稱
+    /// </summary>
+    /// <returns>字串</returns>
+    public static string GetVideoUrlOrIDName()
+    {
+        return nameof(VideoUrlOrID);
+    }
+
+    /// <summary>
+    /// 取得 No 的名稱
+    /// </summary>
+    /// <returns>字串</returns>
+    public static string GetNoName()
+    {
+        return nameof(No);
+    }
+
+    /// <summary>
+    /// 取得 Name 的名稱
+    /// </summary>
+    /// <returns>字串</returns>
+    public static string GetNameName()
+    {
+        return nameof(Name);
+    }
+
+    /// <summary>
+    /// 取得 StartTime 的名稱
+    /// </summary>
+    /// <returns>字串</returns>
+    public static string GetStartTimeName()
+    {
+        return nameof(StartTime);
+    }
+
+    /// <summary>
+    /// 取得 EndTime 的名稱
+    /// </summary>
+    /// <returns>字串</returns>
+    public static string GetEndTimeName()
+    {
+        return nameof(EndTime);
+    }
+
+    /// <summary>
+    /// 取得 SubtitleFileUrl 的名稱
+    /// </summary>
+    /// <returns>字串</returns>
+    public static string GetSubtitleFileUrlName()
+    {
+        return nameof(SubtitleFileUrl);
+    }
+
+    /// <summary>
+    /// 取得 IsAudioOnly 的名稱
+    /// </summary>
+    /// <returns>字串</returns>
+    public static string GetIsAudioOnlyName()
+    {
+        return nameof(IsAudioOnly);
+    }
+
+    /// <summary>
+    /// 取得 IsLivestream 的名稱
+    /// </summary>
+    /// <returns>字串</returns>
+    public static string GetIsLivestreamName()
+    {
+        return nameof(IsLivestream);
+    }
 }
