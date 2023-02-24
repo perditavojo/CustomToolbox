@@ -676,14 +676,8 @@ public partial class WMain
         //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
         httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
         httpClient?.DefaultRequestHeaders.Add("DNT", "1");
-        // TODO: 2023-02-10 待測試 Client Hints。
-        httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"");
-        httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA-Mobile", "?0");
-        httpClient?.DefaultRequestHeaders.Add("Sec-CH-UA-Platform", "Windows");
-        httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Dest", "document");
-        httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Mode", "navigate");
-        httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-Site", "none");
-        httpClient?.DefaultRequestHeaders.Add("Sec-Fetch-User", "?1");
+
+        ClientHintsUtil.SetClientHints(httpClient);
 
         return httpClient;
     }
