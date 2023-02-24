@@ -2,10 +2,11 @@
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Models.ImportPlaylist;
 using CustomToolbox.Common.Sets;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data;
 using System.IO;
 using System.Windows.Controls;
-using System.Collections.ObjectModel;
-using System.Data;
 
 namespace CustomToolbox.Common.Extensions;
 
@@ -550,6 +551,63 @@ internal static class DataGridExtension
 
                         no++;
                     }
+
+                    dataGrid.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    _WMain?.WriteLog(MsgSet.GetFmtStr(
+                        MsgSet.MsgErrorOccured,
+                        ex.ToString()));
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.ToString()));
+        }
+    }
+
+    /// <summary>
+    /// 排序
+    /// <para>來源：https://stackoverflow.com/a/19952233 </para>
+    /// </summary>
+    /// <param name="dataGrid">DataGrid</param>
+    /// <param name="columnIndex">數值，欄位的索引值，預設值為 0</param>
+    /// <param name="listSortDirection">ListSortDirection，預設值為 ListSortDirection.Ascending</param>
+    public static void Sort(
+        this DataGrid dataGrid,
+        int columnIndex = 0,
+        ListSortDirection? listSortDirection = ListSortDirection.Ascending)
+    {
+        try
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                try
+                {
+                    if (columnIndex <= 0)
+                    {
+                        columnIndex = 0;
+                    }
+
+                    listSortDirection ??= ListSortDirection.Ascending;
+
+                    DataGridColumn targetDataGridColumn = dataGrid.Columns[columnIndex];
+
+                    dataGrid.Items.SortDescriptions.Clear();
+                    dataGrid.Items.SortDescriptions.Add(new SortDescription(
+                        targetDataGridColumn.SortMemberPath,
+                        listSortDirection!.Value));
+
+                    foreach (DataGridColumn dataGridColumn in dataGrid.Columns)
+                    {
+                        dataGridColumn.SortDirection = null;
+                    }
+
+                    targetDataGridColumn.SortDirection = listSortDirection;
 
                     dataGrid.Refresh();
                 }

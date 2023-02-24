@@ -544,7 +544,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 // 取得 DGClipList 的排序狀態。
-                SortState sortState = GetDGClipListSortState();
+                SortState sortState = GetSortState();
 
                 int previousIndex = sortState.SortDirection switch
                 {
@@ -590,7 +590,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 // 取得 DGClipList 的排序狀態。
-                SortState sortState = GetDGClipListSortState();
+                SortState sortState = GetSortState();
 
                 int nextIndex = sortState.SortDirection switch
                 {

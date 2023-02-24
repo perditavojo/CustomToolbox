@@ -369,11 +369,11 @@ public partial class WMain
             }
 
             // 取得 DataGrid 的排序狀態。
-            SortState sortState = GetDGClipListSortState();
+            SortState sortState = GetSortState();
 
             #region 設定索引值相關屬性
 
-            CPPlayer.Index = GetActualIndexInSortedGlobalDataSet(clipData);
+            CPPlayer.Index = GetActualIndex(clipData);
 
             int tempPreIndex = CPPlayer.Index,
                 tempNexIndex = CPPlayer.Index,

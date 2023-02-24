@@ -435,7 +435,13 @@ public partial class WMain
                 GlobalDataSet[randomIndex] = currentClipData;
             }
 
-            // TODO: 2023-02-22 待測試是否可以手動觸發排序。
+            // 排序 DGClipList。
+            Dispatcher.BeginInvoke(() =>
+            {
+                SortState sortState = GetSortState();
+
+                DGClipList.Sort(sortState.ColumnIndex, sortState.SortDirection);
+            });
         }
         catch (Exception ex)
         {
@@ -737,7 +743,7 @@ public partial class WMain
     /// </summary>
     /// <param name="clipData">ClipData</param>
     /// <returns>數值，索引值</returns>
-    private int GetActualIndexInSortedGlobalDataSet(ClipData? clipData)
+    private int GetActualIndex(ClipData? clipData)
     {
         return clipData == null ? -1 : GetSortedGlobalDataSet().IndexOf(clipData);
     }
@@ -746,7 +752,7 @@ public partial class WMain
     /// 取得 DGClipList 的排序狀態
     /// </summary>
     /// <returns>SortState</returns>
-    private SortState GetDGClipListSortState()
+    private SortState GetSortState()
     {
         ListSortDirection? targetSortDirection = null;
 
@@ -798,26 +804,5 @@ public partial class WMain
         }
 
         return sortedGlobalDataSet;
-    }
-
-    /// <summary>
-    /// 取得欄位屬性名稱
-    /// </summary>
-    /// <param name="columnIndex">數值，DGClipList 欄位的索引值</param>
-    /// <returns>字串</returns>
-    private static string GetColumnAttributeNameByColumnIndex(int columnIndex)
-    {
-        return columnIndex switch
-        {
-            0 => ClipData.GetVideoUrlOrIDName(),
-            1 => ClipData.GetNameName(),
-            2 => ClipData.GetNoName(),
-            3 => ClipData.GetStartTimeName(),
-            4 => ClipData.GetEndTimeName(),
-            5 => ClipData.GetSubtitleFileUrlName(),
-            6 => ClipData.GetIsAudioOnlyName(),
-            7 => ClipData.GetIsLivestreamName(),
-            _ => string.Empty
-        };
     }
 }
