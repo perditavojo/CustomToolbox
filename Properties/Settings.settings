@@ -185,8 +185,8 @@
     <Setting Name="SecFetchUser" Type="System.String" Scope="Application">
       <Value Profile="(Default)">?1</Value>
     </Setting>
-    <Setting Name="設定" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+    <Setting Name="UpdateSettings" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
