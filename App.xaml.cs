@@ -135,6 +135,27 @@ public partial class App : Application
     {
         string errMsg = string.Empty;
 
+        // 更新設定值。
+        try
+        {
+            // 來源：https://stackoverflow.com/a/23924277
+            if (CustomToolbox.Properties.Settings.Default.UpdateSettings)
+            {
+                CustomToolbox.Properties.Settings.Default.Upgrade();
+                CustomToolbox.Properties.Settings.Default.UpdateSettings = false;
+                CustomToolbox.Properties.Settings.Default.Save();
+            }
+        }
+        catch (Exception ex)
+        {
+            errMsg += ex.ToString();
+        }
+
+        if (!string.IsNullOrEmpty(errMsg))
+        {
+            errMsg += Environment.NewLine;
+        }
+
         errMsg += AppThemeUtil.SetAppTheme();
 
         if (!string.IsNullOrEmpty(errMsg))

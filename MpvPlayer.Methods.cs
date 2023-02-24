@@ -9,6 +9,7 @@ using H.NotifyIcon.Core;
 using ModernWpf.Controls;
 using Mpv.NET.API;
 using Mpv.NET.Player;
+using System.ComponentModel;
 using System.Security.Cryptography;
 
 namespace CustomToolbox;
@@ -367,7 +368,12 @@ public partial class WMain
                 CPPlayer.ClipData.PropertyChanged += ClipData_PropertyChanged;
             }
 
-            CPPlayer.Index = clipData == null ? -1 : GlobalDataSet.IndexOf(clipData);
+            // 取得 DataGrid 的排序狀態。
+            SortState sortState = GetSortState();
+
+            #region 設定索引值相關屬性
+
+            CPPlayer.Index = GetActualIndex(clipData);
 
             int tempPreIndex = CPPlayer.Index,
                 tempNexIndex = CPPlayer.Index,
@@ -379,17 +385,29 @@ public partial class WMain
                 previousIndex = -1;
             }
 
-            CPPlayer.PreviousIndex = previousIndex;
-
             if (nextIndex > GlobalDataSet.Count - 1)
             {
                 nextIndex = -1;
             }
 
-            CPPlayer.NextIndex = nextIndex;
+            CPPlayer.PreviousIndex = sortState.SortDirection switch
+            {
+                ListSortDirection.Ascending => previousIndex,
+                ListSortDirection.Descending => nextIndex,
+                _ => previousIndex
+            };
+            CPPlayer.NextIndex = sortState.SortDirection switch
+            {
+                ListSortDirection.Ascending => nextIndex,
+                ListSortDirection.Descending => previousIndex,
+                _ => nextIndex
+            };
+
+            #endregion
+
             CPPlayer.SeekStatus = SSeekStatus.Idle;
 
-            DGClipList.SelectedIndex = CPPlayer.Index;
+            DGClipList.SelectedItem = CPPlayer.ClipData;
             DGClipList.ScrollToSelectedItem();
 
             if (clipData != null)

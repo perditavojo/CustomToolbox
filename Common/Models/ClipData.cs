@@ -36,7 +36,7 @@ public class ClipData : INotifyPropertyChanged
 
     [JsonIgnore]
     private bool _IsLivestream = false;
-    
+
     [JsonPropertyName("videoUrlOrID")]
     [Description("影片網址／ID")]
     public string? VideoUrlOrID

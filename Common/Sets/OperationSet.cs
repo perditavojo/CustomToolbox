@@ -1101,6 +1101,21 @@ internal class OperationSet
                         string url = $"https://b23.tv/{vlist?.Bvid}/p1",
                             title = vlist?.Title ?? string.Empty;
 
+                        // TODO: 2023-02-24 考慮是否要啟用網址驗證功能，有可能會造成觸發 Bilibili 網站的安全機制。
+                        /*
+                        HttpClient? httpClient = WMain.GetHttpClient();
+
+                        if (httpClient != null)
+                        {
+                            bool isUrlValid = await CommonFunction.IsUrlValid(httpClient, url);
+
+                            if (isUrlValid)
+                            {
+                                continue;
+                            }
+                        }
+                        */
+
                         // 處理 title。
                         if (!string.IsNullOrEmpty(title))
                         {

@@ -508,7 +508,9 @@ public partial class WMain
 
                 StopClip();
 
-                ClipData clipData = GlobalDataSet[0];
+                int initIndex = 0;
+
+                ClipData clipData = GetSortedGlobalDataSet()[initIndex];
 
                 PlayClip(clipData);
             }));
@@ -541,11 +543,19 @@ public partial class WMain
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                int previousIndex = CPPlayer.PreviousIndex;
+                // 取得 DGClipList 的排序狀態。
+                SortState sortState = GetSortState();
+
+                int previousIndex = sortState.SortDirection switch
+                {
+                    ListSortDirection.Ascending => CPPlayer.PreviousIndex,
+                    ListSortDirection.Descending => CPPlayer.NextIndex,
+                    _ => CPPlayer.PreviousIndex
+                };
 
                 if (previousIndex > -1)
                 {
-                    ClipData clipData = GlobalDataSet[previousIndex];
+                    ClipData clipData = GetSortedGlobalDataSet()[previousIndex];
 
                     PlayClip(clipData);
                 }
@@ -579,11 +589,19 @@ public partial class WMain
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                int nextIndex = CPPlayer.NextIndex;
+                // 取得 DGClipList 的排序狀態。
+                SortState sortState = GetSortState();
+
+                int nextIndex = sortState.SortDirection switch
+                {
+                    ListSortDirection.Ascending => CPPlayer.NextIndex,
+                    ListSortDirection.Descending => CPPlayer.PreviousIndex,
+                    _ => CPPlayer.NextIndex
+                };
 
                 if (nextIndex > -1)
                 {
-                    ClipData clipData = GlobalDataSet[nextIndex];
+                    ClipData clipData = GetSortedGlobalDataSet()[nextIndex];
 
                     PlayClip(clipData);
                 }

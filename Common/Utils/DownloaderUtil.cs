@@ -508,16 +508,10 @@ internal class DownloaderUtil
         WebHeaderCollection headerCollection = new()
         {
             { "Origin", "https://space.bilibili.com" },
-            { "DNT", "1" },
-            // TODO: 2023-02-10 待測試 Client Hints。
-            { "Sec-CH-UA", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"" },
-            { "Sec-CH-UA-Mobile", "?0" },
-            { "Sec-CH-UA-Platform", "Windows" },
-            { "Sec-Fetch-Dest", "document" },
-            { "Sec-Fetch-Mode", "navigate" },
-            { "Sec-Fetch-Site", "none" },
-            { "Sec-Fetch-User", "?1" }
+            { "DNT", "1" }
         };
+
+        ClientHintsUtil.SetClientHints(headerCollection);
 
         // 當使用者代理字串值不為空時才設定。
         if (!string.IsNullOrEmpty(Properties.Settings.Default.UserAgent))
