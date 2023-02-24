@@ -8,19 +8,20 @@ namespace CustomToolbox.Common.Utils;
 /// </summary>
 internal class ClientHintsUtil
 {
+    // TODO: 2023-02-24 待測試 Client Hints。
+
     /// <summary>
     /// Client Hints
     /// </summary>
-    private static readonly Dictionary<string, string> KeyValues = new() 
+    private static readonly Dictionary<string, string> KeyValues = new()
     {
-        // TODO: 2023-02-24 待測試 Client Hints。
-        { "Sec-CH-UA", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"" },
-        { "Sec-CH-UA-Mobile", "?0" },
-        { "Sec-CH-UA-Platform", "Windows" },
-        { "Sec-Fetch-Dest", "document" },
-        { "Sec-Fetch-Mode", "navigate" },
-        { "Sec-Fetch-Site", "none" },
-        { "Sec-Fetch-User", "?1" }
+        { "Sec-CH-UA", Properties.Settings.Default.SecChUa },
+        { "Sec-CH-UA-Mobile", Properties.Settings.Default.SecChUaMobile },
+        { "Sec-CH-UA-Platform", Properties.Settings.Default.SecChUaPlatform },
+        { "Sec-Fetch-Dest", Properties.Settings.Default.SecFetchDest },
+        { "Sec-Fetch-Mode", Properties.Settings.Default.SecFetchMode },
+        { "Sec-Fetch-Site", Properties.Settings.Default.SecFetchSite },
+        { "Sec-Fetch-User", Properties.Settings.Default.SecFetchUser }
     };
 
     /// <summary>

@@ -164,5 +164,29 @@
     <Setting Name="Aria2Version" Type="System.String" Scope="Application">
       <Value Profile="(Default)">1.36.0</Value>
     </Setting>
+    <Setting Name="SecChUa" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">"Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110"</Value>
+    </Setting>
+    <Setting Name="SecChUaMobile" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">?0</Value>
+    </Setting>
+    <Setting Name="SecChUaPlatform" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Windows</Value>
+    </Setting>
+    <Setting Name="SecFetchDest" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">document</Value>
+    </Setting>
+    <Setting Name="SecFetchMode" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">navigate</Value>
+    </Setting>
+    <Setting Name="SecFetchSite" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">none</Value>
+    </Setting>
+    <Setting Name="SecFetchUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">?1</Value>
+    </Setting>
+    <Setting Name="設定" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
