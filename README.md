@@ -61,5 +61,5 @@
 
 ## 六、注意事項
 
-1. 在發佈時請勿勾選`產生單一檔案`選項，這會造成 H.NotifyIcon.Wpf 函式庫運作不正常。
-2. 在發佈時請勿勾選`啟用 ReadyToRun 編譯`選項，這會造成應用程式在啟動時崩潰。
+1. 在發佈時請勿勾選`啟用 ReadyToRun 編譯`選項，這會造成應用程式在啟動時崩潰。
+2. 請在發布後將 `Microsoft.Playwright.dll.bak` 重新命名成 `Microsoft.Playwright.dll`。
