@@ -45,7 +45,7 @@ public partial class WMain
     /// <summary>
     /// 共用的 IHttpClientFactory
     /// </summary>
-    private static readonly IHttpClientFactory? GlobalHCFactory = null;
+    private static IHttpClientFactory? GlobalHCFactory = null;
 
     /// <summary>
     /// 共用的 WPopupPlayer
