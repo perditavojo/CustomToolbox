@@ -54,6 +54,9 @@ internal class DownloaderUtil
                 MsgSet.MsgStartDownloading,
                 VariableSet.YtDlpExecName));
 
+            // TODO: 2023-03-06 待修改。
+            // BREAKING CHANGE: YoutubeDLSharp.Utils.DownloadBinaries();
+
             await YoutubeDL.DownloadYtDlpBinary(VariableSet.BinsFolderPath)
                 .ContinueWith(t =>
                 {

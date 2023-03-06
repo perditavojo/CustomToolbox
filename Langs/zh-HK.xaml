@@ -107,6 +107,7 @@
     <sys:String x:Key="LB23ClipListExcludedPhrases">排除字詞</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">一行一個排除字詞</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">匯出成 *.jsonc</sys:String>
+    <sys:String x:Key="CBB23ClipListCheckUrl">檢查網址</sys:String>
     <sys:String x:Key="BtnGenerateB23ClipList">產生短片清單檔案</sys:String>
     <sys:String x:Key="GBWebTools">網頁工具</sys:String>
     <sys:String x:Key="GBFFmpegFunctions">FFmpeg</sys:String>
@@ -324,6 +325,7 @@
     <sys:String x:Key="MsgClipListFileGeneratedFor">已產生 Bilibili 使用者（{0}）的短片清單檔案：{1}</sys:String>
     <sys:String x:Key="MsgUpdateLB23ClipListExcludedPhrases">已更新排除字詞。</sys:String>
     <sys:String x:Key="MsgSkipThisVideo">偵測到排除字詞，已忽略此影片：{0}</sys:String>
+    <sys:String x:Key="MsgInvalidUrlSkipThisVideo">偵測影片網址（{0}）無效，已忽略此影片：{1}</sys:String>
     <sys:String x:Key="MsgYtChannelIDCCantNoBeEmpty">請輸入 YouTube 頻道 ID。</sys:String>
     <sys:String x:Key="MsgYtscToolUsedBrowserChannel">Playwright 使用的網頁瀏覽器頻道：{0}</sys:String>
     <sys:String x:Key="MsgYtscToolChNameTooLongCancelCut">因頻道名稱長度超過 {0} 列，故取消裁切截圖。</sys:String>

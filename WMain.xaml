@@ -391,8 +391,13 @@
                                             Content="{DynamicResource CBB23ClipListExportJsonc}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
-                                        <Button x:Name="BtnGenerateB23ClipList"
+                                        <CheckBox x:Name="CBB23ClipListCheckUrl"
                                             Margin="0,285,0,0"
+                                            Content="{DynamicResource CBB23ClipListCheckUrl}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top" />
+                                        <Button x:Name="BtnGenerateB23ClipList"
+                                            Margin="0,323,0,0"
                                             Content="{DynamicResource BtnGenerateB23ClipList}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"

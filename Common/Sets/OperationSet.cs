@@ -19,6 +19,7 @@ using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
+using System.Net.Http;
 
 namespace CustomToolbox.Common.Sets;
 
@@ -197,7 +198,7 @@ internal class OperationSet
                             audioBitrate,
                             audioSamplingRate,
                             formatData.ContainerFormat,
-                            formatData.DynamicRange,
+                            formatData.DynamicRange
                         });
                     }
 
@@ -964,11 +965,15 @@ internal class OperationSet
     /// </summary>
     /// <param name="mid">字串，目標使用者的 mid</param>
     /// <param name="exportJsonc">布林值，是否匯出 *.jsonc 格式，預設值為 false</param>
+    /// <param name="httpClient">HttpClient，預設值為 null</param>
+    /// <param name="checkUrl">布林值，是否檢查影片的網址，預設值為 false</param>
     /// <param name="ct">CancellationToken</param>
     /// <returns>Task</returns>
     public static async Task DoGenerateB23ClipList(
         string mid,
         bool exportJsonc = false,
+        HttpClient? httpClient = null,
+        bool checkUrl = false,
         CancellationToken ct = default)
     {
         try
@@ -1101,11 +1106,9 @@ internal class OperationSet
                         string url = $"https://b23.tv/{vlist?.Bvid}/p1",
                             title = vlist?.Title ?? string.Empty;
 
-                        // TODO: 2023-02-24 考慮是否要啟用網址驗證功能，有可能會造成觸發 Bilibili 網站的安全機制。
-                        /*
-                        HttpClient? httpClient = WMain.GetHttpClient();
-
-                        if (httpClient != null)
+                        // 2023-02-24 有可能會造成觸發 Bilibili 網站的安全機制。
+                        // 主要用於排除拜年紀的影片。
+                        if (httpClient != null && checkUrl)
                         {
                             bool isUrlValid = await CommonFunction.IsUrlValid(httpClient, url);
 
@@ -1113,8 +1116,15 @@ internal class OperationSet
                             {
                                 continue;
                             }
+                            else
+                            {
+                                _WMain?.WriteLog(
+                                    MsgSet.GetFmtStr(
+                                        MsgSet.MsgInvalidUrlSkipThisVideo,
+                                        url,
+                                        title));
+                            }
                         }
-                        */
 
                         // 處理 title。
                         if (!string.IsNullOrEmpty(title))
