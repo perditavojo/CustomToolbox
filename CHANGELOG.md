@@ -4,6 +4,13 @@
   1. 更新 H.NotifyIcon.Wpf 函式庫至 2.0.93 版。
   2. 更新 Microsoft.Playwright 函式庫至 1.31.1 版。
   3. 更新 YoutubeDLSharp 函式庫至 1.0.0-beta4 版。
+  4. 更新 MANUAL.md。
+  5. 更新語系檔案。
+  6. 對 " Bilibili 短片清單產生器" 功能，加入"檢查網址"選項。
+  7. 更新 BilibiliApi\README.md 的內容。
+  8. 更新 BiliBili API 的網址。
+  9. 改寫 yt-dlp 的下載方式。
+  10. 調整 *.csproj 的設定，在發布時輸出 CHANGELOG.md 以及 MANUAL.md 等檔案。
 - 1.0.8
   1. 針對 DataGrid 的排序機制，調整播放時的選取播放項目的策略。
   2. 更新 Microsoft.Playwright 函式庫至 1.31.0 版。
