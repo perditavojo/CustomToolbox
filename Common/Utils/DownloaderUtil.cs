@@ -6,7 +6,6 @@ using Label = System.Windows.Controls.Label;
 using ProgressBar = ModernWpf.Controls.ProgressBar;
 using SevenZipExtractor;
 using System.IO;
-using YoutubeDLSharp;
 using System.Net;
 
 namespace CustomToolbox.Common.Utils;
@@ -54,11 +53,12 @@ internal class DownloaderUtil
                 MsgSet.MsgStartDownloading,
                 VariableSet.YtDlpExecName));
 
-            // TODO: 2023-03-06 待修改。
-            // BREAKING CHANGE: YoutubeDLSharp.Utils.DownloadBinaries();
+            string path = Path.Combine(
+                VariableSet.BinsFolderPath,
+                VariableSet.YtDlpExecName);
 
-            await YoutubeDL.DownloadYtDlpBinary(VariableSet.BinsFolderPath)
-                .ContinueWith(t =>
+            DownloadService downloadService = GetDownloadService(
+                action: new Action(() =>
                 {
                     _WMain?.WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgDownloaded,
@@ -69,7 +69,9 @@ internal class DownloaderUtil
                     Properties.Settings.Default.Save();
 
                     ExternalProgram.SetYtDlpVersion();
-                });
+                }));
+
+            await downloadService.DownloadFileTaskAsync(UrlSet.YtDlpUrl, path);
         }
         catch (Exception ex)
         {

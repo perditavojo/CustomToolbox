@@ -26,6 +26,11 @@ internal class UrlSet
     public static readonly string FFmpegUrl = $"https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/{FFmpegArchiveFileName}";
 
     /// <summary>
+    /// yt-dlp 的下載網址
+    /// </summary>
+    public static readonly string YtDlpUrl = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe";
+
+    /// <summary>
     /// aria2 的版本號
     /// </summary>
     public static readonly string Aria2Version = Properties.Settings.Default.Aria2Version;
