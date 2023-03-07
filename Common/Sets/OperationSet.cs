@@ -1112,17 +1112,12 @@ internal class OperationSet
                         {
                             bool isUrlValid = await CommonFunction.IsUrlValid(httpClient, url);
 
-                            if (isUrlValid)
-                            {
-                                continue;
-                            }
-                            else
+                            if (!isUrlValid)
                             {
                                 _WMain?.WriteLog(
-                                    MsgSet.GetFmtStr(
-                                        MsgSet.MsgInvalidUrlSkipThisVideo,
-                                        url,
-                                        title));
+                                    MsgSet.GetFmtStr(MsgSet.MsgInvalidUrlSkipThisVideo, url, title));
+
+                                continue;
                             }
                         }
 

@@ -99,7 +99,7 @@
     <sys:String x:Key="LNetPlaylists">Network playlists</sys:String>
     <sys:String x:Key="LLocalClipLists">Local clip lists</sys:String>
     <sys:String x:Key="CBEnableAutoLyric">Enable auto lyric</sys:String>
-    <sys:String x:Key="CBEnableAutoLyricToolTip">Only works for playlists from YoutubeClipPlaylist.</sys:String>
+    <sys:String x:Key="CBEnableAutoLyricToolTip">Only works for playlists from YoutubeClipPlaylist</sys:String>
     <sys:String x:Key="BtnRefreshNetResurce">Refresh</sys:String>
     <sys:String x:Key="BtnLoadClipList">Load clip list</sys:String>
     <sys:String x:Key="GBB23ClipListGenerator">Bilibili clip list generator</sys:String>
@@ -108,6 +108,7 @@
     <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">A line a phrase</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">Export as *.jsonc</sys:String>
     <sys:String x:Key="CBB23ClipListCheckUrl">Check URL</sys:String>
+    <sys:String x:Key="CBB23ClipListCheckUrlToolTip">Used to exclude videos like "拜年紀" from playing properly via yt-dlp + libmpv</sys:String>
     <sys:String x:Key="BtnGenerateB23ClipList">Generate clip list file</sys:String>
     <sys:String x:Key="GBWebTools">Web tools</sys:String>
     <sys:String x:Key="GBFFmpegFunctions">FFmpeg</sys:String>

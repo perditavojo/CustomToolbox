@@ -389,11 +389,13 @@
                                         <CheckBox x:Name="CBB23ClipListExportJsonc"
                                             Margin="0,247,0,0"
                                             Content="{DynamicResource CBB23ClipListExportJsonc}"
+                                            ToolTip="{DynamicResource CBB23ClipListExportJsoncToolTip}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <CheckBox x:Name="CBB23ClipListCheckUrl"
                                             Margin="0,285,0,0"
                                             Content="{DynamicResource CBB23ClipListCheckUrl}"
+                                            ToolTip="{DynamicResource CBB23ClipListCheckUrlToolTip}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <Button x:Name="BtnGenerateB23ClipList"

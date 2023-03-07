@@ -99,7 +99,7 @@
     <sys:String x:Key="LNetPlaylists">網路播放清單</sys:String>
     <sys:String x:Key="LLocalClipLists">本機短片清單</sys:String>
     <sys:String x:Key="CBEnableAutoLyric">啟用自動歌詞</sys:String>
-    <sys:String x:Key="CBEnableAutoLyricToolTip">僅對來自 YoutubeClipPlaylist 的播放清單生效。</sys:String>
+    <sys:String x:Key="CBEnableAutoLyricToolTip">僅對來自 YoutubeClipPlaylist 的播放清單生效</sys:String>
     <sys:String x:Key="BtnRefreshNetResurce">重新整理</sys:String>
     <sys:String x:Key="BtnLoadClipList">載入短片清單</sys:String>
     <sys:String x:Key="GBB23ClipListGenerator">Bilibili 短片清單產生器</sys:String>
@@ -107,7 +107,9 @@
     <sys:String x:Key="LB23ClipListExcludedPhrases">排除字詞</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">一行一個排除字詞</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">匯出成 *.jsonc</sys:String>
+    <sys:String x:Key="CBB23ClipListExportJsoncToolTip">匯出成 "Youtube 影片截選播放清單" 使用的格式</sys:String>
     <sys:String x:Key="CBB23ClipListCheckUrl">檢查網址</sys:String>
+    <sys:String x:Key="CBB23ClipListCheckUrlToolTip">用於排除拜年紀這類無法透過 yt-dlp + libmpv 正常播放的影片</sys:String>
     <sys:String x:Key="BtnGenerateB23ClipList">產生短片清單檔案</sys:String>
     <sys:String x:Key="GBWebTools">網頁工具</sys:String>
     <sys:String x:Key="GBFFmpegFunctions">FFmpeg</sys:String>
