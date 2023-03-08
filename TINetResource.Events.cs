@@ -170,7 +170,7 @@ public partial class WMain
 
                     WriteLog(MsgSet.MsgUpdateLB23ClipListExcludedPhrases);
 
-                    Task.Delay(1500).ContinueWith(t => 
+                    Task.Delay(1500).ContinueWith(t =>
                     {
                         IsInitializing = true;
 
@@ -203,7 +203,11 @@ public partial class WMain
                     MIBatchDLClips,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
-                    BtnSplitVideo
+                    BtnSplitVideo,
+                    TBB23UserMID,
+                    TBB23ClipListExcludedPhrases,
+                    CBB23ClipListExportJsonc,
+                    CBB23ClipListCheckUrl
                 };
 
                 Control[] ctrlSet2 =
@@ -223,6 +227,7 @@ public partial class WMain
                     {
                         TBB23UserMID.Text = string.Empty;
                         CBB23ClipListExportJsonc.IsChecked = false;
+                        CBB23ClipListCheckUrl.IsChecked = false;
                     }));
 
                     CustomFunction.BatchSetEnabled(ctrlSet1, true);
@@ -230,9 +235,12 @@ public partial class WMain
 
                     return;
                 }
+
                 await OperationSet.DoGenerateB23ClipList(
                     TBB23UserMID.Text,
                     CBB23ClipListExportJsonc.IsChecked ?? false,
+                    GetHttpClient(),
+                    CBB23ClipListCheckUrl.IsChecked ?? false,
                     GetGlobalCT());
 
                 // 重設控制項。
@@ -242,6 +250,7 @@ public partial class WMain
                     {
                         TBB23UserMID.Text = string.Empty;
                         CBB23ClipListExportJsonc.IsChecked = false;
+                        CBB23ClipListCheckUrl.IsChecked = false;
                     }));
                 });
 

@@ -99,7 +99,7 @@
     <sys:String x:Key="LNetPlaylists">网络播放清单</sys:String>
     <sys:String x:Key="LLocalClipLists">本机短片清单</sys:String>
     <sys:String x:Key="CBEnableAutoLyric">激活自动歌词</sys:String>
-    <sys:String x:Key="CBEnableAutoLyricToolTip">仅对来自 YoutubeClipPlaylist 的播放清单生效。</sys:String>
+    <sys:String x:Key="CBEnableAutoLyricToolTip">仅对来自 YoutubeClipPlaylist 的播放清单生效</sys:String>
     <sys:String x:Key="BtnRefreshNetResurce">刷新</sys:String>
     <sys:String x:Key="BtnLoadClipList">加载短片清单</sys:String>
     <sys:String x:Key="GBB23ClipListGenerator">Bilibili 短片清单产生器</sys:String>
@@ -107,6 +107,9 @@
     <sys:String x:Key="LB23ClipListExcludedPhrases">排除字詞</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">一行一个排除字词</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">导出成 *.jsonc</sys:String>
+    <sys:String x:Key="CBB23ClipListExportJsoncToolTip">导出成 "Youtube 视频截选播放清单" 使用的格式</sys:String>
+    <sys:String x:Key="CBB23ClipListCheckUrl">检查网址</sys:String>
+    <sys:String x:Key="CBB23ClipListCheckUrlToolTip">用于排除拜年纪这类无法通过 yt-dlp + libmpv 正常播放的视频</sys:String>
     <sys:String x:Key="BtnGenerateB23ClipList">产生短片清单文件</sys:String>
     <sys:String x:Key="GBWebTools">网页工具</sys:String>
     <sys:String x:Key="GBFFmpegFunctions">FFmpeg</sys:String>
@@ -324,6 +327,7 @@
     <sys:String x:Key="MsgClipListFileGeneratedFor">已产生 Bilibili 用户（{0}）的短片清单文件：{1}</sys:String>
     <sys:String x:Key="MsgUpdateLB23ClipListExcludedPhrases">已更新排除字词。</sys:String>
     <sys:String x:Key="MsgSkipThisVideo">侦测到排除字词，已忽略此视频：{0}</sys:String>
+    <sys:String x:Key="MsgInvalidUrlSkipThisVideo">侦测视频网址（{0}）无效，已忽略此视频：{1}</sys:String>
     <sys:String x:Key="MsgYtChannelIDCCantNoBeEmpty">请输入 YouTube 频道 ID。</sys:String>
     <sys:String x:Key="MsgYtscToolUsedBrowserChannel">Playwright 使用的网页浏览器频道：{0}</sys:String>
     <sys:String x:Key="MsgYtscToolChNameTooLongCancelCut">因频道名称长度超过 {0} 列，故取消裁切截屏。</sys:String>

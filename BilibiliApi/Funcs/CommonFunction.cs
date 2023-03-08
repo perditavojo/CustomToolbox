@@ -10,6 +10,7 @@ public class CommonFunction
 {
     /// <summary>
     /// 檢查網址是否有效
+    /// <para>主要用於排除拜年紀的影片。</para>
     /// </summary>
     /// <param name="httpClient">HttpClient</param>
     /// <param name="url">字串，網址</param>

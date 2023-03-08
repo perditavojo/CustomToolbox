@@ -1121,6 +1121,13 @@ internal class MsgSet
         string.Empty;
 
     /// <summary>
+    /// 訊息：偵測影片網址（{0}）無效，已忽略此影片：{1}
+    /// </summary>
+    public static readonly string MsgInvalidUrlSkipThisVideo = Application.Current
+        .FindResource("MsgInvalidUrlSkipThisVideo").ToString() ??
+        string.Empty;
+
+    /// <summary>
     /// 訊息：請輸入 YouTube 頻道 ID。
     /// </summary>
     public static readonly string MsgYtChannelIDCCantNoBeEmpty = Application.Current

@@ -672,7 +672,7 @@ public partial class WMain
     /// 取得 HttpClient
     /// </summary>
     /// <returns>HttpClient</returns>
-    public static HttpClient? GetHttpClient()
+    public HttpClient? GetHttpClient()
     {
         HttpClient? httpClient = GlobalHCFactory?.CreateClient();
 
@@ -680,6 +680,7 @@ public partial class WMain
         // 設定 HttpClient 的標頭資訊。
         //httpClient?.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com");
         //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
+
         httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
         httpClient?.DefaultRequestHeaders.Add("DNT", "1");
 

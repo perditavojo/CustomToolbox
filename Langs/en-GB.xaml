@@ -99,7 +99,7 @@
     <sys:String x:Key="LNetPlaylists">Network playlists</sys:String>
     <sys:String x:Key="LLocalClipLists">Local clip lists</sys:String>
     <sys:String x:Key="CBEnableAutoLyric">Enable auto lyric</sys:String>
-    <sys:String x:Key="CBEnableAutoLyricToolTip">Only works for playlists from YoutubeClipPlaylist.</sys:String>
+    <sys:String x:Key="CBEnableAutoLyricToolTip">Only works for playlists from YoutubeClipPlaylist</sys:String>
     <sys:String x:Key="BtnRefreshNetResurce">Refresh</sys:String>
     <sys:String x:Key="BtnLoadClipList">Load clip list</sys:String>
     <sys:String x:Key="GBB23ClipListGenerator">Bilibili clip list generator</sys:String>
@@ -107,6 +107,8 @@
     <sys:String x:Key="LB23ClipListExcludedPhrases">Excluded phrases</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">A line a phrase</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">Export as *.jsonc</sys:String>
+    <sys:String x:Key="CBB23ClipListCheckUrl">Check URL</sys:String>
+    <sys:String x:Key="CBB23ClipListCheckUrlToolTip">Used to exclude videos like "拜年紀" from playing properly via yt-dlp + libmpv</sys:String>
     <sys:String x:Key="BtnGenerateB23ClipList">Generate clip list file</sys:String>
     <sys:String x:Key="GBWebTools">Web tools</sys:String>
     <sys:String x:Key="GBFFmpegFunctions">FFmpeg</sys:String>
@@ -324,6 +326,7 @@
     <sys:String x:Key="MsgClipListFileGeneratedFor">The clip list file for Bilibili users ({0}) has been generated: {1}</sys:String>
     <sys:String x:Key="MsgUpdateLB23ClipListExcludedPhrases">Excluded phrases have been updated.</sys:String>
     <sys:String x:Key="MsgSkipThisVideo">Excluded words were detected and this video ({0}) has been ignored</sys:String>
+    <sys:String x:Key="MsgInvalidUrlSkipThisVideo">Detects that the video URL ({0}) is invalid and has ignored this video: {1}</sys:String>
     <sys:String x:Key="MsgYtChannelIDCCantNoBeEmpty">Please enter YouTube channel ID.</sys:String>
     <sys:String x:Key="MsgYtscToolUsedBrowserChannel">Web browser channel used by Playwright: {0}</sys:String>
     <sys:String x:Key="MsgYtscToolChNameTooLongCancelCut">Cancel the cut screenshot because the channel name is longer than {0} columns.</sys:String>
