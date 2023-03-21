@@ -1,5 +1,10 @@
 # 自定義工具箱更新日誌
 
+- 1.0.10
+  1. 更新 Downloader 函式庫至 3.0.4 版。
+  2. 更新 H.NotifyIcon.Wpf 函式庫至 2.0.99 版。
+  3. 更新 Xabe.FFmpeg 函式庫至 5.2.6 版。
+  4. 更新預設的使用者代理字串。
 - 1.0.9
   1. 更新 H.NotifyIcon.Wpf 函式庫至 2.0.93 版。
   2. 更新 Microsoft.Playwright 函式庫至 1.31.1 版。
