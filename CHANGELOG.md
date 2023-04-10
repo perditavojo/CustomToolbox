@@ -1,5 +1,11 @@
 # 自定義工具箱更新日誌
 
+- 1.0.11
+  1. 更新預設的使用者代理字串。（Google Chrome v112）
+  2. 變更查詢使用者代理字串的網址，改為使用 WhatIsMyBrowser.com 網站。
+  3. 更新 H.NotifyIcon.Wpf 函式庫至 2.0.108 版。
+  4. 更新 Microsoft.Playwright 函式庫至1.32.0 版。
+  5. 更新 YoutubeDLSharp 函式庫至 1.0.0-beta6 版。
 - 1.0.10
   1. 更新 Downloader 函式庫至 3.0.4 版。
   2. 更新 H.NotifyIcon.Wpf 函式庫至 2.0.99 版。

@@ -6,9 +6,14 @@
 internal class UrlSet
 {
     /// <summary>
+    /// 查詢使用者代理字串的網址（舊）
+    /// </summary>
+    public static readonly string OldQueryUserAgentUrl = "https://www.google.com/search?q=My+User+Agent";
+
+    /// <summary>
     /// 查詢使用者代理字串的網址
     /// </summary>
-    public static readonly string QueryUserAgentUrl = "https://www.google.com/search?q=My+User+Agent";
+    public static readonly string QueryUserAgentUrl = "https://www.whatismybrowser.com/detect/what-is-my-user-agent";
 
     /// <summary>
     /// AppVersion.json 檔案的網址
