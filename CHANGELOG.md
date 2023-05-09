@@ -1,5 +1,8 @@
 # 自定義工具箱更新日誌
 
+- 1.0.12
+  1. 更新預設的使用者代理字串。（Google Chrome v113）
+  2. 更新 Microsoft.Playwright 函式庫至1.33.0 版。
 - 1.0.11
   1. 更新預設的使用者代理字串。（Google Chrome v112）
   2. 變更查詢使用者代理字串的網址，改為使用 WhatIsMyBrowser.com 網站。
