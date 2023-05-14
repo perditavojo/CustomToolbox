@@ -18,15 +18,25 @@ class TimeSpanConverter : IValueConverter
         {
             return TimeSpan.FromSeconds(result1);
         }
-        else if (value is string ||
-            value is int ||
+        else if (value is string actualString)
+        {
+            if (TimeSpan.TryParse(actualString, out TimeSpan result2))
+            {
+                return result2;
+            }
+            else
+            {
+                TimeSpan.FromSeconds(0);
+            }
+        }
+        else if (value is int ||
             value is long ||
             value is float ||
             value is decimal)
         {
-            if (double.TryParse(value.ToString(), out double result2))
+            if (double.TryParse(value.ToString(), out double result3))
             {
-                return TimeSpan.FromSeconds(result2);
+                return TimeSpan.FromSeconds(result3);
             }
         }
 
@@ -43,15 +53,25 @@ class TimeSpanConverter : IValueConverter
         {
             return TimeSpan.FromSeconds(result1);
         }
-        else if (value is string ||
-            value is int ||
+        else if (value is string actualString)
+        {
+            if (TimeSpan.TryParse(actualString, out TimeSpan result2))
+            {
+                return result2;
+            }
+            else
+            {
+                TimeSpan.FromSeconds(0);
+            }
+        }
+        else if (value is int ||
             value is long ||
             value is float ||
             value is decimal)
         {
-            if (double.TryParse(value.ToString(), out double result2))
+            if (double.TryParse(value.ToString(), out double result3))
             {
-                return TimeSpan.FromSeconds(result2);
+                return TimeSpan.FromSeconds(result3);
             }
         }
 
