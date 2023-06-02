@@ -142,6 +142,7 @@ public partial class App : Application
             if (CustomToolbox.Properties.Settings.Default.UpdateSettings)
             {
                 CustomToolbox.Properties.Settings.Default.Upgrade();
+                CustomToolbox.Properties.Settings.Default.Reload();
                 CustomToolbox.Properties.Settings.Default.UpdateSettings = false;
                 CustomToolbox.Properties.Settings.Default.Save();
             }
