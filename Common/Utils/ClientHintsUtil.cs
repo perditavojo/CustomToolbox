@@ -8,8 +8,6 @@ namespace CustomToolbox.Common.Utils;
 /// </summary>
 internal class ClientHintsUtil
 {
-    // TODO: 2023-02-24 待測試 Client Hints。
-
     /// <summary>
     /// Client Hints
     /// </summary>
