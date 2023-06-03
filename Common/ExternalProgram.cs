@@ -10,6 +10,7 @@ using Xabe.FFmpeg.Events;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Options;
+using System.Globalization;
 
 namespace CustomToolbox.Common;
 
@@ -758,11 +759,13 @@ internal class ExternalProgram
                 // 避免字串太長，造成顯示問題。
                 string reducedStringValue = stringValue;
 
+                StringInfo siReducedStringValue = new(reducedStringValue);
+
                 int limitLength = Properties.Settings.Default.LOperationLimitLength;
 
-                if (reducedStringValue.Length > limitLength)
+                if (siReducedStringValue.LengthInTextElements > limitLength)
                 {
-                    reducedStringValue = $"{reducedStringValue[..limitLength]}...";
+                    reducedStringValue = $"{siReducedStringValue.SubstringByTextElements(0, limitLength)}{MsgSet.Ellipses}";
                 }
 
                 _LOperation.Content = reducedStringValue;

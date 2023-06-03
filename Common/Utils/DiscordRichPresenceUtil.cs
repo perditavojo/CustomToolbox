@@ -3,6 +3,7 @@ using CustomToolbox.Common.Sets;
 using DiscordRPC;
 using DiscordRPC.Logging;
 using DiscordRPC.Message;
+using System.Globalization;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -153,7 +154,7 @@ internal class DiscordRichPresenceUtil
     public static void Dispose()
     {
         if (_GlobalDRClient != null &&
-            !_GlobalDRClient.IsDisposed) 
+            !_GlobalDRClient.IsDisposed)
         {
             _GlobalDRClient?.ClearPresence();
             _GlobalDRClient?.Dispose();
@@ -186,14 +187,16 @@ internal class DiscordRichPresenceUtil
             {
                 int magicNum = 43, maxLength = 40;
 
-                if (details.Length > magicNum)
+                StringInfo siDetails = new(details), siState = new(state);
+
+                if (siDetails.LengthInTextElements > magicNum)
                 {
-                    details = $"{details[..maxLength]}...";
+                    details = $"{siDetails.SubstringByTextElements(0, maxLength)}{MsgSet.Ellipses}";
                 }
 
-                if (state.Length > magicNum)
+                if (siState.LengthInTextElements > magicNum)
                 {
-                    state = $"{state[..maxLength]}...";
+                    state = $"{siState.SubstringByTextElements(0, maxLength)}{MsgSet.Ellipses}";
                 }
 
                 _GlobalDRClient?.SetPresence(new()

@@ -672,7 +672,7 @@ public partial class WMain
     /// 取得 HttpClient
     /// </summary>
     /// <returns>HttpClient</returns>
-    public HttpClient? GetHttpClient()
+    public static HttpClient? GetHttpClient()
     {
         HttpClient? httpClient = GlobalHCFactory?.CreateClient();
 

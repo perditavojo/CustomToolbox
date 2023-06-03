@@ -20,6 +20,7 @@ using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
 using System.Net.Http;
+using System.Globalization;
 
 namespace CustomToolbox.Common.Sets;
 
@@ -1654,11 +1655,13 @@ internal class OperationSet
                 // 避免字串太長，造成顯示問題。
                 string reducedMessage = message;
 
+                StringInfo siReducedMessage = new(reducedMessage);
+
                 int limitLength = Properties.Settings.Default.LOperationLimitLength;
 
-                if (reducedMessage.Length > limitLength)
+                if (siReducedMessage.LengthInTextElements > limitLength)
                 {
-                    reducedMessage = $"{reducedMessage[..limitLength]}...";
+                    reducedMessage = $"{siReducedMessage.SubstringByTextElements(0, limitLength)}{MsgSet.Ellipses}";
                 }
 
                 _LOperation.Content = reducedMessage;

@@ -11,6 +11,7 @@ using Mpv.NET.API;
 using Mpv.NET.Player;
 using System.ComponentModel;
 using System.Security.Cryptography;
+using System.Globalization;
 
 namespace CustomToolbox;
 
@@ -414,10 +415,12 @@ public partial class WMain
             {
                 if (CPPlayer.Status != ClipPlayerStatus.Paused)
                 {
+                    StringInfo siClipTitle = new(clipData.Name ?? string.Empty);
+
                     string clipTitle = string.IsNullOrEmpty(clipData.Name) ?
                         MsgSet.ClipTitle :
-                        (clipData.Name.Length > 40 ?
-                            $"{clipData.Name[..40]}{MsgSet.Ellipses}" :
+                        (siClipTitle.LengthInTextElements > 40 ?
+                            $"{siClipTitle.SubstringByTextElements(0, 40)}{MsgSet.Ellipses}" :
                             clipData.Name);
 
                     LClipTitle.Content = clipTitle;
