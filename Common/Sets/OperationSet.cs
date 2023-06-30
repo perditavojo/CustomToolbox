@@ -971,9 +971,9 @@ internal class OperationSet
     /// <param name="ct">CancellationToken</param>
     /// <returns>Task</returns>
     public static async Task DoGenerateB23ClipList(
+        HttpClient? httpClient,
         string mid,
         bool exportJsonc = false,
-        HttpClient? httpClient = null,
         bool checkUrl = false,
         CancellationToken ct = default)
     {
@@ -981,8 +981,13 @@ internal class OperationSet
         {
             ct.ThrowIfCancellationRequested();
 
+            if (httpClient == null)
+            {
+                throw new Exception("HttpClient is null.");
+            }
+
             // 取標籤資訊。
-            ReceivedObject<TList> receivedTList = await SpaceFunction.GetTList(mid);
+            ReceivedObject<TList> receivedTList = await SpaceFunction.GetTList(httpClient, mid);
 
             if (receivedTList.Code != 0)
             {
@@ -1039,7 +1044,7 @@ internal class OperationSet
                     tidData.TID.ToString()));
 
                 // 取得分頁資訊。
-                ReceivedObject<Page> receivedPage = await SpaceFunction.GetPage(mid, tid);
+                ReceivedObject<Page> receivedPage = await SpaceFunction.GetPage(httpClient, mid, tid);
 
                 if (receivedPage.Code != 0)
                 {
@@ -1077,6 +1082,7 @@ internal class OperationSet
                         pages.ToString()));
 
                     ReceivedObject<List<VList>> receivedVLists = await SpaceFunction.GetVList(
+                        httpClient,
                         mid,
                         tid,
                         pn,

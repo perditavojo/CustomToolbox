@@ -24,7 +24,14 @@ public class SpaceFunction
         HttpClient httpClient,
         string mid)
     {
-        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?mid={mid}";
+        string queryStringValue = await AuthFunction.GetAuthQueryString(
+            httpClient,
+            new Dictionary<string, string>()
+            {
+                { "mid", mid }
+            });
+
+        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
         using HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
         using HttpContent content = response.Content;
@@ -52,7 +59,15 @@ public class SpaceFunction
         string mid,
         int tid)
     {
-        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?mid={mid}&tid={tid}";
+        string queryStringValue = await AuthFunction.GetAuthQueryString(
+            httpClient,
+            new Dictionary<string, string>()
+            {
+                { "mid", mid },
+                { "tid", tid.ToString() }
+            });
+
+        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
         using HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
         using HttpContent content = response.Content;
@@ -85,7 +100,17 @@ public class SpaceFunction
         int pn = 1,
         int ps = 30)
     {
-        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?mid={mid}&tid={tid}&pn={pn}&ps={ps}";
+        string queryStringValue = await AuthFunction.GetAuthQueryString(
+            httpClient,
+            new Dictionary<string, string>()
+            {
+                { "mid", mid },
+                { "tid", tid.ToString() },
+                { "pn", pn.ToString() },
+                { "ps", ps.ToString() }
+            });
+
+        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
         using HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
         using HttpContent content = response.Content;
@@ -105,11 +130,21 @@ public class SpaceFunction
     /// <summary>
     /// 取得 tlist
     /// </summary>
+    /// <param name="httpClient">HttpClient</param>
     /// <param name="mid">字串，目標使用者的 mid</param>
     /// <returns>Task&lt;ReceivedObject&lt;lTList&gt;&gt;</returns>
-    public static async Task<ReceivedObject<TList>> GetTList(string mid)
+    public static async Task<ReceivedObject<TList>> GetTListV2(
+        HttpClient httpClient,
+        string mid)
     {
-        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?mid={mid}";
+        string queryStringValue = await AuthFunction.GetAuthQueryString(
+            httpClient,
+            new Dictionary<string, string>()
+            {
+                { "mid", mid }
+            });
+
+        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
         DownloadService downloadService = DownloaderUtil
             .GetDownloadService(DownloaderUtil.GetB23DownloadConfiguration());
@@ -129,11 +164,23 @@ public class SpaceFunction
     /// <summary>
     /// 取得 page
     /// </summary>
+    /// <param name="httpClient">HttpClient</param>
     /// <param name="mid">字串，目標使用者的 mid</param>
     /// <returns>Task&lt;ReceivedObject&lt;Page&gt;&gt;</returns>
-    public static async Task<ReceivedObject<Page>> GetPage(string mid, int tid)
+    public static async Task<ReceivedObject<Page>> GetPageV2(
+        HttpClient httpClient,
+        string mid,
+        int tid)
     {
-        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?mid={mid}&tid={tid}";
+        string queryStringValue = await AuthFunction.GetAuthQueryString(
+            httpClient,
+            new Dictionary<string, string>()
+            {
+                { "mid", mid },
+                { "tid", tid.ToString() }
+            });
+
+        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
         DownloadService downloadService = DownloaderUtil
             .GetDownloadService(DownloaderUtil.GetB23DownloadConfiguration());
@@ -153,18 +200,30 @@ public class SpaceFunction
     /// <summary>
     /// 取得 vlist
     /// </summary>
+    /// <param name="httpClient">HttpClient</param>
     /// <param name="mid">字串，目標使用者的 mid</param>
     /// <param name="tid">數值，篩選目標分區，預設值為 0</param>
     /// <param name="pn">數值，頁碼，預設值為 1 </param>
     /// <param name="ps">數值，每頁項數（最小 1 最大 50），預設值為 30</param>
     /// <returns>Task&lt;ReceivedObject&lt;List&lt;VList&gt;&gt;&gt;</returns>
-    public static async Task<ReceivedObject<List<VList>>> GetVList(
+    public static async Task<ReceivedObject<List<VList>>> GetVListV2(
+        HttpClient httpClient,
         string mid,
         int tid = 0,
         int pn = 1,
         int ps = 30)
     {
-        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?mid={mid}&tid={tid}&pn={pn}&ps={ps}";
+        string queryStringValue = await AuthFunction.GetAuthQueryString(
+            httpClient,
+            new Dictionary<string, string>()
+            {
+                { "mid", mid },
+                { "tid", tid.ToString() },
+                { "pn", pn.ToString() },
+                { "ps", ps.ToString() }
+            });
+
+        string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
         DownloadService downloadService = DownloaderUtil
             .GetDownloadService(DownloaderUtil.GetB23DownloadConfiguration());
