@@ -11,6 +11,9 @@ namespace CustomToolbox.BilibiliApi.Funcs;
 /// </summary>
 public class AuthFunction
 {
+    /// <summary>
+    /// 混合鍵值加密表
+    /// </summary>
     private static readonly int[] MixinKeyEncTab =
     {
         46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35, 27, 43, 5, 49, 33, 9, 42, 19, 29, 28, 14, 39,
@@ -19,21 +22,22 @@ public class AuthFunction
     };
 
     /// <summary>
-    /// 對 imgKey 和 subKey 進行字元順序打亂編碼
+    /// 取得混合鍵值
+    /// <para>對 imgKey 和 subKey 進行字元順序打亂編碼。</para>
     /// </summary>
-    /// <param name="orig"></param>
+    /// <param name="value">字串，輸入值</param>
     /// <returns>字串</returns>
-    private static string GetMixinKey(string orig)
+    private static string GetMixinKey(string value)
     {
-        return MixinKeyEncTab.Aggregate("", (s, i) => s + orig[i])[..32];
+        return MixinKeyEncTab.Aggregate(string.Empty, (stringValue, index) => stringValue + value[index])[..32];
     }
 
     /// <summary>
-    /// 
+    /// 加密 Wbi
     /// </summary>
-    /// <param name="parameters"></param>
-    /// <param name="imgKey"></param>
-    /// <param name="subKey"></param>
+    /// <param name="parameters">Dictionary&lt;string, string&gt;</param>
+    /// <param name="imgKey">字串，imgKey</param>
+    /// <param name="subKey">字串，subKey</param>
     /// <returns>Dictionary&lt;string, string&gt;</returns>
     private static Dictionary<string, string> EncWbi(
         Dictionary<string, string> parameters,
@@ -47,7 +51,7 @@ public class AuthFunction
         parameters["wts"] = currTime;
 
         // 依照 key 重排參數。
-        parameters = parameters.OrderBy(p => p.Key).ToDictionary(p => p.Key, p => p.Value);
+        parameters = parameters.OrderBy(n => n.Key).ToDictionary(n => n.Key, n => n.Value);
 
         // 過濾 value 中的 "!'()*" 字元。
         parameters = parameters.ToDictionary(
@@ -61,7 +65,7 @@ public class AuthFunction
         // 計算 w_rid。
         byte[] hashBytes = MD5.HashData(Encoding.UTF8.GetBytes(query + mixinKey));
 
-        string wbiSign = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+        string wbiSign = BitConverter.ToString(hashBytes).Replace("-", string.Empty).ToLower();
 
         parameters["w_rid"] = wbiSign;
 
@@ -92,5 +96,30 @@ public class AuthFunction
         subUrl = subUrl.Split("/")[^1].Split(".")[0];
 
         return (imgUrl, subUrl);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="httpClient"></param>
+    /// <returns></returns>
+    public static async Task<string> GetWbi(HttpClient httpClient)
+    {
+        var (imgKey, subKey) = await GetWbiKeys(httpClient);
+
+        Dictionary<string, string> signedParams = EncWbi(
+            parameters: new Dictionary<string, string>
+            {
+                { "foo", "114" },
+                { "bar", "514" },
+                { "baz", "1919810" }
+            },
+            imgKey: imgKey,
+            subKey: subKey
+        );
+
+        string query = await new FormUrlEncodedContent(signedParams).ReadAsStringAsync();
+
+        return query;
     }
 }
