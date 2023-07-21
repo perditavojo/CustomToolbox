@@ -58,6 +58,16 @@ internal class VariableSet
     public static readonly string LyricsFolderPath = Path.Combine(RootPath, "Lyrics");
 
     /// <summary>
+    /// Temp 資料夾的路徑
+    /// </summary>
+    public static readonly string TempFolderPath = Path.Combine(RootPath, "Temp");
+
+    /// <summary>
+    /// Models 資料夾的路徑
+    /// </summary>
+    public static readonly string ModelsFolderPath = Path.Combine(RootPath, "Models");
+
+    /// <summary>
     /// yt-dlp.exe 的執行檔名稱
     /// </summary>
     public static readonly string YtDlpExecName = "yt-dlp.exe";

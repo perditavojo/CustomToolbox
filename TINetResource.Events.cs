@@ -7,6 +7,7 @@ using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using System.Windows;
 using System.Windows.Controls;
+using System.Net.Http;
 using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
@@ -237,9 +238,9 @@ public partial class WMain
                 }
 
                 await OperationSet.DoGenerateB23ClipList(
+                    GetHttpClient(),
                     TBB23UserMID.Text,
                     CBB23ClipListExportJsonc.IsChecked ?? false,
-                    GetHttpClient(),
                     CBB23ClipListCheckUrl.IsChecked ?? false,
                     GetGlobalCT());
 

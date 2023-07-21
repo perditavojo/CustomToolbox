@@ -10,6 +10,7 @@ using Xabe.FFmpeg.Events;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Options;
+using System.Globalization;
 
 namespace CustomToolbox.Common;
 
@@ -67,7 +68,9 @@ internal class ExternalProgram
                 VariableSet.DownloadsFolderPath,
                 VariableSet.ClipListsFolderPath,
                 VariableSet.LogsFolderPath,
-                VariableSet.LyricsFolderPath
+                VariableSet.LyricsFolderPath,
+                VariableSet.TempFolderPath,
+                VariableSet.ModelsFolderPath
             };
 
             foreach (string folder in folders)
@@ -648,6 +651,32 @@ internal class ExternalProgram
     }
 
     /// <summary>
+    /// 取得加入轉換成 WAV 檔案的 IConversion
+    /// </summary>
+    /// <param name="audioStreams">IEnumerable&lt;IAudioStream&gt;</param>
+    /// <param name="outputPath">字串，輸出檔案的路徑</param>
+    /// <returns>IConversion</returns>
+    public static IConversion GetConvertToWavConversion(
+        IEnumerable<IAudioStream> audioStreams,
+        string outputPath)
+    {
+        // 轉換成取樣率為 16 kHz 的 WAV 檔案。
+        IConversion conversion = FFmpeg.Conversions.New()
+            .AddStream(audioStreams)
+            // 參考來源：https://github.com/tigros/Whisperer/blob/dcdbcd8c9b01c06016272e4a6784774768b7b316/whisperer/Form1.cs#L220
+            // TODO: 2023-03-20 需要再觀察下列參數適不適合。
+            .AddParameter("-vn -ar 16000 -ab 32k -af volume=1.75")
+            .SetOutputFormat(Format.wav)
+            .SetOutput(outputPath)
+            .SetOverwriteOutput(true);
+
+        conversion.OnDataReceived += Conversion_OnDataReceived;
+        conversion.OnProgress += Conversion_OnProgress;
+
+        return conversion;
+    }
+
+    /// <summary>
     /// 對 IConversion 設定硬體加速相關參數
     /// </summary>
     /// <param name="conversion">IConversion</param>
@@ -758,11 +787,13 @@ internal class ExternalProgram
                 // 避免字串太長，造成顯示問題。
                 string reducedStringValue = stringValue;
 
+                StringInfo siReducedStringValue = new(reducedStringValue);
+
                 int limitLength = Properties.Settings.Default.LOperationLimitLength;
 
-                if (reducedStringValue.Length > limitLength)
+                if (siReducedStringValue.LengthInTextElements > limitLength)
                 {
-                    reducedStringValue = $"{reducedStringValue[..limitLength]}...";
+                    reducedStringValue = $"{siReducedStringValue.SubstringByTextElements(0, limitLength)}{MsgSet.Ellipses}";
                 }
 
                 _LOperation.Content = reducedStringValue;
