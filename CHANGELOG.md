@@ -1,7 +1,21 @@
 # 自定義工具箱更新日誌
 
+- v1.0.15
+  1. 更新 README.md。
+  2. 更新預設的使用者代理字串。（Google Chrome v115）
+  3. 將判斷字數限制的部分改為使用 StringInfo 來處理。
+  4. 加入 B 站 Wbi 驗證機制。
+  5. 更新 Downloader 函式庫至 3.0.6 版。
+  6. 更新 HtmlAgilityPack 函式庫至 1.11.50 版。
+  7. 更新 Microsoft.Playwright 函式庫至 1.36.0 版。
+  8. 更新 YoutubeDLSharp 函式庫至 1.0.0 版。
+  9. 更新 DiscordRichPresence 函式庫至 1.4.20 版。
+  10. 加入 Whisper 相關函式庫。
+  11. 加入新的預設資料夾。
+  12. 加入 FFmpeg 轉換成 WAV 檔案的相關程式碼。
+  13. 調高 Playwright 的預設等待秒數，從 1 秒調高成 2 秒。
 - v1.0.14
-  1. 更新 Microsoft.Playwright 函式庫至1.34.0 版。
+  1. 更新 Microsoft.Playwright 函式庫至 1.34.0 版。
   2. 修正 MANUAL.md 內錯誤的內容。
   3. 移除不在需要的 TODO 註解。
   4. 調整載入上一版本的設定值的相關程式碼。
