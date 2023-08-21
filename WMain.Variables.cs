@@ -38,6 +38,11 @@ public partial class WMain
     public ContentDialog? GlobalCDDialog = null;
 
     /// <summary>
+    /// 共用的 CancellationTokenSource
+    /// </summary>
+    public CancellationTokenSource? GlobalCTS = null;
+
+    /// <summary>
     /// 共用的 ObservableCollection&lt;ClipData&gt;
     /// </summary>
     private readonly ObservableCollection<ClipData> GlobalDataSet = new();
@@ -51,11 +56,6 @@ public partial class WMain
     /// 共用的 WPopupPlayer
     /// </summary>
     private WPopupPlayer? WPPPlayer = null;
-
-    /// <summary>
-    /// 共用的 CancellationTokenSource
-    /// </summary>
-    private CancellationTokenSource? GlobalCTS = null;
 
     /// <summary>
     /// 共用的 CancellationToken

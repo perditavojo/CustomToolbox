@@ -12,15 +12,19 @@ using Microsoft.Playwright;
 using OpenCCNET;
 using Page = CustomToolbox.BilibiliApi.Models.Page;
 using ProgressBar = ModernWpf.Controls.ProgressBar;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Net.Http;
 using System.Text.Json;
 using System.Windows.Controls;
+using Whisper.net;
+using Whisper.net.Ggml;
+using Whisper.net.Wave;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
-using System.Net.Http;
-using System.Globalization;
 
 namespace CustomToolbox.Common.Sets;
 
@@ -1512,6 +1516,483 @@ internal class OperationSet
     }
 
     /// <summary>
+    /// 執行轉換成 WAV 檔案
+    /// </summary>
+    /// <param name="inputFilePath">字串，檔案的路徑</param>
+    /// <param name="ct">CancellationToken</param>
+    /// <returns>Task&lt;string&gt;，產生的 WAV 檔案的路徑</returns>
+    public static async Task<string> DoConvertToWavFile(
+        string inputFilePath,
+        CancellationToken ct = default)
+    {
+        // TODO: 2023-08-21 待 i18n 化。
+
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+
+            string fileName = Path.GetFileNameWithoutExtension(inputFilePath);
+
+            IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(inputFilePath, ct);
+
+            IEnumerable<IAudioStream> audioStreams = mediaInfo.AudioStreams;
+
+            if (audioStreams == null)
+            {
+                _WMain?.WriteLog("發生錯誤：請選擇有效的視訊或音訊檔案。");
+
+                return string.Empty;
+            }
+
+            string tempFilePath = Path.Combine(
+                VariableSet.TempFolderPath,
+                $"{fileName}_{DateTime.Now:yyyyMMddHHmmssfff}.wav");
+
+            IConversion conversion = ExternalProgram
+                .GetConvertToWavConversion(audioStreams, tempFilePath);
+
+            IConversionResult conversionResult = await conversion.Start(ct);
+
+            ExternalProgram.WriteConversionResult(conversionResult);
+
+            return tempFilePath;
+        }
+        catch (OperationCanceledException)
+        {
+            _WMain?.WriteLog("已取消作業。");
+        }
+        catch (Exception ex)
+        {
+            _WMain?.ShowMsgBox(ex.ToString());
+        }
+
+        return string.Empty;
+    }
+
+    /// <summary>
+    /// 執行偵測語言
+    /// <para>因為會發生 System.AccessViolationException，故 speedUp 需設為 false。</para>
+    /// </summary>
+    /// <param name="inputFilePath">字串，檔案的路徑</param>
+    /// <param name="language">字串，語言（兩碼），預設值為 "auto"</param>
+    /// <param name="enableTranslate">布林值，啟用翻譯成英文，預設值為 false</param>
+    /// <param name="enableSpeedUp2x">布林值，啟用 SpeedUp2x，預設值為 false</param>
+    /// <param name="speedUp">布林值，是否加速，預設值為 false</param>
+    /// <param name="ggmlType">GgmlType，預設值為 GgmlType.Small</param>
+    /// <param name="quantizationType">QuantizationType，預設值為 QuantizationType.NoQuantization</param>
+    /// <param name="samplingStrategyType">SamplingStrategyType，預設值為 SamplingStrategyType.Default</param>
+    /// <param name="beamSize">beamSize，用於 SamplingStrategyType.BeamSearch，預設值為 5</param>
+    /// <param name="patience">patience，用於 SamplingStrategyType.BeamSearch，預設值為 -0.1f</param>
+    /// <param name="bestOf">bestOf，用於 SamplingStrategyType.Greedy，預設值為 1</param>
+    /// <param name="cancellationToken">CancellationToken</param>
+    /// <returns>Task</returns>
+    public static async Task DoDetectLanguage(
+        string inputFilePath,
+        string language = "auto",
+        bool enableTranslate = false,
+        bool enableSpeedUp2x = false,
+        bool speedUp = false,
+        GgmlType ggmlType = GgmlType.Small,
+        QuantizationType quantizationType = QuantizationType.NoQuantization,
+        SamplingStrategyType samplingStrategyType = SamplingStrategyType.Default,
+        int beamSize = 5,
+        float patience = -0.1f,
+        int bestOf = 1,
+        CancellationToken cancellationToken = default)
+    {
+        // TODO: 2023-08-21 待 i18n 化。
+
+        Stopwatch stopWatch = new();
+
+        stopWatch.Start();
+
+        try
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            string tempFilePath = await Task.Run(async () =>
+            {
+                string wavfilePath = await DoConvertToWavFile(
+                        inputFilePath,
+                        cancellationToken),
+                    modelFilePath = await ExternalProgram.CheckModelFile(
+                        ggmlType,
+                        quantizationType,
+                        cancellationToken);
+
+                if (string.IsNullOrEmpty(modelFilePath))
+                {
+                    _WMain?.WriteLog("發生錯誤：使用的模型檔案不存在或下載失敗。");
+                    _WMain?.WriteLog("已取消偵測語言作業。");
+                    _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+
+                    return string.Empty;
+                }
+
+                _WMain?.WriteLog("正在開始偵測語言作業……");
+                _WMain?.WriteLog($"使用的模型：{ggmlType}");
+                _WMain?.WriteLog($"使用的量化：{quantizationType}");
+
+                using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
+
+                WhisperProcessorBuilder whisperProcessorBuilder = whisperFactory.CreateBuilder()
+                    .WithEncoderBeginHandler(WhisperDotNet_OnEncoderBegin)
+                    .WithProgressHandler(WhisperDotNet_OnProgress)
+                    .WithSegmentEventHandler(WhisperDotNet_OnNewSegment);
+
+                if (language == "auto")
+                {
+                    whisperProcessorBuilder.WithLanguageDetection();
+                }
+                else
+                {
+                    whisperProcessorBuilder.WithLanguage(language);
+                }
+
+                if (enableTranslate)
+                {
+                    whisperProcessorBuilder.WithTranslate();
+                }
+
+                if (enableSpeedUp2x)
+                {
+                    whisperProcessorBuilder.WithSpeedUp2x();
+                }
+
+                WhisperProcessor whisperProcessor = WhisperUtil.GetWhisperProcessor(
+                    whisperProcessorBuilder: whisperProcessorBuilder,
+                    samplingStrategyType: samplingStrategyType,
+                    beamSize: beamSize,
+                    patience: patience,
+                    bestOf: bestOf);
+
+                using FileStream fileStream = File.OpenRead(wavfilePath);
+
+                WaveParser waveParser = new(fileStream);
+
+                bool isTaskCanceled = false;
+
+                try
+                {
+                    float[] avgSamples = await waveParser.GetAvgSamplesAsync(cancellationToken);
+
+                    (string? detectedLanguage, float? probability) = whisperProcessor
+                        .DetectLanguageWithProbability(samples: avgSamples, speedUp: speedUp);
+
+                    string rawResult = string.IsNullOrEmpty(detectedLanguage) ?
+                            "識別失敗。" :
+                            $"{detectedLanguage}（{probability:P}）",
+                        resultMessage = $"偵測語言結果：{rawResult}";
+
+                    _WMain?.WriteLog(resultMessage);
+
+                    _WMain?.ShowMsgBox(resultMessage);
+                }
+                catch (OperationCanceledException)
+                {
+                    isTaskCanceled = true;
+
+                    stopWatch.Stop();
+
+                    _WMain?.WriteLog("已取消偵測語言作業。");
+                    _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+                }
+
+                await whisperProcessor.DisposeAsync();
+
+                if (!isTaskCanceled)
+                {
+                    stopWatch.Stop();
+
+                    _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+                }
+
+                return wavfilePath;
+            }, cancellationToken);
+
+            if (!string.IsNullOrEmpty(tempFilePath) &&
+                File.Exists(tempFilePath))
+            {
+                File.Delete(tempFilePath);
+
+                _WMain?.WriteLog($"已刪除暫時檔案：{tempFilePath}");
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            stopWatch.Stop();
+
+            _WMain?.WriteLog("已取消偵測語言作業。");
+            _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+            _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+        }
+        catch (Exception ex)
+        {
+            stopWatch.Stop();
+
+            _WMain?.WriteLog("已取消偵測語言作業。");
+            _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+            _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+
+            _WMain?.ShowMsgBox(ex.ToString());
+        }
+    }
+
+    /// <summary>
+    /// 執行轉譯
+    /// </summary>
+    /// <param name="inputFilePath">字串，檔案的路徑</param>
+    /// <param name="language">字串，語言（兩碼），預設值為 "auto"</param>
+    /// <param name="enableTranslate">布林值，啟用翻譯成英文，預設值為 false</param>
+    /// <param name="enableSpeedUp2x">布林值，啟用 SpeedUp2x，預設值為 false</param>
+    /// <param name="exportWebVtt">布林值，匯出 WebVTT 格式，預設值為 false</param>
+    /// <param name="ggmlType">GgmlType，預設值為 GgmlType.Small</param>
+    /// <param name="quantizationType">QuantizationType，預設值為 QuantizationType.NoQuantization</param>
+    /// <param name="samplingStrategyType">SamplingStrategyType，預設值為 SamplingStrategyType.Default</param>
+    /// <param name="beamSize">beamSize，用於 SamplingStrategyType.BeamSearch，預設值為 5</param>
+    /// <param name="patience">patience，用於 SamplingStrategyType.BeamSearch，預設值為 -0.1f</param>
+    /// <param name="bestOf">bestOf，用於 SamplingStrategyType.Greedy，預設值為 1</param>
+    /// <param name="cancellationToken">CancellationToken</param>
+    /// <returns>Task</returns>
+    public static async Task DoTranscribe(
+        string inputFilePath,
+        string language = "auto",
+        bool enableTranslate = false,
+        bool enableSpeedUp2x = false,
+        bool exportWebVtt = false,
+        GgmlType ggmlType = GgmlType.Small,
+        QuantizationType quantizationType = QuantizationType.NoQuantization,
+        SamplingStrategyType samplingStrategyType = SamplingStrategyType.Default,
+        int beamSize = 5,
+        float patience = -0.1f,
+        int bestOf = 1,
+        CancellationToken cancellationToken = default)
+    {
+        // TODO: 2023-08-21 待 i18n 化。
+
+        Stopwatch stopWatch = new();
+
+        stopWatch.Start();
+
+        try
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            string tempFilePath = await Task.Run(async () =>
+            {
+                List<SegmentData> segmentDataSet = new();
+
+                string wavfilePath = await DoConvertToWavFile(
+                        inputFilePath,
+                        cancellationToken),
+                    modelFilePath = await ExternalProgram.CheckModelFile(
+                        ggmlType,
+                        quantizationType,
+                        cancellationToken);
+
+                if (string.IsNullOrEmpty(modelFilePath))
+                {
+                    _WMain?.WriteLog("發生錯誤：使用的模型檔案不存在或下載失敗。");
+                    _WMain?.WriteLog("已取消轉譯作業。");
+                    _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+
+                    return string.Empty;
+                }
+
+                _WMain?.WriteLog("正在開始轉譯作業……");
+                _WMain?.WriteLog($"使用的模型：{ggmlType}");
+                _WMain?.WriteLog($"使用的量化：{quantizationType}");
+                _WMain?.WriteLog($"使用的語言：{language}");
+                _WMain?.WriteLog($"使用的抽樣策略：{samplingStrategyType}");
+                _WMain?.WriteLog($"使用 OpenCC：{(Properties.Settings.Default.OpenCCS2TWP ? "是" : "否")}");
+
+                using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
+
+                WhisperProcessorBuilder whisperProcessorBuilder = whisperFactory.CreateBuilder()
+                    .WithEncoderBeginHandler(WhisperDotNet_OnEncoderBegin)
+                    .WithProgressHandler(WhisperDotNet_OnProgress)
+                    .WithSegmentEventHandler(WhisperDotNet_OnNewSegment)
+                    .WithProbabilities();
+
+                if (language == "auto")
+                {
+                    whisperProcessorBuilder.WithLanguageDetection();
+                }
+                else
+                {
+                    whisperProcessorBuilder.WithLanguage(language);
+                }
+
+                if (enableTranslate)
+                {
+                    whisperProcessorBuilder.WithTranslate();
+                }
+
+                if (enableSpeedUp2x)
+                {
+                    whisperProcessorBuilder.WithSpeedUp2x();
+                }
+
+                WhisperProcessor whisperProcessor = WhisperUtil.GetWhisperProcessor(
+                    whisperProcessorBuilder: whisperProcessorBuilder,
+                    samplingStrategyType: samplingStrategyType,
+                    beamSize: beamSize,
+                    patience: patience,
+                    bestOf: bestOf);
+
+                using FileStream fileStream = File.OpenRead(wavfilePath);
+
+                _WMain?.WriteLog("轉譯的內容：");
+
+                bool isTaskCanceled = false;
+
+                try
+                {
+                    await foreach (SegmentData segmentData in whisperProcessor
+                        .ProcessAsync(fileStream, cancellationToken))
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+
+                        segmentDataSet.Add(segmentData);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    isTaskCanceled = true;
+
+                    stopWatch.Stop();
+
+                    _WMain?.WriteLog("已取消轉譯作業。");
+                    _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+                }
+
+                await whisperProcessor.DisposeAsync();
+
+                if (!isTaskCanceled)
+                {
+                    stopWatch.Stop();
+
+                    _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+                    _WMain?.WriteLog("轉譯完成。");
+
+                    // 建立字幕檔。
+                    string subtitleFilePath = DoCreateSubtitleFile(
+                            segmentDataSet,
+                            inputFilePath,
+                            exportWebVtt),
+                        subtitleFileName = Path.GetFileName(subtitleFilePath),
+                        subtitleFileFolder = Path.GetFullPath(subtitleFilePath)
+                            .Replace(subtitleFileName, string.Empty);
+
+                    // 開啟資料夾。
+                    CustomFunction.OpenFolder(subtitleFileFolder);
+
+                    _WMain?.ShowMsgBox("轉譯完成。");
+                }
+
+                return wavfilePath;
+            }, cancellationToken);
+
+            if (!string.IsNullOrEmpty(tempFilePath) &&
+                File.Exists(tempFilePath))
+            {
+                File.Delete(tempFilePath);
+
+                _WMain?.WriteLog($"已刪除暫時檔案：{tempFilePath}");
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            stopWatch.Stop();
+
+            _WMain?.WriteLog("已取消轉譯作業。");
+            _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+            _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+        }
+        catch (Exception ex)
+        {
+            stopWatch.Stop();
+
+            _WMain?.WriteLog("已取消轉譯作業。");
+            _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+            _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+
+            _WMain?.ShowMsgBox(ex.ToString());
+        }
+    }
+
+    /// <summary>
+    /// 執行建立字幕檔案
+    /// </summary>
+    /// <param name="segmentDataSet">List&lt;SegmentData&gt;</param>
+    /// <param name="inputFilePath">字串，檔案的路徑</param>
+    /// <param name="exportWebVTT">布林值，匯出 WebVTT 格式，預設值為 false</param>
+    /// <returns>字串，字幕檔案的路徑</returns>
+    public static string DoCreateSubtitleFile(
+        List<SegmentData> segmentDataSet,
+        string inputFilePath,
+        bool exportWebVTT)
+    {
+        // TODO: 2023-08-21 待 i18n 化。
+
+        string filePath1 = Path.ChangeExtension(inputFilePath, ".srt");
+
+        _WMain?.WriteLog($"開始建立 SubRip Text 字幕檔……");
+
+        using StreamWriter streamWriter1 = File.CreateText(filePath1);
+
+        for (int i = 0; i < segmentDataSet.Count; i++)
+        {
+            streamWriter1.WriteLine(i + 1);
+
+            SegmentData segmentData = segmentDataSet[i];
+
+            string startTime = WhisperUtil.PrintTimeWithComma(segmentData.Start),
+                endTime = WhisperUtil.PrintTimeWithComma(segmentData.End);
+
+            streamWriter1.WriteLine("{0} --> {1}", startTime, endTime);
+            streamWriter1.WriteLine(WhisperUtil.GetSegmentDataText(segmentData));
+            streamWriter1.WriteLine();
+        }
+
+        _WMain?.WriteLog($"已建立 SubRip Text 字幕檔：{filePath1}");
+
+        #region WebVTT
+
+        if (exportWebVTT)
+        {
+            string filePath2 = Path.ChangeExtension(inputFilePath, ".vtt");
+
+            _WMain?.WriteLog($"開始建立 WebVTT 字幕檔……");
+
+            using StreamWriter streamWriter2 = File.CreateText(filePath2);
+
+            streamWriter2.WriteLine("WEBVTT ");
+            streamWriter2.WriteLine();
+
+            for (int i = 0; i < segmentDataSet.Count; i++)
+            {
+                streamWriter2.WriteLine(i + 1);
+
+                SegmentData segmentData = segmentDataSet[i];
+
+                string startTime = WhisperUtil.PrintTime(segmentData.Start),
+                    endTime = WhisperUtil.PrintTime(segmentData.End);
+
+                streamWriter2.WriteLine("{0} --> {1}", startTime, endTime);
+                streamWriter2.WriteLine(WhisperUtil.GetSegmentDataText(segmentData));
+                streamWriter2.WriteLine();
+            }
+
+            _WMain?.WriteLog($"已建立 WebVTT 字幕檔：{filePath2}");
+        }
+
+        #endregion
+
+        return filePath1;
+    }
+
+    /// <summary>
     /// 設定 List<TidData>
     /// </summary>
     /// <param name="dataSet">List&lt;TidData&gt;</param>
@@ -1742,5 +2223,49 @@ internal class OperationSet
         {
             _WMain?.WriteLog(ex.Message);
         }
+    }
+
+    /// <summary>
+    /// whisper.net 的編碼器開始事件
+    /// </summary>
+    /// <param name="encoderBeginData">EncoderBeginData</param>
+    private static bool WhisperDotNet_OnEncoderBegin(EncoderBeginData encoderBeginData)
+    {
+        _ = encoderBeginData;
+
+        if (_WMain?.GlobalCTS != null &&
+            _WMain?.GlobalCTS.IsCancellationRequested == true)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// whisper.net 的進度事件
+    /// </summary>
+    /// <param name="porgress">數值，進度</param>
+    private static void WhisperDotNet_OnProgress(int porgress)
+    {
+        if (_PBProgress != null)
+        {
+            _PBProgress.Value = porgress;
+        }
+    }
+
+    /// <summary>
+    /// whisper.net 的新段事件
+    /// </summary>
+    /// <param name="segmentData">SegmentData</param>
+    private static void WhisperDotNet_OnNewSegment(SegmentData segmentData)
+    {
+        string segment = $"{segmentData.Start} --> {segmentData.End}：" +
+                $"[ {segmentData.Language} ({segmentData.Probability:P}) ] " +
+                $"{segmentData.Text}";
+
+        _WMain?.WriteLog(segment);
     }
 }

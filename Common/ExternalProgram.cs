@@ -5,12 +5,13 @@ using CustomToolbox.Common.Utils;
 using Label = System.Windows.Controls.Label;
 using ProgressBar = ModernWpf.Controls.ProgressBar;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using Whisper.net.Ggml;
 using Xabe.FFmpeg.Events;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Options;
-using System.Globalization;
 
 namespace CustomToolbox.Common;
 
@@ -751,6 +752,62 @@ internal class ExternalProgram
             conversionResult.EndTime.ToString(),
             conversionResult.Duration.ToString(),
             conversionResult.Arguments));
+    }
+
+    /// <summary>
+    /// 檢查模型檔案
+    /// </summary>
+    /// <param name="ggmlType">GgmlType，預設值為 GgmlType.Small</param>
+    /// <param name="ggmlType">QuantizationType，預設值為 GgmlType.NoQuantization</param>
+    /// <param name="cancellationToken">CancellationToken</param>
+    /// <returns>Task&lt;string&gt;，模型檔案的路徑</returns>
+    public static async Task<string> CheckModelFile(
+        GgmlType ggmlType = GgmlType.Small,
+        QuantizationType quantizationType = QuantizationType.NoQuantization,
+        CancellationToken cancellationToken = default)
+    {
+        // TODO: 2023-08-21 待 i18n 化。
+
+        string modelFilePath = Path.Combine(
+            VariableSet.ModelsFolderPath,
+            WhisperUtil.GetModelFileName(ggmlType, quantizationType)),
+            modelFileName = Path.GetFileName(modelFilePath);
+
+        try
+        {
+            // 判斷模型檔案是否存在。
+            if (!File.Exists(modelFilePath))
+            {
+                _WMain?.WriteLog($"模型檔案 {modelFileName} 不存在，正在開始下載該模型檔案……");
+
+                using Stream stream = await WhisperGgmlDownloader.GetGgmlModelAsync(
+                    ggmlType,
+                    quantizationType,
+                    cancellationToken);
+                using FileStream fileStream = File.OpenWrite(modelFilePath);
+
+                await stream.CopyToAsync(fileStream, cancellationToken).ContinueWith(task =>
+                {
+                    _WMain?.WriteLog($"已下載模型檔案 {modelFileName}。");
+                }, cancellationToken);
+            }
+            else
+            {
+                _WMain?.WriteLog($"已找到模型檔案 {modelFileName}。");
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            _WMain?.WriteLog("已取消轉譯作業。");
+        }
+        catch (Exception ex)
+        {
+            modelFilePath = string.Empty;
+
+            _WMain?.ShowMsgBox(ex.ToString());
+        }
+
+        return modelFilePath;
     }
 
     private static void Conversion_OnDataReceived(object sender, DataReceivedEventArgs e)

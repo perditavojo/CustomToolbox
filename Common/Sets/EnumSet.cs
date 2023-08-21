@@ -82,14 +82,4 @@ public class EnumSet
         /// </summary>
         BeamSearch
     }
-
-    /// <summary>
-    /// OpenCC 類型
-    /// </summary>
-    public enum OpenCCMode
-    {
-        None,
-        S2TWP,
-        TW2SP
-    }
 }
