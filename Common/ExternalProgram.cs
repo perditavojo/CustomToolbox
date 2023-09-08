@@ -766,8 +766,6 @@ internal class ExternalProgram
         QuantizationType quantizationType = QuantizationType.NoQuantization,
         CancellationToken cancellationToken = default)
     {
-        // TODO: 2023-08-21 待 i18n 化。
-
         string modelFilePath = Path.Combine(
             VariableSet.ModelsFolderPath,
             WhisperUtil.GetModelFileName(ggmlType, quantizationType)),
@@ -778,7 +776,7 @@ internal class ExternalProgram
             // 判斷模型檔案是否存在。
             if (!File.Exists(modelFilePath))
             {
-                _WMain?.WriteLog($"模型檔案 {modelFileName} 不存在，正在開始下載該模型檔案……");
+                _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgWhisperModelIsNotExists, modelFileName));
 
                 using Stream stream = await WhisperGgmlDownloader.GetGgmlModelAsync(
                     ggmlType,
@@ -788,17 +786,17 @@ internal class ExternalProgram
 
                 await stream.CopyToAsync(fileStream, cancellationToken).ContinueWith(task =>
                 {
-                    _WMain?.WriteLog($"已下載模型檔案 {modelFileName}。");
+                    _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgWhisperModelIsDownloaded, modelFileName));
                 }, cancellationToken);
             }
             else
             {
-                _WMain?.WriteLog($"已找到模型檔案 {modelFileName}。");
+                _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgWhisperModelIsFound, modelFileName));
             }
         }
         catch (OperationCanceledException)
         {
-            _WMain?.WriteLog("已取消轉譯作業。");
+            _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgWhisperTranscribeCanceled, modelFileName));
         }
         catch (Exception ex)
         {

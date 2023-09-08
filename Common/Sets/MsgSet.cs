@@ -1316,6 +1316,48 @@ internal class MsgSet
         .FindResource("MsgMediaIsNotLoaded").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 訊息：模型檔案 {0} 不存在，正在開始下載該模型檔案……
+    /// </summary>
+    public static readonly string MsgWhisperModelIsNotExists = Application.Current
+        .FindResource("MsgWhisperModelIsNotExists").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已下載模型檔案 {0}。
+    /// </summary>
+    public static readonly string MsgWhisperModelIsDownloaded = Application.Current
+        .FindResource("MsgWhisperModelIsDownloaded").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已找到模型檔案 {0}。
+    /// </summary>
+    public static readonly string MsgWhisperModelIsFound = Application.Current
+        .FindResource("MsgWhisperModelIsFound").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已取消轉譯作業。
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeCanceled = Application.Current
+        .FindResource("MsgWhisperTranscribeCanceled").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：發生錯誤：請選擇有效的視訊或音訊檔案。
+    /// </summary>
+    public static readonly string MsgSelectAValidVideoOrAudioFile = Application.Current
+        .FindResource("MsgSelectAValidVideoOrAudioFile").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已取消作業。
+    /// </summary>
+    public static readonly string MsgJobHasCanceled = Application.Current
+        .FindResource("MsgJobHasCanceled").ToString() ??
+        string.Empty;
+
     #endregion
 
     /// <summary>

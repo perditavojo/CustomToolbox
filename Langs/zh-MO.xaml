@@ -355,4 +355,10 @@
     <sys:String x:Key="MsgPlayAClipFirst">請先播放短片。</sys:String>
     <sys:String x:Key="MsgLibMpvIsNotLoaded">未載入 libmpv。</sys:String>
     <sys:String x:Key="MsgMediaIsNotLoaded">未載入多媒體。</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsNotExists">模型檔案 {0} 不存在，正在開始下載該模型檔案……</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsDownloaded">已下載模型檔案 {0}。</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsFound">已找到模型檔案 {0}。</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeCanceled">已取消轉譯作業。</sys:String>
+    <sys:String x:Key="MsgSelectAValidVideoOrAudioFile">發生錯誤：請選擇有效的視訊或音訊檔案。</sys:String>
+    <sys:String x:Key="MsgJobHasCanceled">已取消作業。</sys:String>
 </ResourceDictionary>

@@ -1525,8 +1525,6 @@ internal class OperationSet
         string inputFilePath,
         CancellationToken ct = default)
     {
-        // TODO: 2023-08-21 待 i18n 化。
-
         try
         {
             ct.ThrowIfCancellationRequested();
@@ -1539,7 +1537,7 @@ internal class OperationSet
 
             if (audioStreams == null)
             {
-                _WMain?.WriteLog("發生錯誤：請選擇有效的視訊或音訊檔案。");
+                _WMain?.WriteLog(MsgSet.MsgSelectAValidVideoOrAudioFile);
 
                 return string.Empty;
             }
@@ -1559,7 +1557,7 @@ internal class OperationSet
         }
         catch (OperationCanceledException)
         {
-            _WMain?.WriteLog("已取消作業。");
+            _WMain?.WriteLog(MsgSet.MsgJobHasCanceled);
         }
         catch (Exception ex)
         {

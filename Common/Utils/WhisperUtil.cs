@@ -11,8 +11,6 @@ namespace CustomToolbox.Common.Utils;
 /// </summary>
 public class WhisperUtil
 {
-    // TODO: 2023-08-21 待 i18n 化。
-
     /// <summary>
     /// 取得抽樣策略類型
     /// </summary>

@@ -354,4 +354,10 @@
     <sys:String x:Key="MsgPlayAClipFirst">Please, play a clip first.</sys:String>
     <sys:String x:Key="MsgLibMpvIsNotLoaded">Libmpv not loaded.</sys:String>
     <sys:String x:Key="MsgMediaIsNotLoaded">No media loaded.</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsNotExists">Model file {0} does not exist, downloading the model file is in progress...</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsDownloaded">Model file {0} has been downloaded.</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsFound">Found model file {0}.</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeCanceled">Transcribe job has been canceled.</sys:String>
+    <sys:String x:Key="MsgSelectAValidVideoOrAudioFile">An error occurred: Please select a valid video or audio file.</sys:String>
+    <sys:String x:Key="MsgJobHasCanceled">Job has been canceled.</sys:String>
 </ResourceDictionary>
