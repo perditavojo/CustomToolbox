@@ -1802,7 +1802,7 @@ internal class OperationSet
                 _WMain?.WriteLog($"使用的量化：{quantizationType}");
                 _WMain?.WriteLog($"使用的語言：{language}");
                 _WMain?.WriteLog($"使用的抽樣策略：{samplingStrategyType}");
-                _WMain?.WriteLog($"使用 OpenCC：{(Properties.Settings.Default.OpenCCS2TWP ? "是" : "否")}");
+                _WMain?.WriteLog($"啟用 OpenCC S2TWP：{(Properties.Settings.Default.OpenCCS2TWP ? "是" : "否")}");
 
                 using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
 
