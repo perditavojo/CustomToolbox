@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CustomToolbox.BilibiliApi.Funcs;
+namespace CustomToolbox.BilibiliApi.Functions;
 
 /// <summary>
 /// Bilibili 使用者空間 API 函式

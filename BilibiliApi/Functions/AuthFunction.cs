@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text.Json.Nodes;
 using System.Text;
 
-namespace CustomToolbox.BilibiliApi.Funcs;
+namespace CustomToolbox.BilibiliApi.Functions;
 
 /// <summary>
 /// 驗證函式

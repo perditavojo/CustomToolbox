@@ -1,6 +1,6 @@
 ﻿using Application = System.Windows.Application;
 using ConsoleTableExt;
-using CustomToolbox.BilibiliApi.Funcs;
+using CustomToolbox.BilibiliApi.Functions;
 using CustomToolbox.BilibiliApi.Models;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
