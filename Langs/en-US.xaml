@@ -51,6 +51,8 @@
     <sys:String x:Key="YtdlSharpData" xml:space="preserve"> Data: {0}</sys:String>
     <sys:String x:Key="ClipPlayer">Clip player</sys:String>
     <sys:String x:Key="TimestampEditor">Timestamp editor</sys:String>
+    <sys:String x:Key="Yes">Yes</sys:String>
+    <sys:String x:Key="No">No</sys:String>
     <!-- String template -->
     <sys:String x:Key="TemplateMaintainer">[Maintainer: {0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1} ({2})]: ({3}) {4}</sys:String>
@@ -61,6 +63,7 @@
     <sys:String x:Key="TemplateXabeFFmpegConversionResult" xml:space="preserve">[Xabe.FFmpeg] The job is finished.&#x0a;Start time: {0}&#x0a;End time: {1}&#x0a;Duration: {2}&#x0a;Arguments: {3}</sys:String>
     <sys:String x:Key="TemplateUpdateStarTimeOfClipTo">Updated the start time of the clip "{0}" to "{1}".</sys:String>
     <sys:String x:Key="TemplateUpdateEndTimeOfClipTo">Updated the end time of the clip "{0}" to "{1}".</sys:String>
+    <sys:String x:Key="TemplateWhipserDetectLaunguageResult">{0} ({1})</sys:String>
     <!-- Control -->
     <sys:String x:Key="MIFile">File</sys:String>
     <sys:String x:Key="MILoadClipListFile">Load clip list</sys:String>
@@ -361,4 +364,20 @@
     <sys:String x:Key="MsgWhisperTranscribeCanceled">Transcribe job has been canceled.</sys:String>
     <sys:String x:Key="MsgSelectAValidVideoOrAudioFile">An error occurred: Please select a valid video or audio file.</sys:String>
     <sys:String x:Key="MsgJobHasCanceled">Job has been canceled.</sys:String>
+    <sys:String x:Key="MsgWhisperModelFileNotFound">An error occurred: The model file used does not exist or the download failed.</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageCanceled">The language detects operation has been canceled.</sys:String>
+    <sys:String x:Key="MsgWhisperRemoveTempFileByYourSelf">Please go to "{0}" to delete temp file by yourself.</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageStarting">Starting detect the language...</sys:String>
+    <sys:String x:Key="MsgWhisperUsedModel">Model used: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperUsedQuantizationType">Quantization used: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageFailed">Language detects failed.</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageResult">Language detects result: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTotalElapsed">Total Elapsed: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTempFileDeleted">Temporary files deleted: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeStarting">Starting Transcribe...</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeUsedLanguage">The language used: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeUsedSamplingStrategyType">Sampling strategy used: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeEnableOpenCCS2TWP">Enable OpenCC S2TWP: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeContent">Transcribed content:</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeFinished">Transcribe finished.</sys:String>
 </ResourceDictionary>

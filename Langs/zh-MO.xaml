@@ -51,6 +51,8 @@
     <sys:String x:Key="YtdlSharpData" xml:space="preserve"> 資料：{0}</sys:String>
     <sys:String x:Key="ClipPlayer">短片播放器</sys:String>
     <sys:String x:Key="TimestampEditor">時間標記編輯器</sys:String>
+    <sys:String x:Key="Yes">是</sys:String>
+    <sys:String x:Key="No">否</sys:String>
     <!-- 字串模板 -->
     <sys:String x:Key="TemplateMaintainer">[維護者：{0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1}（{2}）]：（{3}）{4}</sys:String>
@@ -61,6 +63,7 @@
     <sys:String x:Key="TemplateXabeFFmpegConversionResult" xml:space="preserve">[Xabe.FFmpeg] 作業完成。&#x0a;開始時間：{0}&#x0a;結束時間：{1}&#x0a;耗時：{2}&#x0a;使用的參數：{3}</sys:String>
     <sys:String x:Key="TemplateUpdateStarTimeOfClipTo">已更新短片「{0}」的開始時間至「{1}」。</sys:String>
     <sys:String x:Key="TemplateUpdateEndTimeOfClipTo">已更新短片「{0}」的結束時間至「{1}」。</sys:String>
+    <sys:String x:Key="TemplateWhipserDetectLaunguageResult">{0}（{1}）</sys:String>
     <!-- 控制項 -->
     <sys:String x:Key="MIFile">檔案</sys:String>
     <sys:String x:Key="MILoadClipListFile">載入短片清單檔案</sys:String>
@@ -361,4 +364,20 @@
     <sys:String x:Key="MsgWhisperTranscribeCanceled">已取消轉譯作業。</sys:String>
     <sys:String x:Key="MsgSelectAValidVideoOrAudioFile">發生錯誤：請選擇有效的視訊或音訊檔案。</sys:String>
     <sys:String x:Key="MsgJobHasCanceled">已取消作業。</sys:String>
+    <sys:String x:Key="MsgWhisperModelFileNotFound">發生錯誤：使用的模型檔案不存在或下載失敗。</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageCanceled">已取消偵測語言作業。</sys:String>
+    <sys:String x:Key="MsgWhisperRemoveTempFileByYourSelf">請自行至「{0}」刪除暫存檔案。</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageStarting">正在開始偵測語言作業……</sys:String>
+    <sys:String x:Key="MsgWhisperUsedModel">使用的模型：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperUsedQuantizationType">使用的量化：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageFailed">識別失敗。</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageResult">偵測語言結果：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTotalElapsed">總共耗時：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTempFileDeleted">已刪除暫時檔案：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeStarting">正在開始轉譯作業……</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeUsedLanguage">使用的語言：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeUsedSamplingStrategyType">使用的抽樣策略：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeEnableOpenCCS2TWP">啟用 OpenCC S2TWP：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeContent">轉譯的內容：</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeFinished">轉譯完成。</sys:String>
 </ResourceDictionary>

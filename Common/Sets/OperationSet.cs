@@ -1598,8 +1598,6 @@ internal class OperationSet
         int bestOf = 1,
         CancellationToken cancellationToken = default)
     {
-        // TODO: 2023-08-21 待 i18n 化。
-
         Stopwatch stopWatch = new();
 
         stopWatch.Start();
@@ -1620,16 +1618,22 @@ internal class OperationSet
 
                 if (string.IsNullOrEmpty(modelFilePath))
                 {
-                    _WMain?.WriteLog("發生錯誤：使用的模型檔案不存在或下載失敗。");
-                    _WMain?.WriteLog("已取消偵測語言作業。");
-                    _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+                    _WMain?.WriteLog(MsgSet.MsgWhisperModelFileNotFound);
+                    _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageCanceled);
+                    _WMain?.WriteLog(MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                        VariableSet.TempFolderPath));
 
                     return string.Empty;
                 }
 
-                _WMain?.WriteLog("正在開始偵測語言作業……");
-                _WMain?.WriteLog($"使用的模型：{ggmlType}");
-                _WMain?.WriteLog($"使用的量化：{quantizationType}");
+                _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageStarting);
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperUsedModel,
+                    nameof(ggmlType)));
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperUsedQuantizationType,
+                    nameof(quantizationType)));
 
                 using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
 
@@ -1678,9 +1682,14 @@ internal class OperationSet
                         .DetectLanguageWithProbability(samples: avgSamples, speedUp: speedUp);
 
                     string rawResult = string.IsNullOrEmpty(detectedLanguage) ?
-                            "識別失敗。" :
-                            $"{detectedLanguage}（{probability:P}）",
-                        resultMessage = $"偵測語言結果：{rawResult}";
+                            MsgSet.MsgWhisperDetectLanguageFailed :
+                            MsgSet.GetFmtStr(
+                                MsgSet.TemplateWhipserDetectLaunguageResult,
+                                detectedLanguage,
+                                $"{probability:P}"),
+                        resultMessage = MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperDetectLanguageResult,
+                            rawResult);
 
                     _WMain?.WriteLog(resultMessage);
 
@@ -1692,8 +1701,10 @@ internal class OperationSet
 
                     stopWatch.Stop();
 
-                    _WMain?.WriteLog("已取消偵測語言作業。");
-                    _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+                    _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageCanceled);
+                    _WMain?.WriteLog(MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTotalElapsed,
+                        stopWatch.Elapsed.ToFFmpeg()));
                 }
 
                 await whisperProcessor.DisposeAsync();
@@ -1702,7 +1713,9 @@ internal class OperationSet
                 {
                     stopWatch.Stop();
 
-                    _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+                    _WMain?.WriteLog(MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTotalElapsed,
+                        stopWatch.Elapsed.ToFFmpeg()));
                 }
 
                 return wavfilePath;
@@ -1713,24 +1726,34 @@ internal class OperationSet
             {
                 File.Delete(tempFilePath);
 
-                _WMain?.WriteLog($"已刪除暫時檔案：{tempFilePath}");
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTempFileDeleted,
+                    tempFilePath));
             }
         }
         catch (OperationCanceledException)
         {
             stopWatch.Stop();
 
-            _WMain?.WriteLog("已取消偵測語言作業。");
-            _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
-            _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+            _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageCanceled);
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperTotalElapsed,
+                stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                VariableSet.TempFolderPath));
         }
         catch (Exception ex)
         {
             stopWatch.Stop();
 
-            _WMain?.WriteLog("已取消偵測語言作業。");
-            _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
-            _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+            _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageCanceled);
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperTotalElapsed,
+                stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                VariableSet.TempFolderPath));
 
             _WMain?.ShowMsgBox(ex.ToString());
         }
@@ -1766,8 +1789,6 @@ internal class OperationSet
         int bestOf = 1,
         CancellationToken cancellationToken = default)
     {
-        // TODO: 2023-08-21 待 i18n 化。
-
         Stopwatch stopWatch = new();
 
         stopWatch.Start();
@@ -1790,19 +1811,31 @@ internal class OperationSet
 
                 if (string.IsNullOrEmpty(modelFilePath))
                 {
-                    _WMain?.WriteLog("發生錯誤：使用的模型檔案不存在或下載失敗。");
-                    _WMain?.WriteLog("已取消轉譯作業。");
-                    _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+                    _WMain?.WriteLog(MsgSet.MsgWhisperModelFileNotFound);
+                    _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeCanceled);
+                    _WMain?.WriteLog(MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                        VariableSet.TempFolderPath));
 
                     return string.Empty;
                 }
 
-                _WMain?.WriteLog("正在開始轉譯作業……");
-                _WMain?.WriteLog($"使用的模型：{ggmlType}");
-                _WMain?.WriteLog($"使用的量化：{quantizationType}");
-                _WMain?.WriteLog($"使用的語言：{language}");
-                _WMain?.WriteLog($"使用的抽樣策略：{samplingStrategyType}");
-                _WMain?.WriteLog($"啟用 OpenCC S2TWP：{(Properties.Settings.Default.OpenCCS2TWP ? "是" : "否")}");
+                _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeStarting);
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperUsedModel,
+                    nameof(ggmlType)));
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperUsedQuantizationType,
+                    nameof(quantizationType)));
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTranscribeUsedLanguage,
+                    language));
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTranscribeUsedSamplingStrategyType,
+                    nameof(samplingStrategyType)));
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTranscribeEnableOpenCCS2TWP,
+                    (Properties.Settings.Default.OpenCCS2TWP ? MsgSet.Yes : MsgSet.No)));
 
                 using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
 
@@ -1840,7 +1873,7 @@ internal class OperationSet
 
                 using FileStream fileStream = File.OpenRead(wavfilePath);
 
-                _WMain?.WriteLog("轉譯的內容：");
+                _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeContent);
 
                 bool isTaskCanceled = false;
 
@@ -1860,8 +1893,10 @@ internal class OperationSet
 
                     stopWatch.Stop();
 
-                    _WMain?.WriteLog("已取消轉譯作業。");
-                    _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
+                    _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeCanceled);
+                    _WMain?.WriteLog(MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTotalElapsed,
+                        stopWatch.Elapsed.ToFFmpeg()));
                 }
 
                 await whisperProcessor.DisposeAsync();
@@ -1870,8 +1905,10 @@ internal class OperationSet
                 {
                     stopWatch.Stop();
 
-                    _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
-                    _WMain?.WriteLog("轉譯完成。");
+                    _WMain?.WriteLog(MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTotalElapsed,
+                        stopWatch.Elapsed.ToFFmpeg()));
+                    _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeFinished);
 
                     // 建立字幕檔。
                     string subtitleFilePath = DoCreateSubtitleFile(
@@ -1885,7 +1922,7 @@ internal class OperationSet
                     // 開啟資料夾。
                     CustomFunction.OpenFolder(subtitleFileFolder);
 
-                    _WMain?.ShowMsgBox("轉譯完成。");
+                    _WMain?.ShowMsgBox(MsgSet.MsgWhisperTranscribeFinished);
                 }
 
                 return wavfilePath;
@@ -1896,24 +1933,34 @@ internal class OperationSet
             {
                 File.Delete(tempFilePath);
 
-                _WMain?.WriteLog($"已刪除暫時檔案：{tempFilePath}");
+                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTempFileDeleted,
+                    tempFilePath));
             }
         }
         catch (OperationCanceledException)
         {
             stopWatch.Stop();
 
-            _WMain?.WriteLog("已取消轉譯作業。");
-            _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
-            _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+            _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeCanceled);
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperTotalElapsed,
+                stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                VariableSet.TempFolderPath));
         }
         catch (Exception ex)
         {
             stopWatch.Stop();
 
-            _WMain?.WriteLog("已取消轉譯作業。");
-            _WMain?.WriteLog($"總共耗時：{stopWatch.Elapsed.ToFFmpeg()}");
-            _WMain?.WriteLog($"請自行至「{VariableSet.TempFolderPath}」刪除暫存檔案。");
+            _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeCanceled);
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperTotalElapsed,
+                stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                VariableSet.TempFolderPath));
 
             _WMain?.ShowMsgBox(ex.ToString());
         }

@@ -286,6 +286,20 @@ internal class MsgSet
         .FindResource("YtdlSharpData").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 字詞：是
+    /// </summary>
+    public static readonly string Yes = Application.Current
+        .FindResource("Yes").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字詞：否
+    /// </summary>
+    public static readonly string No = Application.Current
+        .FindResource("No").ToString() ??
+        string.Empty;
+
     #endregion
 
     #region 字串模板
@@ -351,6 +365,13 @@ internal class MsgSet
     /// </summary>
     public static readonly string TemplateUpdateEndTimeOfClipTo = Application.Current
         .FindResource("TemplateUpdateEndTimeOfClipTo").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字串模板：{0}（{1}）
+    /// </summary>
+    public static readonly string TemplateWhipserDetectLaunguageResult = Application.Current
+        .FindResource("TemplateWhipserDetectLaunguageResult").ToString() ??
         string.Empty;
 
     #endregion
@@ -1356,6 +1377,118 @@ internal class MsgSet
     /// </summary>
     public static readonly string MsgJobHasCanceled = Application.Current
         .FindResource("MsgJobHasCanceled").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：發生錯誤：使用的模型檔案不存在或下載失敗。
+    /// </summary>
+    public static readonly string MsgWhisperModelFileNotFound = Application.Current
+        .FindResource("MsgWhisperModelFileNotFound").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已取消偵測語言作業。
+    /// </summary>
+    public static readonly string MsgWhisperDetectLanguageCanceled = Application.Current
+        .FindResource("MsgWhisperDetectLanguageCanceled").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：請自行至「{0}」刪除暫存檔案。
+    /// </summary>
+    public static readonly string MsgWhisperRemoveTempFileByYourSelf = Application.Current
+        .FindResource("MsgWhisperRemoveTempFileByYourSelf").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：正在開始偵測語言作業……
+    /// </summary>
+    public static readonly string MsgWhisperDetectLanguageStarting = Application.Current
+        .FindResource("MsgWhisperDetectLanguageStarting").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：使用的模型：{0}
+    /// </summary>
+    public static readonly string MsgWhisperUsedModel = Application.Current
+        .FindResource("MsgWhisperUsedModel").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：使用的量化：{0}
+    /// </summary>
+    public static readonly string MsgWhisperUsedQuantizationType = Application.Current
+        .FindResource("MsgWhisperUsedQuantizationType").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：識別失敗。
+    /// </summary>
+    public static readonly string MsgWhisperDetectLanguageFailed = Application.Current
+        .FindResource("MsgWhisperDetectLanguageFailed").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：偵測語言結果：{0}
+    /// </summary>
+    public static readonly string MsgWhisperDetectLanguageResult = Application.Current
+        .FindResource("MsgWhisperDetectLanguageResult").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：總共耗時：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTotalElapsed = Application.Current
+        .FindResource("MsgWhisperTotalElapsed").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已刪除暫時檔案：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTempFileDeleted = Application.Current
+        .FindResource("MsgWhisperTempFileDeleted").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：正在開始轉譯作業……
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeStarting = Application.Current
+        .FindResource("MsgWhisperTranscribeStarting").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：使用的語言：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeUsedLanguage = Application.Current
+        .FindResource("MsgWhisperTranscribeUsedLanguage").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：使用的抽樣策略：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeUsedSamplingStrategyType = Application.Current
+        .FindResource("MsgWhisperTranscribeUsedSamplingStrategyType").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：啟用 OpenCC S2TWP：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeEnableOpenCCS2TWP = Application.Current
+        .FindResource("MsgWhisperTranscribeEnableOpenCCS2TWP").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：轉譯的內容：
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeContent = Application.Current
+        .FindResource("MsgWhisperTranscribeContent").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：轉譯完成。
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeFinished = Application.Current
+        .FindResource("MsgWhisperTranscribeFinished").ToString() ??
         string.Empty;
 
     #endregion
