@@ -380,4 +380,6 @@
     <sys:String x:Key="MsgWhisperTranscribeEnableOpenCCS2TWP">启用 OpenCC S2TWP：{0}</sys:String>
     <sys:String x:Key="MsgWhisperTranscribeContent">转译的内容：</sys:String>
     <sys:String x:Key="MsgWhisperTranscribeFinished">转译完成。</sys:String>
+    <sys:String x:Key="MsgWhisperStartToCreateSubtitleFile">开始建立 {0} 字幕档……</sys:String>
+    <sys:String x:Key="MsgWhisperSubtitleFileCreated">已建立 {0} 字幕档：{1}</sys:String>
 </ResourceDictionary>

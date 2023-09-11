@@ -380,4 +380,6 @@
     <sys:String x:Key="MsgWhisperTranscribeEnableOpenCCS2TWP">Enable OpenCC S2TWP: {0}</sys:String>
     <sys:String x:Key="MsgWhisperTranscribeContent">Transcribed content:</sys:String>
     <sys:String x:Key="MsgWhisperTranscribeFinished">Transcribe finished.</sys:String>
+    <sys:String x:Key="MsgWhisperStartToCreateSubtitleFile">Start creating {0} subtitle file...</sys:String>
+    <sys:String x:Key="MsgWhisperSubtitleFileCreated">{0} subtitle file created: {1}</sys:String>
 </ResourceDictionary>

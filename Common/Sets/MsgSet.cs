@@ -1491,6 +1491,20 @@ internal class MsgSet
         .FindResource("MsgWhisperTranscribeFinished").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 訊息：開始建立 {0} 字幕檔……
+    /// </summary>
+    public static readonly string MsgWhisperStartToCreateSubtitleFile = Application.Current
+        .FindResource("MsgWhisperStartToCreateSubtitleFile").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已建立 {0} 字幕檔：{1}
+    /// </summary>
+    public static readonly string MsgWhisperSubtitleFileCreated = Application.Current
+        .FindResource("MsgWhisperSubtitleFileCreated").ToString() ??
+        string.Empty;
+
     #endregion
 
     /// <summary>

@@ -1978,11 +1978,11 @@ internal class OperationSet
         string inputFilePath,
         bool exportWebVTT)
     {
-        // TODO: 2023-08-21 待 i18n 化。
-
         string filePath1 = Path.ChangeExtension(inputFilePath, ".srt");
 
-        _WMain?.WriteLog($"開始建立 SubRip Text 字幕檔……");
+        _WMain?.WriteLog(MsgSet.GetFmtStr(
+            MsgSet.MsgWhisperStartToCreateSubtitleFile,
+            "SubRip Text"));
 
         using StreamWriter streamWriter1 = File.CreateText(filePath1);
 
@@ -2000,7 +2000,10 @@ internal class OperationSet
             streamWriter1.WriteLine();
         }
 
-        _WMain?.WriteLog($"已建立 SubRip Text 字幕檔：{filePath1}");
+        _WMain?.WriteLog(MsgSet.GetFmtStr(
+            MsgSet.MsgWhisperSubtitleFileCreated,
+            "SubRip Text",
+            filePath1));
 
         #region WebVTT
 
@@ -2008,7 +2011,9 @@ internal class OperationSet
         {
             string filePath2 = Path.ChangeExtension(inputFilePath, ".vtt");
 
-            _WMain?.WriteLog($"開始建立 WebVTT 字幕檔……");
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperStartToCreateSubtitleFile,
+                "WebVTT"));
 
             using StreamWriter streamWriter2 = File.CreateText(filePath2);
 
@@ -2029,7 +2034,10 @@ internal class OperationSet
                 streamWriter2.WriteLine();
             }
 
-            _WMain?.WriteLog($"已建立 WebVTT 字幕檔：{filePath2}");
+            _WMain?.WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperSubtitleFileCreated,
+                "WebVTT",
+                filePath2));
         }
 
         #endregion
