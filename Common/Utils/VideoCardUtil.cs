@@ -6,7 +6,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// 顯示卡工具
 /// </summary>
-internal class VideoCardUtil
+public class VideoCardUtil
 {
     /// <summary>
     /// 取得裝置的列表

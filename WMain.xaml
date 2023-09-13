@@ -1183,16 +1183,15 @@
                 Height="3"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center" />
-            <TextBox x:Name="TBLog"
+            <RichTextBox x:Name="TBLog"
                 Grid.Row="2"
                 Grid.Column="2"
                 ToolTip="{DynamicResource TBLog}"
-                TextWrapping="NoWrap"
                 AcceptsReturn="True"
                 HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Visible"
                 IsReadOnly="True">
-                <TextBox.ContextMenu>
+                <RichTextBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem x:Name="MIClearLog"
                             Header="{DynamicResource MIClearLog}"
@@ -1201,8 +1200,8 @@
                             Header="{DynamicResource MIExportLog}"
                             Click="MIExportLog_Click" />
                     </ContextMenu>
-                </TextBox.ContextMenu>
-            </TextBox>
+                </RichTextBox.ContextMenu>
+            </RichTextBox>
         </Grid>
         <StatusBar x:Name="SBStatusBar"
             Grid.Row="2"

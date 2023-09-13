@@ -13,7 +13,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// 下載器工具
 /// </summary>
-internal class DownloaderUtil
+public class DownloaderUtil
 {
     /// <summary>
     /// WMain

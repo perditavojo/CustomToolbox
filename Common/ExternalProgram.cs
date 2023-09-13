@@ -18,7 +18,7 @@ namespace CustomToolbox.Common;
 /// <summary>
 /// 外部程式
 /// </summary>
-internal class ExternalProgram
+public class ExternalProgram
 {
     /// <summary>
     /// WMain

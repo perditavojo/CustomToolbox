@@ -3,7 +3,7 @@
 /// <summary>
 /// TimeSpan 的擴充方法
 /// </summary>
-internal static class TimeSpanExtension
+public static class TimeSpanExtension
 {
     /// <summary>
     /// 移除毫秒

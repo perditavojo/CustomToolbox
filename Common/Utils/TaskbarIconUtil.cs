@@ -11,7 +11,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// TaskbarIcon 工具
 /// </summary>
-internal class TaskbarIconUtil
+public class TaskbarIconUtil
 {
     /// <summary>
     /// 標題

@@ -9,7 +9,7 @@ namespace CustomToolbox.Common;
 /// <summary>
 /// 更新通知器
 /// </summary>
-internal class UpdateNotifier
+public class UpdateNotifier
 {
     /// <summary>
     /// 檢查版本

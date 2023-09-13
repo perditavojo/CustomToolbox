@@ -10,7 +10,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// Discord 豐富狀態工具
 /// </summary>
-internal class DiscordRichPresenceUtil
+public class DiscordRichPresenceUtil
 {
     /// <summary>
     /// WMain

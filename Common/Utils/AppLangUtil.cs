@@ -11,7 +11,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// 應用程式語系工具
 /// </summary>
-internal class AppLangUtil
+public class AppLangUtil
 {
     /// <summary>
     /// 取得應用程式預設的 LangData

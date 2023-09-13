@@ -10,7 +10,7 @@ namespace CustomToolbox.Common.Sets;
 /// <summary>
 /// 變數組
 /// </summary>
-internal class VariableSet
+public class VariableSet
 {
     /// <summary>
     /// 根路徑

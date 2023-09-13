@@ -3,7 +3,7 @@
 /// <summary>
 /// 表達式組
 /// </summary>
-internal class ExpressionSet
+public class ExpressionSet
 {
     /// <summary>
     /// 隱藏元素

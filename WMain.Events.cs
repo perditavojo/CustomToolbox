@@ -23,6 +23,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TabControl = System.Windows.Controls.TabControl;
+using System.Windows.Documents;
+using System.Windows.Forms;
 
 namespace CustomToolbox;
 
@@ -1187,7 +1189,7 @@ public partial class WMain : Window
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                TBLog.Clear();
+                TBLog.Document.Blocks.Clear();
 
                 WriteLog(MsgSet.MsgLogCleared);
             }));
@@ -1218,9 +1220,13 @@ public partial class WMain : Window
 
                 if (result == true)
                 {
+                    string textContent = new TextRange(
+                        TBLog.Document.ContentStart,
+                        TBLog.Document.ContentEnd).Text;
+
                     File.WriteAllText(
                         saveFileDialog.FileName,
-                        TBLog.Text);
+                        textContent);
 
                     WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgExportLogTo,

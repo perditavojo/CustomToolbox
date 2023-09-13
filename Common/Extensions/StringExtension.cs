@@ -3,7 +3,7 @@
 /// <summary>
 /// String 的擴充方法
 /// </summary>
-internal static class StringExtension
+public static class StringExtension
 {
     /// <summary>
     /// 依據數值陣列分割字串至字串陣列

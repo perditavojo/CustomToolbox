@@ -8,11 +8,11 @@ using H.NotifyIcon;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ModernWpf.Controls.Primitives;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
+using RichTextBox = System.Windows.Controls.RichTextBox;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
-using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
 
@@ -75,10 +75,10 @@ public partial class WMain : Window
                 return;
             }
 
-            // 避免在非指定的 TextBox 內輸入內容時觸發快速鍵。
-            if (e.OriginalSource is TextBox textBox)
+            // 避免在非指定的 RichTextBox 內輸入內容時觸發快速鍵。
+            if (e.OriginalSource is RichTextBox richTextBox)
             {
-                if (textBox != null && textBox != TBLog)
+                if (richTextBox != null && richTextBox != TBLog)
                 {
                     return;
                 }

@@ -3,7 +3,7 @@
 /// <summary>
 /// 選擇器組
 /// </summary>
-internal class SelectorSet
+public class SelectorSet
 {
     /// <summary>
     /// 標頭區塊

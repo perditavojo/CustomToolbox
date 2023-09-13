@@ -5,7 +5,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// 應用程式主題工具
 /// </summary>
-internal class AppThemeUtil
+public class AppThemeUtil
 {
     /// <summary>
     /// 設定應用程式使用的主題

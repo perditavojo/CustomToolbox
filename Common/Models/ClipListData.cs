@@ -3,7 +3,7 @@
 /// <summary>
 /// 短片清單資料
 /// </summary>
-internal class ClipListData
+public class ClipListData
 {
     /// <summary>
     /// 名稱

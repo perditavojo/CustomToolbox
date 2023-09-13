@@ -3,20 +3,22 @@ using Contorl = System.Windows.Controls.Control;
 using CustomToolbox.Common.Sets;
 using H.NotifyIcon;
 using Mpv.NET.Player;
+using RichTextBox = System.Windows.Controls.RichTextBox;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Enumeration;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using TextBox = System.Windows.Controls.TextBox;
+using Serilog;
+using Serilog.Sinks.RichTextBox.Themes;
 
 namespace CustomToolbox.Common;
 
 /// <summary>
 /// 自定義函式
 /// </summary>
-internal class CustomFunction
+public class CustomFunction
 {
     /// <summary>
     /// WMain
@@ -26,7 +28,7 @@ internal class CustomFunction
     /// <summary>
     /// TBLog
     /// </summary>
-    private static TextBox? _TBLog = null;
+    private static RichTextBox? _TBLog = null;
 
     /// <summary>
     /// 初始化
@@ -36,6 +38,15 @@ internal class CustomFunction
     {
         _WMain = wMain;
         _TBLog = _WMain.TBLog;
+
+        // 調高以避免自動換行。
+        _TBLog.Document.PageWidth = 1920;
+
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.RichTextBox(
+                _TBLog,
+                theme: RichTextBoxConsoleTheme.Colored)
+            .CreateLogger();
     }
 
     /// <summary>
@@ -183,10 +194,8 @@ internal class CustomFunction
         {
             try
             {
-                string newMessage = $"[{DateTime.Now}] {message}{Environment.NewLine}";
+                Log.Information(message);
 
-                _TBLog.AppendText(newMessage);
-                _TBLog.CaretIndex = _TBLog.Text.Length;
                 _TBLog.ScrollToEnd();
             }
             catch (Exception ex)

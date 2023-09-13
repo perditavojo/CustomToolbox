@@ -10,7 +10,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// 短片清單工具
 /// </summary>
-internal class ClipListUtil
+public class ClipListUtil
 {
     /// <summary>
     /// WMain

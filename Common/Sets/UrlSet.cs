@@ -3,7 +3,7 @@
 /// <summary>
 /// 網址組
 /// </summary>
-internal class UrlSet
+public class UrlSet
 {
     /// <summary>
     /// 查詢使用者代理字串的網址（舊）

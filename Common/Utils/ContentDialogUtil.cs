@@ -7,7 +7,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// ContentDialog 工具
 /// </summary>
-internal class ContentDialogUtil
+public class ContentDialogUtil
 {
     /// <summary>
     /// 延遲毫秒數

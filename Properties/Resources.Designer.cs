@@ -22,21 +22,21 @@ namespace CustomToolbox.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        public Resources() {
         }
         
         /// <summary>
         ///   傳回這個類別使用的快取的 ResourceManager 執行個體。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CustomToolbox.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace CustomToolbox.Properties {
         ///   使用這個強類型資源類別的資源查閱。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace CustomToolbox.Properties {
         /// <summary>
         ///   查詢類似 (圖示) 的類型 System.Drawing.Icon 當地語系化資源。
         /// </summary>
-        internal static System.Drawing.Icon app_icon {
+        public static System.Drawing.Icon app_icon {
             get {
                 object obj = ResourceManager.GetObject("app_icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));

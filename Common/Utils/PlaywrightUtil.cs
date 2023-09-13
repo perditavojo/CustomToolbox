@@ -6,7 +6,7 @@ using CustomToolbox.Common.Sets;
 
 namespace CustomToolbox.Common.Utils;
 
-internal class PlaywrightUtil
+public class PlaywrightUtil
 {
     /// <summary>
     /// WMain

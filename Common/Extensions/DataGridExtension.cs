@@ -13,7 +13,7 @@ namespace CustomToolbox.Common.Extensions;
 /// <summary>
 /// DataGrid 的擴充方法
 /// </summary>
-internal static class DataGridExtension
+public static class DataGridExtension
 {
     /// <summary>
     /// WMain

@@ -31,7 +31,7 @@ namespace CustomToolbox.Common.Sets;
 /// <summary>
 /// 作業組
 /// </summary>
-internal class OperationSet
+public class OperationSet
 {
     /// <summary>
     /// WMain

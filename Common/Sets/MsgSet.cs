@@ -5,7 +5,7 @@ namespace CustomToolbox.Common.Sets;
 /// <summary>
 /// 訊息組
 /// </summary>
-internal class MsgSet
+public class MsgSet
 {
     #region 應用程式
 

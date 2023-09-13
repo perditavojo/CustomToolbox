@@ -3,7 +3,7 @@
 /// <summary>
 /// 類別：顯示卡資料
 /// </summary>
-internal class VideoCardData
+public class VideoCardData
 {
     /// <summary>
     /// 裝置編號

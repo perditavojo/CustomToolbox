@@ -16,7 +16,7 @@ namespace CustomToolbox.Common.Utils;
 /// <para>來源：https://github.com/AioiLight/LRCDotNet/blob/master/LRCDotNet/Parser.cs </para>
 /// <para>來源：https://github.com/OpportunityLiu/LrcParser </para>
 /// </summary>
-internal partial class LyricsUtil
+public partial class LyricsUtil
 {
     /// <summary>
     /// WMain
