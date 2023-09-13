@@ -3,6 +3,7 @@ using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 using Microsoft.Playwright;
 using Microsoft.Win32;
 using CustomToolbox.Common.Sets;
+using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -203,7 +204,7 @@ public class PlaywrightUtil
             {
                 _WMain?.WriteLog(MsgSet.GetFmtStr(
                     MsgSet.MsgErrorOccured,
-                    ex.ToString()));
+                    ex.GetExceptionMessage()));
             }
         });
     }

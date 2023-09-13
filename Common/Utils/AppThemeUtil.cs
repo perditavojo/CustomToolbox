@@ -1,4 +1,5 @@
-﻿using ModernWpf;
+﻿using CustomToolbox.Common.Extensions;
+using ModernWpf;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -44,7 +45,7 @@ public class AppThemeUtil
         }
         catch (Exception ex)
         {
-            message = ex.ToString();
+            message = ex.GetExceptionMessage();
         }
 
         return message;

@@ -22,6 +22,7 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Data;
 using Xabe.FFmpeg;
+using Serilog.Events;
 
 namespace CustomToolbox;
 
@@ -66,7 +67,7 @@ public partial class WMain
                     catch (Exception ex)
                     {
                         // WONTFIX: 2022-12-20 目前無好方法以避免此例外。
-                        Debug.WriteLine(ex.ToString());
+                        Debug.WriteLine(ex.GetExceptionMessage());
                     }
                 });
             });
@@ -75,7 +76,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -239,7 +240,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -263,7 +264,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -345,7 +346,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -447,7 +448,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -485,7 +486,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -563,7 +564,7 @@ public partial class WMain
                 {
                     WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                        ex.GetExceptionMessage()));
                 }
             }),
             secondaryAction: new Action(() =>
@@ -648,7 +649,7 @@ public partial class WMain
                     catch (Exception ex)
                     {
                         // WONTFIX: 2022-12-20 目前無好方法以避免此例外。
-                        Debug.WriteLine(ex.ToString());
+                        Debug.WriteLine(ex.GetExceptionMessage());
                     }
                 });
             });
@@ -657,7 +658,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -665,8 +666,17 @@ public partial class WMain
     /// 寫紀錄
     /// </summary>
     /// <param name="message">字串，訊息</param>
+    /// <param name="title">字串，標題，預設值為空白</param>
+    /// <param name="logEventLevel">LogEventLevel，預設值為 LogEventLevel.Information</param>
     [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
-    public void WriteLog(string message) => CustomFunction.WriteLog(message);
+    public void WriteLog(
+        string message,
+        string title = "",
+        LogEventLevel logEventLevel = LogEventLevel.Information) =>
+            CustomFunction.WriteLog(
+                message,
+                title,
+                logEventLevel);
 
     /// <summary>
     /// 取得 HttpClient

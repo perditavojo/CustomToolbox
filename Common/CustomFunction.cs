@@ -12,6 +12,9 @@ using System.Windows;
 using System.Windows.Controls;
 using Serilog;
 using Serilog.Sinks.RichTextBox.Themes;
+using System.Windows.Threading;
+using CustomToolbox.Common.Extensions;
+using Serilog.Events;
 
 namespace CustomToolbox.Common;
 
@@ -39,14 +42,7 @@ public class CustomFunction
         _WMain = wMain;
         _TBLog = _WMain.TBLog;
 
-        // 調高以避免自動換行。
-        _TBLog.Document.PageWidth = 1920;
-
-        Log.Logger = new LoggerConfiguration()
-            .WriteTo.RichTextBox(
-                _TBLog,
-                theme: RichTextBoxConsoleTheme.Colored)
-            .CreateLogger();
+        SetSeriLog();
     }
 
     /// <summary>
@@ -178,7 +174,11 @@ public class CustomFunction
     /// </summary>
     /// <param name="message">字串，訊息</param>
     /// <param name="title">字串，應用程式的名稱，預設值為空白</param>
-    public static void WriteLog(string message, string title = "")
+    /// <param name="logEventLevel">LogEventLevel，預設值為 LogEventLevel.Information</param>
+    public static void WriteLog(
+        string message,
+        string title = "",
+        LogEventLevel logEventLevel = LogEventLevel.Information)
     {
         if (_TBLog == null)
         {
@@ -190,19 +190,57 @@ public class CustomFunction
             return;
         }
 
-        Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-        {
-            try
+        Application.Current.Dispatcher.BeginInvoke(
+            method: new Action(() =>
             {
-                Log.Information(message);
+                try
+                {
+                    switch (logEventLevel)
+                    {
+                        case LogEventLevel.Verbose:
+                            Log.Verbose(message);
 
-                _TBLog.ScrollToEnd();
-            }
-            catch (Exception ex)
-            {
-                _WMain?.ShowMsgBox(ex.ToString(), title);
-            }
-        }));
+                            break;
+
+                        case LogEventLevel.Debug:
+                            Log.Debug(message);
+
+                            break;
+
+                        case LogEventLevel.Information:
+                            Log.Information(message);
+
+                            break;
+
+                        case LogEventLevel.Warning:
+                            Log.Warning(message);
+
+                            break;
+
+                        case LogEventLevel.Error:
+                            Log.Error(message);
+
+                            break;
+
+                        case LogEventLevel.Fatal:
+                            Log.Fatal(message);
+
+                            break;
+
+                        default:
+                            Log.Information(message);
+
+                            break;
+                    }
+
+                    _TBLog.ScrollToEnd();
+                }
+                catch (Exception ex)
+                {
+                    _WMain?.ShowMsgBox(ex.GetExceptionMessage(), title);
+                }
+            }),
+            priority: DispatcherPriority.Background);
     }
 
     /// <summary>
@@ -312,7 +350,7 @@ public class CustomFunction
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -358,7 +396,7 @@ public class CustomFunction
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
 
         return Visibility.Visible;
@@ -393,7 +431,7 @@ public class CustomFunction
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -405,5 +443,25 @@ public class CustomFunction
     {
         // 2023-01-04 Bilibili 的 API 會依據使用者代理字串來封鎖連線。
         return $"{Properties.Settings.Default.UserAgent} {DateTime.Now:yyyyMMddHHmm}";
+    }
+
+    /// <summary>
+    /// 設定 SeriLog
+    /// </summary>
+    private static void SetSeriLog()
+    {
+        if (_TBLog != null)
+        {
+            // 調高以避免自動換行。
+            _TBLog.Document.PageWidth = 1920;
+        }
+
+        // 設定 Serilog。
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.RichTextBox(
+                richTextBoxControl: _TBLog,
+                outputTemplate: "[{Timestamp:yyyy/MM/dd HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                theme: RichTextBoxConsoleTheme.Colored)
+            .CreateLogger();
     }
 }

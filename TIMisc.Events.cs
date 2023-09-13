@@ -12,6 +12,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using TextBox = System.Windows.Controls.TextBox;
+using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox;
 
@@ -67,7 +68,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -127,7 +128,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -157,7 +158,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                MsgSet.MsgErrorOccured,
-               ex.ToString()));
+               ex.GetExceptionMessage()));
         }
     }
 
@@ -171,7 +172,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                MsgSet.MsgErrorOccured,
-               ex.ToString()));
+               ex.GetExceptionMessage()));
         }
     }
 
@@ -214,7 +215,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                MsgSet.MsgErrorOccured,
-               ex.ToString()));
+               ex.GetExceptionMessage()));
         }
     }
 
@@ -260,7 +261,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -293,7 +294,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -326,7 +327,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -362,7 +363,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -397,7 +398,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -428,7 +429,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -459,7 +460,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -494,7 +495,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -531,7 +532,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -564,7 +565,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -594,7 +595,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -624,7 +625,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -654,7 +655,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -687,7 +688,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -717,7 +718,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -747,7 +748,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -777,7 +778,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -807,7 +808,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -837,7 +838,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -868,7 +869,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -898,7 +899,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -933,7 +934,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -963,7 +964,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -993,7 +994,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1028,7 +1029,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1059,7 +1060,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1102,7 +1103,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1147,7 +1148,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1178,7 +1179,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1209,7 +1210,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1275,7 +1276,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1301,7 +1302,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                MsgSet.MsgErrorOccured,
-               ex.ToString()));
+               ex.GetExceptionMessage()));
         }
     }
 
@@ -1327,7 +1328,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1348,7 +1349,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1373,7 +1374,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1402,7 +1403,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1425,7 +1426,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1458,7 +1459,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1496,7 +1497,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1529,7 +1530,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1547,7 +1548,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1567,7 +1568,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1581,7 +1582,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1595,7 +1596,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1609,7 +1610,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -1623,7 +1624,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 

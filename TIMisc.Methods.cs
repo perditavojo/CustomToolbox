@@ -1,4 +1,5 @@
 ﻿using CustomToolbox.Common;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
@@ -144,7 +145,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -306,7 +307,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -324,7 +325,6 @@ public partial class WMain
                 CBLanguages.ItemsSource = listLang;
                 CBLanguages.DisplayMemberPath = nameof(LangData.LangName);
                 CBLanguages.SelectedValuePath = nameof(LangData.LangCode);
-
                 CBLanguages.SelectedValue = Properties.Settings.Default.AppLangCode;
             }));
         }
@@ -332,7 +332,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -357,7 +357,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -384,7 +384,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -437,7 +437,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -468,7 +468,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -499,7 +499,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 }

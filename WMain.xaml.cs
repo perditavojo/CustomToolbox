@@ -38,7 +38,7 @@ public partial class WMain : Window
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -56,7 +56,7 @@ public partial class WMain : Window
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -274,7 +274,7 @@ public partial class WMain : Window
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 }

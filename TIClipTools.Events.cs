@@ -6,6 +6,7 @@ using CustomToolbox.Common.Sets;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using System.IO;
 using System.Windows;
+using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox;
 
@@ -28,7 +29,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -46,7 +47,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -194,7 +195,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -314,7 +315,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 }

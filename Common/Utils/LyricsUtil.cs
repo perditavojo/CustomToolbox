@@ -1,4 +1,5 @@
-﻿using CustomToolbox.Common.Models;
+﻿using CustomToolbox.Common.Extensions;
+using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using Downloader;
 using OpenCCNET;
@@ -158,7 +159,7 @@ public partial class LyricsUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
 
         return path;

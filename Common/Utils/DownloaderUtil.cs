@@ -7,6 +7,7 @@ using ProgressBar = ModernWpf.Controls.ProgressBar;
 using SevenZipExtractor;
 using System.IO;
 using System.Net;
+using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -77,7 +78,7 @@ public class DownloaderUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -132,7 +133,7 @@ public class DownloaderUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -163,7 +164,7 @@ public class DownloaderUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -217,7 +218,7 @@ public class DownloaderUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -273,7 +274,7 @@ public class DownloaderUtil
                         _WMain?.WriteLog(
                             MsgSet.GetFmtStr(
                                 MsgSet.MsgErrorOccured,
-                                ex.ToString()));
+                                ex.GetExceptionMessage()));
                     }
                 }));
 
@@ -284,7 +285,7 @@ public class DownloaderUtil
             _WMain?.WriteLog(
                 MsgSet.GetFmtStr(
                     MsgSet.MsgErrorOccured,
-                    ex.ToString()));
+                    ex.GetExceptionMessage()));
         }
     }
 
@@ -349,7 +350,7 @@ public class DownloaderUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 

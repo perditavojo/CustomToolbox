@@ -4,6 +4,7 @@ using CustomToolbox.Common.Sets;
 using Downloader;
 using System.IO;
 using System.Text.Json;
+using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -118,7 +119,7 @@ public class ClipListUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
 
         outputList.Insert(0, new ClipListData(MsgSet.SelectPlease, string.Empty));
@@ -155,7 +156,7 @@ public class ClipListUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
 
         outputList.Insert(0, new ClipListData(MsgSet.SelectPlease, string.Empty));
@@ -191,7 +192,7 @@ public class ClipListUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
 
         return outputList;

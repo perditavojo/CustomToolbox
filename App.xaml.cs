@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ServiceCollection = Microsoft.Extensions.DependencyInjection.ServiceCollection;
 using System.Windows;
 using System.Windows.Threading;
+using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox;
 
@@ -91,7 +92,7 @@ public partial class App : Application
         catch (Exception ex)
         {
             // 使用 MessageBox 輸出錯誤訊息。
-            MessageBox.Show(ex.ToString(),
+            MessageBox.Show(ex.GetExceptionMessage(),
                 caption: DefaultTitle,
                 button: MessageBoxButton.OK,
                 icon: MessageBoxImage.Error);
@@ -110,7 +111,7 @@ public partial class App : Application
         {
             Exception ex = (Exception)args.ExceptionObject;
 
-            ShowErrorMsg(ex.ToString());
+            ShowErrorMsg(ex.GetExceptionMessage());
         };
 
         Current.DispatcherUnhandledException += (object sender, DispatcherUnhandledExceptionEventArgs e) =>
@@ -149,7 +150,7 @@ public partial class App : Application
         }
         catch (Exception ex)
         {
-            errMsg += ex.ToString();
+            errMsg += ex.GetExceptionMessage();
         }
 
         if (!string.IsNullOrEmpty(errMsg))

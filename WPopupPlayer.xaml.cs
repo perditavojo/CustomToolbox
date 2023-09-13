@@ -3,6 +3,7 @@ using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms.Integration;
+using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox;
 
@@ -72,7 +73,7 @@ public partial class WPopupPlayer : Window
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -93,7 +94,7 @@ public partial class WPopupPlayer : Window
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -110,7 +111,7 @@ public partial class WPopupPlayer : Window
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CustomToolbox.Common.Models;
+﻿using CustomToolbox.Common.Extensions;
+using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using DiscordRPC;
 using DiscordRPC.Logging;
@@ -144,7 +145,7 @@ public class DiscordRichPresenceUtil
         {
             CustomFunction.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -216,7 +217,7 @@ public class DiscordRichPresenceUtil
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 

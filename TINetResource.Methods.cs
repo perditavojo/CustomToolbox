@@ -1,4 +1,5 @@
-﻿using CustomToolbox.Common.Models;
+﻿using CustomToolbox.Common.Extensions;
+using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using Downloader;
@@ -52,7 +53,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -166,7 +167,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
 
         return new string[]
@@ -199,7 +200,7 @@ public partial class WMain
         {
             WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 }

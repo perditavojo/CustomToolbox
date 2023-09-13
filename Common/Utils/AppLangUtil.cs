@@ -5,6 +5,7 @@ using FontFamily = System.Windows.Media.FontFamily;
 using System.Globalization;
 using System.IO;
 using System.Windows;
+using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -68,7 +69,7 @@ public class AppLangUtil
         }
         catch (Exception ex)
         {
-            message = ex.ToString();
+            message = ex.GetExceptionMessage();
         }
 
         return new AppLangData()
@@ -149,7 +150,7 @@ public class AppLangUtil
         }
         catch (Exception ex)
         {
-            message = ex.ToString();
+            message = ex.GetExceptionMessage();
         }
 
         return message;

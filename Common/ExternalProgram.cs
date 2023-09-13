@@ -12,6 +12,7 @@ using Xabe.FFmpeg.Events;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Options;
+using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox.Common;
 
@@ -238,7 +239,7 @@ public class ExternalProgram
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -802,7 +803,7 @@ public class ExternalProgram
         {
             modelFilePath = string.Empty;
 
-            _WMain?.ShowMsgBox(ex.ToString());
+            _WMain?.ShowMsgBox(ex.GetExceptionMessage());
         }
 
         return modelFilePath;

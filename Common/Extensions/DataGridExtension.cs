@@ -73,7 +73,7 @@ public static class DataGridExtension
                 {
                     _WMain?.WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                        ex.GetExceptionMessage()));
                 }
 
             }));
@@ -82,7 +82,7 @@ public static class DataGridExtension
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -132,7 +132,7 @@ public static class DataGridExtension
                 {
                     _WMain?.WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                        ex.GetExceptionMessage()));
                 }
             }));
         }
@@ -140,7 +140,7 @@ public static class DataGridExtension
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -195,7 +195,7 @@ public static class DataGridExtension
                 {
                     _WMain?.WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                        ex.GetExceptionMessage()));
                 }
             }));
         }
@@ -203,7 +203,7 @@ public static class DataGridExtension
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -258,7 +258,7 @@ public static class DataGridExtension
                 {
                     _WMain?.WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                        ex.GetExceptionMessage()));
                 }
             }));
         }
@@ -266,7 +266,7 @@ public static class DataGridExtension
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -321,7 +321,7 @@ public static class DataGridExtension
                 {
                     _WMain?.WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                        ex.GetExceptionMessage()));
                 }
             }));
         }
@@ -329,7 +329,7 @@ public static class DataGridExtension
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -558,7 +558,7 @@ public static class DataGridExtension
                 {
                     _WMain?.WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                        ex.GetExceptionMessage()));
                 }
             }));
         }
@@ -566,7 +566,7 @@ public static class DataGridExtension
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -615,7 +615,7 @@ public static class DataGridExtension
                 {
                     _WMain?.WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                        ex.GetExceptionMessage()));
                 }
             }));
         }
@@ -623,7 +623,7 @@ public static class DataGridExtension
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 
@@ -652,7 +652,7 @@ public static class DataGridExtension
                 {
                     _WMain?.WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                        ex.GetExceptionMessage()));
                 }
             }));
         }
@@ -660,7 +660,7 @@ public static class DataGridExtension
         {
             _WMain?.WriteLog(MsgSet.GetFmtStr(
                 MsgSet.MsgErrorOccured,
-                ex.ToString()));
+                ex.GetExceptionMessage()));
         }
     }
 }

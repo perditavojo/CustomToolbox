@@ -25,6 +25,7 @@ using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
+using Serilog.Events;
 
 namespace CustomToolbox.Common.Sets;
 
@@ -661,7 +662,9 @@ public class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                ex.GetExceptionMessage(),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -742,7 +745,9 @@ public class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                ex.GetExceptionMessage(),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -812,7 +817,9 @@ public class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                ex.GetExceptionMessage(),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -901,7 +908,9 @@ public class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                ex.GetExceptionMessage(),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -961,7 +970,9 @@ public class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                ex.GetExceptionMessage(),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1267,7 +1278,9 @@ public class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                ex.GetExceptionMessage(),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1511,7 +1524,9 @@ public class OperationSet
         catch (Exception ex)
         {
             // 只有可以 Cancel 的才只輸出 ex.Message.ToString()。
-            _WMain?.WriteLog(ex.ToString());
+            _WMain?.WriteLog(
+                ex.GetExceptionMessage(),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1561,7 +1576,7 @@ public class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.ShowMsgBox(ex.ToString());
+            _WMain?.ShowMsgBox(ex.GetExceptionMessage());
         }
 
         return string.Empty;
@@ -1755,7 +1770,7 @@ public class OperationSet
                 MsgSet.MsgWhisperRemoveTempFileByYourSelf,
                 VariableSet.TempFolderPath));
 
-            _WMain?.ShowMsgBox(ex.ToString());
+            _WMain?.ShowMsgBox(ex.GetExceptionMessage());
         }
     }
 
@@ -1962,7 +1977,7 @@ public class OperationSet
                 MsgSet.MsgWhisperRemoveTempFileByYourSelf,
                 VariableSet.TempFolderPath));
 
-            _WMain?.ShowMsgBox(ex.ToString());
+            _WMain?.ShowMsgBox(ex.GetExceptionMessage());
         }
     }
 
@@ -2274,7 +2289,9 @@ public class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                ex.GetExceptionMessage(),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
