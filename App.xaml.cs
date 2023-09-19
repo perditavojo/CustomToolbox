@@ -158,13 +158,6 @@ public partial class App : Application
             errMsg += Environment.NewLine;
         }
 
-        errMsg += AppThemeUtil.SetAppTheme();
-
-        if (!string.IsNullOrEmpty(errMsg))
-        {
-            errMsg += Environment.NewLine;
-        }
-
         errMsg += _AppLangData.ErrMsg;
 
         if (!string.IsNullOrEmpty(errMsg))

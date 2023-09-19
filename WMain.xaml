@@ -7,10 +7,7 @@
     xmlns:converters="clr-namespace:CustomToolbox.Common.Converters"
     xmlns:properties="clr-namespace:CustomToolbox.Properties"
     xmlns:tb="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
-    ui:WindowHelper.UseModernWindowStyle="True"
-    ui:TitleBar.IsIconVisible="True"
     mc:Ignorable="d"
     Title="WMain"
     MinHeight="600"
@@ -251,50 +248,47 @@
                                         <ComboBoxItem Content="0.25x" />
                                     </ComboBox>
                                 </StackPanel>
-                                <ui:AppBarButton x:Name="BtnMute"
+                                <Button x:Name="BtnMute"
                                     Grid.Column="1"
                                     Margin="0,0,5,0"
-                                    Label="{DynamicResource BtnMute}"
-                                    Icon="Mute"
+                                    Content="{DynamicResource BtnMute}"
                                     HorizontalAlignment="Right"
                                     Click="BtnMute_Click" />
                             </Grid>
                             <StackPanel Orientation="Horizontal"
                                 Margin="5,5,5,5">
-                                <ui:AppBarButton x:Name="BtnPlay"
+                                <Button x:Name="BtnPlay"
                                     Margin="5,0,0,0"
-                                    Label="{DynamicResource BtnPlay}"
-                                    Icon="Play"
+                                    Content="{DynamicResource BtnPlay}"
                                     Click="BtnPlay_Click" />
-                                <ui:AppBarButton x:Name="BtnPrevious"
+                                <Button x:Name="BtnPrevious"
                                     Margin="5,0,0,0"
-                                    Label="{DynamicResource BtnPrevious}"
-                                    Icon="Previous"
+                                    Content="{DynamicResource BtnPrevious}"
                                     IsEnabled="False"
                                     Click="BtnPrevious_Click" />
-                                <ui:AppBarButton x:Name="BtnNext"
+                                <Button x:Name="BtnNext"
                                     Margin="5,0,0,0"
-                                    Label="{DynamicResource BtnNext}"
-                                    Icon="Next"
+                                    Content="{DynamicResource BtnNext}"
                                     IsEnabled="False"
                                     Click="BtnNext_Click" />
-                                <ui:AppBarButton x:Name="BtnPause"
+                                <Button x:Name="BtnPause"
                                     Margin="5,0,0,0"
-                                    Label="{DynamicResource BtnPause}"
-                                    Icon="Pause"
+                                    Content="{DynamicResource BtnPause}"
                                     IsEnabled="False"
                                     Click="BtnPause_Click"/>
-                                <ui:AppBarButton x:Name="BtnStop"
+                                <Button x:Name="BtnStop"
                                     Margin="5,0,0,0"
-                                    Label="{DynamicResource BtnStop}"
-                                    Icon="Stop"
+                                    Content="{DynamicResource BtnStop}"
                                     IsEnabled="False"
                                     Click="BtnStop_Click" />
-                                <ui:ToggleSwitch x:Name="TSClipPlayerMode" 
+                                <RadioButton x:Name="RBClipPlayer" 
                                     Margin="5,0,0,0"
-                                    OffContent="{DynamicResource ClipPlayer}"
-                                    OnContent="{DynamicResource TimestampEditor}"
-                                    Toggled="TSClipPlayerMode_Toggled" />
+                                    Checked="RBClipPlayer_Checked"
+                                    Content="{DynamicResource ClipPlayer}"/>
+                                <RadioButton x:Name="RBTimestampEditor" 
+                                    Margin="5,0,0,0"
+                                    Checked="RBTimestampEditor_Checked"
+                                    Content="{DynamicResource TimestampEditor}"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
@@ -307,22 +301,21 @@
                             <Grid>
                                 <GroupBox x:Name="GBClipList"
                                     Header="{DynamicResource GBClipList}"
-                                    Margin="5,5,5,5"
+                                    Margin="5,5,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
                                         <Label x:Name="LNetPlaylists"
-                                            Margin="0,0,0,0"
                                             Content="{DynamicResource LNetPlaylists}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <ComboBox x:Name="CBNetPlaylists"
-                                            Margin="0,25,0,0"
-                                            MaxWidth="{Binding ElementName=GBClipList, Path=ActualWidth}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" />
+                                            Margin="0,30,0,0"
+                                            Width="411"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Left"  />
                                         <CheckBox x:Name="CBAutoLyric"
-                                            Margin="0,65,0,0"
+                                            Margin="0,56,0,0"
                                             Content="{DynamicResource CBEnableAutoLyric}"
                                             ToolTip="{DynamicResource CBEnableAutoLyricToolTip}"
                                             HorizontalAlignment="Left"
@@ -330,79 +323,69 @@
                                             Checked="CBAutoLyric_Checked"
                                             Unchecked="CBAutoLyric_Unchecked" />
                                         <Label x:Name="LLocalClipLists"
-                                            Margin="0,105,0,0"
+                                            Margin="0,76,0,0"
                                             Content="{DynamicResource LLocalClipLists}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <ComboBox x:Name="CBLocalClipLists"
-                                            Margin="0,130,0,0"
-                                            MaxWidth="{Binding ElementName=GBClipList, Path=ActualWidth}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" />
+                                            Margin="0,106,0,0"
+                                            Width="411"
+                                            VerticalAlignment="Top" 
+                                            HorizontalAlignment="Left"  />
                                         <Button x:Name="BtnRefreshNetResurce"
-                                            Margin="0,170,0,0"
+                                            Margin="0,132,0,5"
                                             Content="{DynamicResource BtnRefreshNetResurce}"
                                             HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
                                             Click="BtnRefreshNetResurce_Click" />
                                         <Button x:Name="BtnLoadClipList"
-                                            Margin="0,210,0,0"
+                                            Margin="337,132,10,5"
                                             Content="{DynamicResource BtnLoadClipList}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
                                             Click="BtnLoadClipList_Click" />
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox x:Name="GBB23ClipListGenerator"
                                     Header="{DynamicResource GBB23ClipListGenerator}"
-                                    Margin="150,5,5,5"
+                                    Margin="5,188,0,0"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Top">
+                                    VerticalAlignment="Top" Height="284" Width="433">
                                     <Grid>
                                         <Label Margin="0,0,0,0"
                                             Content="{DynamicResource LB23UserMID}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBB23UserMID"
-                                            Margin="0,25,0,0"
-                                            MinWidth="{Binding ElementName=GBB23ClipListGenerator, Path=ActualWidth}"
-                                            MaxWidth="{Binding ElementName=GBB23ClipListGenerator, Path=ActualWidth}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" />
-                                        <Label Margin="0,65,0,0"
+                                            Margin="0,30,0,0"
+                                            Width="411"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Left" />
+                                        <Label Margin="0,52,0,0"
                                             Content="{DynamicResource LB23ClipListExcludedPhrases}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBB23ClipListExcludedPhrases"
-                                            Margin="0,90,0,0"
+                                            Margin="0,82,0,0"
                                             MinHeight="150"
-                                            MinWidth="{Binding ElementName=GBB23ClipListGenerator, Path=ActualWidth}"
-                                            MaxWidth="{Binding ElementName=GBB23ClipListGenerator, Path=ActualWidth}"
+                                            Width="411"
                                             ToolTip="{DynamicResource LB23ClipListExcludedPhrasesToolTip}"
-                                            HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             TextWrapping="NoWrap"
                                             AcceptsReturn="True"
                                             HorizontalScrollBarVisibility="Auto"
                                             VerticalScrollBarVisibility="Visible"
+                                            HorizontalAlignment="Left" 
                                             TextChanged="TBB23ClipListExcludedPhrases_TextChanged" />
                                         <CheckBox x:Name="CBB23ClipListExportJsonc"
-                                            Margin="0,247,0,0"
+                                            Margin="0,237,0,5"
                                             Content="{DynamicResource CBB23ClipListExportJsonc}"
                                             ToolTip="{DynamicResource CBB23ClipListExportJsoncToolTip}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" />
+                                            HorizontalAlignment="Left" />
                                         <CheckBox x:Name="CBB23ClipListCheckUrl"
-                                            Margin="0,285,0,0"
+                                            Margin="117,237,330,5"
                                             Content="{DynamicResource CBB23ClipListCheckUrl}"
-                                            ToolTip="{DynamicResource CBB23ClipListCheckUrlToolTip}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" />
+                                            ToolTip="{DynamicResource CBB23ClipListCheckUrlToolTip}" />
                                         <Button x:Name="BtnGenerateB23ClipList"
-                                            Margin="0,323,0,0"
+                                            Margin="273,238,10,5"
                                             Content="{DynamicResource BtnGenerateB23ClipList}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
                                             Click="BtnGenerateB23ClipList_Click" />
                                     </Grid>
                                 </GroupBox>
@@ -429,7 +412,7 @@
                                             VerticalAlignment="Top"
                                             Click="BtnSubtitleCreator_Click" />
                                         <Button x:Name="BtnYTSecConverter"
-                                            Margin="0,40,0,0"
+                                            Margin="0,24,0,0"
                                             Content="{DynamicResource BtnYTSecConverter}"
                                             ToolTip="{DynamicResource BtnYTSecConverterToolTip}"
                                             HorizontalAlignment="Left"
@@ -438,7 +421,7 @@
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox x:Name="GBFFmpegFunctions"
-                                    Margin="5,150,5,5"
+                                    Margin="5,75,0,0"
                                     Header="{DynamicResource GBFFmpegFunctions}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
@@ -483,64 +466,64 @@
                                         VerticalAlignment="Top" />
                                     <TextBox x:Name="TBYtChannelID" 
                                         Margin="0,25,0,0"
-                                        MaxWidth="{Binding ElementName=GBYtscTool, Path=ActualWidth}"
+                                         Width="180"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         TextChanged="TBYtChannelID_TextChanged" />
-                                    <Label Margin="0,65,0,0"
+                                    <Label Margin="0,47,0,0"
                                         Content="{DynamicResource LCustomYtChSubscriberAmount}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
-                                    <ui:NumberBox x:Name="NBCustomSubscriberAmount" 
-                                        Margin="0,90,0,0"
-                                        Value="-1"
-                                        Minimum="-1"
-                                        SpinButtonPlacementMode="Inline"                                       
-                                        MaxWidth="{Binding ElementName=GBYtscTool, Path=ActualWidth}"
+                                    <TextBox x:Name="TBCustomSubscriberAmount" 
+                                        Margin="0,77,0,0"
+                                        Width="180"
+                                        PreviewKeyDown="TBCustomSubscriberAmount_PreviewKeyDown"
+                                        TextChanged="TBCustomSubscriberAmount_TextChanged"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                     <DatePicker x:Name="DPCustomDate"
-                                        Margin="0,130,0,0"
+                                        Margin="0,99,0,0"
+                                        Width="180"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                     <CheckBox x:Name="CBAddTimestamp"
-                                        Margin="0,170,0,0"
+                                        Margin="0,128,0,0"
                                         Content="{DynamicResource CBAddTimestamp}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                     <CheckBox x:Name="CBUseClip"
-                                        Margin="0,210,0,0"
+                                        Margin="0,148,0,0"
                                         Content="{DynamicResource CBUseClip}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                     <CheckBox x:Name="CBBlurBackground"
-                                        Margin="0,250,0,0"
+                                        Margin="0,168,0,0"
                                         Content="{DynamicResource CBBlurBackground}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                     <CheckBox x:Name="CBUseTranslate"
-                                        Margin="0,290,0,0"
+                                        Margin="0,188,0,0"
                                         Content="{DynamicResource CBUseTranslate}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                     <CheckBox x:Name="CBForceChromium"
-                                        Margin="0,330,0,0"
+                                        Margin="0,208,0,0"
                                         Content="{DynamicResource CBForceChromium}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                     <CheckBox x:Name="CBIsDevelopmentMode"
-                                        Margin="0,370,0,0"
+                                        Margin="0,228,0,0"
                                         Content="{DynamicResource CBIsDevelopmentMode}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top" />
                                     <Button x:Name="BtnYtscToolReset"
-                                        Margin="0,410,0,0"
+                                        Margin="0,248,0,0"
                                         Content="{DynamicResource BtnYtscToolReset}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Click="BtnYtscToolReset_Click" />
                                     <Button x:Name="BtnYtscToolTakeScreenshot"
-                                        Margin="0,450,0,0"
+                                        Margin="0,272,0,0"
                                         Content="{DynamicResource BtnYtscToolTakeScreenshot}"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
@@ -569,85 +552,68 @@
                                             VerticalAlignment="Top" />
                                         <ComboBox x:Name="CBLanguages"
                                             Margin="0,25,0,0"
-                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
-                                            HorizontalAlignment="Left"
+                                            Width="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
+                                            MaxWidth="175"
                                             VerticalAlignment="Top"
+                                            HorizontalAlignment="Left"
                                             SelectionChanged="CBLanguages_SelectionChanged" />
-                                        <Label x:Name="LThemes"
-                                            Margin="0,65,0,0"
-                                            Content="{DynamicResource LThemes}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top" />
-                                        <ComboBox x:Name="CBThemes"
-                                            Margin="0,90,0,5"
-                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            SelectionChanged="CBThemes_SelectionChanged">
-                                            <ComboBoxItem Tag="Light"
-                                                Content="{DynamicResource CBILightTheme}" />
-                                            <ComboBoxItem Tag="Dark"
-                                                Content="{DynamicResource CBIDarkTheme}" />
-                                        </ComboBox>
                                         <Label x:Name="LUserAgent"
-                                            Margin="0,130,0,5"
+                                            Margin="0,51,0,0"
                                             Content="{DynamicResource LUserAgent}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBUserAgent"
-                                            Margin="0,155,0,5"
-                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
-                                            HorizontalAlignment="Left"
+                                            Margin="0,81,0,0"
+                                            Width="175"
                                             VerticalAlignment="Top"
                                             HorizontalScrollBarVisibility="Auto"
                                             VerticalScrollBarVisibility="Visible"
-                                            TextChanged="TBUserAgent_TextChanged" />
+                                            TextChanged="TBUserAgent_TextChanged" HorizontalAlignment="Left" />
                                         <Button x:Name="BtnMyUserAgent"
-                                            Margin="0,210,0,5"
+                                            Margin="0,138,0,0"
                                             Content="{DynamicResource BtnMyUserAgent}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnMyUserAgent_Click" />
                                         <Label x:Name="LUnsupportedDomains"
-                                            Margin="0,245,0,5"
+                                            Margin="0,162,0,0"
                                             Content="{DynamicResource LUnsupportedDomains}"
                                             ToolTip="{DynamicResource LUnsupportedDomainsToolTip}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBUnsupportedDomains"
-                                            Margin="0,270,0,5"
-                                            MinHeight="150"
-                                            MaxHeight="{Binding ElementName=TBUnsupportedDomains, Path=MinHeight}"
-                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
+                                            Margin="0,192,0,0"
+                                            Height="150" 
                                             ToolTip="{DynamicResource TBUnsupportedDomainsToolTip}"
-                                            HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             TextWrapping="NoWrap"
                                             AcceptsReturn="True"
+                                            Width="175"
                                             HorizontalScrollBarVisibility="Auto"
                                             VerticalScrollBarVisibility="Visible"
+                                            HorizontalAlignment="Left"
                                             TextChanged="TBUnsupportedDomains_TextChanged" />
                                         <Label x:Name="LAppendSeconds"
-                                            Margin="0,425,0,5"
+                                            Margin="-2,347,0,0"
                                             Content="{DynamicResource LAppendSeconds}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBAppendSeconds"
-                                            Margin="0,450,0,5"
-                                            MaxWidth="{Binding ElementName=GBAppOptions, Path=ActualWidth}"
+                                            Margin="0,377,0,0"
                                             ToolTip="{DynamicResource TBAppendSecondsToolTip}"
-                                            HorizontalAlignment="Left"
+                                            Width="175"
                                             VerticalAlignment="Top"
+                                             HorizontalAlignment="Left"
                                             TextChanged="TBAppendSeconds_TextChanged" />
                                         <CheckBox x:Name="CBEnableMpvLogVerbose"
-                                            Margin="0,490,0,5"
+                                            Margin="0,399,0,0"
                                             Content="{DynamicResource CBEnableMpvLogVerbose}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Checked="CBEnableMpvLogVerbose_Checked"
                                             Unchecked="CBEnableMpvLogVerbose_Unchecked" />
                                         <CheckBox x:Name="CBEnableDiscordRichPresence"
-                                            Margin="0,530,0,5"
+                                            Margin="0,419,0,0"
                                             Content="{DynamicResource CBEnableDiscordRichPresence}"
                                             ToolTip="{DynamicResource CBEnableDiscordRichPresenceToolTip}"
                                             HorizontalAlignment="Left"
@@ -655,7 +621,7 @@
                                             Checked="CBEnableDiscordRichPresence_Checked"
                                             Unchecked="CBEnableDiscordRichPresence_Unchecked" />
                                         <CheckBox x:Name="CBEnableOpenCCS2TWP"
-                                            Margin="0,570,0,5"
+                                            Margin="0,439,0,0"
                                             Content="{DynamicResource CBEnableOpenCCS2TWP}"
                                             ToolTip="{DynamicResource CBEnableOpenCCS2TWPToolTip}"
                                             HorizontalAlignment="Left"
@@ -663,7 +629,7 @@
                                             Checked="CBEnableOpenCCS2TWP_Checked"
                                             Unchecked="CBEnableOpenCCS2TWP_Unchecked" />
                                         <Button x:Name="BtnResetGridSpliiter"
-                                            Margin="0,610,0,5"
+                                            Margin="0,459,0,0"
                                             Content="{DynamicResource BtnResetGridSpliiter}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
@@ -672,7 +638,7 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBYtDlpOptions"
                                     Header="{DynamicResource GBYtDlpOptions}"
-                                    Margin="250,5,5,5"
+                                    Margin="207,5,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
@@ -683,14 +649,14 @@
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBFormat"
                                             Margin="0,30,0,0"
-                                            MaxWidth="180"
+                                            Width="185"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             TextChanged="TBFormat_TextChanged" />
                                         <CheckBox x:Name="CBUseAria2"
                                             Content="{DynamicResource CBUseAria2}"
                                             ToolTip="{DynamicResource CBUseAria2ToolTip}"
-                                            Margin="0,70,0,0"
+                                            Margin="0,52,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Checked="CBUseAria2_Checked"
@@ -698,7 +664,7 @@
                                         <CheckBox x:Name="CBEmbedMetadata"
                                             Content="{DynamicResource CBEmbedMetadata}"
                                             ToolTip="{DynamicResource CBEmbedMetadataToolTip}"
-                                            Margin="0,110,0,0"
+                                            Margin="0,72,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Checked="CBEmbedMetadata_Checked"
@@ -706,7 +672,7 @@
                                         <CheckBox x:Name="CBLiveFromStart"
                                             Content="{DynamicResource CBLiveFromStart}"
                                             ToolTip="{DynamicResource CBLiveFromStartToolTip}"
-                                            Margin="0,150,0,0"
+                                            Margin="0,92,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Checked="CBLiveFromStart_Checked"
@@ -714,7 +680,7 @@
                                         <CheckBox x:Name="CBWaitForVideo"
                                             Content="{DynamicResource CBWaitForVideo}"
                                             ToolTip="{DynamicResource CBWaitForVideoToolTip}"
-                                            Margin="0,190,0,0"
+                                            Margin="0,112,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Checked="CBWaitForVideo_Checked"
@@ -722,7 +688,7 @@
                                         <CheckBox x:Name="CBSplitChapters"
                                             Content="{DynamicResource CBSplitChapters}"
                                             ToolTip="{DynamicResource CBSplitChaptersToolTip}"
-                                            Margin="0,230,0,0"
+                                            Margin="0,132,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Checked="CBSplitChapters_Checked"
@@ -739,7 +705,8 @@
                                                     VerticalAlignment="Top" />
                                                 <ComboBox x:Name="CBBrowserName"
                                                     Margin="0,25,0,0"
-                                                    MaxWidth="{Binding ElementName=GBCookies, Path=ActualWidth}"
+                                                    Width="{Binding ElementName=GBCookies, Path=ActualWidth}"
+                                                    MaxWidth="96"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
                                                     SelectionChanged="CBBrowserName_SelectionChanged">
@@ -754,21 +721,21 @@
                                                 </ComboBox>
                                                 <Label
                                                     Content="{DynamicResource TBBrowserProfilePath}"
-                                                    Margin="0,65,0,0"
+                                                    Margin="0,51,0,0"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top" />
                                                 <TextBox x:Name="TBBrowserProfilePath"
-                                                    Margin="0,90,0,0"
-                                                    Width="{Binding ElementName=TBBrowserProfilePathPlaceholder,
-                                                        Path=ActualWidth,
+                                                    Margin="0,81,0,0"
+                                                    Width="{Binding ActualWidth,
+                                                        ConverterParameter=10,
                                                         Converter={StaticResource WidthConverter},
-                                                        ConverterParameter=10}"
+                                                        ElementName=TBBrowserProfilePathPlaceholder}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
                                                     TextChanged="TBBrowserProfilePath_TextChanged" />
                                                 <TextBlock x:Name="TBBrowserProfilePathPlaceholder"
                                                     IsHitTestVisible="False"
-                                                    Margin="5,97,0,0"
+                                                    Margin="5,81,0,0"
                                                     Text="{DynamicResource TBBrowserProfilePathPlaceholder}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
@@ -790,13 +757,13 @@
                                                 </TextBlock>
                                                 <Button x:Name="BtnSelectBrowserProfileFolder"
                                                     Content="{DynamicResource BtnSelectBrowserProfileFolder}"
-                                                    Margin="0,130,0,0"
+                                                    Margin="0,103,0,0"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
                                                     Click="BtnSelectBrowserProfileFolder_Click" />
                                                 <CheckBox x:Name="CBCookieFromBrowser"
                                                     Content="{DynamicResource CBCookieFromBrowser}"
-                                                    Margin="0,170,0,0"
+                                                    Margin="0,127,0,0"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
                                                     Checked="CBCookieFromBrowser_Checked"
@@ -807,7 +774,8 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBDependencyFiles"
                                     Header="{DynamicResource GBDependencyFiles}"
-                                    Margin="5,750,5,5" HorizontalAlignment="Left"
+                                    Margin="5,510,0,0" 
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
                                         <Button x:Name="BtnForceDLDeps"
@@ -818,55 +786,55 @@
                                             Click="BtnForceDLDeps_Click_Click" />
                                         <Button x:Name="BtnDlYtDlp"
                                             Content="{DynamicResource BtnDlYtDlp}"
-                                            Margin="0,35,0,0"
+                                            Margin="0,24,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnDlYtDlp_Click" />
                                         <Button x:Name="BtnUpdateYtDlp"
                                             Content="{DynamicResource BtnUpdateYtDlp}"
-                                            Margin="0,70,0,0"
+                                            Margin="0,48,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnUpdateYtDlp_Click" />
                                         <Button x:Name="BtnReCreateYtDlpConf"
                                             Content="{DynamicResource BtnReCreateYtDlpConf}"
-                                            Margin="0,105,0,0"
+                                            Margin="0,72,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnReCreateYtDlpConf_Click" />
                                         <Button x:Name="BtnDLFFmpeg"
                                             Content="{DynamicResource BtnDLFFmpeg}"
-                                            Margin="0,140,0,0"
+                                            Margin="0,96,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnDLFFmpeg_Click" />
                                         <Button x:Name="BtnDLSubCharencParametersTxt"
                                             Content="{DynamicResource BtnDLSubCharencParametersTxt}"
-                                            Margin="0,175,0,0"
+                                            Margin="0,120,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnDLSubCharencParametersTxt_Click" />
                                         <Button x:Name="BtnDLAria2"
                                             Content="{DynamicResource BtnDLAria2}"
-                                            Margin="0,210,0,0"
+                                            Margin="0,144,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnDLAria2_Click" />
                                         <Button x:Name="BtnReCreateMpvConf"
                                             Content="{DynamicResource BtnReCreateMpvConf}"
-                                            Margin="0,245,0,0"
+                                            Margin="0,168,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnReCreateMpvConf_Click" />
                                         <Button x:Name="BtnDLLibMpv"
                                             Content="{DynamicResource BtnDLLibMpv}"
-                                            Margin="0,280,0,0"
+                                            Margin="0,192,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnDLLibMpv_Click" />
                                         <Button x:Name="BtnDLYtDlHookLua"
                                             Content="{DynamicResource BtnDLYtDlHookLua}"
-                                            Margin="0,315,0,0"
+                                            Margin="0,216,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnDLYtDlHookLua_Click" />
@@ -874,15 +842,16 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBFFmpegOptions"
                                     Header="{DynamicResource GBFFmpegOptions}"
-                                    Margin="260,355,5,5"
+                                    Margin="207,207,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
                                         <GroupBox x:Name="GBSubtitleOptions"
                                             Header="{DynamicResource GBSubtitleOptions}"
-                                            Margin="5,5,5,5"
+                                            Margin="5,0,0,0"
                                             HorizontalAlignment="Left"
-                                            VerticalAlignment="Top">
+                                            VerticalAlignment="Top"
+                                            Width="150">
                                             <Grid>
                                                 <Label x:Name="LFontList"
                                                     Margin="0,0,0,0"
@@ -890,21 +859,19 @@
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top" />
                                                 <ComboBox x:Name="CBFontList"
-                                                    Margin="0,25,0,0"
-                                                    MaxWidth="{Binding ElementName=GBSubtitleOptions, Path=ActualWidth}"
+                                                    Margin="0,30,0,0"
+                                                    Width="{Binding ElementName=GBSubtitleOptions, Path=ActualWidth}"
+                                                    MaxWidth="128" 
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top" />
                                                 <TextBox x:Name="TBCustomFont"
-                                                    Margin="0,65,0,0"
-                                                    Width="{Binding ElementName=TBCustomFontPlaceholder,
-                                                    Path=ActualWidth,
-                                                    Converter={StaticResource WidthConverter},
-                                                    ConverterParameter=10}"
+                                                    Margin="0,56,0,0"
+                                                    Width="{Binding ActualWidth, ConverterParameter=10, Converter={StaticResource WidthConverter}, ElementName=TBCustomFontPlaceholder}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top" />
                                                 <TextBlock x:Name="TBCustomFontPlaceholder"
                                                     IsHitTestVisible="False"
-                                                    Margin="5,72,0,0"
+                                                    Margin="5,56,0,0"
                                                     Text="{DynamicResource TBCustomFontPlaceholder}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
@@ -925,27 +892,25 @@
                                                     </TextBlock.Style>
                                                 </TextBlock>
                                                 <Label x:Name="LEncodingList"
-                                                    Margin="0,105,0,0"
+                                                    Margin="0,78,0,0"
                                                     Content="{DynamicResource LEncodingList}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top" />
                                                 <ComboBox x:Name="CBEncodingList"
-                                                    Margin="0,135,0,0"
-                                                    MaxWidth="{Binding ElementName=GBSubtitleOptions, Path=ActualWidth}"
+                                                    Margin="0,108,0,0"
+                                                    Width="{Binding ElementName=GBSubtitleOptions, Path=ActualWidth}"
+                                                    MaxWidth="128"
                                                     HorizontalAlignment="Left"
-                                                    VerticalAlignment="Top">
+                                                    VerticalAlignment="Top" >
                                                 </ComboBox>
                                                 <TextBox x:Name="TBCustomEncoding"
-                                                    Margin="0,175,0,0"
-                                                    Width="{Binding ElementName=TBCustomEncodingPlaceholder,
-                                                    Path=ActualWidth,
-                                                    Converter={StaticResource WidthConverter},
-                                                    ConverterParameter=10}"
+                                                    Margin="0,134,0,0"
+                                                    Width="{Binding ActualWidth, ConverterParameter=10, Converter={StaticResource WidthConverter}, ElementName=TBCustomEncodingPlaceholder}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top" />
                                                 <TextBlock x:Name="TBCustomEncodingPlaceholder"
                                                     IsHitTestVisible="False"
-                                                    Margin="5,182,0,0"
+                                                    Margin="5,134,0,0"
                                                     Text="{DynamicResource TBCustomEncodingPlaceholder}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
@@ -966,7 +931,7 @@
                                                     </TextBlock.Style>
                                                 </TextBlock>
                                                 <CheckBox x:Name="CBApplyFontSetting"
-                                                    Margin="0,215,0,0"
+                                                    Margin="0,156,0,0"
                                                     Content="{DynamicResource CBApplyFontSetting}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
@@ -982,22 +947,24 @@
                                             <Grid>
                                                 <ComboBox x:Name="CBHardwareAccelerationType"
                                                     Margin="0,0,0,0"
-                                                    MaxWidth="{Binding ElementName=GBHardwareAcceleration, Path=ActualWidth}"
+                                                    Width="{Binding ElementName=GBHardwareAcceleration, Path=ActualWidth}"
+                                                    MaxWidth="175"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
-                                                    SelectionChanged="CBHardwareAccelerationType_SelectionChanged">
+                                                    SelectionChanged="CBHardwareAccelerationType_SelectionChanged" >
                                                     <ComboBoxItem Tag="Intel">Intel</ComboBoxItem>
                                                     <ComboBoxItem Tag="AMD">AMD</ComboBoxItem>
                                                     <ComboBoxItem Tag="NVIDIA">NVIDIA</ComboBoxItem>
                                                 </ComboBox>
                                                 <ComboBox x:Name="CBGpuDevice"
-                                                    Margin="0,40,0,0"
-                                                    MaxWidth="{Binding ElementName=GBHardwareAcceleration, Path=ActualWidth}"
+                                                    Margin="0,26,0,0"
+                                                    Width="{Binding ElementName=GBHardwareAcceleration, Path=ActualWidth}"
+                                                    MaxWidth="175"      
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
-                                                    SelectionChanged="CBGpuDevice_SelectionChanged" />
+                                                    SelectionChanged="CBGpuDevice_SelectionChanged"  />
                                                 <CheckBox x:Name="CBEnableHardwareAcceleration"
-                                                    Margin="0,80,0,0"
+                                                    Margin="0,52,0,0"
                                                     Content="{DynamicResource CBEnableHardwareAcceleration}"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Top"
@@ -1009,9 +976,9 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBFolders"
                                     Header="{DynamicResource GBFolders}"
-                                    Margin="290,750,5,5"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top">
+                                    Margin="239,428,0,0"
+                                    VerticalAlignment="Top" 
+                                    HorizontalAlignment="Left" >
                                     <Grid>
                                         <Button x:Name="BtnOpenBinsFolder"
                                             Margin="0,0,0,5"
@@ -1020,31 +987,31 @@
                                             VerticalAlignment="Top"
                                             Click="BtnOpenBinsFolder_Click" />
                                         <Button x:Name="BtnOpenConfigFolder"
-                                            Margin="0,35,0,5"
+                                            Margin="0,24,0,0"
                                             Content="{DynamicResource BtnOpenConfigFolder}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnOpenConfigFolder_Click" />
                                         <Button x:Name="BtnOpenDownloadsFolder"
-                                            Margin="0,70,0,5"
+                                            Margin="0,48,0,0"
                                             Content="{DynamicResource BtnOpenDownloadsFolder}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnOpenDownloadsFolder_Click" />
                                         <Button x:Name="BtnOpenCliplistsFolder"
-                                            Margin="0,105,0,5"
+                                            Margin="0,72,0,0"
                                             Content="{DynamicResource BtnOpenCliplistsFolder}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnOpenCliplistsFolder_Click" />
                                         <Button x:Name="BtnOpenLogsFolder"
-                                            Margin="0,140,0,5"
+                                            Margin="0,96,0,0"
                                             Content="{DynamicResource BtnOpenLogsFolder}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnOpenLogsFolder_Click" />
                                         <Button x:Name="BtnOpenLyricsFolder"
-                                            Margin="0,175,0,5"
+                                            Margin="0,120,0,0"
                                             Content="{DynamicResource BtnOpenLyricsFolder}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
@@ -1186,6 +1153,8 @@
             <RichTextBox x:Name="TBLog"
                 Grid.Row="2"
                 Grid.Column="2"
+                Background="Black"
+                Foreground="LightGray"
                 ToolTip="{DynamicResource TBLog}"
                 AcceptsReturn="True"
                 HorizontalScrollBarVisibility="Auto"
@@ -1220,7 +1189,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Label x:Name="LOperation"
                         Margin="5,5,5,5" />
-                    <ui:ProgressBar x:Name="PBProgress"
+                    <ProgressBar x:Name="PBProgress"
                         MinWidth="100" />
                 </StackPanel>
             </StatusBarItem>

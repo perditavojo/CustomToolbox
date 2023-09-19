@@ -69,7 +69,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 TBYtChannelID.Text = string.Empty;
-                NBCustomSubscriberAmount.Value = -1;
+                TBCustomSubscriberAmount.Text = "-1";
                 DPCustomDate.SelectedDate = null;
                 CBAddTimestamp.IsChecked = false;
                 CBUseClip.IsChecked = false;
@@ -96,7 +96,7 @@ public partial class WMain
                 Control[] ctrlSet1 =
                 {
                     TBYtChannelID,
-                    NBCustomSubscriberAmount,
+                    TBCustomSubscriberAmount,
                     DPCustomDate,
                     CBAddTimestamp,
                     CBUseClip,
@@ -144,7 +144,7 @@ public partial class WMain
                     await OperationSet.DoTakeYtscScrnshot(
                         TBYtChannelID.Text,
                         saveFileDialog.FileName,
-                        Convert.ToInt32(NBCustomSubscriberAmount.Value),
+                        Convert.ToInt32(TBCustomSubscriberAmount.Text),
                         CBUseTranslate.IsChecked ?? false,
                         CBUseClip.IsChecked ?? false,
                         CBAddTimestamp.IsChecked ?? false,

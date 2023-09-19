@@ -1,6 +1,5 @@
 ﻿using CustomToolbox.Common.Models;
 using DiscordRPC;
-using ModernWpf.Controls;
 using Mpv.NET.Player;
 using System.Collections.ObjectModel;
 using System.Net.Http;
@@ -31,11 +30,6 @@ public partial class WMain
     /// 共用的 ClipPlayer
     /// </summary>
     public readonly ClipPlayer CPPlayer = new();
-
-    /// <summary>
-    /// 共用的 GlobalCDDialog
-    /// </summary>
-    public ContentDialog? GlobalCDDialog = null;
 
     /// <summary>
     /// 共用的 CancellationTokenSource

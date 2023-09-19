@@ -8,11 +8,10 @@ using CustomToolbox.Common.Models.UpdateNotifier;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using KeyEventHandler = System.Windows.Input.KeyEventHandler;
-using ModernWpf.Controls;
+using MessageBox = System.Windows.MessageBox;
 using OpenCCNET;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
@@ -31,55 +30,6 @@ namespace CustomToolbox;
 /// </summary>
 public partial class WMain
 {
-    /// <summary>
-    /// 顯示訊息
-    /// </summary>
-    /// <param name="message">字串，訊息</param>
-    /// <param name="title">字串，標題，預設值為空白</param>
-    public void ShowMsgBox(
-        string message,
-        string title = "")
-    {
-        try
-        {
-            // 先隱藏先前的 ContentDialog。
-            GlobalCDDialog?.Hide();
-
-            GlobalCDDialog = ContentDialogUtil.GetOkDialog(message, title, this);
-            GlobalCDDialog.Opened += (ContentDialog sender, ContentDialogOpenedEventArgs args) =>
-            {
-                APPanel.FixAirspace = true;
-            };
-            GlobalCDDialog.Closed += (ContentDialog sender, ContentDialogClosedEventArgs args) =>
-            {
-                APPanel.FixAirspace = false;
-            };
-
-            // 延後執行，以免無法修正空域問題。
-            Task.Delay(ContentDialogUtil.DelayMilliseconds).ContinueWith(t =>
-            {
-                Application.Current.Dispatcher.Invoke(async () =>
-                {
-                    try
-                    {
-                        await GlobalCDDialog.ShowAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        // WONTFIX: 2022-12-20 目前無好方法以避免此例外。
-                        Debug.WriteLine(ex.GetExceptionMessage());
-                    }
-                });
-            });
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
-        }
-    }
-
     /// <summary>
     /// 自定義初始化
     /// </summary>
@@ -120,35 +70,17 @@ public partial class WMain
                 ZhConverter.Initialize();
 
                 // 設定控制項。
-                MILoadClipListFile.Icon = new SymbolIcon(Symbol.OpenFile);
-                MISaveClipListFile.Icon = new SymbolIcon(Symbol.Save);
-                MIExit.Icon = new SymbolIcon(Symbol.Cancel);
-                MICheckUpdate.Icon = new SymbolIcon(Symbol.Download);
-                MIAbout.Icon = new SymbolIcon(Symbol.Help);
-
-                MIPlayClip.Icon = new SymbolIcon(Symbol.Play);
-                MIFetchClip.Icon = new SymbolIcon(Symbol.Zoom);
-                MIDLClip.Icon = new SymbolIcon(Symbol.Download);
-                MIDLClipsByTheSameUrl.Icon = new SymbolIcon(Symbol.Download);
-                MIBatchDLClips.Icon = new SymbolIcon(Symbol.Download);
-                MIDownloadOptions.Icon = new SymbolIcon(Symbol.Setting);
-                MIFullDownloadFirst.Icon = new SymbolIcon(Symbol.Priority);
-                MIDeleteSourceFile.Icon = new SymbolIcon(Symbol.Delete);
-                MIRandomPlayClip.Icon = new SymbolIcon(Symbol.Shuffle);
-                MIReorderClipList.Icon = new SymbolIcon(Symbol.Sort);
-                MIClearClipList.Icon = new SymbolIcon(Symbol.Delete);
-                MIClearLog.Icon = new SymbolIcon(Symbol.Delete);
-                MIExportLog.Icon = new SymbolIcon(Symbol.Save);
-
                 DGClipList.ItemsSource = GlobalDataSet;
                 CBYTQuality.SelectedIndex = Properties.Settings.Default.MpvNetLibYTQualityIndex;
                 CBPlaybackSpeed.SelectedIndex = Properties.Settings.Default.MpvNetLibPlaybackSpeedIndex;
                 SVolume.Value = Convert.ToDouble(Properties.Settings.Default.MpvNetLibVolume.ToString());
                 CBNoVideo.IsChecked = Properties.Settings.Default.MpvNetLibNoVideo;
                 CBChromaKey.IsChecked = Properties.Settings.Default.MpvNetLibChromaKey;
+                RBClipPlayer.IsChecked = true;
                 CBAutoLyric.IsChecked = Properties.Settings.Default.NetPlaylistAutoLyric;
                 MIFullDownloadFirst.IsChecked = Properties.Settings.Default.FullDownloadFirst;
                 MIDeleteSourceFile.IsChecked = Properties.Settings.Default.DeleteSourceFile;
+                TBCustomSubscriberAmount.Text = "-1";
 
                 // 為 SSeek 加入 KeyUpEvent、KeyDownEvent 等事件處裡，以讓使用者可以透過方向鍵控制控制項。
                 SSeek.AddHandler(KeyUpEvent, new KeyEventHandler(SSeek_KeyUpEvent), true);
@@ -183,7 +115,6 @@ public partial class WMain
                 CBApplyFontSetting.IsChecked = Properties.Settings.Default.FFmpegApplyFontSetting;
 
                 InitCBLanguages();
-                InitCBThemes();
                 InitUnsupportedDomains();
 
                 TBUserAgent.Text = Properties.Settings.Default.UserAgent;
@@ -511,7 +442,6 @@ public partial class WMain
 
             // 清除變數值。
             GlobalDRClient = null;
-            GlobalCDDialog = null;
 
             // 用於在應用程式結束前儲存特定 Grid 的
             // RowDefinition、ColumnDefinition 的值。
@@ -583,6 +513,22 @@ public partial class WMain
     }
 
     /// <summary>
+    /// 顯示訊息
+    /// </summary>
+    /// <param name="message">字串，訊息</param>
+    /// <param name="title">字串，標題，預設值為空白</param>
+    [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
+    public void ShowMsgBox(
+        string message,
+        string title = "")
+    {
+        MessageBox.Show(
+            messageBoxText: message,
+            caption: title,
+            button: MessageBoxButton.OK);
+    }
+
+    /// <summary>
     /// 顯示確認訊息
     /// </summary>
     /// <param name="message">字串，訊息</param>
@@ -593,7 +539,8 @@ public partial class WMain
     /// <param name="primaryButtonText">字串，主要按鈕文字，預設值為空白</param>
     /// <param name="closeButtonText">字串，關閉按鈕文字，預設值為空白</param>
     /// <param name="secondaryButtonText">字串，第二按鈕文字，預設值為空白</param>
-    private void ShowConfirmMsgBox(
+    [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
+    public void ShowConfirmMsgBox(
         string message,
         Action primaryAction,
         Action? cancelAction = null,
@@ -603,62 +550,27 @@ public partial class WMain
         string closeButtonText = "",
         string secondaryButtonText = "")
     {
-        try
+        MessageBoxResult messageBoxResult = MessageBox.Show(
+            messageBoxText: message,
+            caption: title,
+            button: MessageBoxButton.YesNoCancel);
+
+        switch (messageBoxResult)
         {
-            // 先隱藏先前的 ContentDialog。
-            GlobalCDDialog?.Hide();
+            case MessageBoxResult.OK:
+            case MessageBoxResult.Yes:
+                primaryAction.Invoke();
 
-            GlobalCDDialog = ContentDialogUtil.GetConfirmDialog(
-                message: message,
-                title: title,
-                window: this,
-                primaryButtonText: primaryButtonText,
-                closeButtonText: closeButtonText,
-                secondaryButtonText: secondaryButtonText);
-            GlobalCDDialog.Opened += (ContentDialog sender, ContentDialogOpenedEventArgs args) =>
-            {
-                APPanel.FixAirspace = true;
-            };
-            GlobalCDDialog.Closed += (ContentDialog sender, ContentDialogClosedEventArgs args) =>
-            {
-                APPanel.FixAirspace = false;
-            };
+                break;
+            case MessageBoxResult.No:
+                secondaryAction?.Invoke();
 
-            // 延後執行，以免無法修正空域問題。
-            Task.Delay(ContentDialogUtil.DelayMilliseconds).ContinueWith(t =>
-            {
-                Application.Current.Dispatcher.Invoke(async () =>
-                {
-                    try
-                    {
-                        ContentDialogResult result = await GlobalCDDialog.ShowAsync();
+                break;
+            case MessageBoxResult.Cancel:
+            case MessageBoxResult.None:
+                cancelAction?.Invoke();
 
-                        if (result == ContentDialogResult.Primary)
-                        {
-                            primaryAction.Invoke();
-                        }
-                        else if (result == ContentDialogResult.Secondary)
-                        {
-                            secondaryAction?.Invoke();
-                        }
-                        else
-                        {
-                            cancelAction?.Invoke();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // WONTFIX: 2022-12-20 目前無好方法以避免此例外。
-                        Debug.WriteLine(ex.GetExceptionMessage());
-                    }
-                });
-            });
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+                break;
         }
     }
 

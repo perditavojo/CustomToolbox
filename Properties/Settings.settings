@@ -38,9 +38,6 @@
     <Setting Name="AppLangCode" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="AppTheme" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="NetPlaylistAutoLyric" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

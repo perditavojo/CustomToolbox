@@ -3,7 +3,7 @@ using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using Label = System.Windows.Controls.Label;
-using ProgressBar = ModernWpf.Controls.ProgressBar;
+using ProgressBar = System.Windows.Controls.ProgressBar;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;

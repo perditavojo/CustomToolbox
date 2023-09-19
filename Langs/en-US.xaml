@@ -136,9 +136,6 @@
     <sys:String x:Key="BtnYtscToolTakeScreenshot">Take screensshot</sys:String>
     <sys:String x:Key="GBAppOptions">Application Options</sys:String>
     <sys:String x:Key="LLanguages">Language</sys:String>
-    <sys:String x:Key="LThemes">Theme</sys:String>
-    <sys:String x:Key="CBILightTheme">Light</sys:String>
-    <sys:String x:Key="CBIDarkTheme">Dark</sys:String>
     <sys:String x:Key="LUserAgent">User agent</sys:String>
     <sys:String x:Key="BtnMyUserAgent">Query user agent</sys:String>
     <sys:String x:Key="LUnsupportedDomains">Unsupported domains</sys:String>
@@ -308,7 +305,6 @@
     <sys:String x:Key="MsgUpdateAppendSeconds">Append seconds have been updated.</sys:String>
     <sys:String x:Key="MsgInputAValidNumber">Please input a valid number.</sys:String>
     <sys:String x:Key="MsgPathIsNotExists">Target folder is not exists.</sys:String>
-    <sys:String x:Key="MsgSwitchTheme">Switch theme to {0}.</sys:String>
     <sys:String x:Key="MsgUpdateUserAgent">User agent have been updated.</sys:String>
     <sys:String x:Key="MsgConfirmExitApp">Would you like to save the existing clip list to the temp clip list file and exit the application?</sys:String>
     <sys:String x:Key="MsgDiscordRichPresenceConnectedPipe">[{0}]: Connected pipe: {1}</sys:String>

@@ -136,9 +136,6 @@
     <sys:String x:Key="BtnYtscToolTakeScreenshot">保存截屏</sys:String>
     <sys:String x:Key="GBAppOptions">应用程序选项</sys:String>
     <sys:String x:Key="LLanguages">语系</sys:String>
-    <sys:String x:Key="LThemes">主题</sys:String>
-    <sys:String x:Key="CBILightTheme">浅色</sys:String>
-    <sys:String x:Key="CBIDarkTheme">深色</sys:String>
     <sys:String x:Key="LUserAgent">用户代理字符串</sys:String>
     <sys:String x:Key="BtnMyUserAgent">查找用户代理字符串</sys:String>
     <sys:String x:Key="LUnsupportedDomains">不支持的域名</sys:String>
@@ -308,7 +305,6 @@
     <sys:String x:Key="MsgUpdateAppendSeconds">已更新附加秒数。</sys:String>
     <sys:String x:Key="MsgInputAValidNumber">请输入有效的数值。</sys:String>
     <sys:String x:Key="MsgPathIsNotExists">目标文件夹不存在。</sys:String>
-    <sys:String x:Key="MsgSwitchTheme">变更主题至{0}。</sys:String>
     <sys:String x:Key="MsgUpdateUserAgent">已更新用户代理字符串。</sys:String>
     <sys:String x:Key="MsgConfirmExitApp">您想将目前的短片清单，保存至短片清单暂存盘案，并结束本应用程序吗？</sys:String>
     <sys:String x:Key="MsgDiscordRichPresenceConnectedPipe">[{0}]：已连接的管道：{1}</sys:String>

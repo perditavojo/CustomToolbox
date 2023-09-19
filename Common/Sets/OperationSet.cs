@@ -11,7 +11,7 @@ using Label = System.Windows.Controls.Label;
 using Microsoft.Playwright;
 using OpenCCNET;
 using Page = CustomToolbox.BilibiliApi.Models.Page;
-using ProgressBar = ModernWpf.Controls.ProgressBar;
+using ProgressBar = System.Windows.Controls.ProgressBar;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;

@@ -6,13 +6,13 @@ using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using H.NotifyIcon;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using ModernWpf.Controls.Primitives;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using RichTextBox = System.Windows.Controls.RichTextBox;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Input;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
 
@@ -84,6 +84,15 @@ public partial class WMain : Window
                 }
             }
 
+            // 避免在 TextBox 內輸入內容時觸發快速鍵。
+            if (e.OriginalSource is TextBox textBox)
+            {
+                if (textBox != null)
+                {
+                    return;
+                }
+            }
+
             switch (e.Key)
             {
                 case Key.Q:
@@ -127,16 +136,11 @@ public partial class WMain : Window
                                 WPPPlayer.WindowStyle = WindowStyle.None;
                                 WPPPlayer.WindowState = WindowState.Normal;
                                 WPPPlayer.WindowState = WindowState.Maximized;
-
-                                // 不關閉的話會無法完全的全螢幕化。
-                                WindowHelper.SetUseModernWindowStyle(WPPPlayer, false);
                             }
                             else
                             {
                                 WPPPlayer.WindowStyle = WindowStyle.SingleBorderWindow;
                                 WPPPlayer.WindowState = WindowState.Normal;
-
-                                WindowHelper.SetUseModernWindowStyle(WPPPlayer, true);
                             }
                         }
                     }));

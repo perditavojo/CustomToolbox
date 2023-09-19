@@ -5,8 +5,6 @@ using CustomToolbox.Common;
 using CustomToolbox.Common.Utils;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
-using H.NotifyIcon;
-using ModernWpf;
 using System.Configuration;
 using System.IO;
 using System.Windows;
@@ -61,66 +59,6 @@ public partial class WMain
                             primaryButtonText: MsgSet.ContentDialogBtnOk,
                             closeButtonText: MsgSet.ContentDialogBtnCancel);
                     }
-                }
-            }));
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
-        }
-    }
-
-    private void CBThemes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        try
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                if (!IsInitializing)
-                {
-                    ComboBox control = (ComboBox)sender;
-                    ComboBoxItem selectedItem = (ComboBoxItem)control.SelectedItem;
-
-                    string value = selectedItem.Tag.ToString() ?? string.Empty,
-                        themeName = selectedItem.Content.ToString() ?? string.Empty;
-
-                    if (Properties.Settings.Default.AppTheme != value)
-                    {
-                        Properties.Settings.Default.AppTheme = value;
-                        Properties.Settings.Default.Save();
-                    }
-
-                    ApplicationTheme targetTheme = AppThemeUtil.GetAppTheme(value);
-
-                    AppThemeUtil.SetAppTheme(targetTheme);
-
-                    // 丟掉 TITaskbarIcon。
-                    TaskbarIconUtil.Dispose();
-
-                    if (Content is Grid GFrame)
-                    {
-                        // 要要先從 GFrame 移除 TITaskbarIcon 後再加入 TITaskbarIcon，否則會不生效。
-                        GFrame.Children.Remove(TITaskbarIcon);
-
-                        // 重建 TITaskbarIcon。
-                        TITaskbarIcon = new TaskbarIcon()
-                        {
-                            Width = 0,
-                            Height = 0
-                        };
-
-                        Grid.SetRow(TITaskbarIcon, 3);
-
-                        // 將 TITaskbarIcon 加回 GFrame。
-                        GFrame.Children.Add(TITaskbarIcon);
-
-                        // 再次初始化 TaskbarIcon。
-                        TaskbarIconUtil.Init(this, TITaskbarIcon);
-                    }
-
-                    WriteLog(MsgSet.GetFmtStr(MsgSet.MsgSwitchTheme, themeName));
                 }
             }));
         }

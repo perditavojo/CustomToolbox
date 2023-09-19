@@ -3,7 +3,7 @@ using CustomToolbox.Common.Sets;
 using Downloader;
 using Humanizer;
 using Label = System.Windows.Controls.Label;
-using ProgressBar = ModernWpf.Controls.ProgressBar;
+using ProgressBar = System.Windows.Controls.ProgressBar;
 using SevenZipExtractor;
 using System.IO;
 using System.Net;

@@ -6,7 +6,6 @@ using CustomToolbox.Common.Sets;
 using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Utils;
 using H.NotifyIcon.Core;
-using ModernWpf.Controls;
 using Mpv.NET.API;
 using Mpv.NET.Player;
 using System.ComponentModel;
@@ -226,8 +225,7 @@ public partial class WMain
 
                         UpdateClipPlayer(ClipPlayerStatus.Paused, CPPlayer.ClipData);
 
-                        BtnPause.Label = MsgSet.Resume;
-                        BtnPause.Icon = new SymbolIcon(Symbol.Play);
+                        BtnPause.Content = MsgSet.Resume;
 
                         TaskbarIconUtil.UpdateMIPauseHeader(true);
 
@@ -239,8 +237,7 @@ public partial class WMain
 
                         UpdateClipPlayer(ClipPlayerStatus.Playing, CPPlayer.ClipData);
 
-                        BtnPause.Label = MsgSet.Pause;
-                        BtnPause.Icon = new SymbolIcon(Symbol.Pause);
+                        BtnPause.Content = MsgSet.Pause;
 
                         TaskbarIconUtil.UpdateMIPauseHeader(false);
 
@@ -295,11 +292,10 @@ public partial class WMain
             {
                 MPPlayer.Volume = isMuted ? 0 : Properties.Settings.Default.MpvNetLibVolume;
 
-                BtnMute.Label = isMuted ? MsgSet.Unmute : MsgSet.Mute;
-                BtnMute.Icon = isMuted ? new SymbolIcon(Symbol.Volume) : new SymbolIcon(Symbol.Mute);
+                BtnMute.Content = isMuted ? MsgSet.Unmute : MsgSet.Mute;
 
                 // 更新 TaskbarIcon 的 MIMute 的 Header。
-                TaskbarIconUtil.UpdateMIMuteHeader(BtnMute.Label.ToString(), isMuted);
+                TaskbarIconUtil.UpdateMIMuteHeader(BtnMute.Content.ToString());
 
                 Control[] ctrlSet =
                 {

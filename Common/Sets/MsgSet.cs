@@ -988,13 +988,6 @@ public class MsgSet
         string.Empty;
 
     /// <summary>
-    /// 訊息：變更主題至{0}。
-    /// </summary>
-    public static readonly string MsgSwitchTheme = Application.Current
-        .FindResource("MsgSwitchTheme").ToString() ??
-        string.Empty;
-
-    /// <summary>
     /// 訊息：已更新使用者代理字串。
     /// </summary>
     public static readonly string MsgUpdateUserAgent = Application.Current

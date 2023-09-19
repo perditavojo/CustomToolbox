@@ -2,7 +2,6 @@
 using CustomToolbox.Common.Sets;
 using H.NotifyIcon;
 using H.NotifyIcon.Core;
-using ModernWpf.Controls;
 using System.Windows;
 using System.Windows.Controls;
 using CustomToolbox.Common.Extensions;
@@ -122,67 +121,54 @@ public class TaskbarIconUtil
             MIShowOrHide = new()
             {
                 Header = MsgSet.Hide,
-                Icon = new SymbolIcon(Symbol.HideBcc)
             };
             MIMute = new()
             {
-                Header = _WMain.BtnMute.Label,
-                Icon = new SymbolIcon(Symbol.Mute)
+                Header = _WMain.BtnMute.Content,
             };
             MINoVideo = new()
             {
                 Header = MsgSet.MIEnableNoVideo,
-                Icon = new SymbolIcon(Symbol.Video)
             };
             MIRandomPlayClip = new()
             {
                 Header = _WMain.MIRandomPlayClip.Header,
-                Icon = new SymbolIcon(Symbol.Shuffle)
             };
             MIPlayClip = new()
             {
-                Header = _WMain.BtnPlay.Label,
-                Icon = new SymbolIcon(Symbol.Play)
+                Header = _WMain.BtnPlay.Content,
             };
             MIPause = new()
             {
-                Header = _WMain.BtnPause.Label,
-                Icon = new SymbolIcon(Symbol.Pause)
+                Header = _WMain.BtnPause.Content,
             };
             MIPrevious = new()
             {
-                Header = _WMain.BtnPrevious.Label,
-                Icon = new SymbolIcon(Symbol.Previous)
+                Header = _WMain.BtnPrevious.Content,
             };
             MINext = new()
             {
-                Header = _WMain.BtnNext.Label,
-                Icon = new SymbolIcon(Symbol.Next)
+                Header = _WMain.BtnNext.Content,
             };
             MIStop = new()
             {
-                Header = _WMain.BtnStop.Label,
-                Icon = new SymbolIcon(Symbol.Stop)
+                Header = _WMain.BtnStop.Content,
             };
             MIAboutMenu = new()
             {
                 Header = _WMain.MIAbout.Header,
-                Icon = new SymbolIcon(Symbol.Help)
             };
             MICheckUpdate = new()
             {
                 Header = _WMain.MICheckUpdate.Header,
-                Icon = new SymbolIcon(Symbol.Download)
             };
             MIAbout = new()
             {
                 Header = _WMain.MIAbout.Header,
-                Icon = new SymbolIcon(Symbol.Help)
             };
             MIExit = new()
             {
                 Header = _WMain.MIExit.Header,
-                Icon = new SymbolIcon(Symbol.Cancel)
             };
 
             // 設定 MenuItem 的點擊事件。
@@ -370,20 +356,17 @@ public class TaskbarIconUtil
     /// 更新 MIMute 的 Header
     /// </summary>
     /// <param name="value">字串，值</param>
-    /// <param name="isMuted">布林值，是否靜音，預設值為 false</param>
-    public static void UpdateMIMuteHeader(string? value, bool isMuted = false)
+    public static void UpdateMIMuteHeader(string? value)
     {
         try
         {
             if (!string.IsNullOrEmpty(value))
             {
                 MIMute.Header = value;
-                MIMute.Icon = isMuted ? new SymbolIcon(Symbol.Volume) : new SymbolIcon(Symbol.Mute);
             }
             else
             {
-                MIMute.Header = _WMain?.BtnMute.Label;
-                MIMute.Icon = isMuted ? new SymbolIcon(Symbol.Volume) : new SymbolIcon(Symbol.Mute);
+                MIMute.Header = _WMain?.BtnMute.Content;
             }
         }
         catch (Exception ex)
@@ -406,17 +389,14 @@ public class TaskbarIconUtil
             {
                 case Visibility.Visible:
                     MIShowOrHide.Header = MsgSet.Hide;
-                    MIShowOrHide.Icon = new SymbolIcon(Symbol.HideBcc);
 
                     break;
                 case Visibility.Collapsed:
                     MIShowOrHide.Header = MsgSet.Show;
-                    MIShowOrHide.Icon = new SymbolIcon(Symbol.ShowBcc);
 
                     break;
                 case Visibility.Hidden:
                     MIShowOrHide.Header = MsgSet.Show;
-                    MIShowOrHide.Icon = new SymbolIcon(Symbol.ShowBcc);
 
                     break;
                 default:
@@ -488,12 +468,8 @@ public class TaskbarIconUtil
             string header = isChecked == true ?
                 MsgSet.MIDisableNoVideo :
                 MsgSet.MIEnableNoVideo;
-            SymbolIcon icon = isChecked == true ?
-                new SymbolIcon(Symbol.Video) :
-                new SymbolIcon(Symbol.Placeholder);
 
             MINoVideo.Header = header;
-            MINoVideo.Icon = icon;
         }
         catch (Exception ex)
         {
@@ -515,12 +491,7 @@ public class TaskbarIconUtil
                 MsgSet.Resume :
                 MsgSet.Pause;
 
-            SymbolIcon icon = isPaused == true ?
-                new SymbolIcon(Symbol.Play) :
-                 new SymbolIcon(Symbol.Pause);
-
             MIPause.Header = header;
-            MIPause.Icon = icon;
         }
         catch (Exception ex)
         {

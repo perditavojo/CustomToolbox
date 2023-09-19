@@ -10,6 +10,7 @@ using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
 using H.NotifyIcon;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Path = System.IO.Path;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
@@ -22,9 +23,8 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using TabControl = System.Windows.Controls.TabControl;
 using System.Windows.Documents;
-using System.Windows.Forms;
+using TabControl = System.Windows.Controls.TabControl;
 
 namespace CustomToolbox;
 
@@ -1242,17 +1242,45 @@ public partial class WMain : Window
         }
     }
 
-    private void TSClipPlayerMode_Toggled(object sender, RoutedEventArgs e)
+    private void RBClipPlayer_Checked(object sender, RoutedEventArgs e)
     {
         try
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                CPPlayer.Mode = TSClipPlayerMode.IsOn ?
+                CPPlayer.Mode = RBClipPlayer.IsChecked == true ?
+                    ClipPlayerMode.ClipPlayer :
+                    ClipPlayerMode.TimestampEditor;
+
+                if (RBClipPlayer.IsChecked == true)
+                {
+                    WriteLog(MsgSet.MsgSwitchToClipPlayerMode);
+                }
+                else
+                {
+                    WriteLog(MsgSet.MsgSwitchToTimestampEditorMode);
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    private void RBTimestampEditor_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                CPPlayer.Mode = RBTimestampEditor.IsChecked == true ?
                     ClipPlayerMode.TimestampEditor :
                     ClipPlayerMode.ClipPlayer;
 
-                if (TSClipPlayerMode.IsOn)
+                if (RBTimestampEditor.IsChecked == true)
                 {
                     WriteLog(MsgSet.MsgSwitchToTimestampEditorMode);
                 }
@@ -1261,6 +1289,83 @@ public partial class WMain : Window
                     WriteLog(MsgSet.MsgSwitchToClipPlayerMode);
                 }
             }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+
+    private void TBCustomSubscriberAmount_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        try
+        {
+            // 只允許數字鍵、NumPad 的數字鍵，「-」號，以及 Crtl + A、X、C、V 等組合案件。
+            if ((e.Key >= Key.D0 && e.Key <= Key.D9) ||
+                (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) ||
+                e.Key == Key.Back ||
+                e.Key == Key.Left ||
+                e.Key == Key.Right ||
+                e.Key == Key.Delete ||
+                e.Key == Key.OemMinus ||
+                e.Key == Key.Subtract ||
+                e.Key == Key.LeftCtrl ||
+                e.Key == Key.RightCtrl ||
+                e.Key == Key.A ||
+                e.Key == Key.X ||
+                e.Key == Key.C ||
+                e.Key == Key.V)
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    private void TBCustomSubscriberAmount_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            // 用於避免在只輸入「-」號時就開始解析。
+            if (TBCustomSubscriberAmount.Text.Contains('-') &&
+                TBCustomSubscriberAmount.Text.Length == 1)
+            {
+                return;
+            }
+
+            bool canParsed = int.TryParse(TBCustomSubscriberAmount.Text, out int parsedResult);
+
+            if (!canParsed)
+            {
+                TBCustomSubscriberAmount.Text = "-1";
+
+                return;
+            }
+
+            if (parsedResult < -1)
+            {
+                TBCustomSubscriberAmount.Text = "-1";
+
+                return;
+            }
+            else
+            {
+                TBCustomSubscriberAmount.Text = parsedResult.ToString();
+
+                return;
+            }
         }
         catch (Exception ex)
         {
