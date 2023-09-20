@@ -16,14 +16,15 @@ using Path = System.IO.Path;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Documents;
+using System.Windows.Input;
 using TabControl = System.Windows.Controls.TabControl;
 
 namespace CustomToolbox;
@@ -397,6 +398,100 @@ public partial class WMain : Window
                 ex.GetExceptionMessage()));
         }
     }
+
+    #region 資料夾
+
+    public void MIOpenBinsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.BinsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    public void MIOpenConfigFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // 來源：https://stackoverflow.com/a/7069366
+            string configFilePath = ConfigurationManager
+                .OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath,
+                fileName = Path.GetFileName(configFilePath),
+                folderPath = Path.GetFullPath(configFilePath).Replace(fileName, string.Empty);
+
+            CustomFunction.OpenFolder(folderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    public void MIOpenDownloadsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.DownloadsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    public void MIOpenCliplistsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.ClipListsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    public void MIOpenLogsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.LogsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    public void MIOpenLyricsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.LyricsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    #endregion
 
     public void MIExit_Click(object sender, RoutedEventArgs e)
     {

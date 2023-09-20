@@ -74,6 +74,41 @@ public class TaskbarIconUtil
     private static MenuItem MIStop = new();
 
     /// <summary>
+    /// 資料夾選單
+    /// </summary>
+    private static MenuItem MIFoldersMenu = new();
+
+    /// <summary>
+    /// 開啟 Bins 資料夾
+    /// </summary>
+    private static MenuItem MIOpenBinsFolder = new();
+
+    /// <summary>
+    /// 開啟設定檔資料夾
+    /// </summary>
+    private static MenuItem MIOpenConfigFolder = new();
+
+    /// <summary>
+    /// 開啟 Downloads 資料夾
+    /// </summary>
+    private static MenuItem MIOpenDownloadsFolder = new();
+
+    /// <summary>
+    /// 開啟 ClipLists 資料夾
+    /// </summary>
+    private static MenuItem MIOpenCliplistsFolder = new();
+
+    /// <summary>
+    /// 開啟 Logs 資料夾
+    /// </summary>
+    private static MenuItem MIOpenLogsFolder = new();
+
+    /// <summary>
+    /// 開啟 Lyrics 資料夾
+    /// </summary>
+    private static MenuItem MIOpenLyricsFolder = new();
+
+    /// <summary>
     /// 關於選單
     /// </summary>
     private static MenuItem MIAboutMenu = new();
@@ -120,55 +155,83 @@ public class TaskbarIconUtil
             // 設定 MenuItem。
             MIShowOrHide = new()
             {
-                Header = MsgSet.Hide,
+                Header = MsgSet.Hide
             };
             MIMute = new()
             {
-                Header = _WMain.BtnMute.Content,
+                Header = _WMain.BtnMute.Content
             };
             MINoVideo = new()
             {
-                Header = MsgSet.MIEnableNoVideo,
+                Header = MsgSet.MIEnableNoVideo
             };
             MIRandomPlayClip = new()
             {
-                Header = _WMain.MIRandomPlayClip.Header,
+                Header = _WMain.MIRandomPlayClip.Header
             };
             MIPlayClip = new()
             {
-                Header = _WMain.BtnPlay.Content,
+                Header = _WMain.BtnPlay.Content
             };
             MIPause = new()
             {
-                Header = _WMain.BtnPause.Content,
+                Header = _WMain.BtnPause.Content
             };
             MIPrevious = new()
             {
-                Header = _WMain.BtnPrevious.Content,
+                Header = _WMain.BtnPrevious.Content
             };
             MINext = new()
             {
-                Header = _WMain.BtnNext.Content,
+                Header = _WMain.BtnNext.Content
             };
             MIStop = new()
             {
-                Header = _WMain.BtnStop.Content,
+                Header = _WMain.BtnStop.Content
+            };
+            MIFoldersMenu = new()
+            {
+                Header = _WMain.MIFoldersMenu.Header
+            };
+            MIOpenBinsFolder = new()
+            {
+                Header = _WMain.MIOpenBinsFolder.Header
+            };
+            MIOpenConfigFolder = new()
+            {
+                Header = _WMain.MIOpenConfigFolder.Header
+            };
+            MIOpenDownloadsFolder = new()
+            {
+                Header = _WMain.MIOpenDownloadsFolder.Header
+            };
+            MIOpenCliplistsFolder = new()
+            {
+                Header = _WMain.MIOpenCliplistsFolder.Header
+            };
+            MIOpenLogsFolder = new()
+            {
+                Header = _WMain.MIOpenLogsFolder.Header
+            };
+            MIOpenLyricsFolder = new()
+            {
+                Header = _WMain.MIOpenLyricsFolder.Header
             };
             MIAboutMenu = new()
             {
-                Header = _WMain.MIAbout.Header,
+                Header = _WMain.MIAbout.Header
             };
             MICheckUpdate = new()
             {
-                Header = _WMain.MICheckUpdate.Header,
+                Header = _WMain.MICheckUpdate.Header
             };
             MIAbout = new()
             {
-                Header = _WMain.MIAbout.Header,
+                Header = _WMain.MIAbout.Header
             };
             MIExit = new()
             {
-                Header = _WMain.MIExit.Header,
+                Header = _WMain.MIExit.Header
             };
 
             // 設定 MenuItem 的點擊事件。
@@ -182,6 +245,12 @@ public class TaskbarIconUtil
             MINext.Click += _WMain.BtnNext_Click;
             MIStop.Click += _WMain.BtnStop_Click;
             MICheckUpdate.Click += _WMain.MICheckUpdate_Click;
+            MIOpenBinsFolder.Click += _WMain.MIOpenBinsFolder_Click;
+            MIOpenConfigFolder.Click += _WMain.MIOpenConfigFolder_Click;
+            MIOpenDownloadsFolder.Click += _WMain.MIOpenDownloadsFolder_Click;
+            MIOpenCliplistsFolder.Click += _WMain.MIOpenCliplistsFolder_Click;
+            MIOpenLogsFolder.Click += _WMain.MIOpenLogsFolder_Click;
+            MIOpenLyricsFolder.Click += _WMain.MIOpenLyricsFolder_Click;
             MIAbout.Click += _WMain.MIAbout_Click;
             MIExit.Click += _WMain.MIExit_Click;
 
@@ -200,6 +269,17 @@ public class TaskbarIconUtil
             CMContextMenu.Items.Add(MIPrevious);
             CMContextMenu.Items.Add(MINext);
             CMContextMenu.Items.Add(MIStop);
+            CMContextMenu.Items.Add(new Separator());
+
+            MIFoldersMenu.Items.Clear();
+            MIFoldersMenu.Items.Add(MIOpenBinsFolder);
+            MIFoldersMenu.Items.Add(MIOpenConfigFolder);
+            MIFoldersMenu.Items.Add(MIOpenDownloadsFolder);
+            MIFoldersMenu.Items.Add(MIOpenCliplistsFolder);
+            MIFoldersMenu.Items.Add(MIOpenLogsFolder);
+            MIFoldersMenu.Items.Add(MIOpenLyricsFolder);
+
+            CMContextMenu.Items.Add(MIFoldersMenu);
             CMContextMenu.Items.Add(new Separator());
 
             MIAboutMenu.Items.Clear();

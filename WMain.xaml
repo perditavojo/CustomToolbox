@@ -41,6 +41,27 @@
                     Header="{DynamicResource MIExit}"
                     Click="MIExit_Click" />
             </MenuItem>
+            <MenuItem x:Name="MIFoldersMenu"
+                 Header="{DynamicResource MIFoldersMenu}">
+                <MenuItem x:Name="MIOpenBinsFolder"
+                    Header="{DynamicResource MIOpenBinsFolder}"
+                    Click="MIOpenBinsFolder_Click" />
+                <MenuItem x:Name="MIOpenConfigFolder"
+                    Header="{DynamicResource MIOpenConfigFolder}"
+                    Click="MIOpenConfigFolder_Click" />
+                <MenuItem x:Name="MIOpenDownloadsFolder"
+                    Header="{DynamicResource MIOpenDownloadsFolder}"
+                    Click="MIOpenDownloadsFolder_Click" />
+                <MenuItem x:Name="MIOpenCliplistsFolder"
+                    Header="{DynamicResource MIOpenCliplistsFolder}"
+                    Click="MIOpenCliplistsFolder_Click" />
+                <MenuItem x:Name="MIOpenLogsFolder"
+                    Header="{DynamicResource MIOpenLogsFolder}"
+                    Click="MIOpenLogsFolder_Click" />
+                <MenuItem x:Name="MIOpenLyricsFolder"
+                    Header="{DynamicResource MIOpenLyricsFolder}"
+                    Click="MIOpenLyricsFolder_Click" />
+            </MenuItem>
             <MenuItem x:Name="MICancel"
                 Header="{DynamicResource MICancel}"
                 IsEnabled="False"
@@ -972,50 +993,6 @@
                                                     Unchecked="CBEnableHardwareAcceleration_Unchecked" />
                                             </Grid>
                                         </GroupBox>
-                                    </Grid>
-                                </GroupBox>
-                                <GroupBox x:Name="GBFolders"
-                                    Header="{DynamicResource GBFolders}"
-                                    Margin="239,428,0,0"
-                                    VerticalAlignment="Top" 
-                                    HorizontalAlignment="Left" >
-                                    <Grid>
-                                        <Button x:Name="BtnOpenBinsFolder"
-                                            Margin="0,0,0,5"
-                                            Content="{DynamicResource BtnOpenBinsFolder}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Click="BtnOpenBinsFolder_Click" />
-                                        <Button x:Name="BtnOpenConfigFolder"
-                                            Margin="0,24,0,0"
-                                            Content="{DynamicResource BtnOpenConfigFolder}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Click="BtnOpenConfigFolder_Click" />
-                                        <Button x:Name="BtnOpenDownloadsFolder"
-                                            Margin="0,48,0,0"
-                                            Content="{DynamicResource BtnOpenDownloadsFolder}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Click="BtnOpenDownloadsFolder_Click" />
-                                        <Button x:Name="BtnOpenCliplistsFolder"
-                                            Margin="0,72,0,0"
-                                            Content="{DynamicResource BtnOpenCliplistsFolder}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Click="BtnOpenCliplistsFolder_Click" />
-                                        <Button x:Name="BtnOpenLogsFolder"
-                                            Margin="0,96,0,0"
-                                            Content="{DynamicResource BtnOpenLogsFolder}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Click="BtnOpenLogsFolder_Click" />
-                                        <Button x:Name="BtnOpenLyricsFolder"
-                                            Margin="0,120,0,0"
-                                            Content="{DynamicResource BtnOpenLyricsFolder}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Click="BtnOpenLyricsFolder_Click" />
                                     </Grid>
                                 </GroupBox>
                             </Grid>
