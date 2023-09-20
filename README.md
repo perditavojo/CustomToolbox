@@ -65,9 +65,6 @@
 - [Humanizr/Humanizer](https://github.com/Humanizr/Humanizer)
    - Copyright (c) .NET Foundation and Contributors
    - [MIT 授權條款](https://github.com/Humanizr/Humanizer/blob/main/LICENSE)
-- [Kinnara/ModernWpf](https://github.com/Kinnara/ModernWpf)
-   - Copyright (c) 2019 Yimeng Wu
-   - [MIT 授權條款](https://github.com/Kinnara/ModernWpf/blob/master/LICENSE)
 - [Lachee/discord-rpc-csharp](https://github.com/Lachee/discord-rpc-csharp)
    - Copyright (c) 2021 Lachee
    - [MIT 授權條款](https://github.com/Lachee/discord-rpc-csharp/blob/master/LICENSE)
