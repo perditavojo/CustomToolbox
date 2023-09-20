@@ -37,6 +37,12 @@ public partial class WMain
     public CancellationTokenSource? GlobalCTS = null;
 
     /// <summary>
+    /// 略過 WMain 的 Closing 事件的 Cancel
+    /// <para>※僅用於讓攔截機制可以正常運作使用。</para>
+    /// </summary>
+    public bool IsByPassingWindowClosingEventCancel = false;
+
+    /// <summary>
     /// 共用的 ObservableCollection&lt;ClipData&gt;
     /// </summary>
     private readonly ObservableCollection<ClipData> GlobalDataSet = new();

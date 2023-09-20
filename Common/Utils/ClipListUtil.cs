@@ -1,10 +1,11 @@
-﻿using CustomToolbox.Common.Models.NetPlaylist;
+﻿using CustomToolbox.Common.Extensions;
+using CustomToolbox.Common.Models.NetPlaylist;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using Downloader;
+using Serilog.Events;
 using System.IO;
 using System.Text.Json;
-using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -117,9 +118,11 @@ public class ClipListUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         outputList.Insert(0, new ClipListData(MsgSet.SelectPlease, string.Empty));
@@ -154,9 +157,11 @@ public class ClipListUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         outputList.Insert(0, new ClipListData(MsgSet.SelectPlease, string.Empty));
@@ -190,9 +195,11 @@ public class ClipListUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         return outputList;

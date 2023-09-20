@@ -1,20 +1,20 @@
 ﻿using Application = System.Windows.Application;
 using Contorl = System.Windows.Controls.Control;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using H.NotifyIcon;
 using Mpv.NET.Player;
 using RichTextBox = System.Windows.Controls.RichTextBox;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.RichTextBox.Themes;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Enumeration;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using Serilog;
-using Serilog.Sinks.RichTextBox.Themes;
 using System.Windows.Threading;
-using CustomToolbox.Common.Extensions;
-using Serilog.Events;
 
 namespace CustomToolbox.Common;
 
@@ -173,11 +173,9 @@ public class CustomFunction
     /// 寫紀錄
     /// </summary>
     /// <param name="message">字串，訊息</param>
-    /// <param name="title">字串，應用程式的名稱，預設值為空白</param>
     /// <param name="logEventLevel">LogEventLevel，預設值為 LogEventLevel.Information</param>
     public static void WriteLog(
         string message,
-        string title = "",
         LogEventLevel logEventLevel = LogEventLevel.Information)
     {
         if (_TBLog == null)
@@ -237,7 +235,7 @@ public class CustomFunction
                 }
                 catch (Exception ex)
                 {
-                    _WMain?.ShowMsgBox(ex.GetExceptionMessage(), title);
+                    _WMain?.ShowMsgBox(ex.GetExceptionMessage());
                 }
             }),
             priority: DispatcherPriority.Background);
@@ -348,9 +346,11 @@ public class CustomFunction
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -394,9 +394,11 @@ public class CustomFunction
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         return Visibility.Visible;
@@ -429,9 +431,11 @@ public class CustomFunction
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 

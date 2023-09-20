@@ -13,6 +13,7 @@ using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Options;
 using CustomToolbox.Common.Extensions;
+using Serilog.Events;
 
 namespace CustomToolbox.Common;
 
@@ -81,9 +82,10 @@ public class ExternalProgram
                 {
                     Directory.CreateDirectory(folder);
 
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgCreated,
-                        folder));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgCreated,
+                            folder));
                 }
             }
 
@@ -98,9 +100,10 @@ public class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.YtDlpExecName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.YtDlpExecName));
 
                 // 當今天的日期晚於設定檔中的日期時。
                 if (DateTime.Now.Date > Properties.Settings.Default.YtDlpCheckTime.Date)
@@ -111,9 +114,10 @@ public class ExternalProgram
                 {
                     SetYtDlpVersion();
 
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgYtDlpNotice,
-                        $"{Properties.Settings.Default.YtDlpCheckTime:yyyy/MM/dd HH:mm:ss}"));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgYtDlpNotice,
+                            $"{Properties.Settings.Default.YtDlpCheckTime:yyyy/MM/dd HH:mm:ss}"));
                 }
             }
 
@@ -128,24 +132,26 @@ public class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.YtDlpConfName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.YtDlpConfName));
             }
 
             #endregion
 
             #region 檢查 FFmpeg
 
-            if ((!File.Exists(VariableSet.FFmpegPath) ||
-                !File.Exists(VariableSet.FFprobePath)) ||
+            if (!File.Exists(VariableSet.FFmpegPath) ||
+                !File.Exists(VariableSet.FFprobePath) ||
                 isForceDownload)
             {
                 await DownloaderUtil.DownloadFFmpeg();
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
                         MsgSet.MsgFound,
                         $"{VariableSet.FFmpegExecName}, " +
                         $"{VariableSet.FFprobeExecName}"));
@@ -162,9 +168,10 @@ public class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.SubCharencParametersTxtFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.SubCharencParametersTxtFileName));
             }
 
             #endregion
@@ -178,9 +185,10 @@ public class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.Aria2ExecName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.Aria2ExecName));
             }
 
             #endregion
@@ -194,9 +202,10 @@ public class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.MpvConfFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.MpvConfFileName));
             }
 
             #endregion
@@ -210,9 +219,10 @@ public class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.LibMpvDllFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.LibMpvDllFileName));
             }
 
             #endregion
@@ -226,9 +236,10 @@ public class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.YtDlHookLuaFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.YtDlHookLuaFileName));
             }
 
             #endregion
@@ -237,9 +248,11 @@ public class ExternalProgram
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -308,18 +321,20 @@ public class ExternalProgram
         {
             File.Delete(VariableSet.MpvConfPath);
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgDeleted,
-                VariableSet.MpvConfFileName));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgDeleted,
+                    VariableSet.MpvConfFileName));
         }
 
         using StreamWriter streamWriter = new(VariableSet.MpvConfPath, false);
 
         streamWriter.Write(VariableSet.MpvConfTemplate);
 
-        _WMain?.WriteLog(MsgSet.GetFmtStr(
-            MsgSet.MsgCreated,
-            VariableSet.MpvConfFileName));
+        _WMain?.WriteLog(
+            message: MsgSet.GetFmtStr(
+                MsgSet.MsgCreated,
+                VariableSet.MpvConfFileName));
     }
 
     /// <summary>
@@ -336,9 +351,10 @@ public class ExternalProgram
             {
                 File.Delete(VariableSet.YtDlpConfPath);
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDeleted,
-                    VariableSet.YtDlpConfName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDeleted,
+                        VariableSet.YtDlpConfName));
             }
 
             OptionSet optionSet = new()
@@ -355,7 +371,7 @@ public class ExternalProgram
 
             optionSet.WriteConfigFile(VariableSet.YtDlpConfPath);
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
+            _WMain?.WriteLog(message: MsgSet.GetFmtStr(
                 MsgSet.MsgCreated,
                 VariableSet.YtDlpConfName));
         }
@@ -747,12 +763,13 @@ public class ExternalProgram
             }
         }));
 
-        _WMain?.WriteLog(MsgSet.GetFmtStr(
-            MsgSet.TemplateXabeFFmpegConversionResult,
-            conversionResult.StartTime.ToString(),
-            conversionResult.EndTime.ToString(),
-            conversionResult.Duration.ToString(),
-            conversionResult.Arguments));
+        _WMain?.WriteLog(
+            message: MsgSet.GetFmtStr(
+                MsgSet.TemplateXabeFFmpegConversionResult,
+                conversionResult.StartTime.ToString(),
+                conversionResult.EndTime.ToString(),
+                conversionResult.Duration.ToString(),
+                conversionResult.Arguments));
     }
 
     /// <summary>
@@ -777,7 +794,10 @@ public class ExternalProgram
             // 判斷模型檔案是否存在。
             if (!File.Exists(modelFilePath))
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgWhisperModelIsNotExists, modelFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperModelIsNotExists,
+                        modelFileName));
 
                 using Stream stream = await WhisperGgmlDownloader.GetGgmlModelAsync(
                     ggmlType,
@@ -787,17 +807,26 @@ public class ExternalProgram
 
                 await stream.CopyToAsync(fileStream, cancellationToken).ContinueWith(task =>
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgWhisperModelIsDownloaded, modelFileName));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperModelIsDownloaded,
+                            modelFileName));
                 }, cancellationToken);
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgWhisperModelIsFound, modelFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperModelIsFound,
+                        modelFileName));
             }
         }
         catch (OperationCanceledException)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgWhisperTranscribeCanceled, modelFileName));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTranscribeCanceled,
+                    modelFileName));
         }
         catch (Exception ex)
         {
@@ -813,9 +842,10 @@ public class ExternalProgram
     {
         if (!string.IsNullOrEmpty(e.Data))
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.TemplateXabeFFmpegOnDataReceived,
-                e.Data));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.TemplateXabeFFmpegOnDataReceived,
+                    e.Data));
         }
     }
 

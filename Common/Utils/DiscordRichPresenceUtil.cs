@@ -4,6 +4,7 @@ using CustomToolbox.Common.Sets;
 using DiscordRPC;
 using DiscordRPC.Logging;
 using DiscordRPC.Message;
+using Serilog.Events;
 using System.Globalization;
 
 namespace CustomToolbox.Common.Utils;
@@ -68,26 +69,31 @@ public class DiscordRichPresenceUtil
 
             _GlobalDRClient.OnConnectionEstablished += (object sender, ConnectionEstablishedMessage e) =>
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDiscordRichPresenceConnectedPipe,
-                    e.Type.ToString(),
-                    e.ConnectedPipe.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDiscordRichPresenceConnectedPipe,
+                        e.Type.ToString(),
+                        e.ConnectedPipe.ToString()));
             };
 
             _GlobalDRClient.OnConnectionFailed += (object sender, ConnectionFailedMessage e) =>
             {
                 ConnectionFailedCount++;
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDiscordRichPresenceFailedPipe,
-                    e.Type.ToString(),
-                    e.FailedPipe.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDiscordRichPresenceFailedPipe,
+                        e.Type.ToString(),
+                        e.FailedPipe.ToString()),
+                    logEventLevel: LogEventLevel.Error);
 
                 if (ConnectionFailedCount == MaxConnectionFailedCount)
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgDiscordRichPresenceConnectionFailed,
-                        ConnectionFailedCount.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgDiscordRichPresenceConnectionFailed,
+                            ConnectionFailedCount.ToString()),
+                        logEventLevel: LogEventLevel.Warning);
 
                     Dispose();
 
@@ -100,39 +106,44 @@ public class DiscordRichPresenceUtil
 
             _GlobalDRClient.OnReady += (object sender, ReadyMessage e) =>
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDiscordRichPresenceOnReady,
-                    e.Type.ToString(),
-                    e.User.Username));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDiscordRichPresenceOnReady,
+                        e.Type.ToString(),
+                        e.User.Username));
             };
 
             _GlobalDRClient.OnPresenceUpdate += (object sender, PresenceMessage e) =>
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.TemplateDiscordRichPresenceOnPresenceUpdate,
-                    e.Type.ToString(),
-                    e.Name,
-                    e.ApplicationID,
-                    e.Presence.State,
-                    e.Presence.Details));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.TemplateDiscordRichPresenceOnPresenceUpdate,
+                        e.Type.ToString(),
+                        e.Name,
+                        e.ApplicationID,
+                        e.Presence.State,
+                        e.Presence.Details));
             };
 
             _GlobalDRClient.OnError += (object sender, ErrorMessage e) =>
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.TemplateDiscordRichPresenceOnError,
-                    e.Type.ToString(),
-                    e.Code.ToString(),
-                    e.Message));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.TemplateDiscordRichPresenceOnError,
+                        e.Type.ToString(),
+                        e.Code.ToString(),
+                        e.Message),
+                    logEventLevel: LogEventLevel.Error);
             };
 
             _GlobalDRClient.OnClose += (object sender, CloseMessage e) =>
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.TemplateDiscordRichPresenceOnClose,
-                    e.Type.ToString(),
-                    e.Code.ToString(),
-                    e.Reason));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.TemplateDiscordRichPresenceOnClose,
+                        e.Type.ToString(),
+                        e.Code.ToString(),
+                        e.Reason));
             };
 
             _GlobalDRClient.Initialize();
@@ -143,9 +154,11 @@ public class DiscordRichPresenceUtil
         }
         catch (Exception ex)
         {
-            CustomFunction.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            CustomFunction.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -163,7 +176,7 @@ public class DiscordRichPresenceUtil
             // 重設 ConnectionFailedCount。
             ConnectionFailedCount = 0;
 
-            _WMain?.WriteLog(MsgSet.MsgDisableDiscordRichPresence);
+            _WMain?.WriteLog(message: MsgSet.MsgDisableDiscordRichPresence);
         }
     }
 
@@ -215,9 +228,11 @@ public class DiscordRichPresenceUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 

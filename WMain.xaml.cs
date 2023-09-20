@@ -46,11 +46,14 @@ public partial class WMain : Window
     {
         try
         {
-            // 先攔截事件。
-            e.Cancel = true;
+            if (!IsByPassingWindowClosingEventCancel)
+            {
+                // 先攔截事件。
+                e.Cancel = true;
 
-            // 關閉應用程式。
-            ShutdownApp(sender);
+                // 關閉應用程式。
+                ShutdownApp(sender);
+            }
         }
         catch (Exception ex)
         {

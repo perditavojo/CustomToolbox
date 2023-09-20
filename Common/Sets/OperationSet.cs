@@ -12,6 +12,7 @@ using Microsoft.Playwright;
 using OpenCCNET;
 using Page = CustomToolbox.BilibiliApi.Models.Page;
 using ProgressBar = System.Windows.Controls.ProgressBar;
+using Serilog.Events;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -25,7 +26,6 @@ using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
-using Serilog.Events;
 
 namespace CustomToolbox.Common.Sets;
 
@@ -663,7 +663,9 @@ public class OperationSet
         catch (Exception ex)
         {
             _WMain?.WriteLog(
-                ex.GetExceptionMessage(),
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
                 logEventLevel: LogEventLevel.Error);
         }
     }
@@ -746,7 +748,9 @@ public class OperationSet
         catch (Exception ex)
         {
             _WMain?.WriteLog(
-                ex.GetExceptionMessage(),
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
                 logEventLevel: LogEventLevel.Error);
         }
     }
@@ -818,7 +822,9 @@ public class OperationSet
         catch (Exception ex)
         {
             _WMain?.WriteLog(
-                ex.GetExceptionMessage(),
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
                 logEventLevel: LogEventLevel.Error);
         }
     }
@@ -899,9 +905,11 @@ public class OperationSet
 
                     break;
                 default:
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        MsgSet.MsgSelectedVideoNonSupported));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            MsgSet.MsgSelectedVideoNonSupported),
+                        logEventLevel: LogEventLevel.Error);
 
                     break;
             }
@@ -909,7 +917,9 @@ public class OperationSet
         catch (Exception ex)
         {
             _WMain?.WriteLog(
-                ex.GetExceptionMessage(),
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
                 logEventLevel: LogEventLevel.Error);
         }
     }
@@ -971,7 +981,9 @@ public class OperationSet
         catch (Exception ex)
         {
             _WMain?.WriteLog(
-                ex.GetExceptionMessage(),
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
                 logEventLevel: LogEventLevel.Error);
         }
     }
@@ -1008,7 +1020,7 @@ public class OperationSet
             {
                 string message = $"[{receivedTList.Code}] {receivedTList.Message}" ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
-                _WMain?.WriteLog(message);
+                _WMain?.WriteLog(message: message);
 
                 return;
             }
@@ -1020,9 +1032,10 @@ public class OperationSet
             // 當 tlist 等於 null，則表示沒有取到有效的標籤資訊。
             if (tlist == null)
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDataParsingFailedAndCanceled,
-                    mid));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDataParsingFailedAndCanceled,
+                        mid));
 
                 return;
             }
@@ -1032,16 +1045,18 @@ public class OperationSet
 
             if (tidDataSet.Count <= 0)
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDataParsingFailedAndCanceled,
-                    mid));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDataParsingFailedAndCanceled,
+                        mid));
 
                 return;
             }
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgPrepToProduceClipListFile,
-                mid));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgPrepToProduceClipListFile,
+                    mid));
 
             List<ClipData> originDataSource = new();
 
@@ -1053,10 +1068,11 @@ public class OperationSet
 
                 int tid = tidData.TID, ps = 50;
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgProcessingDataForTag,
-                    tidData.Name ?? string.Empty,
-                    tidData.TID.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgProcessingDataForTag,
+                        tidData.Name ?? string.Empty,
+                        tidData.TID.ToString()));
 
                 // 取得分頁資訊。
                 ReceivedObject<Page> receivedPage = await SpaceFunction.GetPage(httpClient, mid, tid);
@@ -1065,7 +1081,7 @@ public class OperationSet
                 {
                     string message = receivedPage.Message ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
-                    _WMain?.WriteLog(message);
+                    _WMain?.WriteLog(message: message);
 
                     return;
                 }
@@ -1091,10 +1107,11 @@ public class OperationSet
                 {
                     ct.ThrowIfCancellationRequested();
 
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgProcessingDataForPage,
-                        pn.ToString(),
-                        pages.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgProcessingDataForPage,
+                            pn.ToString(),
+                            pages.ToString()));
 
                     ReceivedObject<List<VList>> receivedVLists = await SpaceFunction.GetVList(
                         httpClient,
@@ -1108,7 +1125,7 @@ public class OperationSet
                     {
                         string message = receivedPage.Message ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
-                        _WMain?.WriteLog(message);
+                        _WMain?.WriteLog(message: message);
 
                         continue;
                     }
@@ -1117,10 +1134,11 @@ public class OperationSet
                     {
                         ct.ThrowIfCancellationRequested();
 
-                        _WMain?.WriteLog(MsgSet.GetFmtStr(
-                            MsgSet.MsgProcessingDataForVideo,
-                            processCount.ToString(),
-                            videoCount.ToString()));
+                        _WMain?.WriteLog(
+                            message: MsgSet.GetFmtStr(
+                                MsgSet.MsgProcessingDataForVideo,
+                                processCount.ToString(),
+                                videoCount.ToString()));
 
                         processCount++;
 
@@ -1137,7 +1155,10 @@ public class OperationSet
                             if (!isUrlValid)
                             {
                                 _WMain?.WriteLog(
-                                    MsgSet.GetFmtStr(MsgSet.MsgInvalidUrlSkipThisVideo, url, title));
+                                    message: MsgSet.GetFmtStr(
+                                        MsgSet.MsgInvalidUrlSkipThisVideo,
+                                        url,
+                                        title));
 
                                 continue;
                             }
@@ -1160,7 +1181,10 @@ public class OperationSet
                         // 檢查影片的標題是否包含排除字詞。
                         if (!CheckVideoTitle(title))
                         {
-                            _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgSkipThisVideo, title));
+                            _WMain?.WriteLog(message:
+                                MsgSet.GetFmtStr(
+                                    MsgSet.MsgSkipThisVideo,
+                                    title));
 
                             continue;
                         }
@@ -1203,19 +1227,21 @@ public class OperationSet
                     }
                 }
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgProcessResult,
-                    mid,
-                    tid.ToString(),
-                    videoCount.ToString(),
-                    originDataSource.Count.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgProcessResult,
+                        mid,
+                        tid.ToString(),
+                        videoCount.ToString(),
+                        originDataSource.Count.ToString()));
             }
 
             if (originDataSource.Count <= 0)
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDataParsingFailedAndCantCreateClipListFile,
-                    mid));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDataParsingFailedAndCantCreateClipListFile,
+                        mid));
 
                 return;
             }
@@ -1268,10 +1294,11 @@ public class OperationSet
 
             await fileStream.DisposeAsync();
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgClipListFileGeneratedFor,
-                mid,
-                savedPath));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgClipListFileGeneratedFor,
+                    mid,
+                    savedPath));
 
             // 開啟 ClipLists 資料夾。
             CustomFunction.OpenFolder(VariableSet.ClipListsFolderPath);
@@ -1279,7 +1306,9 @@ public class OperationSet
         catch (Exception ex)
         {
             _WMain?.WriteLog(
-                ex.GetExceptionMessage(),
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
                 logEventLevel: LogEventLevel.Error);
         }
     }
@@ -1315,9 +1344,10 @@ public class OperationSet
             // 偵測 Playwright 使用的網頁瀏覽器。
             string browserChannel = await PlaywrightUtil.DetectBrowser(forceChromium);
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgYtscToolUsedBrowserChannel,
-                browserChannel));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgYtscToolUsedBrowserChannel,
+                    browserChannel));
 
             using IPlaywright playwright = await Playwright.CreateAsync();
 
@@ -1376,9 +1406,10 @@ public class OperationSet
                             // 當超出限制列數時，取消裁切截圖。
                             useClip = false;
 
-                            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.MsgYtscToolChNameTooLongCancelCut,
-                                VariableSet.ChannelNameRowLimit.ToString()));
+                            _WMain?.WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgYtscToolChNameTooLongCancelCut,
+                                    VariableSet.ChannelNameRowLimit.ToString()));
                         }
                     }
                 }
@@ -1510,10 +1541,11 @@ public class OperationSet
                 Type = extName == ".png" ? ScreenshotType.Png : ScreenshotType.Jpeg
             });
 
-            _WMain?.WriteLog(MsgSet.MsgYtscToolTakeScreenshotFinished);
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgYtscToolFileSaveAt,
-                savedPath));
+            _WMain?.WriteLog(message: MsgSet.MsgYtscToolTakeScreenshotFinished);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgYtscToolFileSaveAt,
+                    savedPath));
 
             // 僅供測試使用。
             if (isDevelopmentMode)
@@ -1525,7 +1557,9 @@ public class OperationSet
         {
             // 只有可以 Cancel 的才只輸出 ex.Message.ToString()。
             _WMain?.WriteLog(
-                ex.GetExceptionMessage(),
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
                 logEventLevel: LogEventLevel.Error);
         }
     }
@@ -1552,7 +1586,9 @@ public class OperationSet
 
             if (audioStreams == null)
             {
-                _WMain?.WriteLog(MsgSet.MsgSelectAValidVideoOrAudioFile);
+                _WMain?.WriteLog(
+                    message: MsgSet.MsgSelectAValidVideoOrAudioFile,
+                    logEventLevel: LogEventLevel.Warning);
 
                 return string.Empty;
             }
@@ -1572,11 +1608,11 @@ public class OperationSet
         }
         catch (OperationCanceledException)
         {
-            _WMain?.WriteLog(MsgSet.MsgJobHasCanceled);
+            _WMain?.WriteLog(message: MsgSet.MsgJobHasCanceled);
         }
         catch (Exception ex)
         {
-            _WMain?.ShowMsgBox(ex.GetExceptionMessage());
+            _WMain?.ShowMsgBox(message: ex.GetExceptionMessage());
         }
 
         return string.Empty;
@@ -1633,22 +1669,25 @@ public class OperationSet
 
                 if (string.IsNullOrEmpty(modelFilePath))
                 {
-                    _WMain?.WriteLog(MsgSet.MsgWhisperModelFileNotFound);
-                    _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageCanceled);
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgWhisperRemoveTempFileByYourSelf,
-                        VariableSet.TempFolderPath));
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperModelFileNotFound);
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageCanceled);
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                            VariableSet.TempFolderPath));
 
                     return string.Empty;
                 }
 
-                _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageStarting);
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgWhisperUsedModel,
-                    nameof(ggmlType)));
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgWhisperUsedQuantizationType,
-                    nameof(quantizationType)));
+                _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageStarting);
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperUsedModel,
+                        nameof(ggmlType)));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperUsedQuantizationType,
+                        nameof(quantizationType)));
 
                 using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
 
@@ -1706,9 +1745,9 @@ public class OperationSet
                             MsgSet.MsgWhisperDetectLanguageResult,
                             rawResult);
 
-                    _WMain?.WriteLog(resultMessage);
+                    _WMain?.WriteLog(message: resultMessage);
 
-                    _WMain?.ShowMsgBox(resultMessage);
+                    _WMain?.ShowMsgBox(message: resultMessage);
                 }
                 catch (OperationCanceledException)
                 {
@@ -1716,10 +1755,11 @@ public class OperationSet
 
                     stopWatch.Stop();
 
-                    _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageCanceled);
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgWhisperTotalElapsed,
-                        stopWatch.Elapsed.ToFFmpeg()));
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageCanceled);
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperTotalElapsed,
+                            stopWatch.Elapsed.ToFFmpeg()));
                 }
 
                 await whisperProcessor.DisposeAsync();
@@ -1728,9 +1768,10 @@ public class OperationSet
                 {
                     stopWatch.Stop();
 
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgWhisperTotalElapsed,
-                        stopWatch.Elapsed.ToFFmpeg()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperTotalElapsed,
+                            stopWatch.Elapsed.ToFFmpeg()));
                 }
 
                 return wavfilePath;
@@ -1741,36 +1782,41 @@ public class OperationSet
             {
                 File.Delete(tempFilePath);
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgWhisperTempFileDeleted,
-                    tempFilePath));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTempFileDeleted,
+                        tempFilePath));
             }
         }
         catch (OperationCanceledException)
         {
             stopWatch.Stop();
 
-            _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageCanceled);
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperTotalElapsed,
-                stopWatch.Elapsed.ToFFmpeg()));
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperRemoveTempFileByYourSelf,
-                VariableSet.TempFolderPath));
+            _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageCanceled);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTotalElapsed,
+                    stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                    VariableSet.TempFolderPath));
         }
         catch (Exception ex)
         {
             stopWatch.Stop();
 
-            _WMain?.WriteLog(MsgSet.MsgWhisperDetectLanguageCanceled);
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperTotalElapsed,
-                stopWatch.Elapsed.ToFFmpeg()));
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperRemoveTempFileByYourSelf,
-                VariableSet.TempFolderPath));
+            _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageCanceled);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTotalElapsed,
+                    stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                    VariableSet.TempFolderPath));
 
-            _WMain?.ShowMsgBox(ex.GetExceptionMessage());
+            _WMain?.ShowMsgBox(message: ex.GetExceptionMessage());
         }
     }
 
@@ -1826,31 +1872,37 @@ public class OperationSet
 
                 if (string.IsNullOrEmpty(modelFilePath))
                 {
-                    _WMain?.WriteLog(MsgSet.MsgWhisperModelFileNotFound);
-                    _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeCanceled);
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgWhisperRemoveTempFileByYourSelf,
-                        VariableSet.TempFolderPath));
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperModelFileNotFound);
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeCanceled);
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                            VariableSet.TempFolderPath));
 
                     return string.Empty;
                 }
 
-                _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeStarting);
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgWhisperUsedModel,
-                    nameof(ggmlType)));
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgWhisperUsedQuantizationType,
-                    nameof(quantizationType)));
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgWhisperTranscribeUsedLanguage,
-                    language));
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgWhisperTranscribeUsedSamplingStrategyType,
-                    nameof(samplingStrategyType)));
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgWhisperTranscribeEnableOpenCCS2TWP,
-                    (Properties.Settings.Default.OpenCCS2TWP ? MsgSet.Yes : MsgSet.No)));
+                _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeStarting);
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperUsedModel,
+                        nameof(ggmlType)));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperUsedQuantizationType,
+                        nameof(quantizationType)));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTranscribeUsedLanguage,
+                        language));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTranscribeUsedSamplingStrategyType,
+                        nameof(samplingStrategyType)));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTranscribeEnableOpenCCS2TWP,
+                        Properties.Settings.Default.OpenCCS2TWP ? MsgSet.Yes : MsgSet.No));
 
                 using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
 
@@ -1908,10 +1960,11 @@ public class OperationSet
 
                     stopWatch.Stop();
 
-                    _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeCanceled);
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgWhisperTotalElapsed,
-                        stopWatch.Elapsed.ToFFmpeg()));
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeCanceled);
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperTotalElapsed,
+                            stopWatch.Elapsed.ToFFmpeg()));
                 }
 
                 await whisperProcessor.DisposeAsync();
@@ -1920,10 +1973,11 @@ public class OperationSet
                 {
                     stopWatch.Stop();
 
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgWhisperTotalElapsed,
-                        stopWatch.Elapsed.ToFFmpeg()));
-                    _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeFinished);
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperTotalElapsed,
+                            stopWatch.Elapsed.ToFFmpeg()));
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeFinished);
 
                     // 建立字幕檔。
                     string subtitleFilePath = DoCreateSubtitleFile(
@@ -1937,7 +1991,7 @@ public class OperationSet
                     // 開啟資料夾。
                     CustomFunction.OpenFolder(subtitleFileFolder);
 
-                    _WMain?.ShowMsgBox(MsgSet.MsgWhisperTranscribeFinished);
+                    _WMain?.ShowMsgBox(message: MsgSet.MsgWhisperTranscribeFinished);
                 }
 
                 return wavfilePath;
@@ -1948,34 +2002,39 @@ public class OperationSet
             {
                 File.Delete(tempFilePath);
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgWhisperTempFileDeleted,
-                    tempFilePath));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTempFileDeleted,
+                        tempFilePath));
             }
         }
         catch (OperationCanceledException)
         {
             stopWatch.Stop();
 
-            _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeCanceled);
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperTotalElapsed,
-                stopWatch.Elapsed.ToFFmpeg()));
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperRemoveTempFileByYourSelf,
-                VariableSet.TempFolderPath));
+            _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeCanceled);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTotalElapsed,
+                    stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                    VariableSet.TempFolderPath));
         }
         catch (Exception ex)
         {
             stopWatch.Stop();
 
-            _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeCanceled);
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperTotalElapsed,
-                stopWatch.Elapsed.ToFFmpeg()));
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperRemoveTempFileByYourSelf,
-                VariableSet.TempFolderPath));
+            _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeCanceled);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTotalElapsed,
+                    stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                    VariableSet.TempFolderPath));
 
             _WMain?.ShowMsgBox(ex.GetExceptionMessage());
         }
@@ -2015,10 +2074,11 @@ public class OperationSet
             streamWriter1.WriteLine();
         }
 
-        _WMain?.WriteLog(MsgSet.GetFmtStr(
-            MsgSet.MsgWhisperSubtitleFileCreated,
-            "SubRip Text",
-            filePath1));
+        _WMain?.WriteLog(
+            message: MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperSubtitleFileCreated,
+                "SubRip Text",
+                filePath1));
 
         #region WebVTT
 
@@ -2049,10 +2109,11 @@ public class OperationSet
                 streamWriter2.WriteLine();
             }
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperSubtitleFileCreated,
-                "WebVTT",
-                filePath2));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperSubtitleFileCreated,
+                    "WebVTT",
+                    filePath2));
         }
 
         #endregion
@@ -2259,7 +2320,7 @@ public class OperationSet
                 // 手動減速機制，讓前後一樣的字串不輸出。
                 if (value != tempValue)
                 {
-                    _WMain?.WriteLog(value);
+                    _WMain?.WriteLog(message: value);
                 }
             }
 
@@ -2290,7 +2351,9 @@ public class OperationSet
         catch (Exception ex)
         {
             _WMain?.WriteLog(
-                ex.GetExceptionMessage(),
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
                 logEventLevel: LogEventLevel.Error);
         }
     }

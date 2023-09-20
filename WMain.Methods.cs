@@ -10,6 +10,7 @@ using CustomToolbox.Common.Utils;
 using KeyEventHandler = System.Windows.Input.KeyEventHandler;
 using MessageBox = System.Windows.MessageBox;
 using OpenCCNET;
+using Serilog.Events;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -21,7 +22,6 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Data;
 using Xabe.FFmpeg;
-using Serilog.Events;
 
 namespace CustomToolbox;
 
@@ -30,6 +30,124 @@ namespace CustomToolbox;
 /// </summary>
 public partial class WMain
 {
+
+    /// <summary>
+    /// 顯示訊息
+    /// </summary>
+    /// <param name="message">字串，訊息</param>
+    /// <param name="title">字串，標題，預設值為空白</param>
+    public void ShowMsgBox(
+        string message,
+        string title = "")
+    {
+        MessageBox.Show(
+            owner: this,
+            messageBoxText: message,
+            caption: title,
+            button: MessageBoxButton.OK);
+    }
+
+    /// <summary>
+    /// 顯示確認訊息
+    /// </summary>
+    /// <param name="message">字串，訊息</param>
+    /// <param name="primaryAction">Action，主要按鈕的 Action</param>
+    /// <param name="cancelAction">Action，取消按鈕的 Action</param>
+    /// <param name="secondaryAction">Action，第二按鈕的 Action</param>
+    /// <param name="title">字串，標題，預設值為空白</param>
+    /// <param name="primaryButtonText">字串，主要按鈕文字，預設值為空白</param>
+    /// <param name="closeButtonText">字串，關閉按鈕文字，預設值為空白</param>
+    /// <param name="secondaryButtonText">字串，第二按鈕文字，預設值為空白</param>
+    public void ShowConfirmMsgBox(
+        string message,
+        Action? primaryAction,
+        Action? cancelAction = null,
+        Action? secondaryAction = null,
+        string title = "",
+        string primaryButtonText = "",
+        string closeButtonText = "",
+        string secondaryButtonText = "")
+    {
+        // TODO: 2023-09-20 待再次調整。
+        MessageBoxButton messageBoxButton = MessageBoxButton.OKCancel;
+
+        if (primaryAction == null)
+        {
+            messageBoxButton = MessageBoxButton.OK;
+        }
+
+        if (secondaryAction != null)
+        {
+            messageBoxButton = MessageBoxButton.YesNoCancel;
+        }
+
+        MessageBoxResult messageBoxResult = MessageBox.Show(
+            owner: this,
+            messageBoxText: message,
+            caption: title,
+            button: messageBoxButton);
+
+        switch (messageBoxResult)
+        {
+            case MessageBoxResult.OK:
+            case MessageBoxResult.Yes:
+                primaryAction?.Invoke();
+
+                break;
+            case MessageBoxResult.No:
+                if (messageBoxButton != MessageBoxButton.YesNoCancel)
+                {
+                    cancelAction?.Invoke();
+                }
+                else
+                {
+                    secondaryAction?.Invoke();
+                }
+
+                break;
+            case MessageBoxResult.Cancel:
+            case MessageBoxResult.None:
+                cancelAction?.Invoke();
+
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 寫紀錄
+    /// </summary>
+    /// <param name="message">字串，訊息</param>
+    /// <param name="title">字串，標題，預設值為空白</param>
+    /// <param name="logEventLevel">LogEventLevel，預設值為 LogEventLevel.Information</param>
+    [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
+    public void WriteLog(
+        string message,
+        LogEventLevel logEventLevel = LogEventLevel.Information) =>
+            CustomFunction.WriteLog(
+                message,
+                logEventLevel);
+
+    /// <summary>
+    /// 取得 HttpClient
+    /// </summary>
+    /// <returns>HttpClient</returns>
+    public static HttpClient? GetHttpClient()
+    {
+        HttpClient? httpClient = GlobalHCFactory?.CreateClient();
+
+        // 參考來源：https://github.com/RayWangQvQ/BiliBiliToolPro/pull/350
+        // 設定 HttpClient 的標頭資訊。
+        //httpClient?.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com");
+        //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
+
+        httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
+        httpClient?.DefaultRequestHeaders.Add("DNT", "1");
+
+        ClientHintsUtil.SetClientHints(httpClient);
+
+        return httpClient;
+    }
+
     /// <summary>
     /// 自定義初始化
     /// </summary>
@@ -377,9 +495,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -415,9 +535,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -456,6 +578,8 @@ public partial class WMain
                 {
                     await Dispatcher.BeginInvoke(async () =>
                     {
+                        IsByPassingWindowClosingEventCancel = true;
+
                         baseAction.Invoke();
 
                         // 先刪除舊檔案。
@@ -492,15 +616,19 @@ public partial class WMain
                 }
                 catch (Exception ex)
                 {
-                    WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.GetExceptionMessage()));
+                    WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }),
             secondaryAction: new Action(() =>
             {
                 Dispatcher.BeginInvoke(() =>
                 {
+                    IsByPassingWindowClosingEventCancel = true;
+
                     baseAction.Invoke();
 
                     // 手動結束應用程式。
@@ -510,105 +638,6 @@ public partial class WMain
             primaryButtonText: MsgSet.SaveAndExit,
             secondaryButtonText: MsgSet.ExitDirectly,
             closeButtonText: MsgSet.Cancel);
-    }
-
-    /// <summary>
-    /// 顯示訊息
-    /// </summary>
-    /// <param name="message">字串，訊息</param>
-    /// <param name="title">字串，標題，預設值為空白</param>
-    [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
-    public void ShowMsgBox(
-        string message,
-        string title = "")
-    {
-        MessageBox.Show(
-            messageBoxText: message,
-            caption: title,
-            button: MessageBoxButton.OK);
-    }
-
-    /// <summary>
-    /// 顯示確認訊息
-    /// </summary>
-    /// <param name="message">字串，訊息</param>
-    /// <param name="primaryAction">Action，主要按鈕的 Action</param>
-    /// <param name="cancelAction">Action，取消按鈕的 Action</param>
-    /// <param name="secondaryAction">Action，第二按鈕的 Action</param>
-    /// <param name="title">字串，標題，預設值為空白</param>
-    /// <param name="primaryButtonText">字串，主要按鈕文字，預設值為空白</param>
-    /// <param name="closeButtonText">字串，關閉按鈕文字，預設值為空白</param>
-    /// <param name="secondaryButtonText">字串，第二按鈕文字，預設值為空白</param>
-    [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
-    public void ShowConfirmMsgBox(
-        string message,
-        Action primaryAction,
-        Action? cancelAction = null,
-        Action? secondaryAction = null,
-        string title = "",
-        string primaryButtonText = "",
-        string closeButtonText = "",
-        string secondaryButtonText = "")
-    {
-        MessageBoxResult messageBoxResult = MessageBox.Show(
-            messageBoxText: message,
-            caption: title,
-            button: MessageBoxButton.YesNoCancel);
-
-        switch (messageBoxResult)
-        {
-            case MessageBoxResult.OK:
-            case MessageBoxResult.Yes:
-                primaryAction.Invoke();
-
-                break;
-            case MessageBoxResult.No:
-                secondaryAction?.Invoke();
-
-                break;
-            case MessageBoxResult.Cancel:
-            case MessageBoxResult.None:
-                cancelAction?.Invoke();
-
-                break;
-        }
-    }
-
-    /// <summary>
-    /// 寫紀錄
-    /// </summary>
-    /// <param name="message">字串，訊息</param>
-    /// <param name="title">字串，標題，預設值為空白</param>
-    /// <param name="logEventLevel">LogEventLevel，預設值為 LogEventLevel.Information</param>
-    [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
-    public void WriteLog(
-        string message,
-        string title = "",
-        LogEventLevel logEventLevel = LogEventLevel.Information) =>
-            CustomFunction.WriteLog(
-                message,
-                title,
-                logEventLevel);
-
-    /// <summary>
-    /// 取得 HttpClient
-    /// </summary>
-    /// <returns>HttpClient</returns>
-    public static HttpClient? GetHttpClient()
-    {
-        HttpClient? httpClient = GlobalHCFactory?.CreateClient();
-
-        // 參考來源：https://github.com/RayWangQvQ/BiliBiliToolPro/pull/350
-        // 設定 HttpClient 的標頭資訊。
-        //httpClient?.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com");
-        //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
-
-        httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
-        httpClient?.DefaultRequestHeaders.Add("DNT", "1");
-
-        ClientHintsUtil.SetClientHints(httpClient);
-
-        return httpClient;
     }
 
     /// <summary>

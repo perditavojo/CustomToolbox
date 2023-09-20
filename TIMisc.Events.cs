@@ -46,6 +46,8 @@ public partial class WMain
                             message: message,
                             primaryAction: new Action(() =>
                             {
+                                IsByPassingWindowClosingEventCancel = true;
+
                                 Properties.Settings.Default.AppLangCode = value;
                                 Properties.Settings.Default.Save();
 
@@ -53,6 +55,8 @@ public partial class WMain
                             }),
                             cancelAction: new Action(() =>
                             {
+                                IsByPassingWindowClosingEventCancel = false;
+
                                 // 設回預設值。
                                 control.SelectedValue = Properties.Settings.Default.AppLangCode;
                             }),
