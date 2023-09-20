@@ -12,7 +12,25 @@ class TimeSpanToSecondsConverter : IValueConverter
     {
         if (value is TimeSpan timeSpan)
         {
-            return timeSpan.TotalSeconds;
+            if (timeSpan.Days == 0)
+            {
+                return timeSpan.TotalSeconds;
+            }
+
+            double seconds = double.TryParse(
+                timeSpan.Days.ToString(),
+                out double parsedDouble) ?
+                parsedDouble :
+                -1;
+
+            if (seconds == -1)
+            {
+                return timeSpan.TotalSeconds;
+            }
+
+            TimeSpan tsNew = TimeSpan.FromSeconds(seconds);
+
+            return tsNew.TotalSeconds;
         }
 
         return value;

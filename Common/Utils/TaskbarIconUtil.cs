@@ -1,10 +1,10 @@
 ﻿using Control = System.Windows.Controls.Control;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using H.NotifyIcon;
 using H.NotifyIcon.Core;
 using System.Windows;
 using System.Windows.Controls;
-using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox.Common.Utils;
 
