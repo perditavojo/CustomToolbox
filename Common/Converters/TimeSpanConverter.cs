@@ -10,30 +10,26 @@ class TimeSpanConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is TimeSpan timeSpan)
-        {
-            if (timeSpan.Days > 1)
-            {
-                double seconds = double.TryParse(
-                    timeSpan.Days.ToString(),
-                    out double parsedDouble) ?
-                    parsedDouble :
-                    -1;
-
-                if (seconds == -1)
-                {
-                    return value;
-                }
-
-                value = TimeSpan.FromSeconds(seconds);
-            }
-        }
-
         return value;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
+        // TODO: 2023-09-21 待調整。
+        bool canParse = TimeSpan.TryParse(value.ToString(), out TimeSpan result);
+
+        if (!canParse)
+        {
+            value = TimeSpan.Zero;
+        }
+
+        if (result.Days > 0)
+        {
+            double seconds = result.Days;
+
+            value = TimeSpan.FromSeconds(seconds);
+        }
+
         return value;
     }
 }

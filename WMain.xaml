@@ -1044,7 +1044,9 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="{DynamicResource ClipDataStartTime}"
-                        Binding="{Binding StartTime, Converter={StaticResource TimeSpanConverter}}">
+                        Binding="{Binding StartTime,
+                            Converter={StaticResource TimeSpanConverter},
+                            UpdateSourceTrigger=PropertyChanged}">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Setter Property="ToolTip"
@@ -1053,7 +1055,9 @@
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="{DynamicResource ClipDataEndTime}"
-                        Binding="{Binding EndTime, Converter={StaticResource TimeSpanConverter}}">
+                        Binding="{Binding EndTime,
+                            Converter={StaticResource TimeSpanConverter},
+                            UpdateSourceTrigger=PropertyChanged}">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Setter Property="ToolTip"
