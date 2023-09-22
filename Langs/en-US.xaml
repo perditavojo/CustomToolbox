@@ -107,6 +107,8 @@
     <sys:String x:Key="BtnLoadClipList">Load clip list</sys:String>
     <sys:String x:Key="GBB23ClipListGenerator">Bilibili clip list generator</sys:String>
     <sys:String x:Key="LB23UserMID">User mid</sys:String>
+    <sys:String x:Key="BtnB23CopyMID">Copy MID</sys:String>
+    <sys:String x:Key="BtnB23CopyMIDToolTip">Copy MID from "Network Playlist" (Only supports Bilibili playlists)</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrases">Excluded phrases</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">A line a phrase</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">Export as *.jsonc</sys:String>
@@ -213,7 +215,7 @@
     <sys:String x:Key="MIRandomPlayClip">Random play clip</sys:String>
     <sys:String x:Key="MIReorderClipList">Reorder clip list</sys:String>
     <sys:String x:Key="MIClearClipList">Clear clip list</sys:String>
-    <sys:String x:Key="TBLog">Log</sys:String>
+    <sys:String x:Key="RTBLog">Log</sys:String>
     <sys:String x:Key="MIClearLog">Clear log</sys:String>
     <sys:String x:Key="MIExportLog">Export log</sys:String>
     <sys:String x:Key="LVersionPrefix">Version:</sys:String>
@@ -378,4 +380,5 @@
     <sys:String x:Key="MsgWhisperTranscribeFinished">Transcribe finished.</sys:String>
     <sys:String x:Key="MsgWhisperStartToCreateSubtitleFile">Start creating {0} subtitle file...</sys:String>
     <sys:String x:Key="MsgWhisperSubtitleFileCreated">{0} subtitle file created: {1}</sys:String>
+    <sys:String x:Key="MsgSelectB23Playlist">Please select a Bilibili playlist.</sys:String>
 </ResourceDictionary>

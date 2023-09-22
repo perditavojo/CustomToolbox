@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using System.Windows.Forms;
 
 namespace CustomToolbox.Common;
 
@@ -29,9 +30,9 @@ public class CustomFunction
     private static WMain? _WMain = null;
 
     /// <summary>
-    /// TBLog
+    /// RTBLog
     /// </summary>
-    private static RichTextBox? _TBLog = null;
+    private static RichTextBox? _RTBLog = null;
 
     /// <summary>
     /// 初始化
@@ -40,7 +41,7 @@ public class CustomFunction
     public static void Init(WMain wMain)
     {
         _WMain = wMain;
-        _TBLog = _WMain.TBLog;
+        _RTBLog = _WMain.RTBLog;
 
         SetSeriLog();
     }
@@ -178,7 +179,7 @@ public class CustomFunction
         string message,
         LogEventLevel logEventLevel = LogEventLevel.Information)
     {
-        if (_TBLog == null)
+        if (_RTBLog == null)
         {
             return;
         }
@@ -231,7 +232,7 @@ public class CustomFunction
                             break;
                     }
 
-                    _TBLog.ScrollToEnd();
+                    _RTBLog.ScrollToEnd();
                 }
                 catch (Exception ex)
                 {
@@ -446,7 +447,7 @@ public class CustomFunction
     public static string GetUserAgent()
     {
         // 2023-01-04 Bilibili 的 API 會依據使用者代理字串來封鎖連線。
-        return $"{Properties.Settings.Default.UserAgent} {DateTime.Now:yyyyMMddHHmm}";
+        return $"{Properties.Settings.Default.UserAgent}";
     }
 
     /// <summary>
@@ -454,16 +455,16 @@ public class CustomFunction
     /// </summary>
     private static void SetSeriLog()
     {
-        if (_TBLog != null)
+        if (_RTBLog != null)
         {
             // 調高以避免自動換行。
-            _TBLog.Document.PageWidth = 1920;
+            _RTBLog.Document.PageWidth = 1920;
         }
 
         // 設定 Serilog。
         Log.Logger = new LoggerConfiguration()
             .WriteTo.RichTextBox(
-                richTextBoxControl: _TBLog,
+                richTextBoxControl: _RTBLog,
                 outputTemplate: "[{Timestamp:yyyy/MM/dd HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
                 theme: RichTextBoxConsoleTheme.Colored)
             .CreateLogger();

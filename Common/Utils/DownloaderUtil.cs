@@ -1,4 +1,5 @@
 ﻿using Application = System.Windows.Application;
+using CustomToolbox.BilibiliApi.Functions;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using Downloader;
@@ -9,6 +10,8 @@ using Serilog.Events;
 using SevenZipExtractor;
 using System.IO;
 using System.Net;
+
+using System.Net.Http;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -530,9 +533,22 @@ public class DownloaderUtil
     /// <summary>
     /// 取得針對 Bilibili 網站使用的 DownloadConfiguration
     /// </summary>
+    /// <param name="httpClient">HttpClient，預設值是 null</param>
     /// <returns>DownloadConfiguration</returns>
-    public static DownloadConfiguration GetB23DownloadConfiguration()
+    public static async Task<DownloadConfiguration> GetB23DownloadConfiguration(
+        HttpClient? httpClient = null)
     {
+        string strB_3 = string.Empty;
+
+        if (httpClient != null)
+        {
+            // 2023-09-22 Bilibili Buvid3 參考來源：
+            // https://github.com/SocialSisterYi/bilibili-API-collect/issues/788
+            // https://github.com/SocialSisterYi/bilibili-API-collect/issues/790
+            // https://github.com/SocialSisterYi/bilibili-API-collect/issues/795
+            (strB_3, string _) = await AuthFunction.GetBuvids(httpClient);
+        }
+
         DownloadConfiguration downloadConfiguration = new();
 
         WebHeaderCollection headerCollection = new()
@@ -540,6 +556,11 @@ public class DownloaderUtil
             { "Origin", "https://space.bilibili.com" },
             { "DNT", "1" }
         };
+
+        if (!string.IsNullOrEmpty(strB_3))
+        {
+            headerCollection.Add("Cookie", $"buvid3={strB_3};");
+        }
 
         ClientHintsUtil.SetClientHints(headerCollection);
 

@@ -165,7 +165,7 @@ public partial class WMain
                 GlobalDataSet.CollectionChanged += GlobalDataSet_CollectionChanged;
 
                 // 日誌記錄需要使用等寬字型。
-                TBLog.FontFamily = AppLangUtil.GetLogFontFamily();
+                RTBLog.FontFamily = AppLangUtil.GetLogFontFamily();
 
                 // 初始化數個方法。
                 // CustomFunction.Init() 必須第一個呼叫。

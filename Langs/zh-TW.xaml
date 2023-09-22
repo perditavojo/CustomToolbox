@@ -107,6 +107,8 @@
     <sys:String x:Key="BtnLoadClipList">載入短片清單</sys:String>
     <sys:String x:Key="GBB23ClipListGenerator">Bilibili 短片清單產生器</sys:String>
     <sys:String x:Key="LB23UserMID">使用者 mid</sys:String>
+    <sys:String x:Key="BtnB23CopyMID">複製 MID</sys:String>
+    <sys:String x:Key="BtnB23CopyMIDToolTip">從 "網路播放清單" 複製 MID（僅支援 Bilibili 的播放清單）</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrases">排除字詞</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">一行一個排除字詞</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">匯出成 *.jsonc</sys:String>
@@ -213,7 +215,7 @@
     <sys:String x:Key="MIRandomPlayClip">隨機播放短片</sys:String>
     <sys:String x:Key="MIReorderClipList">隨機排列短片清單</sys:String>
     <sys:String x:Key="MIClearClipList">清除短片清單</sys:String>
-    <sys:String x:Key="TBLog">日誌紀錄</sys:String>
+    <sys:String x:Key="RTBLog">日誌紀錄</sys:String>
     <sys:String x:Key="MIClearLog">清除日誌紀錄</sys:String>
     <sys:String x:Key="MIExportLog">匯出日誌紀錄</sys:String>
     <sys:String x:Key="LVersionPrefix">版本：</sys:String>
@@ -378,4 +380,5 @@
     <sys:String x:Key="MsgWhisperTranscribeFinished">轉譯完成。</sys:String>
     <sys:String x:Key="MsgWhisperStartToCreateSubtitleFile">開始建立 {0} 字幕檔……</sys:String>
     <sys:String x:Key="MsgWhisperSubtitleFileCreated">已建立 {0} 字幕檔：{1}</sys:String>
+    <sys:String x:Key="MsgSelectB23Playlist">請選擇 Bilibili 的播放清單。</sys:String>
 </ResourceDictionary>

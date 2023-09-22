@@ -1,5 +1,6 @@
 ﻿using CustomToolbox.BilibiliApi.Models;
 using CustomToolbox.BilibiliApi.Sets;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Utils;
 using Downloader;
 using System.IO;
@@ -30,6 +31,9 @@ public class SpaceFunction
             {
                 { "mid", mid }
             });
+
+        // 輸出 HttpClient 的標頭資訊。
+        string _ = httpClient.LogHeaders();
 
         string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
@@ -66,6 +70,9 @@ public class SpaceFunction
                 { "mid", mid },
                 { "tid", tid.ToString() }
             });
+
+        // 輸出 HttpClient 的標頭資訊。
+        string _ = httpClient.LogHeaders();
 
         string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
@@ -110,6 +117,9 @@ public class SpaceFunction
                 { "ps", ps.ToString() }
             });
 
+        // 輸出 HttpClient 的標頭資訊。
+        string _ = httpClient.LogHeaders();
+
         string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
         using HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
@@ -146,8 +156,11 @@ public class SpaceFunction
 
         string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
+        DownloadConfiguration downloadConfiguration =
+            await DownloaderUtil.GetB23DownloadConfiguration(httpClient);
+
         DownloadService downloadService = DownloaderUtil
-            .GetDownloadService(DownloaderUtil.GetB23DownloadConfiguration());
+            .GetDownloadService(downloadConfiguration);
 
         Stream stream = await downloadService.DownloadFileTaskAsync(apiUrl);
 
@@ -182,8 +195,11 @@ public class SpaceFunction
 
         string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
+        DownloadConfiguration downloadConfiguration =
+            await DownloaderUtil.GetB23DownloadConfiguration(httpClient);
+
         DownloadService downloadService = DownloaderUtil
-            .GetDownloadService(DownloaderUtil.GetB23DownloadConfiguration());
+            .GetDownloadService(downloadConfiguration);
 
         Stream stream = await downloadService.DownloadFileTaskAsync(apiUrl);
 
@@ -225,8 +241,11 @@ public class SpaceFunction
 
         string apiUrl = $"{UrlSet.BilibiliSpaceApiUrl}?{queryStringValue}";
 
+        DownloadConfiguration downloadConfiguration =
+            await DownloaderUtil.GetB23DownloadConfiguration(httpClient);
+
         DownloadService downloadService = DownloaderUtil
-            .GetDownloadService(DownloaderUtil.GetB23DownloadConfiguration());
+            .GetDownloadService(downloadConfiguration);
 
         Stream stream = await downloadService.DownloadFileTaskAsync(apiUrl);
 

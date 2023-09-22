@@ -6,6 +6,7 @@ using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Utils;
 using CustomToolbox.Common.Sets;
+using static CustomToolbox.Common.Sets.EnumSet;
 using DragCompletedEventArgs = System.Windows.Controls.Primitives.DragCompletedEventArgs;
 using DragStartedEventArgs = System.Windows.Controls.Primitives.DragStartedEventArgs;
 using H.NotifyIcon.Core;
@@ -648,6 +649,62 @@ public partial class WMain
                     MsgSet.MsgStoppedPlayingClip,
                     NotificationIcon.Info);
                 TaskbarIconUtil.SetToolTip(string.Empty);
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    private void RBClipPlayer_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                CPPlayer.Mode = RBClipPlayer.IsChecked == true ?
+                    ClipPlayerMode.ClipPlayer :
+                    ClipPlayerMode.TimestampEditor;
+
+                if (RBClipPlayer.IsChecked == true)
+                {
+                    WriteLog(MsgSet.MsgSwitchToClipPlayerMode);
+                }
+                else
+                {
+                    WriteLog(MsgSet.MsgSwitchToTimestampEditorMode);
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(MsgSet.GetFmtStr(
+                MsgSet.MsgErrorOccured,
+                ex.GetExceptionMessage()));
+        }
+    }
+
+    private void RBTimestampEditor_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                CPPlayer.Mode = RBTimestampEditor.IsChecked == true ?
+                    ClipPlayerMode.TimestampEditor :
+                    ClipPlayerMode.ClipPlayer;
+
+                if (RBTimestampEditor.IsChecked == true)
+                {
+                    WriteLog(MsgSet.MsgSwitchToTimestampEditorMode);
+                }
+                else
+                {
+                    WriteLog(MsgSet.MsgSwitchToClipPlayerMode);
+                }
             }));
         }
         catch (Exception ex)

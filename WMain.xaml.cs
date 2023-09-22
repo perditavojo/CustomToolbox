@@ -81,7 +81,7 @@ public partial class WMain : Window
             // 避免在非指定的 RichTextBox 內輸入內容時觸發快速鍵。
             if (e.OriginalSource is RichTextBox richTextBox)
             {
-                if (richTextBox != null && richTextBox != TBLog)
+                if (richTextBox != null && richTextBox != RTBLog)
                 {
                     return;
                 }

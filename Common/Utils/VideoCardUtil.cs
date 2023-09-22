@@ -19,7 +19,7 @@ public class VideoCardUtil
 
         ManagementObjectSearcher managementObjectSearcher = new("SELECT * FROM Win32_VideoController");
 
-        foreach (ManagementObject managementObject in managementObjectSearcher.Get())
+        foreach (ManagementObject managementObject in managementObjectSearcher.Get().Cast<ManagementObject>())
         {
             VideoCardData videoCard = new();
 

@@ -1498,6 +1498,13 @@ public class MsgSet
         .FindResource("MsgWhisperSubtitleFileCreated").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 訊息：請選擇 Bilibili 的播放清單。
+    /// </summary>
+    public static readonly string MsgSelectB23Playlist = Application.Current
+        .FindResource("MsgSelectB23Playlist").ToString() ??
+        string.Empty;
+
     #endregion
 
     /// <summary>
