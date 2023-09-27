@@ -1,12 +1,13 @@
 ﻿using Control = System.Windows.Controls.Control;
 using CustomToolbox.Common;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using Serilog.Events;
 using System.Windows;
 using System.Windows.Controls;
 using TextBox = System.Windows.Controls.TextBox;
-using CustomToolbox.Common.Extensions;
 
 namespace CustomToolbox;
 
@@ -56,9 +57,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -81,9 +84,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -159,9 +164,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

@@ -3,6 +3,7 @@ using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using Downloader;
+using Serilog.Events;
 using System.IO;
 using System.Text.Json;
 
@@ -51,9 +52,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -93,30 +96,34 @@ public partial class WMain
                     {
                         if (songID > 0)
                         {
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.MsgSongID,
-                                songID.ToString()));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgSongID,
+                                    songID.ToString()));
 
                             lrcFileUrl = PlaylistUrlSet.YCPLrcFileTemplateUrl
                                 .Replace("[SongId]", songID.ToString());
 
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.MsgFoundAvailableLrcFile,
-                                videoID,
-                                videoName,
-                                lrcFileUrl));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgFoundAvailableLrcFile,
+                                    videoID,
+                                    videoName,
+                                    lrcFileUrl));
 
                             string tempOffsetSecnds = lyricData[4].ToString() ?? "0";
 
                             if (int.TryParse(startSeconds, out int iStartSecnds) &&
                                 int.TryParse(tempOffsetSecnds, out int iOffsetSecnds))
                             {
-                                WriteLog(MsgSet.GetFmtStr(
-                                    MsgSet.MsgStartSeconds,
-                                    iStartSecnds.ToString()));
-                                WriteLog(MsgSet.GetFmtStr(
-                                    MsgSet.MsgLrcFileOffsetSeconds,
-                                    iOffsetSecnds.ToString()));
+                                WriteLog(
+                                    message: MsgSet.GetFmtStr(
+                                        MsgSet.MsgStartSeconds,
+                                        iStartSecnds.ToString()));
+                                WriteLog(
+                                    message: MsgSet.GetFmtStr(
+                                        MsgSet.MsgLrcFileOffsetSeconds,
+                                        iOffsetSecnds.ToString()));
 
                                 offsetSeconds = (iStartSecnds + iOffsetSecnds).ToString();
                             }
@@ -125,49 +132,60 @@ public partial class WMain
                                 offsetSeconds = "0";
                             }
 
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.MsgLrcFileActualOffsetSeconds,
-                                offsetSeconds.ToString()));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgLrcFileActualOffsetSeconds,
+                                    offsetSeconds.ToString()));
                         }
                         else if (songID == 0)
                         {
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.MsgManualDisabledLyricSearch,
-                                videoID,
-                                videoName));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgManualDisabledLyricSearch,
+                                    videoID,
+                                    videoName),
+                                logEventLevel: LogEventLevel.Warning);
                         }
                         else if (songID == -1)
                         {
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.MsgSongFindingFailed,
-                                videoID,
-                                videoName));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgSongFindingFailed,
+                                    videoID,
+                                    videoName),
+                                logEventLevel: LogEventLevel.Warning);
                         }
                         else
                         {
                             // result < -1。
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.MsgFoundSongButNoLyric,
-                                videoID,
-                                videoName,
-                                songID.ToString()));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgFoundSongButNoLyric,
+                                    videoID,
+                                    videoName,
+                                    songID.ToString()),
+                                logEventLevel: LogEventLevel.Warning);
                         }
                     }
                 }
                 else
                 {
-                    WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgCanNotFindLrcFileInfo,
-                        videoID,
-                        videoName));
+                    WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgCanNotFindLrcFileInfo,
+                            videoID,
+                            videoName),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         return new string[]
@@ -198,9 +216,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

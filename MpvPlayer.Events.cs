@@ -3,6 +3,7 @@ using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
+using Serilog.Events;
 using System.Windows;
 using Mpv.NET.API;
 using Mpv.NET.Player;
@@ -43,7 +44,7 @@ public partial class WMain
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                WriteLog(MsgSet.MsgMediaLoaded);
+                WriteLog(message: MsgSet.MsgMediaLoaded);
 
                 if (MPPlayer != null && CPPlayer.ClipData != null)
                 {
@@ -80,15 +81,17 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
     private void MediaFinished(object? sender, EventArgs e)
     {
-        WriteLog(MsgSet.MsgMediaFinished);
+        WriteLog(message: MsgSet.MsgMediaFinished);
 
         BtnNext_Click(
             nameof(MediaFinished),
@@ -97,37 +100,39 @@ public partial class WMain
 
     private void MediaPaused(object? sender, EventArgs e)
     {
-        WriteLog(MsgSet.MsgMediaPaused);
+        WriteLog(message: MsgSet.MsgMediaPaused);
     }
 
     private void MediaResumed(object? sender, EventArgs e)
     {
-        WriteLog(MsgSet.MsgMediaResumed);
+        WriteLog(message: MsgSet.MsgMediaResumed);
     }
 
     private void MediaStartedBuffering(object? sender, EventArgs e)
     {
-        WriteLog(MsgSet.MsgMediaStartedBuffering);
+        WriteLog(message: MsgSet.MsgMediaStartedBuffering);
     }
 
     private void MediaEndedBuffering(object? sender, EventArgs e)
     {
-        WriteLog(MsgSet.MsgMediaEndedBuffering);
+        WriteLog(message: MsgSet.MsgMediaEndedBuffering);
     }
 
     private void MediaStartedSeeking(object? sender, EventArgs e)
     {
-        WriteLog(MsgSet.MsgMediaStartedSeeking);
+        WriteLog(message: MsgSet.MsgMediaStartedSeeking);
     }
 
     private void MediaEndedSeeking(object? sender, EventArgs e)
     {
-        WriteLog(MsgSet.MsgMediaEndedSeeking);
+        WriteLog(message: MsgSet.MsgMediaEndedSeeking);
     }
 
     private void MediaError(object? sender, EventArgs e)
     {
-        WriteLog(MsgSet.MsgMediaError);
+        WriteLog(
+            message: MsgSet.MsgMediaError,
+            logEventLevel: LogEventLevel.Error);
 
         BtnNext_Click(
             nameof(MediaError),
@@ -136,7 +141,7 @@ public partial class WMain
 
     private void MediaUnloaded(object? sender, EventArgs e)
     {
-        WriteLog(MsgSet.MsgMediaUnloaded);
+        WriteLog(message: MsgSet.MsgMediaUnloaded);
     }
 
     private void PositionChanged(object? sender, MpvPlayerPositionChangedEventArgs e)
@@ -250,9 +255,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -265,7 +272,7 @@ public partial class WMain
 
         if (!string.IsNullOrEmpty(rawText))
         {
-            WriteLog($"[{mpvLogMessage.Prefix}] ({mpvLogMessage.LogLevel}) {rawText}");
+            WriteLog(message: $"[{mpvLogMessage.Prefix}] ({mpvLogMessage.LogLevel}) {rawText}");
         }
     }
 }
