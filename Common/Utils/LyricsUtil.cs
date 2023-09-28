@@ -3,6 +3,7 @@ using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using Downloader;
 using OpenCCNET;
+using Serilog.Events;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -157,9 +158,11 @@ public partial class LyricsUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         return path;

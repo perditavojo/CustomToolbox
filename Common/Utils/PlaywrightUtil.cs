@@ -1,9 +1,10 @@
-﻿using HtmlAgilityPack;
+﻿using CustomToolbox.Common.Sets;
+using CustomToolbox.Common.Extensions;
+using HtmlAgilityPack;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 using Microsoft.Playwright;
 using Microsoft.Win32;
-using CustomToolbox.Common.Sets;
-using CustomToolbox.Common.Extensions;
+using Serilog.Events;
 
 namespace CustomToolbox.Common.Utils;
 
@@ -100,7 +101,9 @@ public class PlaywrightUtil
         {
             clip = null;
 
-            _WMain?.WriteLog(MsgSet.MsgYtscToolSubscribersTooLongCancelClip);
+            _WMain?.WriteLog(
+                message: MsgSet.MsgYtscToolSubscribersTooLongCancelClip,
+                logEventLevel: LogEventLevel.Warning);
         }
 
         return clip;
@@ -197,14 +200,16 @@ public class PlaywrightUtil
                         exitCode.ToString()));
                 }
 
-                _WMain?.WriteLog(MsgSet.MsgPlaywrightBrowserPath);
-                _WMain?.WriteLog($@"C:\Users\{Environment.UserName}\AppData\Local\ms-playwright");
+                _WMain?.WriteLog(message: MsgSet.MsgPlaywrightBrowserPath);
+                _WMain?.WriteLog(message: $@"C:\Users\{Environment.UserName}\AppData\Local\ms-playwright");
             }
             catch (Exception ex)
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgErrorOccured,
-                    ex.GetExceptionMessage()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgErrorOccured,
+                        ex.GetExceptionMessage()),
+                    logEventLevel: LogEventLevel.Error);
             }
         });
     }

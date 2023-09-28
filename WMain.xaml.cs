@@ -8,6 +8,7 @@ using H.NotifyIcon;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using RichTextBox = System.Windows.Controls.RichTextBox;
+using Serilog.Events;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Windows;
@@ -36,9 +37,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -57,9 +60,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -256,19 +261,21 @@ public partial class WMain : Window
                         {
                             clipData.StartTime = TimeSpan.FromSeconds(newSeconds);
 
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.TemplateUpdateStarTimeOfClipTo,
-                                clipData.Name ?? string.Empty,
-                                clipData.StartTime.ToString()));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.TemplateUpdateStarTimeOfClipTo,
+                                    clipData.Name ?? string.Empty,
+                                    clipData.StartTime.ToString()));
                         }
                         else if (e.Key == Key.I)
                         {
                             clipData.EndTime = TimeSpan.FromSeconds(newSeconds);
 
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.TemplateUpdateEndTimeOfClipTo,
-                                clipData.Name ?? string.Empty,
-                                clipData.EndTime.ToString()));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.TemplateUpdateEndTimeOfClipTo,
+                                    clipData.Name ?? string.Empty,
+                                    clipData.EndTime.ToString()));
                         }
                     }
 
@@ -279,9 +286,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

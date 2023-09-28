@@ -3,6 +3,7 @@ using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using H.NotifyIcon;
 using H.NotifyIcon.Core;
+using Serilog.Events;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -297,9 +298,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -311,9 +314,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -335,9 +340,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
     }
@@ -357,9 +364,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -394,9 +403,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -426,9 +437,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -451,9 +464,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -485,9 +500,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -501,9 +518,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -531,9 +550,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -553,9 +574,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -575,9 +598,11 @@ public class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.GetExceptionMessage()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }
