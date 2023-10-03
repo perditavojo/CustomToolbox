@@ -55,20 +55,13 @@ public partial class WMain
     /// <param name="cancelAction">Action，取消按鈕的 Action</param>
     /// <param name="secondaryAction">Action，第二按鈕的 Action</param>
     /// <param name="title">字串，標題，預設值為空白</param>
-    /// <param name="primaryButtonText">字串，主要按鈕文字，預設值為空白</param>
-    /// <param name="closeButtonText">字串，關閉按鈕文字，預設值為空白</param>
-    /// <param name="secondaryButtonText">字串，第二按鈕文字，預設值為空白</param>
     public void ShowConfirmMsgBox(
         string message,
         Action? primaryAction,
         Action? cancelAction = null,
         Action? secondaryAction = null,
-        string title = "",
-        string primaryButtonText = "",
-        string closeButtonText = "",
-        string secondaryButtonText = "")
+        string title = "")
     {
-        // TODO: 2023-09-20 待再次調整。
         MessageBoxButton messageBoxButton = MessageBoxButton.OKCancel;
 
         if (primaryAction == null)
@@ -236,6 +229,7 @@ public partial class WMain
                 InitUnsupportedDomains();
 
                 TBUserAgent.Text = Properties.Settings.Default.UserAgent;
+                TBSecChUa.Text = Properties.Settings.Default.SecChUa;
                 TBAppendSeconds.Text = Properties.Settings.Default.PlaylistAppendSeconds.ToString();
                 CBEnableMpvLogVerbose.IsChecked = Properties.Settings.Default.MpvNetLibLogVerbose;
                 CBEnableDiscordRichPresence.IsChecked = Properties.Settings.Default.DiscordRichPresence;
@@ -640,10 +634,7 @@ public partial class WMain
                     // 手動結束應用程式。
                     Application.Current.Shutdown();
                 });
-            }),
-            primaryButtonText: MsgSet.SaveAndExit,
-            secondaryButtonText: MsgSet.ExitDirectly,
-            closeButtonText: MsgSet.Cancel);
+            }));
     }
 
     /// <summary>
@@ -675,9 +666,7 @@ public partial class WMain
                 primaryAction: new Action(() =>
                 {
                     CustomFunction.OpenUrl(checkResult.DownloadUrl);
-                }),
-                primaryButtonText: MsgSet.ContentDialogBtnOk,
-                closeButtonText: MsgSet.ContentDialogBtnCancel);
+                }));
         }
 
         if (checkResult.NetVersionIsOdler &&
@@ -690,9 +679,7 @@ public partial class WMain
                 primaryAction: new Action(() =>
                 {
                     CustomFunction.OpenUrl(checkResult.DownloadUrl);
-                }),
-                primaryButtonText: MsgSet.ContentDialogBtnOk,
-                closeButtonText: MsgSet.ContentDialogBtnCancel);
+                }));
         }
     }
 

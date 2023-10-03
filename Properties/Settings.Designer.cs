@@ -608,12 +608,15 @@ namespace CustomToolbox.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\"Google Chrome\";v=\"117\", \"Not;A=Brand\";v=\"8\", \"Chromium\";v=\"117\"")]
         public string SecChUa {
             get {
                 return ((string)(this["SecChUa"]));
+            }
+            set {
+                this["SecChUa"] = value;
             }
         }
         

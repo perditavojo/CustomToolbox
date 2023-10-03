@@ -59,9 +59,7 @@ public partial class WMain
 
                                 // 設回預設值。
                                 control.SelectedValue = Properties.Settings.Default.AppLangCode;
-                            }),
-                            primaryButtonText: MsgSet.ContentDialogBtnOk,
-                            closeButtonText: MsgSet.ContentDialogBtnCancel);
+                            }));
                     }
                 }
             }));
@@ -94,6 +92,38 @@ public partial class WMain
                         Properties.Settings.Default.Save();
 
                         WriteLog(message: MsgSet.MsgUpdateUserAgent);
+                    }
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBSecChUa_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (!IsInitializing)
+                {
+                    TextBox control = (TextBox)sender;
+
+                    string value = control.Text;
+
+                    if (Properties.Settings.Default.SecChUa != value)
+                    {
+                        Properties.Settings.Default.SecChUa = value;
+                        Properties.Settings.Default.Save();
+
+                        WriteLog(message: MsgSet.MsgUpdateSecChUa);
                     }
                 }
             }));

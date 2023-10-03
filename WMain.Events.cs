@@ -28,6 +28,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Threading;
 using TabControl = System.Windows.Controls.TabControl;
+using System.Windows.Forms;
+using System.Windows.Media;
+using System.Reflection.Metadata;
 
 namespace CustomToolbox;
 
@@ -1472,6 +1475,29 @@ public partial class WMain : Window
 
                 return;
             }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void RTBLog_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            // Source: https://learn.microsoft.com/en-us/answers/questions/22612/wpf-auto-width-for-flowdocuments-content
+            // Author: Alex Li-MSFT
+            double pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip,
+                formattedTextWidth = RTBLog.Document
+                    .GetFormattedText(pixelsPerDip)
+                    .WidthIncludingTrailingWhitespace;
+
+            RTBLog.Document.PageWidth = formattedTextWidth + 20;
         }
         catch (Exception ex)
         {

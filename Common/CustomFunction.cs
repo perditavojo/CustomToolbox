@@ -462,11 +462,11 @@ public class CustomFunction
     /// </summary>
     private static void SetSeriLog()
     {
-        if (_RTBLog != null)
-        {
-            // 調高以避免自動換行。
-            _RTBLog.Document.PageWidth = 1920;
-        }
+        //if (_RTBLog != null)
+        //{
+        //    // 調高以避免自動換行。
+        //    _RTBLog.Document.PageWidth = 1920;
+        //}
 
         // 設定 Serilog。
         Log.Logger = new LoggerConfiguration()

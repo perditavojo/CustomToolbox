@@ -161,27 +161,6 @@ public class MsgSet
         string.Empty;
 
     /// <summary>
-    /// 字詞：儲存並結束
-    /// </summary>
-    public static readonly string SaveAndExit = Application.Current
-        .FindResource("SaveAndExit").ToString() ??
-        string.Empty;
-
-    /// <summary>
-    /// 字詞：直接結束
-    /// </summary>
-    public static readonly string ExitDirectly = Application.Current
-        .FindResource("ExitDirectly").ToString() ??
-        string.Empty;
-
-    /// <summary>
-    /// 字詞：取消
-    /// </summary>
-    public static readonly string Cancel = Application.Current
-        .FindResource("Cancel").ToString() ??
-        string.Empty;
-
-    /// <summary>
     /// 字詞：頻道：
     /// </summary>
     public static readonly string VideoDataChannel = Application.Current
@@ -464,20 +443,6 @@ public class MsgSet
     /// </summary>
     public static readonly string SelectSubtitleFileFilter = Application.Current
         .FindResource("SelectSubtitleFileFilter").ToString() ??
-        string.Empty;
-
-    /// <summary>
-    /// 對話視窗：確認按鈕
-    /// </summary>
-    public static readonly string ContentDialogBtnOk = Application.Current
-        .FindResource("ContentDialogBtnOk").ToString() ??
-        string.Empty;
-
-    /// <summary>
-    /// 對話視窗：取消按鈕
-    /// </summary>
-    public static readonly string ContentDialogBtnCancel = Application.Current
-        .FindResource("ContentDialogBtnCancel").ToString() ??
         string.Empty;
 
     /// <summary>
@@ -1503,6 +1468,13 @@ public class MsgSet
     /// </summary>
     public static readonly string MsgSelectB23Playlist = Application.Current
         .FindResource("MsgSelectB23Playlist").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已更新 Sec-CH-UA。
+    /// </summary>
+    public static readonly string MsgUpdateSecChUa = Application.Current
+        .FindResource("MsgUpdateSecChUa").ToString() ??
         string.Empty;
 
     #endregion

@@ -596,21 +596,35 @@
                                             VerticalAlignment="Top"
                                             HorizontalScrollBarVisibility="Auto"
                                             VerticalScrollBarVisibility="Visible"
-                                            TextChanged="TBUserAgent_TextChanged" HorizontalAlignment="Left" />
+                                            TextChanged="TBUserAgent_TextChanged"
+                                            HorizontalAlignment="Left" />
+                                        <Label x:Name="LSecChUa"
+                                            Margin="1,138,0,0"
+                                            Content="Sec-CH-UA"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top" />
+                                        <TextBox x:Name="TBSecChUa"
+                                            Margin="0,168,0,0"
+                                            Width="175"
+                                            VerticalAlignment="Top"
+                                            HorizontalScrollBarVisibility="Auto"
+                                            VerticalScrollBarVisibility="Visible"
+                                            TextChanged="TBSecChUa_TextChanged"
+                                            HorizontalAlignment="Left" />
                                         <Button x:Name="BtnMyUserAgent"
-                                            Margin="0,138,0,0"
+                                            Margin="0,225,0,0"
                                             Content="{DynamicResource BtnMyUserAgent}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnMyUserAgent_Click" />
                                         <Label x:Name="LUnsupportedDomains"
-                                            Margin="0,162,0,0"
+                                            Margin="0,249,0,0"
                                             Content="{DynamicResource LUnsupportedDomains}"
                                             ToolTip="{DynamicResource LUnsupportedDomainsToolTip}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBUnsupportedDomains"
-                                            Margin="0,192,0,0"
+                                            Margin="0,279,0,0"
                                             Height="150" 
                                             ToolTip="{DynamicResource TBUnsupportedDomainsToolTip}"
                                             VerticalAlignment="Top"
@@ -622,26 +636,26 @@
                                             HorizontalAlignment="Left"
                                             TextChanged="TBUnsupportedDomains_TextChanged" />
                                         <Label x:Name="LAppendSeconds"
-                                            Margin="-2,347,0,0"
+                                            Margin="0,434,0,0"
                                             Content="{DynamicResource LAppendSeconds}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top" />
                                         <TextBox x:Name="TBAppendSeconds"
-                                            Margin="0,377,0,0"
+                                            Margin="0,464,0,0"
                                             ToolTip="{DynamicResource TBAppendSecondsToolTip}"
                                             Width="175"
                                             VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
                                             TextChanged="TBAppendSeconds_TextChanged" />
                                         <CheckBox x:Name="CBEnableMpvLogVerbose"
-                                            Margin="0,399,0,0"
+                                            Margin="0,486,0,0"
                                             Content="{DynamicResource CBEnableMpvLogVerbose}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Checked="CBEnableMpvLogVerbose_Checked"
                                             Unchecked="CBEnableMpvLogVerbose_Unchecked" />
                                         <CheckBox x:Name="CBEnableDiscordRichPresence"
-                                            Margin="0,419,0,0"
+                                            Margin="0,506,0,0"
                                             Content="{DynamicResource CBEnableDiscordRichPresence}"
                                             ToolTip="{DynamicResource CBEnableDiscordRichPresenceToolTip}"
                                             HorizontalAlignment="Left"
@@ -649,7 +663,7 @@
                                             Checked="CBEnableDiscordRichPresence_Checked"
                                             Unchecked="CBEnableDiscordRichPresence_Unchecked" />
                                         <CheckBox x:Name="CBEnableOpenCCS2TWP"
-                                            Margin="0,439,0,0"
+                                            Margin="0,526,0,0"
                                             Content="{DynamicResource CBEnableOpenCCS2TWP}"
                                             ToolTip="{DynamicResource CBEnableOpenCCS2TWPToolTip}"
                                             HorizontalAlignment="Left"
@@ -657,7 +671,7 @@
                                             Checked="CBEnableOpenCCS2TWP_Checked"
                                             Unchecked="CBEnableOpenCCS2TWP_Unchecked" />
                                         <Button x:Name="BtnResetGridSpliiter"
-                                            Margin="0,459,0,0"
+                                            Margin="0,546,0,0"
                                             Content="{DynamicResource BtnResetGridSpliiter}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
@@ -802,7 +816,7 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBDependencyFiles"
                                     Header="{DynamicResource GBDependencyFiles}"
-                                    Margin="5,510,0,0" 
+                                    Margin="207,428,0,0" 
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
@@ -1147,6 +1161,7 @@
                 AcceptsReturn="True"
                 HorizontalScrollBarVisibility="Auto"
                 VerticalScrollBarVisibility="Visible"
+                TextChanged="RTBLog_TextChanged"
                 IsReadOnly="True">
                 <RichTextBox.ContextMenu>
                     <ContextMenu>

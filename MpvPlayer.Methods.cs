@@ -124,7 +124,9 @@ public partial class WMain
                 else if (path.Contains("youtube") ||
                     path.Contains("youtu.be"))
                 {
-                    // YouTube 網址格式來源：https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
+                    // YouTube 網址格式來源。
+                    // Source: https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
+                    // Author: rodrigoborgesdeoliveira
 
                     MPPlayer.YouTubeDlVideoQuality = CustomFunction
                         .GetYTQuality(Properties.Settings.Default.MpvNetLibYTQualityIndex);
@@ -343,7 +345,15 @@ public partial class WMain
     {
         try
         {
-            Dispatcher.BeginInvoke(() => CBNoVideo.IsChecked = enable);
+            Dispatcher.BeginInvoke(() =>
+            {
+                // 2023/10/3 當設定是非啟用時，才可以被短片清單中的短片設定值影響。
+                // CBNoVideo 是總控制開關。
+                if (!Properties.Settings.Default.MpvNetLibNoVideo)
+                {
+                    CBNoVideo.IsChecked = enable;
+                }
+            });
         }
         catch (Exception ex)
         {

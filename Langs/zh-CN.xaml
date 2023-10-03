@@ -31,9 +31,6 @@
     <sys:String x:Key="StatePlaying">正在播放</sys:String>
     <sys:String x:Key="StatePause">暂停播放</sys:String>
     <sys:String x:Key="StateStop">停止播放</sys:String>
-    <sys:String x:Key="SaveAndExit">保存并结束</sys:String>
-    <sys:String x:Key="ExitDirectly">直接结束</sys:String>
-    <sys:String x:Key="Cancel">取消</sys:String>
     <sys:String x:Key="VideoDataChannel">频道：</sys:String>
     <sys:String x:Key="VideoDataUploader">上传者：</sys:String>
     <sys:String x:Key="VideoDataUploadDate">上传时间：</sys:String>
@@ -231,8 +228,6 @@
     <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska|*.mkv</sys:String>
     <sys:String x:Key="SelectSubtitleFile">选择字幕文件</sys:String>
     <sys:String x:Key="SelectSubtitleFileFilter">SupRip Text|*.srt|WebVTT|*.vtt|SubStation Alpha|*.ssa|Advanced SubStation Alpha|*.ass</sys:String>
-    <sys:String x:Key="ContentDialogBtnOk">确认</sys:String>
-    <sys:String x:Key="ContentDialogBtnCancel">取消</sys:String>
     <sys:String x:Key="SaveImageFile">保存文件</sys:String>
     <sys:String x:Key="SaveImageFileFilter">PNG 影像档 (*.png)|*.png|JPEG 影像档 (*.jpg)|*.jpg</sys:String>
     <!-- 消息 -->
@@ -381,4 +376,5 @@
     <sys:String x:Key="MsgWhisperStartToCreateSubtitleFile">开始建立 {0} 字幕档……</sys:String>
     <sys:String x:Key="MsgWhisperSubtitleFileCreated">已建立 {0} 字幕档：{1}</sys:String>
     <sys:String x:Key="MsgSelectB23Playlist">请选择 Bilibili 的播放清单。</sys:String>
+    <sys:String x:Key="MsgUpdateSecChUa">已更新 Sec-CH-UA。</sys:String>
 </ResourceDictionary>

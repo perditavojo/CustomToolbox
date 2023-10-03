@@ -31,9 +31,6 @@
     <sys:String x:Key="StatePlaying">Now Playing</sys:String>
     <sys:String x:Key="StatePause">Pause playback</sys:String>
     <sys:String x:Key="StateStop">Stop play</sys:String>
-    <sys:String x:Key="SaveAndExit">Save and exit</sys:String>
-    <sys:String x:Key="ExitDirectly">Exit directly</sys:String>
-    <sys:String x:Key="Cancel">Cancel</sys:String>
     <sys:String x:Key="VideoDataChannel">Channel:</sys:String>
     <sys:String x:Key="VideoDataUploader">Uploader:</sys:String>
     <sys:String x:Key="VideoDataUploadDate">Upload date:</sys:String>
@@ -230,8 +227,6 @@
     <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska|*.mkv</sys:String>
     <sys:String x:Key="SelectSubtitleFile">Select subtitle file</sys:String>
     <sys:String x:Key="SelectSubtitleFileFilter">SupRip Text|*.srt|WebVTT|*.vtt|SubStation Alpha|*.ssa|Advanced SubStation Alpha|*.ass</sys:String>
-    <sys:String x:Key="ContentDialogBtnOk">OK</sys:String>
-    <sys:String x:Key="ContentDialogBtnCancel">Cancel</sys:String>
     <sys:String x:Key="SaveImageFile">Save file</sys:String>
     <sys:String x:Key="SaveImageFileFilter">PNG Image file (*.png)|*.png|JPEG Image file (*.jpg)|*.jpg</sys:String>
     <!-- Message -->
@@ -306,7 +301,7 @@
     <sys:String x:Key="MsgUpdateAppendSeconds">Append seconds have been updated.</sys:String>
     <sys:String x:Key="MsgInputAValidNumber">Please input a valid number.</sys:String>
     <sys:String x:Key="MsgPathIsNotExists">Target folder is not exists.</sys:String>
-    <sys:String x:Key="MsgUpdateUserAgent">User agent have been updated.</sys:String>
+    <sys:String x:Key="MsgUpdateUserAgent">User-Agent have been updated.</sys:String>
     <sys:String x:Key="MsgConfirmExitApp">Would you like to save the existing clip list to the temp clip list file and exit the application?</sys:String>
     <sys:String x:Key="MsgDiscordRichPresenceConnectedPipe">[{0}]: Connected pipe: {1}</sys:String>
     <sys:String x:Key="MsgDiscordRichPresenceFailedPipe">[{0}]: Failed pipe: {1}</sys:String>
@@ -380,4 +375,5 @@
     <sys:String x:Key="MsgWhisperStartToCreateSubtitleFile">Start creating {0} subtitle file...</sys:String>
     <sys:String x:Key="MsgWhisperSubtitleFileCreated">{0} subtitle file created: {1}</sys:String>
     <sys:String x:Key="MsgSelectB23Playlist">Please select a Bilibili playlist.</sys:String>
+    <sys:String x:Key="MsgUpdateSecChUa">Sec-CH-UA has been updated.</sys:String>
 </ResourceDictionary>
