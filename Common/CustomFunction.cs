@@ -114,7 +114,7 @@ public class CustomFunction
     /// EnumerateFiles
     /// <para>Source: https://stackoverflow.com/a/72291652</para>
     /// <para>Author: Yevhen Cherkes</para>
-    /// <para>Licence: CC BY-SA 4.0</para>
+    /// <para>License: CC BY-SA 4.0</para>
     /// <para>CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/</para>
     /// </summary>
     /// <param name="path">字串，路徑</param>
@@ -413,7 +413,7 @@ public class CustomFunction
     /// <para>Source: https://stackoverflow.com/a/1132559</para>
     /// <para>Author: OregonGhost</para>
     /// <para>Author: idbrii</para>
-    /// <para>Licence: CC BY-SA 4.0</para>
+    /// <para>License: CC BY-SA 4.0</para>
     /// <para>CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/</para>
     /// </summary>
     /// <param name="path">字串，路徑</param>

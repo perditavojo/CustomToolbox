@@ -15,18 +15,18 @@ namespace CustomToolbox.Common.Utils;
 /// LyRiCs 工具
 /// <para>Source: https://github.com/YoutubeClipPlaylist/YoutubeClipPlaylist/blob/master/src/Helper/LyricHelper.ts</para>
 /// <para>Author: 陳鈞</para>
-/// <para>Licence: MIT License</para>
+/// <para>License: MIT License</para>
 /// <para>MIT License: https://github.com/YoutubeClipPlaylist/YoutubeClipPlaylist/blob/master/LICENSE</para>
 /// <para>Source: https://www.cnblogs.com/Wayou/p/sync_lyric_with_html5_audio.html</para>
 /// <para>Author: 刘哇勇</para>
-/// <para>Licence: CC BY-NC-SA</para>
+/// <para>License: CC BY-NC-SA</para>
 /// <para>Source: https://github.com/AioiLight/LRCDotNet/blob/master/LRCDotNet/Parser.cs</para>
 /// <para>Author: AioiLight</para>
-/// <para>Licence: MIT License</para>
+/// <para>License: MIT License</para>
 /// <para>MIT License: https://github.com/AioiLight/LRCDotNet/blob/master/LICENSE</para>
 /// <para>Source: https://github.com/OpportunityLiu/LrcParser</para>
 /// <para>Author: OpportunityLiu</para>
-/// <para>Licence: Apache License 2.0</para>
+/// <para>License: Apache License 2.0</para>
 /// <para>Apache License 2.0: https://github.com/OpportunityLiu/LrcParser/blob/master/LICENSE</para>
 /// </summary>
 public partial class LyricsUtil

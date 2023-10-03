@@ -9,7 +9,7 @@ public static class TimeSpanExtension
     /// 移除毫秒
     /// <para>Source: https://stackoverflow.com/a/35750677</para>
     /// <para>Author: Tom</para>
-    /// <para>Licence: CC BY-SA 3.0</para>
+    /// <para>License: CC BY-SA 3.0</para>
     /// <para>CC BY-SA 3.0: https://creativecommons.org/licenses/by-sa/3.0/</para>
     /// </summary>
     /// <param name="timeSpan">TimeSpan</param>
