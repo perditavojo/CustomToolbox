@@ -13,10 +13,21 @@ namespace CustomToolbox.Common.Utils;
 
 /// <summary>
 /// LyRiCs 工具
-/// <para>來源：https://github.com/YoutubeClipPlaylist/YoutubeClipPlaylist/blob/master/src/Helper/LyricHelper.ts </para>
-/// <para>來源：https://www.cnblogs.com/Wayou/p/sync_lyric_with_html5_audio.html </para>
-/// <para>來源：https://github.com/AioiLight/LRCDotNet/blob/master/LRCDotNet/Parser.cs </para>
-/// <para>來源：https://github.com/OpportunityLiu/LrcParser </para>
+/// <para>Source: https://github.com/YoutubeClipPlaylist/YoutubeClipPlaylist/blob/master/src/Helper/LyricHelper.ts</para>
+/// <para>Author: 陳鈞</para>
+/// <para>Licence: MIT License</para>
+/// <para>MIT License: https://github.com/YoutubeClipPlaylist/YoutubeClipPlaylist/blob/master/LICENSE</para>
+/// <para>Source: https://www.cnblogs.com/Wayou/p/sync_lyric_with_html5_audio.html</para>
+/// <para>Author: 刘哇勇</para>
+/// <para>Licence: CC BY-NC-SA</para>
+/// <para>Source: https://github.com/AioiLight/LRCDotNet/blob/master/LRCDotNet/Parser.cs</para>
+/// <para>Author: AioiLight</para>
+/// <para>Licence: MIT License</para>
+/// <para>MIT License: https://github.com/AioiLight/LRCDotNet/blob/master/LICENSE</para>
+/// <para>Source: https://github.com/OpportunityLiu/LrcParser</para>
+/// <para>Author: OpportunityLiu</para>
+/// <para>Licence: Apache License 2.0</para>
+/// <para>Apache License 2.0: https://github.com/OpportunityLiu/LrcParser/blob/master/LICENSE</para>
 /// </summary>
 public partial class LyricsUtil
 {

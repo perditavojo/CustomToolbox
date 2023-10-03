@@ -15,7 +15,6 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using System.Windows.Forms;
 
 namespace CustomToolbox.Common;
 
@@ -48,7 +47,8 @@ public class CustomFunction
 
     /// <summary>
     /// 取得 YouTube 影片網址的影片 ID
-    /// <para>來源：https://gist.github.com/takien/4077195 </para>
+    /// <para>Source: https://gist.github.com/takien/4077195</para>
+    /// <para>Author: takien</para>
     /// </summary>
     /// <param name="url">字串，網址</param>
     /// <returns>字串，影片 ID</returns>
@@ -112,7 +112,10 @@ public class CustomFunction
 
     /// <summary>
     /// EnumerateFiles
-    /// <para>來源：https://stackoverflow.com/a/72291652 </para>
+    /// <para>Source: https://stackoverflow.com/a/72291652</para>
+    /// <para>Author: Yevhen Cherkes</para>
+    /// <para>Licence: CC BY-SA 4.0</para>
+    /// <para>CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/</para>
     /// </summary>
     /// <param name="path">字串，路徑</param>
     /// <param name="searchPatterns">字串，搜尋模式</param>
@@ -407,6 +410,11 @@ public class CustomFunction
 
     /// <summary>
     /// 開啟資料夾
+    /// <para>Source: https://stackoverflow.com/a/1132559</para>
+    /// <para>Author: OregonGhost</para>
+    /// <para>Author: idbrii</para>
+    /// <para>Licence: CC BY-SA 4.0</para>
+    /// <para>CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/</para>
     /// </summary>
     /// <param name="path">字串，路徑</param>
     public static void OpenFolder(string path)
@@ -415,14 +423,13 @@ public class CustomFunction
         {
             if (!Directory.Exists(path))
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                _WMain?.WriteLog(message: MsgSet.GetFmtStr(
                     MsgSet.MsgErrorOccured,
                     MsgSet.MsgPathIsNotExists));
 
                 return;
             }
 
-            // 來源：https://stackoverflow.com/a/1132559
             Process.Start(new ProcessStartInfo()
             {
                 FileName = path,

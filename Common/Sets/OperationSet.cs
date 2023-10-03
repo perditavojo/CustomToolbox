@@ -1181,8 +1181,8 @@ public class OperationSet
                         // 檢查影片的標題是否包含排除字詞。
                         if (!CheckVideoTitle(title))
                         {
-                            _WMain?.WriteLog(message:
-                                MsgSet.GetFmtStr(
+                            _WMain?.WriteLog(
+                                message: MsgSet.GetFmtStr(
                                     MsgSet.MsgSkipThisVideo,
                                     title));
 
@@ -1940,7 +1940,7 @@ public class OperationSet
 
                 using FileStream fileStream = File.OpenRead(wavfilePath);
 
-                _WMain?.WriteLog(MsgSet.MsgWhisperTranscribeContent);
+                _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeContent);
 
                 bool isTaskCanceled = false;
 
@@ -2054,9 +2054,10 @@ public class OperationSet
     {
         string filePath1 = Path.ChangeExtension(inputFilePath, ".srt");
 
-        _WMain?.WriteLog(MsgSet.GetFmtStr(
-            MsgSet.MsgWhisperStartToCreateSubtitleFile,
-            "SubRip Text"));
+        _WMain?.WriteLog(
+            message: MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperStartToCreateSubtitleFile,
+                "SubRip Text"));
 
         using StreamWriter streamWriter1 = File.CreateText(filePath1);
 
@@ -2086,9 +2087,10 @@ public class OperationSet
         {
             string filePath2 = Path.ChangeExtension(inputFilePath, ".vtt");
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgWhisperStartToCreateSubtitleFile,
-                "WebVTT"));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperStartToCreateSubtitleFile,
+                    "WebVTT"));
 
             using StreamWriter streamWriter2 = File.CreateText(filePath2);
 
@@ -2399,6 +2401,6 @@ public class OperationSet
                 $"[ {segmentData.Language} ({segmentData.Probability:P}) ] " +
                 $"{segmentData.Text}";
 
-        _WMain?.WriteLog(segment);
+        _WMain?.WriteLog(message: segment);
     }
 }

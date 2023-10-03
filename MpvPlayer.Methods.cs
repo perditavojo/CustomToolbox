@@ -102,7 +102,7 @@ public partial class WMain
                 {
                     string message = MsgSet.MsgInvalidVideoIDOrUrl;
 
-                    WriteLog(message);
+                    WriteLog(message: message);
 
                     TaskbarIconUtil.ShowNotify(
                         message,
@@ -322,7 +322,7 @@ public partial class WMain
                     message,
                     NotificationIcon.Info);
 
-                WriteLog(message);
+                WriteLog(message: message);
             }
         }
         catch (Exception ex)

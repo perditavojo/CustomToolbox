@@ -7,7 +7,10 @@ public static class TimeSpanExtension
 {
     /// <summary>
     /// 移除毫秒
-    /// <para>來源：https://stackoverflow.com/a/35750677 </para>
+    /// <para>Source: https://stackoverflow.com/a/35750677</para>
+    /// <para>Author: Tom</para>
+    /// <para>Licence: CC BY-SA 3.0</para>
+    /// <para>CC BY-SA 3.0: https://creativecommons.org/licenses/by-sa/3.0/</para>
     /// </summary>
     /// <param name="timeSpan">TimeSpan</param>
     /// <returns>TimeSpan</returns>

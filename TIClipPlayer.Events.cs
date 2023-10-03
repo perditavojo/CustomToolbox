@@ -330,7 +330,7 @@ public partial class WMain
                             message,
                             NotificationIcon.Info);
 
-                        WriteLog(message);
+                        WriteLog(message: message);
                     }
                 }
             }));
@@ -744,11 +744,11 @@ public partial class WMain
 
                 if (RBTimestampEditor.IsChecked == true)
                 {
-                    WriteLog(MsgSet.MsgSwitchToTimestampEditorMode);
+                    WriteLog(message: MsgSet.MsgSwitchToTimestampEditorMode);
                 }
                 else
                 {
-                    WriteLog(MsgSet.MsgSwitchToClipPlayerMode);
+                    WriteLog(message: MsgSet.MsgSwitchToClipPlayerMode);
                 }
             }));
         }

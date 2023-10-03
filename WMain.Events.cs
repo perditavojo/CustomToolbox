@@ -28,7 +28,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Threading;
 using TabControl = System.Windows.Controls.TabControl;
-using System.Windows.Forms;
 
 namespace CustomToolbox;
 
@@ -185,7 +184,7 @@ public partial class WMain : Window
 
             if (dataSource == null || dataSource.Count <= 0)
             {
-                WriteLog(MsgSet.MsgCanNotSaveClipList);
+                WriteLog(message: MsgSet.MsgCanNotSaveClipList);
 
                 return;
             }

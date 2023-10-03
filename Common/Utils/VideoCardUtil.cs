@@ -10,7 +10,15 @@ public class VideoCardUtil
 {
     /// <summary>
     /// 取得裝置的列表
-    /// <para>來源：https://stackoverflow.com/questions/37521359/how-to-find-all-graphic-cards-c-sharp </para>
+    /// <para>Source: https://stackoverflow.com/q/37521359</para>
+    /// <para>Author: Mohammad</para>
+    /// <para>Author: Dharman♦</para>
+    /// <para>License: CC BY-SA 4.0</para>
+    /// <para>CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/</para>
+    /// <para>Source: https://stackoverflow.com/a/37521488</para>
+    /// <para>Author: nvoigt</para>
+    /// <para>License: CC BY-SA 3.0</para>
+    /// <para>CC BY-SA 3.0: https://creativecommons.org/licenses/by-sa/3.0/</para>
     /// </summary>
     /// <returns>List&lt;VideoCard&gt;</returns>
     public static List<VideoCardData> GetDeviceList()
