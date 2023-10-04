@@ -106,7 +106,7 @@ public partial class WMain
         }
     }
 
-    private void TBSecChUa_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+    private void TBSecChUa_TextChanged(object sender, TextChangedEventArgs e)
     {
         try
         {

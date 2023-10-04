@@ -4,10 +4,14 @@ using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Serilog.Events;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
 
@@ -317,6 +321,273 @@ public partial class WMain
                 CustomFunction.BatchSetEnabled(ctrlSet1, true);
                 CustomFunction.BatchSetEnabled(ctrlSet2, false);
             }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBWhisperBeamSize_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        try
+        {
+            // 只允許數字鍵、NumPad 的數字鍵、「-」，以及 Crtl + A、X、C、V 等組合案件。
+            if (e.Key is >= Key.D0 and <= Key.D9 or
+                >= Key.NumPad0 and <= Key.NumPad9 or
+                Key.Back or
+                Key.Left or
+                Key.Right or
+                Key.Delete or
+                Key.OemMinus or
+                Key.Subtract or
+                Key.LeftCtrl or
+                Key.RightCtrl or
+                Key.A or
+                Key.X or
+                Key.C or
+                Key.V)
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBWhisperBeamSize_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            TextBox? textBox = (TextBox)sender;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            // 用於避免在只輸入「-」號時就開始解析。
+            if (textBox.Text.Contains('-') &&
+                textBox.Text.Length == 1)
+            {
+                return;
+            }
+
+            bool canParsed = int.TryParse(textBox.Text, out int parsedResult);
+
+            if (!canParsed)
+            {
+                textBox.Text = Properties.Settings.Default.WhisperBeamSize.ToString();
+
+                return;
+            }
+
+            // 當小於 2 時，改回預設值。
+            // 因為等於 1 時，效果等同 Greedy 演算法。
+            if (parsedResult < 2)
+            {
+                textBox.Text = Properties.Settings.Default.WhisperBeamSize.ToString();
+
+                return;
+            }
+            else
+            {
+                textBox.Text = parsedResult.ToString();
+
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBWhisperPatience_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        try
+        {
+            // 只允許數字鍵、NumPad 的數字鍵、「.」、「-」，以及 Crtl + A、X、C、V 等組合案件。
+            if (e.Key is >= Key.D0 and <= Key.D9 or
+                >= Key.NumPad0 and <= Key.NumPad9 or
+                Key.Back or
+                Key.Left or
+                Key.Right or
+                Key.Delete or
+                Key.OemMinus or
+                Key.Decimal or
+                Key.OemPeriod or
+                Key.Subtract or
+                Key.LeftCtrl or
+                Key.RightCtrl or
+                Key.A or
+                Key.X or
+                Key.C or
+                Key.V)
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBWhisperPatience_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            TextBox? textBox = (TextBox)sender;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            // 用於避免在只輸入「-」或是「.」時就開始解析。
+            if ((textBox.Text.Contains('-') && textBox.Text.Length == 1) ||
+                (textBox.Text.Contains('.') && textBox.Text.Length == 3))
+            {
+                return;
+            }
+
+            bool canParsed = float.TryParse(textBox.Text, out float parsedResult);
+
+            if (!canParsed)
+            {
+                textBox.Text = Properties.Settings.Default.WhisperPatience.ToString();
+
+                return;
+            }
+
+            // 2023/10/4 理論上此值預設應為 0.0，且不能大於 0.0。
+            // 根據參考資料，最大值應該不可以大於 0.0f，估限制大於 0.0f 時，則設回預設值。
+            //
+            // Reference: https://github.com/openai/whisper/discussions/154
+            // Reference: https://github.com/sandrohanea/whisper.net/blob/main/Whisper.net/BeamSearchSamplingStrategyBuilder.cs#L46
+            // 當大於 0.0f 時，改回預設值。
+            if (parsedResult > 0.0f)
+            {
+                textBox.Text = Properties.Settings.Default.WhisperPatience.ToString();
+
+                return;
+            }
+            else
+            {
+                textBox.Text = parsedResult.ToString();
+
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBWhisperBestOf_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        try
+        {
+            // 只允許數字鍵、NumPad 的數字鍵、「-」，以及 Crtl + A、X、C、V 等組合案件。
+            e.Handled = (e.Key < Key.D0 || e.Key > Key.D9) &&
+                (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) &&
+                e.Key != Key.Back &&
+                e.Key != Key.Left &&
+                e.Key != Key.Right &&
+                e.Key != Key.Delete &&
+                e.Key != Key.OemMinus &&
+                e.Key != Key.Subtract &&
+                e.Key != Key.LeftCtrl &&
+                e.Key != Key.RightCtrl &&
+                e.Key != Key.A &&
+                e.Key != Key.X &&
+                e.Key != Key.C &&
+                e.Key != Key.V;
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBWhisperBestOf_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            // 僅 Greedy 演歲法會使用此參數。
+
+            TextBox? textBox = (TextBox)sender;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            // 用於避免在只輸入「-」號時就開始解析。
+            if (textBox.Text.Contains('-') &&
+                textBox.Text.Length == 1)
+            {
+                return;
+            }
+
+            bool canParsed = int.TryParse(textBox.Text, out int parsedResult);
+
+            if (!canParsed)
+            {
+                textBox.Text = Properties.Settings.Default.WhisperBestOf.ToString();
+
+                return;
+            }
+
+            // 當小於 1 時，改回預設值。
+            if (parsedResult < 1)
+            {
+                textBox.Text = Properties.Settings.Default.WhisperBestOf.ToString();
+
+                return;
+            }
+            else
+            {
+                textBox.Text = parsedResult.ToString();
+
+                return;
+            }
         }
         catch (Exception ex)
         {

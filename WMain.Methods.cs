@@ -208,6 +208,14 @@ public partial class WMain
                     LVersion.Content = version.ToString();
                 }
 
+                CBWhisperModel.Text = Properties.Settings.Default.WhisperModel;
+                CBWhisperQuantization.Text = Properties.Settings.Default.WhisperQuantization;
+                CBWhisperSamplingStrategies.Text = Properties.Settings.Default.WhisperSamplingStrategy;
+                CBWhisperLanguages.Text = Properties.Settings.Default.WhisperLanguage;
+                TBWhisperBeamSize.Text = Properties.Settings.Default.WhisperBeamSize.ToString();
+                TBWhisperPatience.Text = Properties.Settings.Default.WhisperPatience.ToString();
+                TBWhisperBestOf.Text = Properties.Settings.Default.WhisperBestOf.ToString();
+
                 ResourceDictionary? curResDict = AppLangUtil.GetCurrentLangResDict();
 
                 string langCode = AppLangUtil.GetLangCode(curResDict);

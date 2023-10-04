@@ -185,14 +185,26 @@
     <Setting Name="UpdateSettings" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="WhisperBeamSize" Type="System.Int32" Scope="User">
+    <Setting Name="WhisperBeamSize" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="WhisperPatience" Type="System.Single" Scope="User">
+    <Setting Name="WhisperPatience" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">-0.1</Value>
     </Setting>
-    <Setting Name="WhisperBestOf" Type="System.Int32" Scope="User">
+    <Setting Name="WhisperBestOf" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="WhisperModel" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Medium</Value>
+    </Setting>
+    <Setting Name="WhisperQuantization" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">No Quantization</Value>
+    </Setting>
+    <Setting Name="WhisperSamplingStrategy" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Default</Value>
+    </Setting>
+    <Setting Name="WhisperLanguage" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">auto</Value>
     </Setting>
   </Settings>
 </SettingsFile>

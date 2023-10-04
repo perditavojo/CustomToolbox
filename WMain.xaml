@@ -12,6 +12,7 @@
     Title="WMain"
     MinHeight="600"
     MinWidth="900"
+    FontSize="14"
     Loaded="WMain_Loaded"
     Closing="WMain_Closing"
     KeyDown="WMain_KeyDown">
@@ -169,6 +170,7 @@
                                     Grid.ColumnSpan="2"
                                     Margin="5,5,25,10"
                                     MinWidth="288"
+                                    MaxHeight="10"
                                     Minimum="0"
                                     Value="0"
                                     Maximum="100"
@@ -471,6 +473,207 @@
                                                 VerticalAlignment="Top"
                                                 Click="BtnSplitVideo_Click" />
                                         </StackPanel>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox x:Name="GBWhisperFunctions"
+                                    Margin="5,127,0,0"
+                                    Header="{DynamicResource GBFFmpegFunctions}"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top">
+                                    <Grid>
+                                        <Label x:Name="LWhisperModel" 
+                                            Margin="0,0,0,0"
+                                            Content="LWhisperModel"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="CBWhisperModel"
+                                                Margin="0,30,0,0"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Left">
+                                            <ComboBoxItem x:Name="CBIModelTinyEn" Content="Tiny En"/>
+                                            <ComboBoxItem x:Name="CBIModelTiny" Content="Tiny"/>
+                                            <ComboBoxItem x:Name="CBIModelBase" Content="Base"/>
+                                            <ComboBoxItem x:Name="CBIModelBaseEn" Content="Base En"/>
+                                            <ComboBoxItem x:Name="CBIModelSmall" Content="Small"/>
+                                            <ComboBoxItem x:Name="CBIModelSmallEn" Content="Small En"/>
+                                            <ComboBoxItem x:Name="CBIModelMedium" Content="Medium"/>
+                                            <ComboBoxItem x:Name="CBIModelMediumEn" Content="Medium En"/>
+                                            <ComboBoxItem x:Name="CBIModelLargeV1" Content="Large V1"/>
+                                            <ComboBoxItem x:Name="CBIModelLarge" Content="Large"/>
+                                        </ComboBox>
+                                        <Label x:Name="LWhisperQuantization" 
+                                            Margin="0,56,0,0"
+                                            Content="LWhisperQuantization"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="CBWhisperQuantization"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Left" Margin="0,86,0,0">
+                                            <ComboBoxItem x:Name="CBIQuantizationNoQuantization" Content="No Quantization"/>
+                                            <ComboBoxItem x:Name="CBIQuantizationQ4_0" Content="Q4_0"/>
+                                            <ComboBoxItem x:Name="CBIQuantizationQ4_1" Content="Q4_1"/>
+                                            <ComboBoxItem x:Name="CBIQuantizationQ4_2" Content="Q4_2"/>
+                                            <ComboBoxItem x:Name="CBIQuantizationQ5_0" Content="Q5_0"/>
+                                            <ComboBoxItem x:Name="CBIQuantizationQ5_1" Content="Q5_1"/>
+                                            <ComboBoxItem x:Name="CBIQuantizationQ8_0" Content="Q8_0"/>
+                                        </ComboBox>
+                                        <Label x:Name="LWhisperSamplingStrategies" 
+                                            Margin="0,112,0,0"
+                                            Content="LWhisperSamplingStrategies"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="CBWhisperSamplingStrategies"
+                                                VerticalAlignment="Top" 
+                                                HorizontalAlignment="Left" Margin="-1,142,0,0">
+                                            <ComboBoxItem x:Name="CBISamplingStrategyDefault" Content="Default"/>
+                                            <ComboBoxItem x:Name="CBISamplingStrategyGreedy" Content="Greedy"/>
+                                            <ComboBoxItem x:Name="CBISamplingStrategyBeamSearch" Content="Beam search"/>
+                                        </ComboBox>
+                                        <Label x:Name="LWhisperLanguages" 
+                                            Margin="0,168,0,0"
+                                            Content="LWhisperLanguages"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="CBWhisperLanguages"
+                                                VerticalAlignment="Top" 
+                                                HorizontalAlignment="Left" Margin="0,198,0,0">
+                                            <ComboBoxItem x:Name="CBILangAuto" Content="auto"/>
+                                            <ComboBoxItem x:Name="CBILangEn" Content="en"/>
+                                            <ComboBoxItem x:Name="CBILangZh" Content="zh"/>
+                                            <ComboBoxItem x:Name="CBILangDe" Content="de"/>
+                                            <ComboBoxItem x:Name="CBILangEs" Content="es"/>
+                                            <ComboBoxItem x:Name="CBILangRu" Content="ru"/>
+                                            <ComboBoxItem x:Name="CBILangKo" Content="ko"/>
+                                            <ComboBoxItem x:Name="CBILangFr" Content="fr"/>
+                                            <ComboBoxItem x:Name="CBILangJa" Content="ja"/>
+                                            <ComboBoxItem x:Name="CBILangPt" Content="pt"/>
+                                            <ComboBoxItem x:Name="CBILangTr" Content="tr"/>
+                                            <ComboBoxItem x:Name="CBILangPl" Content="pl"/>
+                                            <ComboBoxItem x:Name="CBILangCa" Content="ca"/>
+                                            <ComboBoxItem x:Name="CBILangNl" Content="nl"/>
+                                            <ComboBoxItem x:Name="CBILangAr" Content="ar"/>
+                                            <ComboBoxItem x:Name="CBILangSv" Content="sv"/>
+                                            <ComboBoxItem x:Name="CBILangIt" Content="it"/>
+                                            <ComboBoxItem x:Name="CBILangId" Content="id"/>
+                                            <ComboBoxItem x:Name="CBILangHi" Content="hi"/>
+                                            <ComboBoxItem x:Name="CBILangFi" Content="fi"/>
+                                            <ComboBoxItem x:Name="CBILangVi" Content="vi"/>
+                                            <ComboBoxItem x:Name="CBILangIw" Content="iw"/>
+                                            <ComboBoxItem x:Name="CBILangUk" Content="uk"/>
+                                            <ComboBoxItem x:Name="CBILangEl" Content="el"/>
+                                            <ComboBoxItem x:Name="CBILangMs" Content="ms"/>
+                                            <ComboBoxItem x:Name="CBILangCs" Content="cs"/>
+                                            <ComboBoxItem x:Name="CBILangRo" Content="ro"/>
+                                            <ComboBoxItem x:Name="CBILangDa" Content="da"/>
+                                            <ComboBoxItem x:Name="CBILangHu" Content="hu"/>
+                                            <ComboBoxItem x:Name="CBILangTa" Content="ta"/>
+                                            <ComboBoxItem x:Name="CBILangNo" Content="no"/>
+                                            <ComboBoxItem x:Name="CBILangTh" Content="th"/>
+                                            <ComboBoxItem x:Name="CBILangUr" Content="ur"/>
+                                            <ComboBoxItem x:Name="CBILangHr" Content="hr"/>
+                                            <ComboBoxItem x:Name="CBILangBg" Content="bg"/>
+                                            <ComboBoxItem x:Name="CBILangLt" Content="lt"/>
+                                            <ComboBoxItem x:Name="CBILangLa" Content="la"/>
+                                            <ComboBoxItem x:Name="CBILangMi" Content="mi"/>
+                                            <ComboBoxItem x:Name="CBILangMl" Content="ml"/>
+                                            <ComboBoxItem x:Name="CBILangCy" Content="cy"/>
+                                            <ComboBoxItem x:Name="CBILangSk" Content="sk"/>
+                                            <ComboBoxItem x:Name="CBILangTe" Content="te"/>
+                                            <ComboBoxItem x:Name="CBILangFa" Content="fa"/>
+                                            <ComboBoxItem x:Name="CBILangLv" Content="lv"/>
+                                            <ComboBoxItem x:Name="CBILangBn" Content="bn"/>
+                                            <ComboBoxItem x:Name="CBILangSr" Content="sr"/>
+                                            <ComboBoxItem x:Name="CBILangAz" Content="az"/>
+                                            <ComboBoxItem x:Name="CBILangSl" Content="sl"/>
+                                            <ComboBoxItem x:Name="CBILangKn" Content="kn"/>
+                                            <ComboBoxItem x:Name="CBILangEt" Content="et"/>
+                                            <ComboBoxItem x:Name="CBILangMk" Content="mk"/>
+                                            <ComboBoxItem x:Name="CBILangBr" Content="br"/>
+                                            <ComboBoxItem x:Name="CBILangEu" Content="eu"/>
+                                            <ComboBoxItem x:Name="CBILangIs" Content="is"/>
+                                            <ComboBoxItem x:Name="CBILangHy" Content="hy"/>
+                                            <ComboBoxItem x:Name="CBILangNe" Content="ne"/>
+                                            <ComboBoxItem x:Name="CBILangMn" Content="mn"/>
+                                            <ComboBoxItem x:Name="CBILangBs" Content="bs"/>
+                                            <ComboBoxItem x:Name="CBILangKk" Content="kk"/>
+                                            <ComboBoxItem x:Name="CBILangSq" Content="sq"/>
+                                            <ComboBoxItem x:Name="CBILangSw" Content="sw"/>
+                                            <ComboBoxItem x:Name="CBILangGl" Content="gl"/>
+                                            <ComboBoxItem x:Name="CBILangMr" Content="mr"/>
+                                            <ComboBoxItem x:Name="CBILangPa" Content="pa"/>
+                                            <ComboBoxItem x:Name="CBILangSi" Content="si"/>
+                                            <ComboBoxItem x:Name="CBILangKm" Content="km"/>
+                                            <ComboBoxItem x:Name="CBILangSn" Content="sn"/>
+                                            <ComboBoxItem x:Name="CBILangYo" Content="yo"/>
+                                            <ComboBoxItem x:Name="CBILangSo" Content="so"/>
+                                            <ComboBoxItem x:Name="CBILangAf" Content="af"/>
+                                            <ComboBoxItem x:Name="CBILangOc" Content="oc"/>
+                                            <ComboBoxItem x:Name="CBILangKa" Content="ka"/>
+                                            <ComboBoxItem x:Name="CBILangBe" Content="be"/>
+                                            <ComboBoxItem x:Name="CBILangTg" Content="tg"/>
+                                            <ComboBoxItem x:Name="CBILangSd" Content="sd"/>
+                                            <ComboBoxItem x:Name="CBILangGu" Content="gu"/>
+                                            <ComboBoxItem x:Name="CBILangAm" Content="am"/>
+                                            <ComboBoxItem x:Name="CBILangYi" Content="yi"/>
+                                            <ComboBoxItem x:Name="CBILangLo" Content="lo"/>
+                                            <ComboBoxItem x:Name="CBILangUz" Content="uz"/>
+                                            <ComboBoxItem x:Name="CBILangFo" Content="fo"/>
+                                            <ComboBoxItem x:Name="CBILangHt" Content="ht"/>
+                                            <ComboBoxItem x:Name="CBILangPs" Content="ps"/>
+                                            <ComboBoxItem x:Name="CBILangTk" Content="tk"/>
+                                            <ComboBoxItem x:Name="CBILangNn" Content="nn"/>
+                                            <ComboBoxItem x:Name="CBILangMt" Content="mt"/>
+                                            <ComboBoxItem x:Name="CBILangSa" Content="sa"/>
+                                            <ComboBoxItem x:Name="CBILangLb" Content="lb"/>
+                                            <ComboBoxItem x:Name="CBILangMy" Content="my"/>
+                                            <ComboBoxItem x:Name="CBILangBo" Content="bo"/>
+                                            <ComboBoxItem x:Name="CBILangTl" Content="tl"/>
+                                            <ComboBoxItem x:Name="CBILangMg" Content="mg"/>
+                                            <ComboBoxItem x:Name="CBILangAs" Content="as"/>
+                                            <ComboBoxItem x:Name="CBILangTt" Content="tt"/>
+                                            <ComboBoxItem x:Name="CBILangHaw" Content="haw"/>
+                                            <ComboBoxItem x:Name="CBILangLn" Content="ln"/>
+                                            <ComboBoxItem x:Name="CBILangHa" Content="ha"/>
+                                            <ComboBoxItem x:Name="CBILangBa" Content="ba"/>
+                                            <ComboBoxItem x:Name="CBILangJw" Content="jw"/>
+                                            <ComboBoxItem x:Name="CBILangSu" Content="su"/>
+                                        </ComboBox>
+                                        <Label x:Name="LWhisperBeamSize" 
+                                            Margin="205,0,0,0"
+                                            Content="LWhisperBeamSize"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"/>
+                                        <TextBox x:Name="TBWhisperBeamSize"
+                                            Margin="205,32,0,0"
+                                            Width="115"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            PreviewKeyDown="TBWhisperBeamSize_PreviewKeyDown"
+                                            TextChanged="TBWhisperBeamSize_TextChanged"/>
+                                        <Label x:Name="LWhisperPatience" 
+                                            Margin="205,56,0,0"
+                                            Content="LWhisperPatience"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"/>
+                                        <TextBox x:Name="TBWhisperPatience"
+                                            Margin="205,88,0,0"
+                                            Width="115"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            PreviewKeyDown="TBWhisperPatience_PreviewKeyDown"
+                                            TextChanged="TBWhisperPatience_TextChanged"/>
+                                        <Label x:Name="LWhisperBestOf" 
+                                            Margin="205,112,0,0"
+                                            Content="LWhisperBestOf"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"/>
+                                        <TextBox x:Name="TBWhisperBestOf"
+                                            Margin="205,144,0,0"
+                                            Width="115"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            PreviewKeyDown="TBWhisperBestOf_PreviewKeyDown"
+                                            TextChanged="TBWhisperBestOf_TextChanged"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
@@ -1177,6 +1380,7 @@
         </Grid>
         <StatusBar x:Name="SBStatusBar"
             Grid.Row="2"
+            Height="30"
             VerticalAlignment="Bottom">
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">
@@ -1193,6 +1397,7 @@
                     <Label x:Name="LOperation"
                         Margin="5,5,5,5" />
                     <ProgressBar x:Name="PBProgress"
+                        MaxHeight="10"
                         MinWidth="100" />
                 </StackPanel>
             </StatusBarItem>
