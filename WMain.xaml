@@ -326,7 +326,8 @@
                                     Header="{DynamicResource GBClipList}"
                                     Margin="5,5,0,0"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Top">
+                                    VerticalAlignment="Top"
+                                    Width="430">
                                     <Grid>
                                         <Label x:Name="LNetPlaylists"
                                             Content="{DynamicResource LNetPlaylists}"
@@ -356,21 +357,24 @@
                                             VerticalAlignment="Top" 
                                             HorizontalAlignment="Left"  />
                                         <Button x:Name="BtnRefreshNetResurce"
-                                            Margin="0,132,0,5"
+                                            Margin="0,134,0,5"
                                             Content="{DynamicResource BtnRefreshNetResurce}"
                                             HorizontalAlignment="Left"
                                             Click="BtnRefreshNetResurce_Click" />
                                         <Button x:Name="BtnLoadClipList"
-                                            Margin="337,132,10,5"
+                                            Margin="326,135,0,5"
+                                            HorizontalAlignment="Left"
                                             Content="{DynamicResource BtnLoadClipList}"
                                             Click="BtnLoadClipList_Click" />
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox x:Name="GBB23ClipListGenerator"
                                     Header="{DynamicResource GBB23ClipListGenerator}"
-                                    Margin="5,188,0,0"
+                                    Margin="5,197,0,0"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Top" Height="284" Width="433">
+                                    VerticalAlignment="Top"
+                                    Height="290"
+                                    Width="430">
                                     <Grid>
                                         <Label Margin="0,0,0,0"
                                             Content="{DynamicResource LB23UserMID}"
