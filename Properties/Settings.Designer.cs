@@ -748,5 +748,32 @@ namespace CustomToolbox.Properties {
                 return ((string)(this["WhisperLanguage"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WhisperSpeedUp2x {
+            get {
+                return ((bool)(this["WhisperSpeedUp2x"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WhisperTranslateToEnglish {
+            get {
+                return ((bool)(this["WhisperTranslateToEnglish"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WhisperExportWebVTTAlso {
+            get {
+                return ((bool)(this["WhisperExportWebVTTAlso"]));
+            }
+        }
     }
 }

@@ -481,19 +481,22 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBWhisperFunctions"
                                     Margin="5,127,0,0"
-                                    Header="{DynamicResource GBFFmpegFunctions}"
+                                    Header="{DynamicResource GBWhisperFunctions}"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Top">
+                                    VerticalAlignment="Top"
+                                    Height="294"
+                                    Width="450">
                                     <Grid>
                                         <Label x:Name="LWhisperModel" 
                                             Margin="0,0,0,0"
-                                            Content="LWhisperModel"
+                                            Content="{DynamicResource LWhisperModel}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"/>
                                         <ComboBox x:Name="CBWhisperModel"
                                                 Margin="0,30,0,0"
                                                 VerticalAlignment="Top"
-                                                HorizontalAlignment="Left">
+                                                HorizontalAlignment="Left"
+                                                SelectionChanged="CBWhisperModel_SelectionChanged">
                                             <ComboBoxItem x:Name="CBIModelTinyEn" Content="Tiny En"/>
                                             <ComboBoxItem x:Name="CBIModelTiny" Content="Tiny"/>
                                             <ComboBoxItem x:Name="CBIModelBase" Content="Base"/>
@@ -507,12 +510,14 @@
                                         </ComboBox>
                                         <Label x:Name="LWhisperQuantization" 
                                             Margin="0,56,0,0"
-                                            Content="LWhisperQuantization"
+                                            Content="{DynamicResource LWhisperQuantization}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"/>
                                         <ComboBox x:Name="CBWhisperQuantization"
+                                                Margin="0,86,0,0"
                                                 VerticalAlignment="Top"
-                                                HorizontalAlignment="Left" Margin="0,86,0,0">
+                                                HorizontalAlignment="Left"
+                                                SelectionChanged="CBWhisperQuantization_SelectionChanged">
                                             <ComboBoxItem x:Name="CBIQuantizationNoQuantization" Content="No Quantization"/>
                                             <ComboBoxItem x:Name="CBIQuantizationQ4_0" Content="Q4_0"/>
                                             <ComboBoxItem x:Name="CBIQuantizationQ4_1" Content="Q4_1"/>
@@ -521,26 +526,31 @@
                                             <ComboBoxItem x:Name="CBIQuantizationQ5_1" Content="Q5_1"/>
                                             <ComboBoxItem x:Name="CBIQuantizationQ8_0" Content="Q8_0"/>
                                         </ComboBox>
-                                        <Label x:Name="LWhisperSamplingStrategies" 
+                                        <Label x:Name="LWhisperSamplingStrategy" 
                                             Margin="0,112,0,0"
-                                            Content="LWhisperSamplingStrategies"
+                                            Content="{DynamicResource LWhisperSamplingStrategy}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"/>
-                                        <ComboBox x:Name="CBWhisperSamplingStrategies"
+                                        <ComboBox x:Name="CBWhisperSamplingStrategy"
+                                                Margin="0,142,0,0"
+                                                ToolTip="{DynamicResource CBWhisperSamplingStrategyTooltip}"
                                                 VerticalAlignment="Top" 
-                                                HorizontalAlignment="Left" Margin="-1,142,0,0">
+                                                HorizontalAlignment="Left"
+                                                SelectionChanged="CBWhisperSamplingStrategy_SelectionChanged">
                                             <ComboBoxItem x:Name="CBISamplingStrategyDefault" Content="Default"/>
                                             <ComboBoxItem x:Name="CBISamplingStrategyGreedy" Content="Greedy"/>
                                             <ComboBoxItem x:Name="CBISamplingStrategyBeamSearch" Content="Beam search"/>
                                         </ComboBox>
-                                        <Label x:Name="LWhisperLanguages" 
+                                        <Label x:Name="LWhisperTranscribeLanguage" 
                                             Margin="0,168,0,0"
-                                            Content="LWhisperLanguages"
+                                            Content="{DynamicResource LWhisperTranscribeLanguage}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"/>
-                                        <ComboBox x:Name="CBWhisperLanguages"
-                                                VerticalAlignment="Top" 
-                                                HorizontalAlignment="Left" Margin="0,198,0,0">
+                                        <ComboBox x:Name="CBWhisperLanguage"
+                                            Margin="0,198,0,0"
+                                            VerticalAlignment="Top" 
+                                            HorizontalAlignment="Left"
+                                            SelectionChanged="CBWhisperLanguage_SelectionChanged">
                                             <ComboBoxItem x:Name="CBILangAuto" Content="auto"/>
                                             <ComboBoxItem x:Name="CBILangEn" Content="en"/>
                                             <ComboBoxItem x:Name="CBILangZh" Content="zh"/>
@@ -644,40 +654,74 @@
                                         </ComboBox>
                                         <Label x:Name="LWhisperBeamSize" 
                                             Margin="205,0,0,0"
-                                            Content="LWhisperBeamSize"
+                                            Content="{DynamicResource LWhisperBeamSize}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"/>
                                         <TextBox x:Name="TBWhisperBeamSize"
                                             Margin="205,32,0,0"
-                                            Width="115"
+                                            Width="196"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             PreviewKeyDown="TBWhisperBeamSize_PreviewKeyDown"
                                             TextChanged="TBWhisperBeamSize_TextChanged"/>
                                         <Label x:Name="LWhisperPatience" 
                                             Margin="205,56,0,0"
-                                            Content="LWhisperPatience"
+                                            Content="{DynamicResource LWhisperPatience}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"/>
                                         <TextBox x:Name="TBWhisperPatience"
                                             Margin="205,88,0,0"
-                                            Width="115"
+                                            Width="196"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             PreviewKeyDown="TBWhisperPatience_PreviewKeyDown"
                                             TextChanged="TBWhisperPatience_TextChanged"/>
                                         <Label x:Name="LWhisperBestOf" 
                                             Margin="205,112,0,0"
-                                            Content="LWhisperBestOf"
+                                            Content="{DynamicResource LWhisperBestOf}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"/>
                                         <TextBox x:Name="TBWhisperBestOf"
                                             Margin="205,144,0,0"
-                                            Width="115"
+                                            Width="196"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             PreviewKeyDown="TBWhisperBestOf_PreviewKeyDown"
                                             TextChanged="TBWhisperBestOf_TextChanged"/>
+                                        <CheckBox x:Name="CBWhisperSpeedUp2x"
+                                            Content="{DynamicResource CBWhisperSpeedUp2x}"
+                                            ToolTip="{DynamicResource CBWhisperSpeedUp2xTooltip}"
+                                            Margin="205,169,0,0" 
+                                            HorizontalAlignment="Left" 
+                                            VerticalAlignment="Top"
+                                            Checked="CBWhisperSpeedUp2x_Checked"
+                                            Unchecked="CBWhisperSpeedUp2x_Unchecked"/>
+                                        <CheckBox x:Name="CBWhisperTranslateToEnglish"
+                                            Content="{DynamicResource CBWhisperTranslateToEnglish}"
+                                            Margin="205,191,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Checked="CBWhisperTranslateToEnglish_Checked"
+                                            Unchecked="CBWhisperTranslateToEnglish_Unchecked"/>
+                                        <CheckBox x:Name="CBWhisperExportWebVTTAlso" 
+                                            Content="{DynamicResource CBWhisperExportWebVTTAlso}"
+                                            Margin="205,213,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Checked="CBWhisperExportWebVTTAlso_Checked"
+                                            Unchecked="CBWhisperExportWebVTTAlso_Unchecked"/>
+                                        <Button x:Name="BtnWhisperDetectVideoLanguage" 
+                                            Content="{DynamicResource BtnWhisperDetectVideoLanguage}"
+                                            Margin="-1,235,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Click="BtnWhisperDetectVideoLanguage_Click"/>
+                                        <Button x:Name="BtnWhisperTranscribeVideo" 
+                                            Content="{DynamicResource BtnWhisperTranscribeVideo}"
+                                            Margin="205,235,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Click="BtnWhisperTranscribeVideo_Click"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
@@ -887,7 +931,7 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBYtDlpOptions"
                                     Header="{DynamicResource GBYtDlpOptions}"
-                                    Margin="207,5,0,0"
+                                    Margin="234,5,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
@@ -1023,7 +1067,7 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBDependencyFiles"
                                     Header="{DynamicResource GBDependencyFiles}"
-                                    Margin="207,428,0,0" 
+                                    Margin="234,440,0,0" 
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>
@@ -1091,7 +1135,7 @@
                                 </GroupBox>
                                 <GroupBox x:Name="GBFFmpegOptions"
                                     Header="{DynamicResource GBFFmpegOptions}"
-                                    Margin="207,207,0,0"
+                                    Margin="234,213,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid>

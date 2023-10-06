@@ -206,5 +206,14 @@
     <Setting Name="WhisperLanguage" Type="System.String" Scope="Application">
       <Value Profile="(Default)">auto</Value>
     </Setting>
+    <Setting Name="WhisperSpeedUp2x" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="WhisperTranslateToEnglish" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="WhisperExportWebVTTAlso" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

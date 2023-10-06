@@ -830,7 +830,9 @@ public partial class WMain : Window
                 MIBatchDLClips,
                 BtnGenerateB23ClipList,
                 BtnBurnInSubtitle,
-                BtnSplitVideo
+                BtnSplitVideo,
+                BtnWhisperDetectVideoLanguage,
+                BtnWhisperTranscribeVideo
             };
 
             Control[] ctrlSet2 =
@@ -884,7 +886,9 @@ public partial class WMain : Window
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
-                    BtnSplitVideo
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
                 };
 
                 Control[] ctrlSet2 =
@@ -965,7 +969,9 @@ public partial class WMain : Window
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
-                    BtnSplitVideo
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
                 };
 
                 Control[] ctrlSet2 =
@@ -1076,7 +1082,9 @@ public partial class WMain : Window
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
-                    BtnSplitVideo
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
                 };
 
                 Control[] ctrlSet2 =

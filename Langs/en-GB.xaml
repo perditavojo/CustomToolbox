@@ -216,6 +216,21 @@
     <sys:String x:Key="MIExportLog">Export log</sys:String>
     <sys:String x:Key="LVersionPrefix">Version:</sys:String>
     <sys:String x:Key="LYtDlpVersionPrefix">yt-dlp Version:</sys:String>
+    <sys:String x:Key="GBWhisperFunctions">Whisper</sys:String>
+    <sys:String x:Key="LWhisperModel">Model</sys:String>
+    <sys:String x:Key="LWhisperQuantization">Quantization</sys:String>
+    <sys:String x:Key="LWhisperSamplingStrategy">Sampling Strategy</sys:String>
+    <sys:String x:Key="LWhisperTranscribeLanguage">Language</sys:String>
+    <sys:String x:Key="CBWhisperSamplingStrategyTooltip">Default is using Greedy</sys:String>
+    <sys:String x:Key="LWhisperBeamSize">Beam size (Only beam search)</sys:String>
+    <sys:String x:Key="LWhisperPatience">Patience (Only beam search)</sys:String>
+    <sys:String x:Key="LWhisperBestOf">Best Of (Only greedy)</sys:String>
+    <sys:String x:Key="CBWhisperSpeedUp2x">Enable SpeedUp2x</sys:String>
+    <sys:String x:Key="CBWhisperSpeedUp2xTooltip">Enable SpeedUp2x may reduce the quality of transcribe</sys:String>
+    <sys:String x:Key="CBWhisperTranslateToEnglish">Translate to English</sys:String>
+    <sys:String x:Key="CBWhisperExportWebVTTAlso">Export WebVTT also</sys:String>
+    <sys:String x:Key="BtnWhisperDetectVideoLanguage">Detect video language</sys:String>
+    <sys:String x:Key="BtnWhisperTranscribeVideo">Transcribe video</sys:String>
     <!-- Dialog -->
     <sys:String x:Key="LoadClipListSelectFile">Select file</sys:String>
     <sys:String x:Key="LoadClipListFilter">JSON file (*.json)|*.json|JSON file (with Comments)|*.jsonc|Timestamp file (*.txt)|*.txt</sys:String>

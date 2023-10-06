@@ -1,4 +1,6 @@
-﻿using Control = System.Windows.Controls.Control;
+﻿using CheckBox = System.Windows.Controls.CheckBox;
+using ComboBox = System.Windows.Controls.ComboBox;
+using Control = System.Windows.Controls.Control;
 using CustomToolbox.Common;
 using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Extensions;
@@ -12,6 +14,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TextBox = System.Windows.Controls.TextBox;
+
 
 namespace CustomToolbox;
 
@@ -74,7 +77,9 @@ public partial class WMain
                     MIBatchDLClips,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
-                    BtnSplitVideo
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
                 };
 
                 Control[] ctrlSet2 =
@@ -227,7 +232,9 @@ public partial class WMain
                     MIClearClipList,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
-                    BtnSplitVideo
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
                 };
 
                 Control[] ctrlSet2 =
@@ -321,6 +328,104 @@ public partial class WMain
                 CustomFunction.BatchSetEnabled(ctrlSet1, true);
                 CustomFunction.BatchSetEnabled(ctrlSet2, false);
             }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperModel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            // 2023/10/6 暫時先保留不使用。
+            ComboBox? comboBox = (ComboBox?)sender;
+
+            if (comboBox == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperQuantization_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            // 2023/10/6 暫時先保留不使用。
+            ComboBox? comboBox = (ComboBox?)sender;
+
+            if (comboBox == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperSamplingStrategy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            // 2023/10/6 暫時先保留不使用。
+            ComboBox? comboBox = (ComboBox?)sender;
+
+            if (comboBox == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            ComboBox? comboBox = (ComboBox?)sender;
+
+            if (comboBox == null)
+            {
+                return;
+            }
+
+            ComboBoxItem? comboBoxItem = (ComboBoxItem?)comboBox?.SelectedItem;
+
+            // 當轉譯語言為 en 時，沒有必要再使用翻譯成英文。
+            if (comboBoxItem != null && comboBoxItem?.Content?.ToString() == "en")
+            {
+                if (CBWhisperTranslateToEnglish.IsChecked == true)
+                {
+                    CBWhisperTranslateToEnglish.IsChecked = false;
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -588,6 +693,368 @@ public partial class WMain
 
                 return;
             }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperSpeedUp2x_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // 2023/10/6 暫時先保留不使用。
+            CheckBox? checkBox = (CheckBox?)sender;
+
+            if (checkBox == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperSpeedUp2x_Unchecked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // 2023/10/6 暫時先保留不使用。
+            CheckBox? checkBox = (CheckBox?)sender;
+
+            if (checkBox == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperTranslateToEnglish_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CheckBox? checkBox = (CheckBox?)sender;
+
+            if (checkBox == null)
+            {
+                return;
+            }
+
+            // 當轉譯語言為 en 時，沒有必要再使用翻譯成英文。
+            if (checkBox.IsChecked == true)
+            {
+                if (CBWhisperLanguage.Text == "en")
+                {
+                    checkBox.IsChecked = false;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperTranslateToEnglish_Unchecked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // 2023/10/6 暫時先保留不使用。
+            CheckBox? checkBox = (CheckBox?)sender;
+
+            if (checkBox == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperExportWebVTTAlso_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // 2023/10/6 暫時先保留不使用。
+            CheckBox? checkBox = (CheckBox?)sender;
+
+            if (checkBox == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void CBWhisperExportWebVTTAlso_Unchecked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // 2023/10/6 暫時先保留不使用。
+            CheckBox? checkBox = (CheckBox?)sender;
+
+            if (checkBox == null)
+            {
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void BtnWhisperDetectVideoLanguage_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // TODO: 2023/10/6 待完成。
+            Dispatcher.BeginInvoke(new Action(async () =>
+            {
+                Control[] ctrlSet1 =
+                {
+                    MIFetchClip,
+                    MIDLClip,
+                    MIDLClipsByTheSameUrl,
+                    MIBatchDLClips,
+                    BtnGenerateB23ClipList,
+                    BtnBurnInSubtitle,
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
+                };
+
+                Control[] ctrlSet2 =
+                {
+                    MICancel
+                };
+
+                Control[] ctrlSet3 =
+                {
+                    CBWhisperModel,
+                    CBWhisperQuantization,
+                    CBWhisperSamplingStrategy,
+                    CBWhisperLanguage,
+                    TBWhisperBeamSize,
+                    TBWhisperPatience,
+                    TBWhisperBestOf,
+                    CBWhisperSpeedUp2x,
+                    CBWhisperTranslateToEnglish,
+                    CBWhisperExportWebVTTAlso
+                };
+
+                CustomFunction.BatchSetEnabled(ctrlSet1, false);
+                CustomFunction.BatchSetEnabled(ctrlSet2, true);
+                CustomFunction.BatchSetEnabled(ctrlSet3, false);
+
+                string? videoFilePath = string.Empty;
+
+                OpenFileDialog openFileDialog1 = new()
+                {
+                    Title = MsgSet.SelectVideoFile,
+                    Filter = MsgSet.SelectVideoFileFilter,
+                    FilterIndex = 1,
+                    InitialDirectory = VariableSet.DownloadsFolderPath
+                };
+
+                bool? result1 = openFileDialog1.ShowDialog();
+
+                if (result1 == true)
+                {
+                    // 設定視訊檔案的路徑。
+                    videoFilePath = openFileDialog1.FileName;
+
+                    OpenFileDialog openFileDialog2 = new()
+                    {
+                        Title = MsgSet.SelectSubtitleFile,
+                        Filter = MsgSet.SelectSubtitleFileFilter,
+                        FilterIndex = 1
+                    };
+
+                    bool? result2 = openFileDialog2.ShowDialog();
+
+                    if (result2 == true)
+                    {
+                        #region 前處理變數
+
+                        string videoExtName = Path.GetExtension(videoFilePath);
+
+                        // 判斷選擇的影片的副檔名。
+                        if (videoExtName != ".mp4" && videoExtName != ".mkv")
+                        {
+                            MICancel_Click(sender, e);
+
+                            ShowMsgBox(MsgSet.MsgSelectedVideoNonSupported);
+
+                            return;
+                        }
+
+                        #endregion
+
+                        // 先清除日誌紀錄。
+                        MIClearLog_Click(sender, e);
+
+                        await OperationSet.DoDetectLanguage(
+                            inputFilePath: videoFilePath,
+                            cancellationToken: GetGlobalCT());
+                    }
+                }
+
+                CustomFunction.BatchSetEnabled(ctrlSet1, true);
+                CustomFunction.BatchSetEnabled(ctrlSet2, false);
+                CustomFunction.BatchSetEnabled(ctrlSet3, true);
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void BtnWhisperTranscribeVideo_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // TODO: 2023/10/6 待完成。
+            Dispatcher.BeginInvoke(new Action(async () =>
+            {
+                Control[] ctrlSet1 =
+                {
+                    MIFetchClip,
+                    MIDLClip,
+                    MIDLClipsByTheSameUrl,
+                    MIBatchDLClips,
+                    BtnGenerateB23ClipList,
+                    BtnBurnInSubtitle,
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
+                };
+
+                Control[] ctrlSet2 =
+                {
+                    MICancel
+                };
+
+                Control[] ctrlSet3 =
+                {
+                    CBWhisperModel,
+                    CBWhisperQuantization,
+                    CBWhisperSamplingStrategy,
+                    CBWhisperLanguage,
+                    TBWhisperBeamSize,
+                    TBWhisperPatience,
+                    TBWhisperBestOf,
+                    CBWhisperSpeedUp2x,
+                    CBWhisperTranslateToEnglish,
+                    CBWhisperExportWebVTTAlso
+                };
+
+                CustomFunction.BatchSetEnabled(ctrlSet1, false);
+                CustomFunction.BatchSetEnabled(ctrlSet2, true);
+                CustomFunction.BatchSetEnabled(ctrlSet3, false);
+
+                string? videoFilePath = string.Empty;
+
+                OpenFileDialog openFileDialog1 = new()
+                {
+                    Title = MsgSet.SelectVideoFile,
+                    Filter = MsgSet.SelectVideoFileFilter,
+                    FilterIndex = 1,
+                    InitialDirectory = VariableSet.DownloadsFolderPath
+                };
+
+                bool? result1 = openFileDialog1.ShowDialog();
+
+                if (result1 == true)
+                {
+                    // 設定視訊檔案的路徑。
+                    videoFilePath = openFileDialog1.FileName;
+
+                    OpenFileDialog openFileDialog2 = new()
+                    {
+                        Title = MsgSet.SelectSubtitleFile,
+                        Filter = MsgSet.SelectSubtitleFileFilter,
+                        FilterIndex = 1
+                    };
+
+                    bool? result2 = openFileDialog2.ShowDialog();
+
+                    if (result2 == true)
+                    {
+                        #region 前處理變數
+
+                        string videoExtName = Path.GetExtension(videoFilePath);
+
+                        // 判斷選擇的影片的副檔名。
+                        if (videoExtName != ".mp4" && videoExtName != ".mkv")
+                        {
+                            MICancel_Click(sender, e);
+
+                            ShowMsgBox(MsgSet.MsgSelectedVideoNonSupported);
+
+                            return;
+                        }
+
+                        #endregion
+
+                        // 先清除日誌紀錄。
+                        MIClearLog_Click(sender, e);
+
+                        await OperationSet.DoTranscribe(
+                            inputFilePath: videoFilePath,
+                            cancellationToken: GetGlobalCT());
+                    }
+                }
+
+                CustomFunction.BatchSetEnabled(ctrlSet1, true);
+                CustomFunction.BatchSetEnabled(ctrlSet2, false);
+                CustomFunction.BatchSetEnabled(ctrlSet3, true);
+            }));
         }
         catch (Exception ex)
         {
