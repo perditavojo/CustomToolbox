@@ -26,6 +26,7 @@ using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
+using System.Windows.Threading;
 
 namespace CustomToolbox.Common.Sets;
 
@@ -2224,67 +2225,69 @@ public class OperationSet
     {
         return new Progress<DownloadProgress>(downloadProgress =>
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                if (_LOperation == null || _PBProgress == null)
+            Application.Current.Dispatcher.BeginInvoke(
+                method: new Action(() =>
                 {
-                    return;
-                }
+                    if (_LOperation == null || _PBProgress == null)
+                    {
+                        return;
+                    }
 
-                double currentPercent = downloadProgress.Progress * 100;
+                    double currentPercent = downloadProgress.Progress * 100;
 
-                _PBProgress.Value = currentPercent;
-                _PBProgress.ToolTip = $"{currentPercent}%";
+                    _PBProgress.Value = currentPercent;
+                    _PBProgress.ToolTip = $"{currentPercent}%";
 
-                string message = $"({downloadProgress.State})";
+                    string message = $"({downloadProgress.State})";
 
-                message += MsgSet.GetFmtStr(
-                    MsgSet.YtdlSharpVideoIndex,
-                    downloadProgress.VideoIndex.ToString());
-
-                if (!string.IsNullOrEmpty(downloadProgress.DownloadSpeed))
-                {
                     message += MsgSet.GetFmtStr(
-                        MsgSet.YtdlSharpDownloadSpeed,
-                        downloadProgress.DownloadSpeed);
-                }
+                        MsgSet.YtdlSharpVideoIndex,
+                        downloadProgress.VideoIndex.ToString());
 
-                if (!string.IsNullOrEmpty(downloadProgress.ETA))
-                {
-                    message += MsgSet.GetFmtStr(
-                        MsgSet.YtdlSharpETA,
-                        downloadProgress.ETA);
-                }
+                    if (!string.IsNullOrEmpty(downloadProgress.DownloadSpeed))
+                    {
+                        message += MsgSet.GetFmtStr(
+                            MsgSet.YtdlSharpDownloadSpeed,
+                            downloadProgress.DownloadSpeed);
+                    }
 
-                if (!string.IsNullOrEmpty(downloadProgress.TotalDownloadSize))
-                {
-                    message += MsgSet.GetFmtStr(
-                        MsgSet.YtdlSharpTotalDownloadSize,
-                        downloadProgress.TotalDownloadSize);
-                }
+                    if (!string.IsNullOrEmpty(downloadProgress.ETA))
+                    {
+                        message += MsgSet.GetFmtStr(
+                            MsgSet.YtdlSharpETA,
+                            downloadProgress.ETA);
+                    }
 
-                if (!string.IsNullOrEmpty(downloadProgress.Data))
-                {
-                    message += MsgSet.GetFmtStr(
-                        MsgSet.YtdlSharpData,
-                        downloadProgress.Data);
-                }
+                    if (!string.IsNullOrEmpty(downloadProgress.TotalDownloadSize))
+                    {
+                        message += MsgSet.GetFmtStr(
+                            MsgSet.YtdlSharpTotalDownloadSize,
+                            downloadProgress.TotalDownloadSize);
+                    }
 
-                // 避免字串太長，造成顯示問題。
-                string reducedMessage = message;
+                    if (!string.IsNullOrEmpty(downloadProgress.Data))
+                    {
+                        message += MsgSet.GetFmtStr(
+                            MsgSet.YtdlSharpData,
+                            downloadProgress.Data);
+                    }
 
-                StringInfo siReducedMessage = new(reducedMessage);
+                    // 避免字串太長，造成顯示問題。
+                    string reducedMessage = message;
 
-                int limitLength = Properties.Settings.Default.LOperationLimitLength;
+                    StringInfo siReducedMessage = new(reducedMessage);
 
-                if (siReducedMessage.LengthInTextElements > limitLength)
-                {
-                    reducedMessage = $"{siReducedMessage.SubstringByTextElements(0, limitLength)}{MsgSet.Ellipses}";
-                }
+                    int limitLength = Properties.Settings.Default.LOperationLimitLength;
 
-                _LOperation.Content = reducedMessage;
-                _LOperation.ToolTip = message;
-            }));
+                    if (siReducedMessage.LengthInTextElements > limitLength)
+                    {
+                        reducedMessage = $"{siReducedMessage.SubstringByTextElements(0, limitLength)}{MsgSet.Ellipses}";
+                    }
+
+                    _LOperation.Content = reducedMessage;
+                    _LOperation.ToolTip = message;
+                }),
+                priority: DispatcherPriority.Background);
         });
     }
 
@@ -2337,18 +2340,20 @@ public class OperationSet
     {
         try
         {
-            await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                if (_LOperation == null || _PBProgress == null)
+            await Application.Current.Dispatcher.BeginInvoke(
+                method: new Action(() =>
                 {
-                    return;
-                }
+                    if (_LOperation == null || _PBProgress == null)
+                    {
+                        return;
+                    }
 
-                _LOperation.Content = string.Empty;
-                _LOperation.ToolTip = string.Empty;
-                _PBProgress.Value = 0.0d;
-                _PBProgress.ToolTip = string.Empty;
-            }));
+                    _LOperation.Content = string.Empty;
+                    _LOperation.ToolTip = string.Empty;
+                    _PBProgress.Value = 0.0d;
+                    _PBProgress.ToolTip = string.Empty;
+                }),
+                priority: DispatcherPriority.Background);
         }
         catch (Exception ex)
         {
@@ -2385,10 +2390,16 @@ public class OperationSet
     /// <param name="porgress">數值，進度</param>
     private static void WhisperDotNet_OnProgress(int porgress)
     {
-        if (_PBProgress != null)
-        {
-            _PBProgress.Value = porgress;
-        }
+        Application.Current.Dispatcher.BeginInvoke(
+            method: new Action(() =>
+            {
+                if (_PBProgress != null)
+                {
+                    _PBProgress.Value = porgress;
+                    _PBProgress.ToolTip = $"{porgress}%";
+                }
+            }),
+            priority: DispatcherPriority.Background);
     }
 
     /// <summary>
