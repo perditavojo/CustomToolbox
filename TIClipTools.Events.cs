@@ -930,7 +930,6 @@ public partial class WMain
                     MIClearLog_Click(sender, e);
 
                     // TODO: 2023/10/7 待完成。
-                    // 呼叫執行緒無法存取此物件,因為此物件於另一個執行緒·
                     await OperationSet.DoDetectLanguage(
                         inputFilePath: inputFilePath,
                         language: CBWhisperLanguage.Text,
@@ -1047,7 +1046,7 @@ public partial class WMain
                     MIClearLog_Click(sender, e);
 
                     // TODO: 2023/10/7 待完成。
-                    // 呼叫執行緒無法存取此物件,因為此物件於另一個執行緒·
+                    // 需要加入開啟 Temp 資料夾的功能。
                     await OperationSet.DoTranscribe(
                         inputFilePath: inputFilePath,
                         language: CBWhisperLanguage.Text,

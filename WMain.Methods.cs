@@ -21,6 +21,7 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Threading;
 using Xabe.FFmpeg;
 
 namespace CustomToolbox;
@@ -30,7 +31,6 @@ namespace CustomToolbox;
 /// </summary>
 public partial class WMain
 {
-
     /// <summary>
     /// 顯示訊息
     /// </summary>
@@ -40,11 +40,16 @@ public partial class WMain
         string message,
         string title = "")
     {
-        MessageBox.Show(
-            owner: this,
-            messageBoxText: message,
-            caption: title,
-            button: MessageBoxButton.OK);
+        Application.Current.Dispatcher.BeginInvoke(
+            method: new Action(() =>
+            {
+                MessageBox.Show(
+                    owner: this,
+                    messageBoxText: message,
+                    caption: title,
+                    button: MessageBoxButton.OK);
+            }),
+            priority: DispatcherPriority.Normal);
     }
 
     /// <summary>
@@ -62,48 +67,53 @@ public partial class WMain
         Action? secondaryAction = null,
         string title = "")
     {
-        MessageBoxButton messageBoxButton = MessageBoxButton.OKCancel;
+        Application.Current.Dispatcher.BeginInvoke(
+            method: new Action(() =>
+            {
+                MessageBoxButton messageBoxButton = MessageBoxButton.OKCancel;
 
-        if (primaryAction == null)
-        {
-            messageBoxButton = MessageBoxButton.OK;
-        }
-
-        if (secondaryAction != null)
-        {
-            messageBoxButton = MessageBoxButton.YesNoCancel;
-        }
-
-        MessageBoxResult messageBoxResult = MessageBox.Show(
-            owner: this,
-            messageBoxText: message,
-            caption: title,
-            button: messageBoxButton);
-
-        switch (messageBoxResult)
-        {
-            case MessageBoxResult.OK:
-            case MessageBoxResult.Yes:
-                primaryAction?.Invoke();
-
-                break;
-            case MessageBoxResult.No:
-                if (messageBoxButton != MessageBoxButton.YesNoCancel)
+                if (primaryAction == null)
                 {
-                    cancelAction?.Invoke();
-                }
-                else
-                {
-                    secondaryAction?.Invoke();
+                    messageBoxButton = MessageBoxButton.OK;
                 }
 
-                break;
-            case MessageBoxResult.Cancel:
-            case MessageBoxResult.None:
-                cancelAction?.Invoke();
+                if (secondaryAction != null)
+                {
+                    messageBoxButton = MessageBoxButton.YesNoCancel;
+                }
 
-                break;
-        }
+                MessageBoxResult messageBoxResult = MessageBox.Show(
+                    owner: this,
+                    messageBoxText: message,
+                    caption: title,
+                    button: messageBoxButton);
+
+                switch (messageBoxResult)
+                {
+                    case MessageBoxResult.OK:
+                    case MessageBoxResult.Yes:
+                        primaryAction?.Invoke();
+
+                        break;
+                    case MessageBoxResult.No:
+                        if (messageBoxButton != MessageBoxButton.YesNoCancel)
+                        {
+                            cancelAction?.Invoke();
+                        }
+                        else
+                        {
+                            secondaryAction?.Invoke();
+                        }
+
+                        break;
+                    case MessageBoxResult.Cancel:
+                    case MessageBoxResult.None:
+                        cancelAction?.Invoke();
+
+                        break;
+                }
+            }),
+            priority: DispatcherPriority.Normal);
     }
 
     /// <summary>
