@@ -6,6 +6,7 @@ using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
+using CustomToolbox.Common.Utils;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Serilog.Events;
@@ -14,7 +15,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TextBox = System.Windows.Controls.TextBox;
-
 
 namespace CustomToolbox;
 
@@ -848,7 +848,6 @@ public partial class WMain
     {
         try
         {
-            // TODO: 2023/10/6 待完成。
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
@@ -887,7 +886,7 @@ public partial class WMain
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);
                 CustomFunction.BatchSetEnabled(ctrlSet3, false);
 
-                string? videoFilePath = string.Empty;
+                string? inputFilePath = string.Empty;
 
                 OpenFileDialog openFileDialog1 = new()
                 {
@@ -901,43 +900,50 @@ public partial class WMain
 
                 if (result1 == true)
                 {
-                    // 設定視訊檔案的路徑。
-                    videoFilePath = openFileDialog1.FileName;
+                    // 設定輸入檔案的路徑。
+                    inputFilePath = openFileDialog1.FileName;
 
-                    OpenFileDialog openFileDialog2 = new()
+                    #region 前處理變數
+
+                    string fileExtName = Path.GetExtension(inputFilePath);
+
+                    // 判斷選擇的檔案的副檔名。
+                    if (fileExtName != ".mp4" &&
+                        fileExtName != ".mkv" &&
+                        fileExtName != ".m4a" &&
+                        fileExtName != ".mp3" &&
+                        fileExtName != ".wav" &&
+                        fileExtName != ".ogg" &&
+                        fileExtName != ".flac" &&
+                        fileExtName != ".opus")
                     {
-                        Title = MsgSet.SelectSubtitleFile,
-                        Filter = MsgSet.SelectSubtitleFileFilter,
-                        FilterIndex = 1
-                    };
+                        MICancel_Click(sender, e);
 
-                    bool? result2 = openFileDialog2.ShowDialog();
+                        ShowMsgBox(MsgSet.MsgSelectedVideoNonSupported);
 
-                    if (result2 == true)
-                    {
-                        #region 前處理變數
-
-                        string videoExtName = Path.GetExtension(videoFilePath);
-
-                        // 判斷選擇的影片的副檔名。
-                        if (videoExtName != ".mp4" && videoExtName != ".mkv")
-                        {
-                            MICancel_Click(sender, e);
-
-                            ShowMsgBox(MsgSet.MsgSelectedVideoNonSupported);
-
-                            return;
-                        }
-
-                        #endregion
-
-                        // 先清除日誌紀錄。
-                        MIClearLog_Click(sender, e);
-
-                        await OperationSet.DoDetectLanguage(
-                            inputFilePath: videoFilePath,
-                            cancellationToken: GetGlobalCT());
+                        return;
                     }
+
+                    #endregion
+
+                    // 先清除日誌紀錄。
+                    MIClearLog_Click(sender, e);
+
+                    // TODO: 2023/10/7 待完成。
+                    // 呼叫執行緒無法存取此物件,因為此物件於另一個執行緒·
+                    await OperationSet.DoDetectLanguage(
+                        inputFilePath: inputFilePath,
+                        language: CBWhisperLanguage.Text,
+                        enableTranslate: CBWhisperTranslateToEnglish.IsChecked ?? false,
+                        enableSpeedUp2x: CBWhisperSpeedUp2x.IsChecked ?? false,
+                        speedUp: false,
+                        ggmlType: WhisperUtil.GetModelType(CBWhisperModel.Text),
+                        quantizationType: WhisperUtil.GetQuantizationType(CBWhisperQuantization.Text),
+                        samplingStrategyType: WhisperUtil.GetSamplingStrategyType(CBWhisperSamplingStrategy.Text),
+                        beamSize: 5,
+                        patience: -0.1f,
+                        bestOf: 1,
+                        cancellationToken: GetGlobalCT());
                 }
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, true);
@@ -959,7 +965,6 @@ public partial class WMain
     {
         try
         {
-            // TODO: 2023/10/6 待完成。
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
@@ -998,7 +1003,7 @@ public partial class WMain
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);
                 CustomFunction.BatchSetEnabled(ctrlSet3, false);
 
-                string? videoFilePath = string.Empty;
+                string? inputFilePath = string.Empty;
 
                 OpenFileDialog openFileDialog1 = new()
                 {
@@ -1012,43 +1017,50 @@ public partial class WMain
 
                 if (result1 == true)
                 {
-                    // 設定視訊檔案的路徑。
-                    videoFilePath = openFileDialog1.FileName;
+                    // 設定輸入檔案的路徑。
+                    inputFilePath = openFileDialog1.FileName;
 
-                    OpenFileDialog openFileDialog2 = new()
+                    #region 前處理變數
+
+                    string fileExtName = Path.GetExtension(inputFilePath);
+
+                    // 判斷選擇的檔案的副檔名。
+                    if (fileExtName != ".mp4" &&
+                        fileExtName != ".mkv" &&
+                        fileExtName != ".m4a" &&
+                        fileExtName != ".mp3" &&
+                        fileExtName != ".wav" &&
+                        fileExtName != ".ogg" &&
+                        fileExtName != ".flac" &&
+                        fileExtName != ".opus")
                     {
-                        Title = MsgSet.SelectSubtitleFile,
-                        Filter = MsgSet.SelectSubtitleFileFilter,
-                        FilterIndex = 1
-                    };
+                        MICancel_Click(sender, e);
 
-                    bool? result2 = openFileDialog2.ShowDialog();
+                        ShowMsgBox(MsgSet.MsgSelectedVideoNonSupported);
 
-                    if (result2 == true)
-                    {
-                        #region 前處理變數
-
-                        string videoExtName = Path.GetExtension(videoFilePath);
-
-                        // 判斷選擇的影片的副檔名。
-                        if (videoExtName != ".mp4" && videoExtName != ".mkv")
-                        {
-                            MICancel_Click(sender, e);
-
-                            ShowMsgBox(MsgSet.MsgSelectedVideoNonSupported);
-
-                            return;
-                        }
-
-                        #endregion
-
-                        // 先清除日誌紀錄。
-                        MIClearLog_Click(sender, e);
-
-                        await OperationSet.DoTranscribe(
-                            inputFilePath: videoFilePath,
-                            cancellationToken: GetGlobalCT());
+                        return;
                     }
+
+                    #endregion
+
+                    // 先清除日誌紀錄。
+                    MIClearLog_Click(sender, e);
+
+                    // TODO: 2023/10/7 待完成。
+                    // 呼叫執行緒無法存取此物件,因為此物件於另一個執行緒·
+                    await OperationSet.DoTranscribe(
+                        inputFilePath: inputFilePath,
+                        language: CBWhisperLanguage.Text,
+                        enableTranslate: CBWhisperTranslateToEnglish.IsChecked ?? false,
+                        enableSpeedUp2x: CBWhisperSpeedUp2x.IsChecked ?? false,
+                        exportWebVtt: CBWhisperExportWebVTTAlso.IsChecked ?? false,
+                        ggmlType: WhisperUtil.GetModelType(CBWhisperModel.Text),
+                        quantizationType: WhisperUtil.GetQuantizationType(CBWhisperQuantization.Text),
+                        samplingStrategyType: WhisperUtil.GetSamplingStrategyType(CBWhisperSamplingStrategy.Text),
+                        beamSize: 5,
+                        patience: -0.1f,
+                        bestOf: 1,
+                        cancellationToken: GetGlobalCT());
                 }
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, true);

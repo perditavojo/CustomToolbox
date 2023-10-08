@@ -1683,11 +1683,11 @@ public class OperationSet
                 _WMain?.WriteLog(
                     message: MsgSet.GetFmtStr(
                         MsgSet.MsgWhisperUsedModel,
-                        nameof(ggmlType)));
+                        ggmlType.ToString()));
                 _WMain?.WriteLog(
                     message: MsgSet.GetFmtStr(
                         MsgSet.MsgWhisperUsedQuantizationType,
-                        nameof(quantizationType)));
+                        quantizationType.ToString()));
 
                 using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
 
@@ -1886,11 +1886,11 @@ public class OperationSet
                 _WMain?.WriteLog(
                     message: MsgSet.GetFmtStr(
                         MsgSet.MsgWhisperUsedModel,
-                        nameof(ggmlType)));
+                        ggmlType.ToString()));
                 _WMain?.WriteLog(
                     message: MsgSet.GetFmtStr(
                         MsgSet.MsgWhisperUsedQuantizationType,
-                        nameof(quantizationType)));
+                        quantizationType.ToString()));
                 _WMain?.WriteLog(
                     message: MsgSet.GetFmtStr(
                         MsgSet.MsgWhisperTranscribeUsedLanguage,
@@ -1898,7 +1898,7 @@ public class OperationSet
                 _WMain?.WriteLog(
                     message: MsgSet.GetFmtStr(
                         MsgSet.MsgWhisperTranscribeUsedSamplingStrategyType,
-                        nameof(samplingStrategyType)));
+                        samplingStrategyType.ToString()));
                 _WMain?.WriteLog(
                     message: MsgSet.GetFmtStr(
                         MsgSet.MsgWhisperTranscribeEnableOpenCCS2TWP,

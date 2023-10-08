@@ -1428,7 +1428,6 @@
         </Grid>
         <StatusBar x:Name="SBStatusBar"
             Grid.Row="2"
-            Height="30"
             VerticalAlignment="Bottom">
             <StatusBarItem>
                 <StackPanel Orientation="Horizontal">

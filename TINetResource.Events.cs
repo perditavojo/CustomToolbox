@@ -264,7 +264,7 @@ public partial class WMain
                     BtnBurnInSubtitle,
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
-                    BtnWhisperTranscribeVideo
+                    BtnWhisperTranscribeVideo,
                     TBB23UserMID,
                     TBB23ClipListExcludedPhrases,
                     CBB23ClipListExportJsonc,
