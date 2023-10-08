@@ -110,6 +110,16 @@ public class TaskbarIconUtil
     private static MenuItem MIOpenLyricsFolder = new();
 
     /// <summary>
+    /// 開啟 Temp 資料夾
+    /// </summary>
+    private static MenuItem MIOpenTempFolder = new();
+
+    /// <summary>
+    /// 開啟 Models 資料夾
+    /// </summary>
+    private static MenuItem MIOpenModelsFolder = new();
+
+    /// <summary>
     /// 關於選單
     /// </summary>
     private static MenuItem MIAboutMenu = new();
@@ -218,6 +228,14 @@ public class TaskbarIconUtil
             {
                 Header = _WMain.MIOpenLyricsFolder.Header
             };
+            MIOpenTempFolder = new()
+            {
+                Header = _WMain.MIOpenTempFolder.Header
+            };
+            MIOpenModelsFolder = new()
+            {
+                Header = _WMain.MIOpenModelsFolder.Header
+            };
             MIAboutMenu = new()
             {
                 Header = _WMain.MIAbout.Header
@@ -252,6 +270,8 @@ public class TaskbarIconUtil
             MIOpenCliplistsFolder.Click += _WMain.MIOpenCliplistsFolder_Click;
             MIOpenLogsFolder.Click += _WMain.MIOpenLogsFolder_Click;
             MIOpenLyricsFolder.Click += _WMain.MIOpenLyricsFolder_Click;
+            MIOpenTempFolder.Click += _WMain.MIOpenTempFolder_Click;
+            MIOpenModelsFolder.Click += _WMain.MIOpenModelsFolder_Click;
             MIAbout.Click += _WMain.MIAbout_Click;
             MIExit.Click += _WMain.MIExit_Click;
 
@@ -279,6 +299,8 @@ public class TaskbarIconUtil
             MIFoldersMenu.Items.Add(MIOpenCliplistsFolder);
             MIFoldersMenu.Items.Add(MIOpenLogsFolder);
             MIFoldersMenu.Items.Add(MIOpenLyricsFolder);
+            MIFoldersMenu.Items.Add(MIOpenTempFolder);
+            MIFoldersMenu.Items.Add(MIOpenModelsFolder);
 
             CMContextMenu.Items.Add(MIFoldersMenu);
             CMContextMenu.Items.Add(new Separator());
@@ -390,6 +412,14 @@ public class TaskbarIconUtil
                 MIPrevious.Click -= _WMain.BtnPrevious_Click;
                 MINext.Click -= _WMain.BtnNext_Click;
                 MIStop.Click -= _WMain.BtnStop_Click;
+                MIOpenBinsFolder.Click -= _WMain.MIOpenBinsFolder_Click;
+                MIOpenConfigFolder.Click -= _WMain.MIOpenConfigFolder_Click;
+                MIOpenDownloadsFolder.Click -= _WMain.MIOpenDownloadsFolder_Click;
+                MIOpenCliplistsFolder.Click -= _WMain.MIOpenCliplistsFolder_Click;
+                MIOpenLogsFolder.Click -= _WMain.MIOpenLogsFolder_Click;
+                MIOpenLyricsFolder.Click -= _WMain.MIOpenLyricsFolder_Click;
+                MIOpenTempFolder.Click -= _WMain.MIOpenTempFolder_Click;
+                MIOpenModelsFolder.Click -= _WMain.MIOpenModelsFolder_Click;
                 MICheckUpdate.Click -= _WMain.MICheckUpdate_Click;
                 MIAbout.Click -= _WMain.MIAbout_Click;
                 MIExit.Click -= _WMain.MIExit_Click;

@@ -1,15 +1,18 @@
-# 自定義工具箱更新日誌
+# 自定義工具箱 - 更新日誌
 
 - v1.1.0
   1. 移除 ModernWpf 函式庫。
   2. 加入 Whisper 功能。（CPU 版）
   3. 更新第三方函式庫。
   4. 配合程式的異動，更新語言檔案。
-  5. UI 重新調整。
+  5. 配合 1. 將 UI 排版重新調整。
   6. 加入從網路播放清單複製 MID 的功能。（僅限 Bilibili 的播放清單） 
   7. 更新 README.md。
   8. 調整 Log 的輸出方式，改為使用 Serilog 函式庫來輸出 Log。
-  9. 將 TBLog 改為 RTBLog，並改用 RichTextBox 重新實現功能。 
+  9. 將 TBLog 改為 RTBLog，並改用 RichTextBox 重新實現功能。
+  10. 調整開啟資料夾按鈕位置，並新增開啟 Temp、Models 等資料夾的按鈕。
+  12. 加入與使用者代理字串的新欄位，並提供自行設定的功能。
+  13. 加入新的 Bilibili 風險控制機制的實做。
 - v1.0.15
   1. 更新 README.md。
   2. 更新預設的使用者代理字串。（Google Chrome v115）

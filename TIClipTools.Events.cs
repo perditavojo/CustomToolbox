@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TextBox = System.Windows.Controls.TextBox;
+using Whisper.net.Ggml;
 
 namespace CustomToolbox;
 
@@ -890,8 +891,8 @@ public partial class WMain
 
                 OpenFileDialog openFileDialog1 = new()
                 {
-                    Title = MsgSet.SelectVideoFile,
-                    Filter = MsgSet.SelectVideoFileFilter,
+                    Title = MsgSet.SelectWhisperInputFile,
+                    Filter = MsgSet.SelectWhisperInputFileFilter,
                     FilterIndex = 1,
                     InitialDirectory = VariableSet.DownloadsFolderPath
                 };
@@ -903,14 +904,15 @@ public partial class WMain
                     // 設定輸入檔案的路徑。
                     inputFilePath = openFileDialog1.FileName;
 
-                    #region 前處理變數
 
                     string fileExtName = Path.GetExtension(inputFilePath);
 
                     // 判斷選擇的檔案的副檔名。
                     if (fileExtName != ".mp4" &&
                         fileExtName != ".mkv" &&
+                        fileExtName != ".mka" &&
                         fileExtName != ".m4a" &&
+                        fileExtName != ".aac" &&
                         fileExtName != ".mp3" &&
                         fileExtName != ".wav" &&
                         fileExtName != ".ogg" &&
@@ -924,24 +926,48 @@ public partial class WMain
                         return;
                     }
 
-                    #endregion
+                    // TODO: 2023/10/9 考慮未來版本是否要將設定欄位移至 TIMic 中。
+                    string language = CBWhisperLanguage.Text;
+
+                    bool enableTranslate = CBWhisperTranslateToEnglish.IsChecked ?? false;
+                    bool enableSpeedUp2x = CBWhisperSpeedUp2x.IsChecked ?? false;
+
+                    GgmlType ggmlType = WhisperUtil.GetModelType(CBWhisperModel.Text);
+
+                    QuantizationType quantizationType = WhisperUtil
+                        .GetQuantizationType(CBWhisperQuantization.Text);
+
+                    SamplingStrategyType samplingStrategyType = WhisperUtil
+                        .GetSamplingStrategyType(CBWhisperSamplingStrategy.Text);
+
+                    int beamSize = int.TryParse(TBWhisperBeamSize.Text, out int parsedBeamSize) ?
+                        parsedBeamSize :
+                        5;
+
+                    float patience = float.TryParse(TBWhisperBeamSize.Text, out float parsedPatience) ?
+                        parsedPatience :
+                        -0.1f;
+
+                    int bestOf = int.TryParse(TBWhisperBeamSize.Text, out int parsedBestOf) ?
+                        parsedBestOf :
+                        1;
 
                     // 先清除日誌紀錄。
                     MIClearLog_Click(sender, e);
 
-                    // TODO: 2023/10/7 待完成。
                     await OperationSet.DoDetectLanguage(
                         inputFilePath: inputFilePath,
-                        language: CBWhisperLanguage.Text,
-                        enableTranslate: CBWhisperTranslateToEnglish.IsChecked ?? false,
-                        enableSpeedUp2x: CBWhisperSpeedUp2x.IsChecked ?? false,
+                        language: language,
+                        enableTranslate: enableTranslate,
+                        enableSpeedUp2x: enableSpeedUp2x,
+                        // 2023/10/9 因為啟用時容易發生錯誤，所以固定保持為 false。
                         speedUp: false,
-                        ggmlType: WhisperUtil.GetModelType(CBWhisperModel.Text),
-                        quantizationType: WhisperUtil.GetQuantizationType(CBWhisperQuantization.Text),
-                        samplingStrategyType: WhisperUtil.GetSamplingStrategyType(CBWhisperSamplingStrategy.Text),
-                        beamSize: 5,
-                        patience: -0.1f,
-                        bestOf: 1,
+                        ggmlType: ggmlType,
+                        quantizationType: quantizationType,
+                        samplingStrategyType: samplingStrategyType,
+                        beamSize: beamSize,
+                        patience: patience,
+                        bestOf: bestOf,
                         cancellationToken: GetGlobalCT());
                 }
 
@@ -1006,8 +1032,8 @@ public partial class WMain
 
                 OpenFileDialog openFileDialog1 = new()
                 {
-                    Title = MsgSet.SelectVideoFile,
-                    Filter = MsgSet.SelectVideoFileFilter,
+                    Title = MsgSet.SelectWhisperInputFile,
+                    Filter = MsgSet.SelectWhisperInputFileFilter,
                     FilterIndex = 1,
                     InitialDirectory = VariableSet.DownloadsFolderPath
                 };
@@ -1019,14 +1045,14 @@ public partial class WMain
                     // 設定輸入檔案的路徑。
                     inputFilePath = openFileDialog1.FileName;
 
-                    #region 前處理變數
-
                     string fileExtName = Path.GetExtension(inputFilePath);
 
                     // 判斷選擇的檔案的副檔名。
                     if (fileExtName != ".mp4" &&
                         fileExtName != ".mkv" &&
+                        fileExtName != ".mka" &&
                         fileExtName != ".m4a" &&
+                        fileExtName != ".aac" &&
                         fileExtName != ".mp3" &&
                         fileExtName != ".wav" &&
                         fileExtName != ".ogg" &&
@@ -1040,25 +1066,48 @@ public partial class WMain
                         return;
                     }
 
-                    #endregion
+                    // TODO: 2023/10/9 考慮未來版本是否要將設定欄位移至 TIMic 中。
+                    string language = CBWhisperLanguage.Text;
+
+                    bool enableTranslate = CBWhisperTranslateToEnglish.IsChecked ?? false;
+                    bool enableSpeedUp2x = CBWhisperSpeedUp2x.IsChecked ?? false;
+                    bool exportWebVtt = CBWhisperExportWebVTTAlso.IsChecked ?? false;
+
+                    GgmlType ggmlType = WhisperUtil.GetModelType(CBWhisperModel.Text);
+
+                    QuantizationType quantizationType = WhisperUtil
+                        .GetQuantizationType(CBWhisperQuantization.Text);
+
+                    SamplingStrategyType samplingStrategyType = WhisperUtil
+                        .GetSamplingStrategyType(CBWhisperSamplingStrategy.Text);
+
+                    int beamSize = int.TryParse(TBWhisperBeamSize.Text, out int parsedBeamSize) ?
+                        parsedBeamSize :
+                        5;
+
+                    float patience = float.TryParse(TBWhisperBeamSize.Text, out float parsedPatience) ?
+                        parsedPatience :
+                        -0.1f;
+
+                    int bestOf = int.TryParse(TBWhisperBeamSize.Text, out int parsedBestOf) ?
+                        parsedBestOf :
+                        1;
 
                     // 先清除日誌紀錄。
                     MIClearLog_Click(sender, e);
 
-                    // TODO: 2023/10/7 待完成。
-                    // 需要加入開啟 Temp 資料夾的功能。
                     await OperationSet.DoTranscribe(
                         inputFilePath: inputFilePath,
-                        language: CBWhisperLanguage.Text,
-                        enableTranslate: CBWhisperTranslateToEnglish.IsChecked ?? false,
-                        enableSpeedUp2x: CBWhisperSpeedUp2x.IsChecked ?? false,
-                        exportWebVtt: CBWhisperExportWebVTTAlso.IsChecked ?? false,
-                        ggmlType: WhisperUtil.GetModelType(CBWhisperModel.Text),
-                        quantizationType: WhisperUtil.GetQuantizationType(CBWhisperQuantization.Text),
-                        samplingStrategyType: WhisperUtil.GetSamplingStrategyType(CBWhisperSamplingStrategy.Text),
-                        beamSize: 5,
-                        patience: -0.1f,
-                        bestOf: 1,
+                        language: language,
+                        enableTranslate: enableTranslate,
+                        enableSpeedUp2x: enableSpeedUp2x,
+                        exportWebVtt: exportWebVtt,
+                        ggmlType: ggmlType,
+                        quantizationType: quantizationType,
+                        samplingStrategyType: samplingStrategyType,
+                        beamSize: beamSize,
+                        patience: patience,
+                        bestOf: bestOf,
                         cancellationToken: GetGlobalCT());
                 }
 

@@ -192,6 +192,8 @@
     <sys:String x:Key="MIOpenCliplistsFolder">打开 ClipLists 文件夹</sys:String>
     <sys:String x:Key="MIOpenLogsFolder">打开 Logs 文件夹</sys:String>
     <sys:String x:Key="MIOpenLyricsFolder">打开 Lyrics 文件夹</sys:String>
+    <sys:String x:Key="MIOpenTempFolder">开启 Temp 资料夹</sys:String>
+    <sys:String x:Key="MIOpenModelsFolder">开启 Models 资料夹</sys:String>
     <sys:String x:Key="DGClipList">短片清单</sys:String>
     <sys:String x:Key="ClipDataVideoUrlOrID">视频 ID／网址</sys:String>
     <sys:String x:Key="ClipDataNo">编号</sys:String>
@@ -240,11 +242,13 @@
     <sys:String x:Key="SelectProfilePath">选择路径</sys:String>
     <sys:String x:Key="ExportLogFilter">文本档（*.txt）|.txt</sys:String>
     <sys:String x:Key="SelectVideoFile">选择视频文件</sys:String>
-    <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska|*.mkv</sys:String>
+    <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska 视频档|*.mkv</sys:String>
     <sys:String x:Key="SelectSubtitleFile">选择字幕文件</sys:String>
     <sys:String x:Key="SelectSubtitleFileFilter">SupRip Text|*.srt|WebVTT|*.vtt|SubStation Alpha|*.ssa|Advanced SubStation Alpha|*.ass</sys:String>
     <sys:String x:Key="SaveImageFile">保存文件</sys:String>
     <sys:String x:Key="SaveImageFileFilter">PNG 影像档 (*.png)|*.png|JPEG 影像档 (*.jpg)|*.jpg</sys:String>
+    <sys:String x:Key="SelectWhisperInputFile">选择档案</sys:String>
+    <sys:String x:Key="SelectWhisperInputFileFilter">MPEG-4 Part 14|*.mp4|Matroska 视频档|*.mkv|Matroska 音讯档|*.mka|MPEG-4 Part 3|*.m4a|AAC|*.aac|MPEG-1 Layer 3|*.mp3|WAVE|*.wav|Ogg Vorbis|*.ogg|FLAC|*.flac|Opus|*.opus</sys:String>
     <!-- 消息 -->
     <sys:String x:Key="MsgUnderConstruction">功能建置中……</sys:String>
     <sys:String x:Key="MsgStartDownloading">开始下载 {0}。</sys:String>

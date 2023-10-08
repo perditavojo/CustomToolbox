@@ -42,6 +42,8 @@
 
 因 [Xabe.FFmpeg](https://github.com/tomaszzmuda/Xabe.FFmpeg) 函式庫[授權合約](https://ffmpeg.xabe.net/license.html)的限制，此 GitHub 倉庫內，`沒有標註來源`的內容，皆採用 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) 授權條款釋出，反之皆以其來源之授權條款為準。
 
+> 使用的函式庫
+
 - [adoconnection/SevenZipExtractor](https://github.com/adoconnection/SevenZipExtractor)
    - Copyright (c) 2017 Alexander Selishchev
    - [MIT 授權條款](https://github.com/adoconnection/SevenZipExtractor/blob/master/LICENSE)

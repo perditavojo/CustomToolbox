@@ -192,6 +192,8 @@
     <sys:String x:Key="MIOpenCliplistsFolder">Open ClipLists folder</sys:String>
     <sys:String x:Key="MIOpenLogsFolder">Open Logs folder</sys:String>
     <sys:String x:Key="MIOpenLyricsFolder">Open Lyrics folder</sys:String>
+    <sys:String x:Key="MIOpenTempFolder">Open Temp folder</sys:String>
+    <sys:String x:Key="MIOpenModelsFolder">Open Models folder</sys:String>
     <sys:String x:Key="DGClipList">Clip list</sys:String>
     <sys:String x:Key="ClipDataVideoUrlOrID">Video ID / URL</sys:String>
     <sys:String x:Key="ClipDataNo">No</sys:String>
@@ -240,11 +242,13 @@
     <sys:String x:Key="SelectProfilePath">Select path</sys:String>
     <sys:String x:Key="ExportLogFilter">Text file（*.txt）|.txt</sys:String>
     <sys:String x:Key="SelectVideoFile">Select video file</sys:String>
-    <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska|*.mkv</sys:String>
+    <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska Video|*.mkv</sys:String>
     <sys:String x:Key="SelectSubtitleFile">Select subtitle file</sys:String>
     <sys:String x:Key="SelectSubtitleFileFilter">SupRip Text|*.srt|WebVTT|*.vtt|SubStation Alpha|*.ssa|Advanced SubStation Alpha|*.ass</sys:String>
     <sys:String x:Key="SaveImageFile">Save file</sys:String>
     <sys:String x:Key="SaveImageFileFilter">PNG Image file (*.png)|*.png|JPEG Image file (*.jpg)|*.jpg</sys:String>
+    <sys:String x:Key="SelectWhisperInputFile">Select file</sys:String>
+    <sys:String x:Key="SelectWhisperInputFileFilter">MPEG-4 Part 14|*.mp4|Matroska Video|*.mkv|Matroska Audio|*.mka|MPEG-4 Part 3|*.m4a|AAC|*.aac|MPEG-1 Layer 3|*.mp3|WAVE|*.wav|Ogg Vorbis|*.ogg|FLAC|*.flac|Opus|*.opus</sys:String>
     <!-- Message -->
     <sys:String x:Key="MsgUnderConstruction">Under construction...</sys:String>
     <sys:String x:Key="MsgStartDownloading">Start downloading {0}.</sys:String>

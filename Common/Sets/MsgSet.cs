@@ -425,10 +425,24 @@ public class MsgSet
         string.Empty;
 
     /// <summary>
-    /// 對話視窗：MPEG-4 Part 14|*.mp4|Matroska|*.mkv
+    /// 對話視窗：MPEG-4 Part 14|*.mp4|Matroska 視訊檔|*.mkv
     /// </summary>
     public static readonly string SelectVideoFileFilter = Application.Current
         .FindResource("SelectVideoFileFilter").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 對話視窗：選擇檔案
+    /// </summary>
+    public static readonly string SelectWhisperInputFile = Application.Current
+        .FindResource("SelectWhisperInputFile").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 對話視窗：MPEG-4 Part 14|*.mp4|Matroska 視訊檔|*.mkv|Matroska 音訊檔|*.mka|MPEG-4 Part 3|*.m4a|AAC|*.aac|MPEG-1 Layer 3|*.mp3|WAVE|*.wav|Ogg Vorbis|*.ogg|FLAC|*.flac|Opus|*.opus
+    /// </summary>
+    public static readonly string SelectWhisperInputFileFilter = Application.Current
+        .FindResource("SelectWhisperInputFileFilter").ToString() ??
         string.Empty;
 
     /// <summary>

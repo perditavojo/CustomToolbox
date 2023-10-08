@@ -511,6 +511,38 @@ public partial class WMain : Window
         }
     }
 
+    public void MIOpenTempFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.TempFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    public void MIOpenModelsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.ModelsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
     #endregion
 
     public void MIExit_Click(object sender, RoutedEventArgs e)
