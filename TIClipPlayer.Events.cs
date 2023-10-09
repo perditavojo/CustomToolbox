@@ -6,12 +6,14 @@ using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Utils;
 using CustomToolbox.Common.Sets;
+using static CustomToolbox.Common.Sets.EnumSet;
 using DragCompletedEventArgs = System.Windows.Controls.Primitives.DragCompletedEventArgs;
 using DragStartedEventArgs = System.Windows.Controls.Primitives.DragStartedEventArgs;
 using H.NotifyIcon.Core;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using Mpv.NET.API;
 using Mpv.NET.Player;
+using Serilog.Events;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,9 +42,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -65,7 +69,7 @@ public partial class WMain
                         Task.Delay(3000)
                             .ContinueWith(task =>
                             {
-                                CPPlayer.SeekStatus = EnumSet.SSeekStatus.Idle;
+                                CPPlayer.SeekStatus = SSeekStatus.Idle;
 
                                 IsPending = false;
                             });
@@ -73,15 +77,17 @@ public partial class WMain
                 }
                 else
                 {
-                    CPPlayer.SeekStatus = EnumSet.SSeekStatus.Idle;
+                    CPPlayer.SeekStatus = SSeekStatus.Idle;
                 }
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -96,19 +102,21 @@ public partial class WMain
                     e.Key == Key.Down ||
                     e.Key == Key.Right)
                 {
-                    CPPlayer.SeekStatus = EnumSet.SSeekStatus.Drag;
+                    CPPlayer.SeekStatus = SSeekStatus.Drag;
                 }
                 else
                 {
-                    CPPlayer.SeekStatus = EnumSet.SSeekStatus.Idle;
+                    CPPlayer.SeekStatus = SSeekStatus.Idle;
                 }
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -124,7 +132,7 @@ public partial class WMain
 
                 if (MPPlayer != null && MPPlayer.IsMediaLoaded)
                 {
-                    if (CPPlayer.SeekStatus == EnumSet.SSeekStatus.Drag)
+                    if (CPPlayer.SeekStatus == SSeekStatus.Drag)
                     {
                         if (newValue >= slider.Minimum &&
                             newValue <= slider.Maximum)
@@ -139,15 +147,19 @@ public partial class WMain
                                 }
                                 catch (ArgumentOutOfRangeException aoore)
                                 {
-                                    WriteLog(MsgSet.GetFmtStr(
-                                        MsgSet.MsgErrorOccured,
-                                        aoore.ToString()));
+                                    WriteLog(
+                                        message: MsgSet.GetFmtStr(
+                                            MsgSet.MsgErrorOccured,
+                                            aoore.GetExceptionMessage()),
+                                        logEventLevel: LogEventLevel.Error);
                                 }
                                 catch (MpvAPIException mae)
                                 {
-                                    WriteLog(MsgSet.GetFmtStr(
-                                        MsgSet.MsgErrorOccured,
-                                        mae.ToString()));
+                                    WriteLog(
+                                        message: MsgSet.GetFmtStr(
+                                            MsgSet.MsgErrorOccured,
+                                            mae.GetExceptionMessage()),
+                                        logEventLevel: LogEventLevel.Error);
                                 }
                             }
                         }
@@ -161,9 +173,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -173,14 +187,16 @@ public partial class WMain
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                CPPlayer.SeekStatus = EnumSet.SSeekStatus.Drag;
+                CPPlayer.SeekStatus = SSeekStatus.Drag;
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -190,14 +206,16 @@ public partial class WMain
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                CPPlayer.SeekStatus = EnumSet.SSeekStatus.Idle;
+                CPPlayer.SeekStatus = SSeekStatus.Idle;
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -225,9 +243,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -270,9 +290,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -308,16 +330,18 @@ public partial class WMain
                             message,
                             NotificationIcon.Info);
 
-                        WriteLog(message);
+                        WriteLog(message: message);
                     }
                 }
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -352,9 +376,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -388,9 +414,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -429,9 +457,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -464,9 +494,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -481,9 +513,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -517,9 +551,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -531,9 +567,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -577,9 +615,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -623,9 +663,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -652,9 +694,71 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void RBClipPlayer_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                CPPlayer.Mode = RBClipPlayer.IsChecked == true ?
+                    ClipPlayerMode.ClipPlayer :
+                    ClipPlayerMode.TimestampEditor;
+
+                if (RBClipPlayer.IsChecked == true)
+                {
+                    WriteLog(MsgSet.MsgSwitchToClipPlayerMode);
+                }
+                else
+                {
+                    WriteLog(MsgSet.MsgSwitchToTimestampEditorMode);
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void RBTimestampEditor_Checked(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                CPPlayer.Mode = RBTimestampEditor.IsChecked == true ?
+                    ClipPlayerMode.TimestampEditor :
+                    ClipPlayerMode.ClipPlayer;
+
+                if (RBTimestampEditor.IsChecked == true)
+                {
+                    WriteLog(message: MsgSet.MsgSwitchToTimestampEditorMode);
+                }
+                else
+                {
+                    WriteLog(message: MsgSet.MsgSwitchToClipPlayerMode);
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Control = System.Windows.Controls.Control;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using H.NotifyIcon;
 using H.NotifyIcon.Core;
-using ModernWpf.Controls;
+using Serilog.Events;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,7 +12,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// TaskbarIcon 工具
 /// </summary>
-internal class TaskbarIconUtil
+public class TaskbarIconUtil
 {
     /// <summary>
     /// 標題
@@ -74,6 +75,51 @@ internal class TaskbarIconUtil
     private static MenuItem MIStop = new();
 
     /// <summary>
+    /// 資料夾選單
+    /// </summary>
+    private static MenuItem MIFoldersMenu = new();
+
+    /// <summary>
+    /// 開啟 Bins 資料夾
+    /// </summary>
+    private static MenuItem MIOpenBinsFolder = new();
+
+    /// <summary>
+    /// 開啟設定檔資料夾
+    /// </summary>
+    private static MenuItem MIOpenConfigFolder = new();
+
+    /// <summary>
+    /// 開啟 Downloads 資料夾
+    /// </summary>
+    private static MenuItem MIOpenDownloadsFolder = new();
+
+    /// <summary>
+    /// 開啟 ClipLists 資料夾
+    /// </summary>
+    private static MenuItem MIOpenCliplistsFolder = new();
+
+    /// <summary>
+    /// 開啟 Logs 資料夾
+    /// </summary>
+    private static MenuItem MIOpenLogsFolder = new();
+
+    /// <summary>
+    /// 開啟 Lyrics 資料夾
+    /// </summary>
+    private static MenuItem MIOpenLyricsFolder = new();
+
+    /// <summary>
+    /// 開啟 Temp 資料夾
+    /// </summary>
+    private static MenuItem MIOpenTempFolder = new();
+
+    /// <summary>
+    /// 開啟 Models 資料夾
+    /// </summary>
+    private static MenuItem MIOpenModelsFolder = new();
+
+    /// <summary>
     /// 關於選單
     /// </summary>
     private static MenuItem MIAboutMenu = new();
@@ -120,68 +166,91 @@ internal class TaskbarIconUtil
             // 設定 MenuItem。
             MIShowOrHide = new()
             {
-                Header = MsgSet.Hide,
-                Icon = new SymbolIcon(Symbol.HideBcc)
+                Header = MsgSet.Hide
             };
             MIMute = new()
             {
-                Header = _WMain.BtnMute.Label,
-                Icon = new SymbolIcon(Symbol.Mute)
+                Header = _WMain.BtnMute.Content
             };
             MINoVideo = new()
             {
-                Header = MsgSet.MIEnableNoVideo,
-                Icon = new SymbolIcon(Symbol.Video)
+                Header = MsgSet.MIEnableNoVideo
             };
             MIRandomPlayClip = new()
             {
-                Header = _WMain.MIRandomPlayClip.Header,
-                Icon = new SymbolIcon(Symbol.Shuffle)
+                Header = _WMain.MIRandomPlayClip.Header
             };
             MIPlayClip = new()
             {
-                Header = _WMain.BtnPlay.Label,
-                Icon = new SymbolIcon(Symbol.Play)
+                Header = _WMain.BtnPlay.Content
             };
             MIPause = new()
             {
-                Header = _WMain.BtnPause.Label,
-                Icon = new SymbolIcon(Symbol.Pause)
+                Header = _WMain.BtnPause.Content
             };
             MIPrevious = new()
             {
-                Header = _WMain.BtnPrevious.Label,
-                Icon = new SymbolIcon(Symbol.Previous)
+                Header = _WMain.BtnPrevious.Content
             };
             MINext = new()
             {
-                Header = _WMain.BtnNext.Label,
-                Icon = new SymbolIcon(Symbol.Next)
+                Header = _WMain.BtnNext.Content
             };
             MIStop = new()
             {
-                Header = _WMain.BtnStop.Label,
-                Icon = new SymbolIcon(Symbol.Stop)
+                Header = _WMain.BtnStop.Content
+            };
+            MIFoldersMenu = new()
+            {
+                Header = _WMain.MIFoldersMenu.Header
+            };
+            MIOpenBinsFolder = new()
+            {
+                Header = _WMain.MIOpenBinsFolder.Header
+            };
+            MIOpenConfigFolder = new()
+            {
+                Header = _WMain.MIOpenConfigFolder.Header
+            };
+            MIOpenDownloadsFolder = new()
+            {
+                Header = _WMain.MIOpenDownloadsFolder.Header
+            };
+            MIOpenCliplistsFolder = new()
+            {
+                Header = _WMain.MIOpenCliplistsFolder.Header
+            };
+            MIOpenLogsFolder = new()
+            {
+                Header = _WMain.MIOpenLogsFolder.Header
+            };
+            MIOpenLyricsFolder = new()
+            {
+                Header = _WMain.MIOpenLyricsFolder.Header
+            };
+            MIOpenTempFolder = new()
+            {
+                Header = _WMain.MIOpenTempFolder.Header
+            };
+            MIOpenModelsFolder = new()
+            {
+                Header = _WMain.MIOpenModelsFolder.Header
             };
             MIAboutMenu = new()
             {
-                Header = _WMain.MIAbout.Header,
-                Icon = new SymbolIcon(Symbol.Help)
+                Header = _WMain.MIAbout.Header
             };
             MICheckUpdate = new()
             {
-                Header = _WMain.MICheckUpdate.Header,
-                Icon = new SymbolIcon(Symbol.Download)
+                Header = _WMain.MICheckUpdate.Header
             };
             MIAbout = new()
             {
-                Header = _WMain.MIAbout.Header,
-                Icon = new SymbolIcon(Symbol.Help)
+                Header = _WMain.MIAbout.Header
             };
             MIExit = new()
             {
-                Header = _WMain.MIExit.Header,
-                Icon = new SymbolIcon(Symbol.Cancel)
+                Header = _WMain.MIExit.Header
             };
 
             // 設定 MenuItem 的點擊事件。
@@ -195,6 +264,14 @@ internal class TaskbarIconUtil
             MINext.Click += _WMain.BtnNext_Click;
             MIStop.Click += _WMain.BtnStop_Click;
             MICheckUpdate.Click += _WMain.MICheckUpdate_Click;
+            MIOpenBinsFolder.Click += _WMain.MIOpenBinsFolder_Click;
+            MIOpenConfigFolder.Click += _WMain.MIOpenConfigFolder_Click;
+            MIOpenDownloadsFolder.Click += _WMain.MIOpenDownloadsFolder_Click;
+            MIOpenCliplistsFolder.Click += _WMain.MIOpenCliplistsFolder_Click;
+            MIOpenLogsFolder.Click += _WMain.MIOpenLogsFolder_Click;
+            MIOpenLyricsFolder.Click += _WMain.MIOpenLyricsFolder_Click;
+            MIOpenTempFolder.Click += _WMain.MIOpenTempFolder_Click;
+            MIOpenModelsFolder.Click += _WMain.MIOpenModelsFolder_Click;
             MIAbout.Click += _WMain.MIAbout_Click;
             MIExit.Click += _WMain.MIExit_Click;
 
@@ -215,6 +292,19 @@ internal class TaskbarIconUtil
             CMContextMenu.Items.Add(MIStop);
             CMContextMenu.Items.Add(new Separator());
 
+            MIFoldersMenu.Items.Clear();
+            MIFoldersMenu.Items.Add(MIOpenBinsFolder);
+            MIFoldersMenu.Items.Add(MIOpenConfigFolder);
+            MIFoldersMenu.Items.Add(MIOpenDownloadsFolder);
+            MIFoldersMenu.Items.Add(MIOpenCliplistsFolder);
+            MIFoldersMenu.Items.Add(MIOpenLogsFolder);
+            MIFoldersMenu.Items.Add(MIOpenLyricsFolder);
+            MIFoldersMenu.Items.Add(MIOpenTempFolder);
+            MIFoldersMenu.Items.Add(MIOpenModelsFolder);
+
+            CMContextMenu.Items.Add(MIFoldersMenu);
+            CMContextMenu.Items.Add(new Separator());
+
             MIAboutMenu.Items.Clear();
             MIAboutMenu.Items.Add(MICheckUpdate);
             MIAboutMenu.Items.Add(MIAbout);
@@ -230,9 +320,11 @@ internal class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -244,9 +336,11 @@ internal class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -268,9 +362,11 @@ internal class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
     }
@@ -290,9 +386,11 @@ internal class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -314,6 +412,14 @@ internal class TaskbarIconUtil
                 MIPrevious.Click -= _WMain.BtnPrevious_Click;
                 MINext.Click -= _WMain.BtnNext_Click;
                 MIStop.Click -= _WMain.BtnStop_Click;
+                MIOpenBinsFolder.Click -= _WMain.MIOpenBinsFolder_Click;
+                MIOpenConfigFolder.Click -= _WMain.MIOpenConfigFolder_Click;
+                MIOpenDownloadsFolder.Click -= _WMain.MIOpenDownloadsFolder_Click;
+                MIOpenCliplistsFolder.Click -= _WMain.MIOpenCliplistsFolder_Click;
+                MIOpenLogsFolder.Click -= _WMain.MIOpenLogsFolder_Click;
+                MIOpenLyricsFolder.Click -= _WMain.MIOpenLyricsFolder_Click;
+                MIOpenTempFolder.Click -= _WMain.MIOpenTempFolder_Click;
+                MIOpenModelsFolder.Click -= _WMain.MIOpenModelsFolder_Click;
                 MICheckUpdate.Click -= _WMain.MICheckUpdate_Click;
                 MIAbout.Click -= _WMain.MIAbout_Click;
                 MIExit.Click -= _WMain.MIExit_Click;
@@ -327,9 +433,11 @@ internal class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -359,9 +467,11 @@ internal class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -369,27 +479,26 @@ internal class TaskbarIconUtil
     /// 更新 MIMute 的 Header
     /// </summary>
     /// <param name="value">字串，值</param>
-    /// <param name="isMuted">布林值，是否靜音，預設值為 false</param>
-    public static void UpdateMIMuteHeader(string? value, bool isMuted = false)
+    public static void UpdateMIMuteHeader(string? value)
     {
         try
         {
             if (!string.IsNullOrEmpty(value))
             {
                 MIMute.Header = value;
-                MIMute.Icon = isMuted ? new SymbolIcon(Symbol.Volume) : new SymbolIcon(Symbol.Mute);
             }
             else
             {
-                MIMute.Header = _WMain?.BtnMute.Label;
-                MIMute.Icon = isMuted ? new SymbolIcon(Symbol.Volume) : new SymbolIcon(Symbol.Mute);
+                MIMute.Header = _WMain?.BtnMute.Content;
             }
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -405,17 +514,14 @@ internal class TaskbarIconUtil
             {
                 case Visibility.Visible:
                     MIShowOrHide.Header = MsgSet.Hide;
-                    MIShowOrHide.Icon = new SymbolIcon(Symbol.HideBcc);
 
                     break;
                 case Visibility.Collapsed:
                     MIShowOrHide.Header = MsgSet.Show;
-                    MIShowOrHide.Icon = new SymbolIcon(Symbol.ShowBcc);
 
                     break;
                 case Visibility.Hidden:
                     MIShowOrHide.Header = MsgSet.Show;
-                    MIShowOrHide.Icon = new SymbolIcon(Symbol.ShowBcc);
 
                     break;
                 default:
@@ -424,9 +530,11 @@ internal class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -440,9 +548,11 @@ internal class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -470,9 +580,11 @@ internal class TaskbarIconUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -487,18 +599,16 @@ internal class TaskbarIconUtil
             string header = isChecked == true ?
                 MsgSet.MIDisableNoVideo :
                 MsgSet.MIEnableNoVideo;
-            SymbolIcon icon = isChecked == true ?
-                new SymbolIcon(Symbol.Video) :
-                new SymbolIcon(Symbol.Placeholder);
 
             MINoVideo.Header = header;
-            MINoVideo.Icon = icon;
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -514,18 +624,15 @@ internal class TaskbarIconUtil
                 MsgSet.Resume :
                 MsgSet.Pause;
 
-            SymbolIcon icon = isPaused == true ?
-                new SymbolIcon(Symbol.Play) :
-                 new SymbolIcon(Symbol.Pause);
-
             MIPause.Header = header;
-            MIPause.Icon = icon;
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

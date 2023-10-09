@@ -3,7 +3,7 @@
 /// <summary>
 /// 播放清單網址組
 /// </summary>
-internal class PlaylistUrlSet
+public class PlaylistUrlSet
 {
     /// <summary>
     /// GitHub 基礎網址

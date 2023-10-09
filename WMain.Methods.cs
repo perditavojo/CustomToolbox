@@ -8,11 +8,11 @@ using CustomToolbox.Common.Models.UpdateNotifier;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using KeyEventHandler = System.Windows.Input.KeyEventHandler;
-using ModernWpf.Controls;
+using MessageBox = System.Windows.MessageBox;
 using OpenCCNET;
+using Serilog.Events;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
@@ -21,6 +21,7 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Threading;
 using Xabe.FFmpeg;
 
 namespace CustomToolbox;
@@ -39,44 +40,115 @@ public partial class WMain
         string message,
         string title = "")
     {
-        try
-        {
-            // 先隱藏先前的 ContentDialog。
-            GlobalCDDialog?.Hide();
+        Application.Current.Dispatcher.BeginInvoke(
+            method: new Action(() =>
+            {
+                MessageBox.Show(
+                    owner: this,
+                    messageBoxText: message,
+                    caption: title,
+                    button: MessageBoxButton.OK);
+            }),
+            priority: DispatcherPriority.Normal);
+    }
 
-            GlobalCDDialog = ContentDialogUtil.GetOkDialog(message, title, this);
-            GlobalCDDialog.Opened += (ContentDialog sender, ContentDialogOpenedEventArgs args) =>
+    /// <summary>
+    /// 顯示確認訊息
+    /// </summary>
+    /// <param name="message">字串，訊息</param>
+    /// <param name="primaryAction">Action，主要按鈕的 Action</param>
+    /// <param name="cancelAction">Action，取消按鈕的 Action</param>
+    /// <param name="secondaryAction">Action，第二按鈕的 Action</param>
+    /// <param name="title">字串，標題，預設值為空白</param>
+    public void ShowConfirmMsgBox(
+        string message,
+        Action? primaryAction,
+        Action? cancelAction = null,
+        Action? secondaryAction = null,
+        string title = "")
+    {
+        Application.Current.Dispatcher.BeginInvoke(
+            method: new Action(() =>
             {
-                APPanel.FixAirspace = true;
-            };
-            GlobalCDDialog.Closed += (ContentDialog sender, ContentDialogClosedEventArgs args) =>
-            {
-                APPanel.FixAirspace = false;
-            };
+                MessageBoxButton messageBoxButton = MessageBoxButton.OKCancel;
 
-            // 延後執行，以免無法修正空域問題。
-            Task.Delay(ContentDialogUtil.DelayMilliseconds).ContinueWith(t =>
-            {
-                Application.Current.Dispatcher.Invoke(async () =>
+                if (primaryAction == null)
                 {
-                    try
-                    {
-                        await GlobalCDDialog.ShowAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        // WONTFIX: 2022-12-20 目前無好方法以避免此例外。
-                        Debug.WriteLine(ex.ToString());
-                    }
-                });
-            });
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
+                    messageBoxButton = MessageBoxButton.OK;
+                }
+
+                if (secondaryAction != null)
+                {
+                    messageBoxButton = MessageBoxButton.YesNoCancel;
+                }
+
+                MessageBoxResult messageBoxResult = MessageBox.Show(
+                    owner: this,
+                    messageBoxText: message,
+                    caption: title,
+                    button: messageBoxButton);
+
+                switch (messageBoxResult)
+                {
+                    case MessageBoxResult.OK:
+                    case MessageBoxResult.Yes:
+                        primaryAction?.Invoke();
+
+                        break;
+                    case MessageBoxResult.No:
+                        if (messageBoxButton != MessageBoxButton.YesNoCancel)
+                        {
+                            cancelAction?.Invoke();
+                        }
+                        else
+                        {
+                            secondaryAction?.Invoke();
+                        }
+
+                        break;
+                    case MessageBoxResult.Cancel:
+                    case MessageBoxResult.None:
+                        cancelAction?.Invoke();
+
+                        break;
+                }
+            }),
+            priority: DispatcherPriority.Normal);
+    }
+
+    /// <summary>
+    /// 寫紀錄
+    /// </summary>
+    /// <param name="message">字串，訊息</param>
+    /// <param name="title">字串，標題，預設值為空白</param>
+    /// <param name="logEventLevel">LogEventLevel，預設值為 LogEventLevel.Information</param>
+    [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
+    public void WriteLog(
+        string message,
+        LogEventLevel logEventLevel = LogEventLevel.Information) =>
+            CustomFunction.WriteLog(
+                message,
+                logEventLevel);
+
+    /// <summary>
+    /// 取得 HttpClient
+    /// </summary>
+    /// <returns>HttpClient</returns>
+    public static HttpClient? GetHttpClient()
+    {
+        HttpClient? httpClient = GlobalHCFactory?.CreateClient();
+
+        // 參考來源：https://github.com/RayWangQvQ/BiliBiliToolPro/pull/350
+        // 設定 HttpClient 的標頭資訊。
+        //httpClient?.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com");
+        //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
+
+        httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
+        httpClient?.DefaultRequestHeaders.Add("DNT", "1");
+
+        ClientHintsUtil.SetClientHints(httpClient);
+
+        return httpClient;
     }
 
     /// <summary>
@@ -96,7 +168,7 @@ public partial class WMain
                 GlobalDataSet.CollectionChanged += GlobalDataSet_CollectionChanged;
 
                 // 日誌記錄需要使用等寬字型。
-                TBLog.FontFamily = AppLangUtil.GetLogFontFamily();
+                RTBLog.FontFamily = AppLangUtil.GetLogFontFamily();
 
                 // 初始化數個方法。
                 // CustomFunction.Init() 必須第一個呼叫。
@@ -119,35 +191,17 @@ public partial class WMain
                 ZhConverter.Initialize();
 
                 // 設定控制項。
-                MILoadClipListFile.Icon = new SymbolIcon(Symbol.OpenFile);
-                MISaveClipListFile.Icon = new SymbolIcon(Symbol.Save);
-                MIExit.Icon = new SymbolIcon(Symbol.Cancel);
-                MICheckUpdate.Icon = new SymbolIcon(Symbol.Download);
-                MIAbout.Icon = new SymbolIcon(Symbol.Help);
-
-                MIPlayClip.Icon = new SymbolIcon(Symbol.Play);
-                MIFetchClip.Icon = new SymbolIcon(Symbol.Zoom);
-                MIDLClip.Icon = new SymbolIcon(Symbol.Download);
-                MIDLClipsByTheSameUrl.Icon = new SymbolIcon(Symbol.Download);
-                MIBatchDLClips.Icon = new SymbolIcon(Symbol.Download);
-                MIDownloadOptions.Icon = new SymbolIcon(Symbol.Setting);
-                MIFullDownloadFirst.Icon = new SymbolIcon(Symbol.Priority);
-                MIDeleteSourceFile.Icon = new SymbolIcon(Symbol.Delete);
-                MIRandomPlayClip.Icon = new SymbolIcon(Symbol.Shuffle);
-                MIReorderClipList.Icon = new SymbolIcon(Symbol.Sort);
-                MIClearClipList.Icon = new SymbolIcon(Symbol.Delete);
-                MIClearLog.Icon = new SymbolIcon(Symbol.Delete);
-                MIExportLog.Icon = new SymbolIcon(Symbol.Save);
-
                 DGClipList.ItemsSource = GlobalDataSet;
                 CBYTQuality.SelectedIndex = Properties.Settings.Default.MpvNetLibYTQualityIndex;
                 CBPlaybackSpeed.SelectedIndex = Properties.Settings.Default.MpvNetLibPlaybackSpeedIndex;
                 SVolume.Value = Convert.ToDouble(Properties.Settings.Default.MpvNetLibVolume.ToString());
                 CBNoVideo.IsChecked = Properties.Settings.Default.MpvNetLibNoVideo;
                 CBChromaKey.IsChecked = Properties.Settings.Default.MpvNetLibChromaKey;
+                RBClipPlayer.IsChecked = true;
                 CBAutoLyric.IsChecked = Properties.Settings.Default.NetPlaylistAutoLyric;
                 MIFullDownloadFirst.IsChecked = Properties.Settings.Default.FullDownloadFirst;
                 MIDeleteSourceFile.IsChecked = Properties.Settings.Default.DeleteSourceFile;
+                TBCustomSubscriberAmount.Text = "-1";
 
                 // 為 SSeek 加入 KeyUpEvent、KeyDownEvent 等事件處裡，以讓使用者可以透過方向鍵控制控制項。
                 SSeek.AddHandler(KeyUpEvent, new KeyEventHandler(SSeek_KeyUpEvent), true);
@@ -163,6 +217,17 @@ public partial class WMain
                 {
                     LVersion.Content = version.ToString();
                 }
+
+                CBWhisperModel.Text = Properties.Settings.Default.WhisperModel;
+                CBWhisperQuantization.Text = Properties.Settings.Default.WhisperQuantization;
+                CBWhisperSamplingStrategy.Text = Properties.Settings.Default.WhisperSamplingStrategy;
+                CBWhisperLanguage.Text = Properties.Settings.Default.WhisperLanguage;
+                TBWhisperBeamSize.Text = Properties.Settings.Default.WhisperBeamSize.ToString();
+                TBWhisperPatience.Text = Properties.Settings.Default.WhisperPatience.ToString();
+                TBWhisperBestOf.Text = Properties.Settings.Default.WhisperBestOf.ToString();
+                CBWhisperSpeedUp2x.IsChecked = Properties.Settings.Default.WhisperSpeedUp2x;
+                CBWhisperTranslateToEnglish.IsChecked = Properties.Settings.Default.WhisperTranslateToEnglish;
+                CBWhisperExportWebVTTAlso.IsChecked = Properties.Settings.Default.WhisperExportWebVTTAlso;
 
                 ResourceDictionary? curResDict = AppLangUtil.GetCurrentLangResDict();
 
@@ -182,10 +247,10 @@ public partial class WMain
                 CBApplyFontSetting.IsChecked = Properties.Settings.Default.FFmpegApplyFontSetting;
 
                 InitCBLanguages();
-                InitCBThemes();
                 InitUnsupportedDomains();
 
                 TBUserAgent.Text = Properties.Settings.Default.UserAgent;
+                TBSecChUa.Text = Properties.Settings.Default.SecChUa;
                 TBAppendSeconds.Text = Properties.Settings.Default.PlaylistAppendSeconds.ToString();
                 CBEnableMpvLogVerbose.IsChecked = Properties.Settings.Default.MpvNetLibLogVerbose;
                 CBEnableDiscordRichPresence.IsChecked = Properties.Settings.Default.DiscordRichPresence;
@@ -237,9 +302,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -261,9 +328,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -343,9 +412,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -445,9 +516,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -483,9 +556,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -510,7 +585,6 @@ public partial class WMain
 
             // 清除變數值。
             GlobalDRClient = null;
-            GlobalCDDialog = null;
 
             // 用於在應用程式結束前儲存特定 Grid 的
             // RowDefinition、ColumnDefinition 的值。
@@ -525,6 +599,8 @@ public partial class WMain
                 {
                     await Dispatcher.BeginInvoke(async () =>
                     {
+                        IsByPassingWindowClosingEventCancel = true;
+
                         baseAction.Invoke();
 
                         // 先刪除舊檔案。
@@ -561,132 +637,25 @@ public partial class WMain
                 }
                 catch (Exception ex)
                 {
-                    WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                    WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }),
             secondaryAction: new Action(() =>
             {
                 Dispatcher.BeginInvoke(() =>
                 {
+                    IsByPassingWindowClosingEventCancel = true;
+
                     baseAction.Invoke();
 
                     // 手動結束應用程式。
                     Application.Current.Shutdown();
                 });
-            }),
-            primaryButtonText: MsgSet.SaveAndExit,
-            secondaryButtonText: MsgSet.ExitDirectly,
-            closeButtonText: MsgSet.Cancel);
-    }
-
-    /// <summary>
-    /// 顯示確認訊息
-    /// </summary>
-    /// <param name="message">字串，訊息</param>
-    /// <param name="primaryAction">Action，主要按鈕的 Action</param>
-    /// <param name="cancelAction">Action，取消按鈕的 Action</param>
-    /// <param name="secondaryAction">Action，第二按鈕的 Action</param>
-    /// <param name="title">字串，標題，預設值為空白</param>
-    /// <param name="primaryButtonText">字串，主要按鈕文字，預設值為空白</param>
-    /// <param name="closeButtonText">字串，關閉按鈕文字，預設值為空白</param>
-    /// <param name="secondaryButtonText">字串，第二按鈕文字，預設值為空白</param>
-    private void ShowConfirmMsgBox(
-        string message,
-        Action primaryAction,
-        Action? cancelAction = null,
-        Action? secondaryAction = null,
-        string title = "",
-        string primaryButtonText = "",
-        string closeButtonText = "",
-        string secondaryButtonText = "")
-    {
-        try
-        {
-            // 先隱藏先前的 ContentDialog。
-            GlobalCDDialog?.Hide();
-
-            GlobalCDDialog = ContentDialogUtil.GetConfirmDialog(
-                message: message,
-                title: title,
-                window: this,
-                primaryButtonText: primaryButtonText,
-                closeButtonText: closeButtonText,
-                secondaryButtonText: secondaryButtonText);
-            GlobalCDDialog.Opened += (ContentDialog sender, ContentDialogOpenedEventArgs args) =>
-            {
-                APPanel.FixAirspace = true;
-            };
-            GlobalCDDialog.Closed += (ContentDialog sender, ContentDialogClosedEventArgs args) =>
-            {
-                APPanel.FixAirspace = false;
-            };
-
-            // 延後執行，以免無法修正空域問題。
-            Task.Delay(ContentDialogUtil.DelayMilliseconds).ContinueWith(t =>
-            {
-                Application.Current.Dispatcher.Invoke(async () =>
-                {
-                    try
-                    {
-                        ContentDialogResult result = await GlobalCDDialog.ShowAsync();
-
-                        if (result == ContentDialogResult.Primary)
-                        {
-                            primaryAction.Invoke();
-                        }
-                        else if (result == ContentDialogResult.Secondary)
-                        {
-                            secondaryAction?.Invoke();
-                        }
-                        else
-                        {
-                            cancelAction?.Invoke();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // WONTFIX: 2022-12-20 目前無好方法以避免此例外。
-                        Debug.WriteLine(ex.ToString());
-                    }
-                });
-            });
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
-    }
-
-    /// <summary>
-    /// 寫紀錄
-    /// </summary>
-    /// <param name="message">字串，訊息</param>
-    [SuppressMessage("Performance", "CA1822:將成員標記為靜態", Justification = "<暫止>")]
-    public void WriteLog(string message) => CustomFunction.WriteLog(message);
-
-    /// <summary>
-    /// 取得 HttpClient
-    /// </summary>
-    /// <returns>HttpClient</returns>
-    public static HttpClient? GetHttpClient()
-    {
-        HttpClient? httpClient = GlobalHCFactory?.CreateClient();
-
-        // 參考來源：https://github.com/RayWangQvQ/BiliBiliToolPro/pull/350
-        // 設定 HttpClient 的標頭資訊。
-        //httpClient?.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com");
-        //httpClient?.DefaultRequestHeaders.Add("Origin", "https://space.bilibili.com");
-
-        httpClient?.DefaultRequestHeaders.Add("User-Agent", CustomFunction.GetUserAgent());
-        httpClient?.DefaultRequestHeaders.Add("DNT", "1");
-
-        ClientHintsUtil.SetClientHints(httpClient);
-
-        return httpClient;
+            }));
     }
 
     /// <summary>
@@ -718,9 +687,7 @@ public partial class WMain
                 primaryAction: new Action(() =>
                 {
                     CustomFunction.OpenUrl(checkResult.DownloadUrl);
-                }),
-                primaryButtonText: MsgSet.ContentDialogBtnOk,
-                closeButtonText: MsgSet.ContentDialogBtnCancel);
+                }));
         }
 
         if (checkResult.NetVersionIsOdler &&
@@ -733,9 +700,7 @@ public partial class WMain
                 primaryAction: new Action(() =>
                 {
                     CustomFunction.OpenUrl(checkResult.DownloadUrl);
-                }),
-                primaryButtonText: MsgSet.ContentDialogBtnOk,
-                closeButtonText: MsgSet.ContentDialogBtnCancel);
+                }));
         }
     }
 

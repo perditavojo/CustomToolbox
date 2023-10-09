@@ -5,7 +5,7 @@ namespace CustomToolbox.Common.Models.UpdateNotifier;
 /// <summary>
 /// 應用程式資料
 /// </summary>
-internal class AppData
+public class AppData
 {
     /// <summary>
     /// 應用程式

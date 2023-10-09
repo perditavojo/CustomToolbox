@@ -2,12 +2,11 @@
 using Control = System.Windows.Controls.Control;
 using ComboBox = System.Windows.Controls.ComboBox;
 using CustomToolbox.Common;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Utils;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
-using H.NotifyIcon;
-using ModernWpf;
-using System.Configuration;
+using Serilog.Events;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,6 +46,8 @@ public partial class WMain
                             message: message,
                             primaryAction: new Action(() =>
                             {
+                                IsByPassingWindowClosingEventCancel = true;
+
                                 Properties.Settings.Default.AppLangCode = value;
                                 Properties.Settings.Default.Save();
 
@@ -54,80 +55,22 @@ public partial class WMain
                             }),
                             cancelAction: new Action(() =>
                             {
+                                IsByPassingWindowClosingEventCancel = false;
+
                                 // 設回預設值。
                                 control.SelectedValue = Properties.Settings.Default.AppLangCode;
-                            }),
-                            primaryButtonText: MsgSet.ContentDialogBtnOk,
-                            closeButtonText: MsgSet.ContentDialogBtnCancel);
+                            }));
                     }
                 }
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
-    }
-
-    private void CBThemes_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        try
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                if (!IsInitializing)
-                {
-                    ComboBox control = (ComboBox)sender;
-                    ComboBoxItem selectedItem = (ComboBoxItem)control.SelectedItem;
-
-                    string value = selectedItem.Tag.ToString() ?? string.Empty,
-                        themeName = selectedItem.Content.ToString() ?? string.Empty;
-
-                    if (Properties.Settings.Default.AppTheme != value)
-                    {
-                        Properties.Settings.Default.AppTheme = value;
-                        Properties.Settings.Default.Save();
-                    }
-
-                    ApplicationTheme targetTheme = AppThemeUtil.GetAppTheme(value);
-
-                    AppThemeUtil.SetAppTheme(targetTheme);
-
-                    // 丟掉 TITaskbarIcon。
-                    TaskbarIconUtil.Dispose();
-
-                    if (Content is Grid GFrame)
-                    {
-                        // 要要先從 GFrame 移除 TITaskbarIcon 後再加入 TITaskbarIcon，否則會不生效。
-                        GFrame.Children.Remove(TITaskbarIcon);
-
-                        // 重建 TITaskbarIcon。
-                        TITaskbarIcon = new TaskbarIcon()
-                        {
-                            Width = 0,
-                            Height = 0
-                        };
-
-                        Grid.SetRow(TITaskbarIcon, 3);
-
-                        // 將 TITaskbarIcon 加回 GFrame。
-                        GFrame.Children.Add(TITaskbarIcon);
-
-                        // 再次初始化 TaskbarIcon。
-                        TaskbarIconUtil.Init(this, TITaskbarIcon);
-                    }
-
-                    WriteLog(MsgSet.GetFmtStr(MsgSet.MsgSwitchTheme, themeName));
-                }
-            }));
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -148,16 +91,50 @@ public partial class WMain
                         Properties.Settings.Default.UserAgent = value;
                         Properties.Settings.Default.Save();
 
-                        WriteLog(MsgSet.MsgUpdateUserAgent);
+                        WriteLog(message: MsgSet.MsgUpdateUserAgent);
                     }
                 }
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-               MsgSet.MsgErrorOccured,
-               ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBSecChUa_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                if (!IsInitializing)
+                {
+                    TextBox control = (TextBox)sender;
+
+                    string value = control.Text;
+
+                    if (Properties.Settings.Default.SecChUa != value)
+                    {
+                        Properties.Settings.Default.SecChUa = value;
+                        Properties.Settings.Default.Save();
+
+                        WriteLog(message: MsgSet.MsgUpdateSecChUa);
+                    }
+                }
+            }));
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -169,9 +146,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-               MsgSet.MsgErrorOccured,
-               ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -196,7 +175,7 @@ public partial class WMain
                         Properties.Settings.Default.NetPlaylistUnsupportedDomains = value;
                         Properties.Settings.Default.Save();
 
-                        WriteLog(MsgSet.MsgUpdateUnsupportedDomains);
+                        WriteLog(message: MsgSet.MsgUpdateUnsupportedDomains);
 
                         Task.Delay(1500).ContinueWith(t =>
                         {
@@ -212,9 +191,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-               MsgSet.MsgErrorOccured,
-               ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -241,12 +222,14 @@ public partial class WMain
                             Properties.Settings.Default.PlaylistAppendSeconds = value;
                             Properties.Settings.Default.Save();
 
-                            WriteLog(MsgSet.MsgUpdateAppendSeconds);
+                            WriteLog(message: MsgSet.MsgUpdateAppendSeconds);
                         }
                     }
                     else
                     {
-                        WriteLog(MsgSet.MsgInputAValidNumber);
+                        WriteLog(
+                            message: MsgSet.MsgInputAValidNumber,
+                            logEventLevel: LogEventLevel.Warning);
 
                         TBAppendSeconds.Text = Properties.Settings
                             .Default.PlaylistAppendSeconds.ToString();
@@ -258,9 +241,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -291,9 +276,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -324,9 +311,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -360,9 +349,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -395,9 +386,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -426,9 +419,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -457,9 +452,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -492,9 +489,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -529,9 +528,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -562,9 +563,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -592,9 +595,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -622,9 +627,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -652,9 +659,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -685,9 +694,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -715,9 +726,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -745,9 +758,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -775,9 +790,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -805,9 +822,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -835,9 +854,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -866,9 +887,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -896,9 +919,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -931,9 +956,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -961,9 +988,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -991,9 +1020,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1026,9 +1057,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1057,9 +1090,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1100,9 +1135,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1145,9 +1182,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1176,9 +1215,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1207,9 +1248,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1273,9 +1316,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1299,9 +1344,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-               MsgSet.MsgErrorOccured,
-               ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1325,9 +1372,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1346,9 +1395,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1371,9 +1422,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1400,9 +1453,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1423,9 +1478,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1456,9 +1513,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1494,9 +1553,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1527,103 +1588,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
-    }
-
-    #endregion
-
-    #region 資料夾
-
-    private void BtnOpenBinsFolder_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            CustomFunction.OpenFolder(VariableSet.BinsFolderPath);
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
-    }
-
-    private void BtnOpenConfigFolder_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            // 來源：https://stackoverflow.com/a/7069366
-            string configFilePath = ConfigurationManager
-                .OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath,
-                fileName = Path.GetFileName(configFilePath),
-                folderPath = Path.GetFullPath(configFilePath).Replace(fileName, string.Empty);
-
-            CustomFunction.OpenFolder(folderPath);
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
-    }
-
-    private void BtnOpenDownloadsFolder_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            CustomFunction.OpenFolder(VariableSet.DownloadsFolderPath);
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
-    }
-
-    private void BtnOpenCliplistsFolder_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            CustomFunction.OpenFolder(VariableSet.ClipListsFolderPath);
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
-    }
-
-    private void BtnOpenLogsFolder_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            CustomFunction.OpenFolder(VariableSet.LogsFolderPath);
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
-    }
-
-    private void BtnOpenLyricsFolder_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            CustomFunction.OpenFolder(VariableSet.LyricsFolderPath);
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 

@@ -1,19 +1,24 @@
 ﻿using Application = System.Windows.Application;
+using CustomToolbox.BilibiliApi.Functions;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using Downloader;
 using Humanizer;
 using Label = System.Windows.Controls.Label;
-using ProgressBar = ModernWpf.Controls.ProgressBar;
+using ProgressBar = System.Windows.Controls.ProgressBar;
+using Serilog.Events;
 using SevenZipExtractor;
 using System.IO;
 using System.Net;
+
+using System.Net.Http;
 
 namespace CustomToolbox.Common.Utils;
 
 /// <summary>
 /// 下載器工具
 /// </summary>
-internal class DownloaderUtil
+public class DownloaderUtil
 {
     /// <summary>
     /// WMain
@@ -49,9 +54,10 @@ internal class DownloaderUtil
     {
         try
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgStartDownloading,
-                VariableSet.YtDlpExecName));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgStartDownloading,
+                    VariableSet.YtDlpExecName));
 
             string path = Path.Combine(
                 VariableSet.BinsFolderPath,
@@ -60,9 +66,10 @@ internal class DownloaderUtil
             DownloadService downloadService = GetDownloadService(
                 action: new Action(() =>
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgDownloaded,
-                        VariableSet.YtDlpExecName));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgDownloaded,
+                            VariableSet.YtDlpExecName));
 
                     // 在下載後寫入檢查時間，以避免不必要的檢查執行。
                     Properties.Settings.Default.YtDlpCheckTime = DateTime.Now;
@@ -75,9 +82,11 @@ internal class DownloaderUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -112,9 +121,10 @@ internal class DownloaderUtil
 
                             entry.Extract(targetPath);
 
-                            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.MsgDecompressed,
-                                fileName));
+                            _WMain?.WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgDecompressed,
+                                    fileName));
                         }
 
                         Task.Delay(VariableSet.WaitForDeleteMilliseconds)
@@ -130,9 +140,11 @@ internal class DownloaderUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -161,9 +173,11 @@ internal class DownloaderUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -215,9 +229,11 @@ internal class DownloaderUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -255,9 +271,10 @@ internal class DownloaderUtil
 
                                 entry.Extract(targetPath);
 
-                                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                                    MsgSet.MsgDecompressed,
-                                    fileName));
+                                _WMain?.WriteLog(
+                                    message: MsgSet.GetFmtStr(
+                                        MsgSet.MsgDecompressed,
+                                        fileName));
                             }
 
                             Task.Delay(VariableSet.WaitForDeleteMilliseconds)
@@ -271,9 +288,10 @@ internal class DownloaderUtil
                     catch (Exception ex)
                     {
                         _WMain?.WriteLog(
-                            MsgSet.GetFmtStr(
+                            message: MsgSet.GetFmtStr(
                                 MsgSet.MsgErrorOccured,
-                                ex.ToString()));
+                                ex.GetExceptionMessage()),
+                            logEventLevel: LogEventLevel.Error);
                     }
                 }));
 
@@ -282,9 +300,10 @@ internal class DownloaderUtil
         catch (Exception ex)
         {
             _WMain?.WriteLog(
-                MsgSet.GetFmtStr(
+                message: MsgSet.GetFmtStr(
                     MsgSet.MsgErrorOccured,
-                    ex.ToString()));
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -326,9 +345,10 @@ internal class DownloaderUtil
                             VariableSet.YtDlHookLuaPath,
                             string.Join(Environment.NewLine, lines));
 
-                        _WMain?.WriteLog(MsgSet.GetFmtStr(
-                            MsgSet.MsgEdited,
-                            VariableSet.YtDlHookLuaFileName));
+                        _WMain?.WriteLog(
+                            message: MsgSet.GetFmtStr(
+                                MsgSet.MsgEdited,
+                                VariableSet.YtDlHookLuaFileName));
                     }
                 }));
 
@@ -336,9 +356,10 @@ internal class DownloaderUtil
             {
                 File.Delete(VariableSet.YtDlHookLuaPath);
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDeleted,
-                    VariableSet.YtDlHookLuaFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDeleted,
+                        VariableSet.YtDlHookLuaFileName));
             }
 
             await downloadService.DownloadFileTaskAsync(
@@ -347,9 +368,11 @@ internal class DownloaderUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -401,9 +424,10 @@ internal class DownloaderUtil
                 }));
             }
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgStartDownloading,
-                fileName));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgStartDownloading,
+                    fileName));
         };
 
         downloadService.DownloadProgressChanged += (sender, e) =>
@@ -464,32 +488,36 @@ internal class DownloaderUtil
             {
                 if (string.IsNullOrEmpty(fileName))
                 {
-                    _WMain?.WriteLog(MsgSet.MsgDownloadCanceled);
+                    _WMain?.WriteLog(message: MsgSet.MsgDownloadCanceled);
                 }
                 else
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgCancelFileDownload,
-                        fileName));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgCancelFileDownload,
+                            fileName));
                 }
             }
             else if (e.Error != null)
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.DownloadError,
-                    e.Error.Message));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.DownloadError,
+                         e.Error.Message),
+                    logEventLevel: LogEventLevel.Error);
             }
             else
             {
                 if (string.IsNullOrEmpty(fileName))
                 {
-                    _WMain?.WriteLog(MsgSet.MsgDownloadFinished);
+                    _WMain?.WriteLog(message: MsgSet.MsgDownloadFinished);
                 }
                 else
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgDownloaded,
-                        fileName));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgDownloaded,
+                            fileName));
                 }
 
                 action?.Invoke();
@@ -505,9 +533,22 @@ internal class DownloaderUtil
     /// <summary>
     /// 取得針對 Bilibili 網站使用的 DownloadConfiguration
     /// </summary>
+    /// <param name="httpClient">HttpClient，預設值是 null</param>
     /// <returns>DownloadConfiguration</returns>
-    public static DownloadConfiguration GetB23DownloadConfiguration()
+    public static async Task<DownloadConfiguration> GetB23DownloadConfiguration(
+        HttpClient? httpClient = null)
     {
+        string strB_3 = string.Empty;
+
+        if (httpClient != null)
+        {
+            // 2023-09-22 Bilibili Buvid3 參考來源：
+            // https://github.com/SocialSisterYi/bilibili-API-collect/issues/788
+            // https://github.com/SocialSisterYi/bilibili-API-collect/issues/790
+            // https://github.com/SocialSisterYi/bilibili-API-collect/issues/795
+            (strB_3, string _) = await AuthFunction.GetBuvids(httpClient);
+        }
+
         DownloadConfiguration downloadConfiguration = new();
 
         WebHeaderCollection headerCollection = new()
@@ -515,6 +556,11 @@ internal class DownloaderUtil
             { "Origin", "https://space.bilibili.com" },
             { "DNT", "1" }
         };
+
+        if (!string.IsNullOrEmpty(strB_3))
+        {
+            headerCollection.Add("Cookie", $"buvid3={strB_3};");
+        }
 
         ClientHintsUtil.SetClientHints(headerCollection);
 

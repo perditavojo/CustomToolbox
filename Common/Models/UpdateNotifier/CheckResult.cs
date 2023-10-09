@@ -3,7 +3,7 @@
 /// <summary>
 /// 檢查結果
 /// </summary>
-internal class CheckResult
+public class CheckResult
 {
     /// <summary>
     /// 訊息文字

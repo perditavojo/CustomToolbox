@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Security.Cryptography;
-using System.Text.Json.Nodes;
 using System.Text;
+using System.Text.Json.Nodes;
 
-namespace CustomToolbox.BilibiliApi.Funcs;
+namespace CustomToolbox.BilibiliApi.Functions;
 
 /// <summary>
 /// 驗證函式
@@ -86,7 +86,7 @@ public class AuthFunction
         HttpRequestMessage httpRequestMessage = new()
         {
             Method = HttpMethod.Get,
-            RequestUri = new Uri("https://api.bilibili.com/x/web-interface/nav"),
+            RequestUri = new Uri("https://api.bilibili.com/x/web-interface/nav")
         };
 
         using HttpResponseMessage? httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
@@ -124,6 +124,35 @@ public class AuthFunction
         Dictionary<string, string> parameters)
     {
         (string imgKey, string subKey) = await GetWbiKeys(httpClient);
+        (string strB_3, string _) = await GetBuvids(httpClient);
+
+        IEnumerable<string>? cookies = null;
+
+        try
+        {
+            cookies = httpClient.DefaultRequestHeaders.GetValues("Cookie");
+        }
+        catch
+        {
+            // 不做任何事。
+        }
+
+        if (cookies == null)
+        {
+            httpClient.DefaultRequestHeaders.Add("Cookie", $"buvid3={strB_3};");
+        }
+        else
+        {
+            if (!cookies.Any(n => n.Contains("buvid3")))
+            {
+                string targetCookies = string.Join(';', cookies);
+
+                targetCookies = $"{targetCookies};buvid3={strB_3};";
+
+                httpClient.DefaultRequestHeaders.Remove("Cookie");
+                httpClient.DefaultRequestHeaders.Add("Cookie", targetCookies);
+            }
+        }
 
         Dictionary<string, string> finalParameters = await EncodeWbi(
             parameters,
@@ -132,5 +161,33 @@ public class AuthFunction
         );
 
         return await new FormUrlEncodedContent(finalParameters).ReadAsStringAsync();
+    }
+
+    /// <summary>
+    /// 取得 Buvid
+    /// <para>獲取 Buvid3 和 Buvid4。</para>
+    /// </summary>
+    /// <param name="httpClient">HttpClient</param>
+    /// <returns>Task&lt;(string, string)&gt;</returns>
+    public static async Task<(string, string)> GetBuvids(HttpClient httpClient)
+    {
+        HttpRequestMessage httpRequestMessage = new()
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri("https://api.bilibili.com/x/frontend/finger/spi")
+        };
+
+        using HttpResponseMessage? httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
+
+        string content = await httpResponseMessage.Content.ReadAsStringAsync();
+
+        JsonNode? jnContent = JsonNode.Parse(content),
+            jnB_3 = jnContent?["data"]?["b_3"],
+            jnB_4 = jnContent?["data"]?["b_4"];
+
+        string strB_3 = jnB_3?.ToString() ?? string.Empty;
+        string strB_4 = jnB_4?.ToString() ?? string.Empty;
+
+        return (strB_3, strB_4);
     }
 }

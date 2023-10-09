@@ -1,6 +1,6 @@
 ﻿using Application = System.Windows.Application;
 using ConsoleTableExt;
-using CustomToolbox.BilibiliApi.Funcs;
+using CustomToolbox.BilibiliApi.Functions;
 using CustomToolbox.BilibiliApi.Models;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
@@ -11,23 +11,29 @@ using Label = System.Windows.Controls.Label;
 using Microsoft.Playwright;
 using OpenCCNET;
 using Page = CustomToolbox.BilibiliApi.Models.Page;
-using ProgressBar = ModernWpf.Controls.ProgressBar;
+using ProgressBar = System.Windows.Controls.ProgressBar;
+using Serilog.Events;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Net.Http;
 using System.Text.Json;
 using System.Windows.Controls;
+using Whisper.net;
+using Whisper.net.Ggml;
+using Whisper.net.Wave;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
-using System.Net.Http;
-using System.Globalization;
+using System.Windows.Threading;
 
 namespace CustomToolbox.Common.Sets;
 
 /// <summary>
 /// 作業組
 /// </summary>
-internal class OperationSet
+public class OperationSet
 {
     /// <summary>
     /// WMain
@@ -657,7 +663,11 @@ internal class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -738,7 +748,11 @@ internal class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -808,7 +822,11 @@ internal class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -888,16 +906,22 @@ internal class OperationSet
 
                     break;
                 default:
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        MsgSet.MsgSelectedVideoNonSupported));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            MsgSet.MsgSelectedVideoNonSupported),
+                        logEventLevel: LogEventLevel.Error);
 
                     break;
             }
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -957,7 +981,11 @@ internal class OperationSet
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -993,7 +1021,7 @@ internal class OperationSet
             {
                 string message = $"[{receivedTList.Code}] {receivedTList.Message}" ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
-                _WMain?.WriteLog(message);
+                _WMain?.WriteLog(message: message);
 
                 return;
             }
@@ -1005,9 +1033,10 @@ internal class OperationSet
             // 當 tlist 等於 null，則表示沒有取到有效的標籤資訊。
             if (tlist == null)
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDataParsingFailedAndCanceled,
-                    mid));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDataParsingFailedAndCanceled,
+                        mid));
 
                 return;
             }
@@ -1017,16 +1046,18 @@ internal class OperationSet
 
             if (tidDataSet.Count <= 0)
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDataParsingFailedAndCanceled,
-                    mid));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDataParsingFailedAndCanceled,
+                        mid));
 
                 return;
             }
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgPrepToProduceClipListFile,
-                mid));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgPrepToProduceClipListFile,
+                    mid));
 
             List<ClipData> originDataSource = new();
 
@@ -1038,10 +1069,11 @@ internal class OperationSet
 
                 int tid = tidData.TID, ps = 50;
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgProcessingDataForTag,
-                    tidData.Name ?? string.Empty,
-                    tidData.TID.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgProcessingDataForTag,
+                        tidData.Name ?? string.Empty,
+                        tidData.TID.ToString()));
 
                 // 取得分頁資訊。
                 ReceivedObject<Page> receivedPage = await SpaceFunction.GetPage(httpClient, mid, tid);
@@ -1050,7 +1082,7 @@ internal class OperationSet
                 {
                     string message = receivedPage.Message ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
-                    _WMain?.WriteLog(message);
+                    _WMain?.WriteLog(message: message);
 
                     return;
                 }
@@ -1076,10 +1108,11 @@ internal class OperationSet
                 {
                     ct.ThrowIfCancellationRequested();
 
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgProcessingDataForPage,
-                        pn.ToString(),
-                        pages.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgProcessingDataForPage,
+                            pn.ToString(),
+                            pages.ToString()));
 
                     ReceivedObject<List<VList>> receivedVLists = await SpaceFunction.GetVList(
                         httpClient,
@@ -1093,7 +1126,7 @@ internal class OperationSet
                     {
                         string message = receivedPage.Message ?? MsgSet.MsgJobFailedAndErrorOccurred;
 
-                        _WMain?.WriteLog(message);
+                        _WMain?.WriteLog(message: message);
 
                         continue;
                     }
@@ -1102,10 +1135,11 @@ internal class OperationSet
                     {
                         ct.ThrowIfCancellationRequested();
 
-                        _WMain?.WriteLog(MsgSet.GetFmtStr(
-                            MsgSet.MsgProcessingDataForVideo,
-                            processCount.ToString(),
-                            videoCount.ToString()));
+                        _WMain?.WriteLog(
+                            message: MsgSet.GetFmtStr(
+                                MsgSet.MsgProcessingDataForVideo,
+                                processCount.ToString(),
+                                videoCount.ToString()));
 
                         processCount++;
 
@@ -1122,7 +1156,10 @@ internal class OperationSet
                             if (!isUrlValid)
                             {
                                 _WMain?.WriteLog(
-                                    MsgSet.GetFmtStr(MsgSet.MsgInvalidUrlSkipThisVideo, url, title));
+                                    message: MsgSet.GetFmtStr(
+                                        MsgSet.MsgInvalidUrlSkipThisVideo,
+                                        url,
+                                        title));
 
                                 continue;
                             }
@@ -1145,7 +1182,10 @@ internal class OperationSet
                         // 檢查影片的標題是否包含排除字詞。
                         if (!CheckVideoTitle(title))
                         {
-                            _WMain?.WriteLog(MsgSet.GetFmtStr(MsgSet.MsgSkipThisVideo, title));
+                            _WMain?.WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgSkipThisVideo,
+                                    title));
 
                             continue;
                         }
@@ -1188,19 +1228,21 @@ internal class OperationSet
                     }
                 }
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgProcessResult,
-                    mid,
-                    tid.ToString(),
-                    videoCount.ToString(),
-                    originDataSource.Count.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgProcessResult,
+                        mid,
+                        tid.ToString(),
+                        videoCount.ToString(),
+                        originDataSource.Count.ToString()));
             }
 
             if (originDataSource.Count <= 0)
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDataParsingFailedAndCantCreateClipListFile,
-                    mid));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDataParsingFailedAndCantCreateClipListFile,
+                        mid));
 
                 return;
             }
@@ -1253,17 +1295,22 @@ internal class OperationSet
 
             await fileStream.DisposeAsync();
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgClipListFileGeneratedFor,
-                mid,
-                savedPath));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgClipListFileGeneratedFor,
+                    mid,
+                    savedPath));
 
             // 開啟 ClipLists 資料夾。
             CustomFunction.OpenFolder(VariableSet.ClipListsFolderPath);
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1298,9 +1345,10 @@ internal class OperationSet
             // 偵測 Playwright 使用的網頁瀏覽器。
             string browserChannel = await PlaywrightUtil.DetectBrowser(forceChromium);
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgYtscToolUsedBrowserChannel,
-                browserChannel));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgYtscToolUsedBrowserChannel,
+                    browserChannel));
 
             using IPlaywright playwright = await Playwright.CreateAsync();
 
@@ -1359,9 +1407,10 @@ internal class OperationSet
                             // 當超出限制列數時，取消裁切截圖。
                             useClip = false;
 
-                            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.MsgYtscToolChNameTooLongCancelCut,
-                                VariableSet.ChannelNameRowLimit.ToString()));
+                            _WMain?.WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.MsgYtscToolChNameTooLongCancelCut,
+                                    VariableSet.ChannelNameRowLimit.ToString()));
                         }
                     }
                 }
@@ -1493,10 +1542,11 @@ internal class OperationSet
                 Type = extName == ".png" ? ScreenshotType.Png : ScreenshotType.Jpeg
             });
 
-            _WMain?.WriteLog(MsgSet.MsgYtscToolTakeScreenshotFinished);
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgYtscToolFileSaveAt,
-                savedPath));
+            _WMain?.WriteLog(message: MsgSet.MsgYtscToolTakeScreenshotFinished);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgYtscToolFileSaveAt,
+                    savedPath));
 
             // 僅供測試使用。
             if (isDevelopmentMode)
@@ -1507,8 +1557,571 @@ internal class OperationSet
         catch (Exception ex)
         {
             // 只有可以 Cancel 的才只輸出 ex.Message.ToString()。
-            _WMain?.WriteLog(ex.ToString());
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
+    }
+
+    /// <summary>
+    /// 執行轉換成 WAV 檔案
+    /// </summary>
+    /// <param name="inputFilePath">字串，檔案的路徑</param>
+    /// <param name="ct">CancellationToken</param>
+    /// <returns>Task&lt;string&gt;，產生的 WAV 檔案的路徑</returns>
+    public static async Task<string> DoConvertToWavFile(
+        string inputFilePath,
+        CancellationToken ct = default)
+    {
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+
+            string fileName = Path.GetFileNameWithoutExtension(inputFilePath);
+
+            IMediaInfo mediaInfo = await FFmpeg.GetMediaInfo(inputFilePath, ct);
+
+            IEnumerable<IAudioStream> audioStreams = mediaInfo.AudioStreams;
+
+            if (audioStreams == null)
+            {
+                _WMain?.WriteLog(
+                    message: MsgSet.MsgSelectAValidVideoOrAudioFile,
+                    logEventLevel: LogEventLevel.Warning);
+
+                return string.Empty;
+            }
+
+            string tempFilePath = Path.Combine(
+                VariableSet.TempFolderPath,
+                $"{fileName}_{DateTime.Now:yyyyMMddHHmmssfff}.wav");
+
+            IConversion conversion = ExternalProgram
+                .GetConvertToWavConversion(audioStreams, tempFilePath);
+
+            IConversionResult conversionResult = await conversion.Start(ct);
+
+            ExternalProgram.WriteConversionResult(conversionResult);
+
+            return tempFilePath;
+        }
+        catch (OperationCanceledException)
+        {
+            _WMain?.WriteLog(message: MsgSet.MsgJobHasCanceled);
+        }
+        catch (Exception ex)
+        {
+            _WMain?.ShowMsgBox(message: ex.GetExceptionMessage());
+        }
+
+        return string.Empty;
+    }
+
+    /// <summary>
+    /// 執行偵測語言
+    /// <para>因為會發生 System.AccessViolationException，故 speedUp 需設為 false。</para>
+    /// </summary>
+    /// <param name="inputFilePath">字串，檔案的路徑</param>
+    /// <param name="language">字串，語言（兩碼），預設值為 "auto"</param>
+    /// <param name="enableTranslate">布林值，啟用翻譯成英文，預設值為 false</param>
+    /// <param name="enableSpeedUp2x">布林值，啟用 SpeedUp2x，預設值為 false</param>
+    /// <param name="speedUp">布林值，是否加速，預設值為 false</param>
+    /// <param name="ggmlType">GgmlType，預設值為 GgmlType.Small</param>
+    /// <param name="quantizationType">QuantizationType，預設值為 QuantizationType.NoQuantization</param>
+    /// <param name="samplingStrategyType">SamplingStrategyType，預設值為 SamplingStrategyType.Default</param>
+    /// <param name="beamSize">beamSize，用於 SamplingStrategyType.BeamSearch，預設值為 5</param>
+    /// <param name="patience">patience，用於 SamplingStrategyType.BeamSearch，預設值為 -0.1f</param>
+    /// <param name="bestOf">bestOf，用於 SamplingStrategyType.Greedy，預設值為 1</param>
+    /// <param name="cancellationToken">CancellationToken</param>
+    /// <returns>Task</returns>
+    public static async Task DoDetectLanguage(
+        string inputFilePath,
+        string language = "auto",
+        bool enableTranslate = false,
+        bool enableSpeedUp2x = false,
+        bool speedUp = false,
+        GgmlType ggmlType = GgmlType.Small,
+        QuantizationType quantizationType = QuantizationType.NoQuantization,
+        SamplingStrategyType samplingStrategyType = SamplingStrategyType.Default,
+        int beamSize = 5,
+        float patience = -0.1f,
+        int bestOf = 1,
+        CancellationToken cancellationToken = default)
+    {
+        Stopwatch stopWatch = new();
+
+        stopWatch.Start();
+
+        try
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            string tempFilePath = await Task.Run(async () =>
+            {
+                string wavfilePath = await DoConvertToWavFile(
+                        inputFilePath,
+                        cancellationToken),
+                    modelFilePath = await ExternalProgram.CheckModelFile(
+                        ggmlType,
+                        quantizationType,
+                        cancellationToken);
+
+                if (string.IsNullOrEmpty(modelFilePath))
+                {
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperModelFileNotFound);
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageCanceled);
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                            VariableSet.TempFolderPath));
+
+                    return string.Empty;
+                }
+
+                _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageStarting);
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperUsedModel,
+                        ggmlType.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperUsedQuantizationType,
+                        quantizationType.ToString()));
+
+                using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
+
+                WhisperProcessorBuilder whisperProcessorBuilder = whisperFactory.CreateBuilder()
+                    .WithEncoderBeginHandler(WhisperDotNet_OnEncoderBegin)
+                    .WithProgressHandler(WhisperDotNet_OnProgress)
+                    .WithSegmentEventHandler(WhisperDotNet_OnNewSegment);
+
+                if (language == "auto")
+                {
+                    whisperProcessorBuilder.WithLanguageDetection();
+                }
+                else
+                {
+                    whisperProcessorBuilder.WithLanguage(language);
+                }
+
+                if (enableTranslate)
+                {
+                    whisperProcessorBuilder.WithTranslate();
+                }
+
+                if (enableSpeedUp2x)
+                {
+                    whisperProcessorBuilder.WithSpeedUp2x();
+                }
+
+                WhisperProcessor whisperProcessor = WhisperUtil.GetWhisperProcessor(
+                    whisperProcessorBuilder: whisperProcessorBuilder,
+                    samplingStrategyType: samplingStrategyType,
+                    beamSize: beamSize,
+                    patience: patience,
+                    bestOf: bestOf);
+
+                using FileStream fileStream = File.OpenRead(wavfilePath);
+
+                WaveParser waveParser = new(fileStream);
+
+                bool isTaskCanceled = false;
+
+                try
+                {
+                    float[] avgSamples = await waveParser.GetAvgSamplesAsync(cancellationToken);
+
+                    (string? detectedLanguage, float? probability) = whisperProcessor
+                        .DetectLanguageWithProbability(samples: avgSamples, speedUp: speedUp);
+
+                    string rawResult = string.IsNullOrEmpty(detectedLanguage) ?
+                            MsgSet.MsgWhisperDetectLanguageFailed :
+                            MsgSet.GetFmtStr(
+                                MsgSet.TemplateWhipserDetectLaunguageResult,
+                                detectedLanguage,
+                                $"{probability:P}"),
+                        resultMessage = MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperDetectLanguageResult,
+                            rawResult);
+
+                    _WMain?.WriteLog(message: resultMessage);
+
+                    _WMain?.ShowMsgBox(message: resultMessage);
+                }
+                catch (OperationCanceledException)
+                {
+                    isTaskCanceled = true;
+
+                    stopWatch.Stop();
+
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageCanceled);
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperTotalElapsed,
+                            stopWatch.Elapsed.ToFFmpeg()));
+                }
+
+                await whisperProcessor.DisposeAsync();
+
+                if (!isTaskCanceled)
+                {
+                    stopWatch.Stop();
+
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperTotalElapsed,
+                            stopWatch.Elapsed.ToFFmpeg()));
+                }
+
+                return wavfilePath;
+            }, cancellationToken);
+
+            if (!string.IsNullOrEmpty(tempFilePath) &&
+                File.Exists(tempFilePath))
+            {
+                File.Delete(tempFilePath);
+
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTempFileDeleted,
+                        tempFilePath));
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            stopWatch.Stop();
+
+            _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageCanceled);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTotalElapsed,
+                    stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                    VariableSet.TempFolderPath));
+        }
+        catch (Exception ex)
+        {
+            stopWatch.Stop();
+
+            _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageCanceled);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTotalElapsed,
+                    stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                    VariableSet.TempFolderPath));
+
+            _WMain?.ShowMsgBox(message: ex.GetExceptionMessage());
+        }
+    }
+
+    /// <summary>
+    /// 執行轉譯
+    /// </summary>
+    /// <param name="inputFilePath">字串，檔案的路徑</param>
+    /// <param name="language">字串，語言（兩碼），預設值為 "auto"</param>
+    /// <param name="enableTranslate">布林值，啟用翻譯成英文，預設值為 false</param>
+    /// <param name="enableSpeedUp2x">布林值，啟用 SpeedUp2x，預設值為 false</param>
+    /// <param name="exportWebVtt">布林值，匯出 WebVTT 格式，預設值為 false</param>
+    /// <param name="ggmlType">GgmlType，預設值為 GgmlType.Small</param>
+    /// <param name="quantizationType">QuantizationType，預設值為 QuantizationType.NoQuantization</param>
+    /// <param name="samplingStrategyType">SamplingStrategyType，預設值為 SamplingStrategyType.Default</param>
+    /// <param name="beamSize">beamSize，用於 SamplingStrategyType.BeamSearch，預設值為 5</param>
+    /// <param name="patience">patience，用於 SamplingStrategyType.BeamSearch，預設值為 -0.1f</param>
+    /// <param name="bestOf">bestOf，用於 SamplingStrategyType.Greedy，預設值為 1</param>
+    /// <param name="cancellationToken">CancellationToken</param>
+    /// <returns>Task</returns>
+    public static async Task DoTranscribe(
+        string inputFilePath,
+        string language = "auto",
+        bool enableTranslate = false,
+        bool enableSpeedUp2x = false,
+        bool exportWebVtt = false,
+        GgmlType ggmlType = GgmlType.Small,
+        QuantizationType quantizationType = QuantizationType.NoQuantization,
+        SamplingStrategyType samplingStrategyType = SamplingStrategyType.Default,
+        int beamSize = 5,
+        float patience = -0.1f,
+        int bestOf = 1,
+        CancellationToken cancellationToken = default)
+    {
+        Stopwatch stopWatch = new();
+
+        stopWatch.Start();
+
+        try
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            string tempFilePath = await Task.Run(async () =>
+            {
+                List<SegmentData> segmentDataSet = new();
+
+                string wavfilePath = await DoConvertToWavFile(
+                        inputFilePath,
+                        cancellationToken),
+                    modelFilePath = await ExternalProgram.CheckModelFile(
+                        ggmlType,
+                        quantizationType,
+                        cancellationToken);
+
+                if (string.IsNullOrEmpty(modelFilePath))
+                {
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperModelFileNotFound);
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeCanceled);
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                            VariableSet.TempFolderPath));
+
+                    return string.Empty;
+                }
+
+                _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeStarting);
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperUsedModel,
+                        ggmlType.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperUsedQuantizationType,
+                        quantizationType.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTranscribeUsedLanguage,
+                        language));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTranscribeUsedSamplingStrategyType,
+                        samplingStrategyType.ToString()));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTranscribeEnableOpenCCS2TWP,
+                        Properties.Settings.Default.OpenCCS2TWP ? MsgSet.Yes : MsgSet.No));
+
+                using WhisperFactory whisperFactory = WhisperFactory.FromPath(modelFilePath);
+
+                WhisperProcessorBuilder whisperProcessorBuilder = whisperFactory.CreateBuilder()
+                    .WithEncoderBeginHandler(WhisperDotNet_OnEncoderBegin)
+                    .WithProgressHandler(WhisperDotNet_OnProgress)
+                    .WithSegmentEventHandler(WhisperDotNet_OnNewSegment)
+                    .WithProbabilities();
+
+                if (language == "auto")
+                {
+                    whisperProcessorBuilder.WithLanguageDetection();
+                }
+                else
+                {
+                    whisperProcessorBuilder.WithLanguage(language);
+                }
+
+                if (enableTranslate)
+                {
+                    whisperProcessorBuilder.WithTranslate();
+                }
+
+                if (enableSpeedUp2x)
+                {
+                    whisperProcessorBuilder.WithSpeedUp2x();
+                }
+
+                WhisperProcessor whisperProcessor = WhisperUtil.GetWhisperProcessor(
+                    whisperProcessorBuilder: whisperProcessorBuilder,
+                    samplingStrategyType: samplingStrategyType,
+                    beamSize: beamSize,
+                    patience: patience,
+                    bestOf: bestOf);
+
+                using FileStream fileStream = File.OpenRead(wavfilePath);
+
+                _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeContent);
+
+                bool isTaskCanceled = false;
+
+                try
+                {
+                    await foreach (SegmentData segmentData in whisperProcessor
+                        .ProcessAsync(fileStream, cancellationToken))
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+
+                        segmentDataSet.Add(segmentData);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    isTaskCanceled = true;
+
+                    stopWatch.Stop();
+
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeCanceled);
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperTotalElapsed,
+                            stopWatch.Elapsed.ToFFmpeg()));
+                }
+
+                await whisperProcessor.DisposeAsync();
+
+                if (!isTaskCanceled)
+                {
+                    stopWatch.Stop();
+
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperTotalElapsed,
+                            stopWatch.Elapsed.ToFFmpeg()));
+                    _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeFinished);
+
+                    // 建立字幕檔。
+                    string subtitleFilePath = DoCreateSubtitleFile(
+                            segmentDataSet,
+                            inputFilePath,
+                            exportWebVtt),
+                        subtitleFileName = Path.GetFileName(subtitleFilePath),
+                        subtitleFileFolder = Path.GetFullPath(subtitleFilePath)
+                            .Replace(subtitleFileName, string.Empty);
+
+                    // 開啟資料夾。
+                    CustomFunction.OpenFolder(subtitleFileFolder);
+
+                    _WMain?.ShowMsgBox(message: MsgSet.MsgWhisperTranscribeFinished);
+                }
+
+                return wavfilePath;
+            }, cancellationToken);
+
+            if (!string.IsNullOrEmpty(tempFilePath) &&
+                File.Exists(tempFilePath))
+            {
+                File.Delete(tempFilePath);
+
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperTempFileDeleted,
+                        tempFilePath));
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            stopWatch.Stop();
+
+            _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeCanceled);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTotalElapsed,
+                    stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                    VariableSet.TempFolderPath));
+        }
+        catch (Exception ex)
+        {
+            stopWatch.Stop();
+
+            _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeCanceled);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTotalElapsed,
+                    stopWatch.Elapsed.ToFFmpeg()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperRemoveTempFileByYourSelf,
+                    VariableSet.TempFolderPath));
+
+            _WMain?.ShowMsgBox(ex.GetExceptionMessage());
+        }
+    }
+
+    /// <summary>
+    /// 執行建立字幕檔案
+    /// </summary>
+    /// <param name="segmentDataSet">List&lt;SegmentData&gt;</param>
+    /// <param name="inputFilePath">字串，檔案的路徑</param>
+    /// <param name="exportWebVTT">布林值，匯出 WebVTT 格式，預設值為 false</param>
+    /// <returns>字串，字幕檔案的路徑</returns>
+    public static string DoCreateSubtitleFile(
+        List<SegmentData> segmentDataSet,
+        string inputFilePath,
+        bool exportWebVTT)
+    {
+        string filePath1 = Path.ChangeExtension(inputFilePath, ".srt");
+
+        _WMain?.WriteLog(
+            message: MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperStartToCreateSubtitleFile,
+                "SubRip Text"));
+
+        using StreamWriter streamWriter1 = File.CreateText(filePath1);
+
+        for (int i = 0; i < segmentDataSet.Count; i++)
+        {
+            streamWriter1.WriteLine(i + 1);
+
+            SegmentData segmentData = segmentDataSet[i];
+
+            string startTime = WhisperUtil.PrintTimeWithComma(segmentData.Start),
+                endTime = WhisperUtil.PrintTimeWithComma(segmentData.End);
+
+            streamWriter1.WriteLine("{0} --> {1}", startTime, endTime);
+            streamWriter1.WriteLine(WhisperUtil.GetSegmentDataText(segmentData));
+            streamWriter1.WriteLine();
+        }
+
+        _WMain?.WriteLog(
+            message: MsgSet.GetFmtStr(
+                MsgSet.MsgWhisperSubtitleFileCreated,
+                "SubRip Text",
+                filePath1));
+
+        #region WebVTT
+
+        if (exportWebVTT)
+        {
+            string filePath2 = Path.ChangeExtension(inputFilePath, ".vtt");
+
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperStartToCreateSubtitleFile,
+                    "WebVTT"));
+
+            using StreamWriter streamWriter2 = File.CreateText(filePath2);
+
+            streamWriter2.WriteLine("WEBVTT ");
+            streamWriter2.WriteLine();
+
+            for (int i = 0; i < segmentDataSet.Count; i++)
+            {
+                streamWriter2.WriteLine(i + 1);
+
+                SegmentData segmentData = segmentDataSet[i];
+
+                string startTime = WhisperUtil.PrintTime(segmentData.Start),
+                    endTime = WhisperUtil.PrintTime(segmentData.End);
+
+                streamWriter2.WriteLine("{0} --> {1}", startTime, endTime);
+                streamWriter2.WriteLine(WhisperUtil.GetSegmentDataText(segmentData));
+                streamWriter2.WriteLine();
+            }
+
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperSubtitleFileCreated,
+                    "WebVTT",
+                    filePath2));
+        }
+
+        #endregion
+
+        return filePath1;
     }
 
     /// <summary>
@@ -1612,67 +2225,69 @@ internal class OperationSet
     {
         return new Progress<DownloadProgress>(downloadProgress =>
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                if (_LOperation == null || _PBProgress == null)
+            Application.Current.Dispatcher.BeginInvoke(
+                method: new Action(() =>
                 {
-                    return;
-                }
+                    if (_LOperation == null || _PBProgress == null)
+                    {
+                        return;
+                    }
 
-                double currentPercent = downloadProgress.Progress * 100;
+                    double currentPercent = downloadProgress.Progress * 100;
 
-                _PBProgress.Value = currentPercent;
-                _PBProgress.ToolTip = $"{currentPercent}%";
+                    _PBProgress.Value = currentPercent;
+                    _PBProgress.ToolTip = $"{currentPercent}%";
 
-                string message = $"({downloadProgress.State})";
+                    string message = $"({downloadProgress.State})";
 
-                message += MsgSet.GetFmtStr(
-                    MsgSet.YtdlSharpVideoIndex,
-                    downloadProgress.VideoIndex.ToString());
-
-                if (!string.IsNullOrEmpty(downloadProgress.DownloadSpeed))
-                {
                     message += MsgSet.GetFmtStr(
-                        MsgSet.YtdlSharpDownloadSpeed,
-                        downloadProgress.DownloadSpeed);
-                }
+                        MsgSet.YtdlSharpVideoIndex,
+                        downloadProgress.VideoIndex.ToString());
 
-                if (!string.IsNullOrEmpty(downloadProgress.ETA))
-                {
-                    message += MsgSet.GetFmtStr(
-                        MsgSet.YtdlSharpETA,
-                        downloadProgress.ETA);
-                }
+                    if (!string.IsNullOrEmpty(downloadProgress.DownloadSpeed))
+                    {
+                        message += MsgSet.GetFmtStr(
+                            MsgSet.YtdlSharpDownloadSpeed,
+                            downloadProgress.DownloadSpeed);
+                    }
 
-                if (!string.IsNullOrEmpty(downloadProgress.TotalDownloadSize))
-                {
-                    message += MsgSet.GetFmtStr(
-                        MsgSet.YtdlSharpTotalDownloadSize,
-                        downloadProgress.TotalDownloadSize);
-                }
+                    if (!string.IsNullOrEmpty(downloadProgress.ETA))
+                    {
+                        message += MsgSet.GetFmtStr(
+                            MsgSet.YtdlSharpETA,
+                            downloadProgress.ETA);
+                    }
 
-                if (!string.IsNullOrEmpty(downloadProgress.Data))
-                {
-                    message += MsgSet.GetFmtStr(
-                        MsgSet.YtdlSharpData,
-                        downloadProgress.Data);
-                }
+                    if (!string.IsNullOrEmpty(downloadProgress.TotalDownloadSize))
+                    {
+                        message += MsgSet.GetFmtStr(
+                            MsgSet.YtdlSharpTotalDownloadSize,
+                            downloadProgress.TotalDownloadSize);
+                    }
 
-                // 避免字串太長，造成顯示問題。
-                string reducedMessage = message;
+                    if (!string.IsNullOrEmpty(downloadProgress.Data))
+                    {
+                        message += MsgSet.GetFmtStr(
+                            MsgSet.YtdlSharpData,
+                            downloadProgress.Data);
+                    }
 
-                StringInfo siReducedMessage = new(reducedMessage);
+                    // 避免字串太長，造成顯示問題。
+                    string reducedMessage = message;
 
-                int limitLength = Properties.Settings.Default.LOperationLimitLength;
+                    StringInfo siReducedMessage = new(reducedMessage);
 
-                if (siReducedMessage.LengthInTextElements > limitLength)
-                {
-                    reducedMessage = $"{siReducedMessage.SubstringByTextElements(0, limitLength)}{MsgSet.Ellipses}";
-                }
+                    int limitLength = Properties.Settings.Default.LOperationLimitLength;
 
-                _LOperation.Content = reducedMessage;
-                _LOperation.ToolTip = message;
-            }));
+                    if (siReducedMessage.LengthInTextElements > limitLength)
+                    {
+                        reducedMessage = $"{siReducedMessage.SubstringByTextElements(0, limitLength)}{MsgSet.Ellipses}";
+                    }
+
+                    _LOperation.Content = reducedMessage;
+                    _LOperation.ToolTip = message;
+                }),
+                priority: DispatcherPriority.Background);
         });
     }
 
@@ -1710,7 +2325,7 @@ internal class OperationSet
                 // 手動減速機制，讓前後一樣的字串不輸出。
                 if (value != tempValue)
                 {
-                    _WMain?.WriteLog(value);
+                    _WMain?.WriteLog(message: value);
                 }
             }
 
@@ -1725,22 +2340,86 @@ internal class OperationSet
     {
         try
         {
-            await Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                if (_LOperation == null || _PBProgress == null)
+            await Application.Current.Dispatcher.BeginInvoke(
+                method: new Action(() =>
                 {
-                    return;
-                }
+                    if (_LOperation == null || _PBProgress == null)
+                    {
+                        return;
+                    }
 
-                _LOperation.Content = string.Empty;
-                _LOperation.ToolTip = string.Empty;
-                _PBProgress.Value = 0.0d;
-                _PBProgress.ToolTip = string.Empty;
-            }));
+                    _LOperation.Content = string.Empty;
+                    _LOperation.ToolTip = string.Empty;
+                    _PBProgress.Value = 0.0d;
+                    _PBProgress.ToolTip = string.Empty;
+                }),
+                priority: DispatcherPriority.Background);
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(ex.Message);
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
+    }
+
+    /// <summary>
+    /// whisper.net 的編碼器開始事件
+    /// </summary>
+    /// <param name="encoderBeginData">EncoderBeginData</param>
+    private static bool WhisperDotNet_OnEncoderBegin(EncoderBeginData encoderBeginData)
+    {
+        _ = encoderBeginData;
+
+        if (_WMain?.GlobalCTS != null &&
+            _WMain?.GlobalCTS.IsCancellationRequested == true)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// whisper.net 的進度事件
+    /// </summary>
+    /// <param name="porgress">數值，進度</param>
+    private static void WhisperDotNet_OnProgress(int porgress)
+    {
+        Application.Current.Dispatcher.BeginInvoke(
+            method: new Action(() =>
+            {
+                if (_PBProgress != null)
+                {
+                    if (porgress >= 100)
+                    {
+                        _PBProgress.Value = porgress;
+                        _PBProgress.ToolTip = $"{porgress}%";
+                    }
+                    else
+                    {
+                        _PBProgress.Value = 0.0d;
+                        _PBProgress.ToolTip = string.Empty;
+                    }
+                }
+            }),
+            priority: DispatcherPriority.Background);
+    }
+
+    /// <summary>
+    /// whisper.net 的新段事件
+    /// </summary>
+    /// <param name="segmentData">SegmentData</param>
+    private static void WhisperDotNet_OnNewSegment(SegmentData segmentData)
+    {
+        string segment = $"{segmentData.Start} --> {segmentData.End}：" +
+                $"[ {segmentData.Language} ({segmentData.Probability:P}) ] " +
+                $"{segmentData.Text}";
+
+        _WMain?.WriteLog(message: segment);
     }
 }

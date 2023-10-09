@@ -1,10 +1,14 @@
 ﻿using Control = System.Windows.Controls.Control;
 using CustomToolbox.Common;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using Serilog.Events;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using TextBox = System.Windows.Controls.TextBox;
 
 namespace CustomToolbox;
@@ -55,9 +59,84 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBCustomSubscriberAmount_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        try
+        {
+            // 只允許數字鍵、NumPad 的數字鍵、「-」，以及 Crtl + A、X、C、V 等組合案件。
+            e.Handled = (e.Key < Key.D0 || e.Key > Key.D9) &&
+                (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) &&
+                e.Key != Key.Back &&
+                e.Key != Key.Left &&
+                e.Key != Key.Right &&
+                e.Key != Key.Delete &&
+                e.Key != Key.OemMinus &&
+                e.Key != Key.Subtract &&
+                e.Key != Key.LeftCtrl &&
+                e.Key != Key.RightCtrl &&
+                e.Key != Key.A &&
+                e.Key != Key.X &&
+                e.Key != Key.C &&
+                e.Key != Key.V;
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    private void TBCustomSubscriberAmount_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            // 用於避免在只輸入「-」號時就開始解析。
+            if (TBCustomSubscriberAmount.Text.Contains('-') &&
+                TBCustomSubscriberAmount.Text.Length == 1)
+            {
+                return;
+            }
+
+            bool canParsed = int.TryParse(TBCustomSubscriberAmount.Text, out int parsedResult);
+
+            if (!canParsed)
+            {
+                TBCustomSubscriberAmount.Text = "-1";
+
+                return;
+            }
+
+            if (parsedResult < -1)
+            {
+                TBCustomSubscriberAmount.Text = "-1";
+
+                return;
+            }
+            else
+            {
+                TBCustomSubscriberAmount.Text = parsedResult.ToString();
+
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -68,7 +147,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 TBYtChannelID.Text = string.Empty;
-                NBCustomSubscriberAmount.Value = -1;
+                TBCustomSubscriberAmount.Text = "-1";
                 DPCustomDate.SelectedDate = null;
                 CBAddTimestamp.IsChecked = false;
                 CBUseClip.IsChecked = false;
@@ -80,9 +159,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -95,7 +176,7 @@ public partial class WMain
                 Control[] ctrlSet1 =
                 {
                     TBYtChannelID,
-                    NBCustomSubscriberAmount,
+                    TBCustomSubscriberAmount,
                     DPCustomDate,
                     CBAddTimestamp,
                     CBUseClip,
@@ -143,7 +224,7 @@ public partial class WMain
                     await OperationSet.DoTakeYtscScrnshot(
                         TBYtChannelID.Text,
                         saveFileDialog.FileName,
-                        Convert.ToInt32(NBCustomSubscriberAmount.Value),
+                        Convert.ToInt32(TBCustomSubscriberAmount.Text),
                         CBUseTranslate.IsChecked ?? false,
                         CBUseClip.IsChecked ?? false,
                         CBAddTimestamp.IsChecked ?? false,
@@ -158,9 +239,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

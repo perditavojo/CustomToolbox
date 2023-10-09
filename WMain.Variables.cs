@@ -1,6 +1,5 @@
 ﻿using CustomToolbox.Common.Models;
 using DiscordRPC;
-using ModernWpf.Controls;
 using Mpv.NET.Player;
 using System.Collections.ObjectModel;
 using System.Net.Http;
@@ -33,9 +32,15 @@ public partial class WMain
     public readonly ClipPlayer CPPlayer = new();
 
     /// <summary>
-    /// 共用的 GlobalCDDialog
+    /// 共用的 CancellationTokenSource
     /// </summary>
-    public ContentDialog? GlobalCDDialog = null;
+    public CancellationTokenSource? GlobalCTS = null;
+
+    /// <summary>
+    /// 略過 WMain 的 Closing 事件的 Cancel
+    /// <para>※僅用於讓攔截機制可以正常運作使用。</para>
+    /// </summary>
+    public bool IsByPassingWindowClosingEventCancel = false;
 
     /// <summary>
     /// 共用的 ObservableCollection&lt;ClipData&gt;
@@ -51,11 +56,6 @@ public partial class WMain
     /// 共用的 WPopupPlayer
     /// </summary>
     private WPopupPlayer? WPPPlayer = null;
-
-    /// <summary>
-    /// 共用的 CancellationTokenSource
-    /// </summary>
-    private CancellationTokenSource? GlobalCTS = null;
 
     /// <summary>
     /// 共用的 CancellationToken

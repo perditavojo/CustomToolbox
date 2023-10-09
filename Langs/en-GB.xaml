@@ -31,9 +31,6 @@
     <sys:String x:Key="StatePlaying">Now Playing</sys:String>
     <sys:String x:Key="StatePause">Pause playback</sys:String>
     <sys:String x:Key="StateStop">Stop play</sys:String>
-    <sys:String x:Key="SaveAndExit">Save and exit</sys:String>
-    <sys:String x:Key="ExitDirectly">Exit directly</sys:String>
-    <sys:String x:Key="Cancel">Cancel</sys:String>
     <sys:String x:Key="VideoDataChannel">Channel:</sys:String>
     <sys:String x:Key="VideoDataUploader">Uploader:</sys:String>
     <sys:String x:Key="VideoDataUploadDate">Upload date:</sys:String>
@@ -51,6 +48,8 @@
     <sys:String x:Key="YtdlSharpData" xml:space="preserve"> Data: {0}</sys:String>
     <sys:String x:Key="ClipPlayer">Clip player</sys:String>
     <sys:String x:Key="TimestampEditor">Timestamp editor</sys:String>
+    <sys:String x:Key="Yes">Yes</sys:String>
+    <sys:String x:Key="No">No</sys:String>
     <!-- String template -->
     <sys:String x:Key="TemplateMaintainer">[Maintainer: {0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1} ({2})]: ({3}) {4}</sys:String>
@@ -61,6 +60,7 @@
     <sys:String x:Key="TemplateXabeFFmpegConversionResult" xml:space="preserve">[Xabe.FFmpeg] The job is finished.&#x0a;Start time: {0}&#x0a;End time: {1}&#x0a;Duration: {2}&#x0a;Arguments: {3}</sys:String>
     <sys:String x:Key="TemplateUpdateStarTimeOfClipTo">Updated the start time of the clip "{0}" to "{1}".</sys:String>
     <sys:String x:Key="TemplateUpdateEndTimeOfClipTo">Updated the end time of the clip "{0}" to "{1}".</sys:String>
+    <sys:String x:Key="TemplateWhipserDetectLaunguageResult">{0} ({1})</sys:String>
     <!-- Control -->
     <sys:String x:Key="MIFile">File</sys:String>
     <sys:String x:Key="MILoadClipListFile">Load clip list</sys:String>
@@ -104,6 +104,8 @@
     <sys:String x:Key="BtnLoadClipList">Load clip list</sys:String>
     <sys:String x:Key="GBB23ClipListGenerator">Bilibili clip list generator</sys:String>
     <sys:String x:Key="LB23UserMID">User mid</sys:String>
+    <sys:String x:Key="BtnB23CopyMID">Copy MID</sys:String>
+    <sys:String x:Key="BtnB23CopyMIDToolTip">Copy MID from "Network Playlist" (Only supports Bilibili playlists)</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrases">Excluded phrases</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">A line a phrase</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">Export as *.jsonc</sys:String>
@@ -132,9 +134,6 @@
     <sys:String x:Key="BtnYtscToolTakeScreenshot">Take screensshot</sys:String>
     <sys:String x:Key="GBAppOptions">Application Options</sys:String>
     <sys:String x:Key="LLanguages">Language</sys:String>
-    <sys:String x:Key="LThemes">Theme</sys:String>
-    <sys:String x:Key="CBILightTheme">Light</sys:String>
-    <sys:String x:Key="CBIDarkTheme">Dark</sys:String>
     <sys:String x:Key="LUserAgent">User agent</sys:String>
     <sys:String x:Key="BtnMyUserAgent">Query user agent</sys:String>
     <sys:String x:Key="LUnsupportedDomains">Unsupported domains</sys:String>
@@ -185,13 +184,15 @@
     <sys:String x:Key="BtnReCreateMpvConf">Re-Create mpv.conf</sys:String>
     <sys:String x:Key="BtnDLLibMpv">Download libmpv</sys:String>
     <sys:String x:Key="BtnDLYtDlHookLua">Download ytdl__hook.lua</sys:String>
-    <sys:String x:Key="GBFolders">Folders</sys:String>
-    <sys:String x:Key="BtnOpenBinsFolder">Open Bins folder</sys:String>
-    <sys:String x:Key="BtnOpenConfigFolder">Open config file folder</sys:String>
-    <sys:String x:Key="BtnOpenDownloadsFolder">Open Downloads folder</sys:String>
-    <sys:String x:Key="BtnOpenCliplistsFolder">Open ClipLists folder</sys:String>
-    <sys:String x:Key="BtnOpenLogsFolder">Open Logs folder</sys:String>
-    <sys:String x:Key="BtnOpenLyricsFolder">Open Lyrics folder</sys:String>
+    <sys:String x:Key="MIFoldersMenu">Folders</sys:String>
+    <sys:String x:Key="MIOpenBinsFolder">Open Bins folder</sys:String>
+    <sys:String x:Key="MIOpenConfigFolder">Open config file folder</sys:String>
+    <sys:String x:Key="MIOpenDownloadsFolder">Open Downloads folder</sys:String>
+    <sys:String x:Key="MIOpenCliplistsFolder">Open ClipLists folder</sys:String>
+    <sys:String x:Key="MIOpenLogsFolder">Open Logs folder</sys:String>
+    <sys:String x:Key="MIOpenLyricsFolder">Open Lyrics folder</sys:String>
+    <sys:String x:Key="MIOpenTempFolder">Open Temp folder</sys:String>
+    <sys:String x:Key="MIOpenModelsFolder">Open Models folder</sys:String>
     <sys:String x:Key="DGClipList">Clip list</sys:String>
     <sys:String x:Key="ClipDataVideoUrlOrID">Video ID / URL</sys:String>
     <sys:String x:Key="ClipDataNo">No</sys:String>
@@ -212,11 +213,26 @@
     <sys:String x:Key="MIRandomPlayClip">Random play clip</sys:String>
     <sys:String x:Key="MIReorderClipList">Reorder clip list</sys:String>
     <sys:String x:Key="MIClearClipList">Clear clip list</sys:String>
-    <sys:String x:Key="TBLog">Log</sys:String>
+    <sys:String x:Key="RTBLog">Log</sys:String>
     <sys:String x:Key="MIClearLog">Clear log</sys:String>
     <sys:String x:Key="MIExportLog">Export log</sys:String>
     <sys:String x:Key="LVersionPrefix">Version:</sys:String>
     <sys:String x:Key="LYtDlpVersionPrefix">yt-dlp Version:</sys:String>
+    <sys:String x:Key="GBWhisperFunctions">Whisper</sys:String>
+    <sys:String x:Key="LWhisperModel">Model</sys:String>
+    <sys:String x:Key="LWhisperQuantization">Quantization</sys:String>
+    <sys:String x:Key="LWhisperSamplingStrategy">Sampling Strategy</sys:String>
+    <sys:String x:Key="LWhisperTranscribeLanguage">Language</sys:String>
+    <sys:String x:Key="CBWhisperSamplingStrategyTooltip">Default is using Greedy</sys:String>
+    <sys:String x:Key="LWhisperBeamSize">Beam size (Only beam search)</sys:String>
+    <sys:String x:Key="LWhisperPatience">Patience (Only beam search)</sys:String>
+    <sys:String x:Key="LWhisperBestOf">Best Of (Only greedy)</sys:String>
+    <sys:String x:Key="CBWhisperSpeedUp2x">Enable SpeedUp2x</sys:String>
+    <sys:String x:Key="CBWhisperSpeedUp2xTooltip">Enable SpeedUp2x may reduce the quality of transcribe</sys:String>
+    <sys:String x:Key="CBWhisperTranslateToEnglish">Translate to English</sys:String>
+    <sys:String x:Key="CBWhisperExportWebVTTAlso">Export WebVTT also</sys:String>
+    <sys:String x:Key="BtnWhisperDetectVideoLanguage">Detect video language</sys:String>
+    <sys:String x:Key="BtnWhisperTranscribeVideo">Transcribe video</sys:String>
     <!-- Dialog -->
     <sys:String x:Key="LoadClipListSelectFile">Select file</sys:String>
     <sys:String x:Key="LoadClipListFilter">JSON file (*.json)|*.json|JSON file (with Comments)|*.jsonc|Timestamp file (*.txt)|*.txt</sys:String>
@@ -225,13 +241,13 @@
     <sys:String x:Key="SelectProfilePath">Select path</sys:String>
     <sys:String x:Key="ExportLogFilter">Text file（*.txt）|.txt</sys:String>
     <sys:String x:Key="SelectVideoFile">Select video file</sys:String>
-    <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska|*.mkv</sys:String>
+    <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska Video|*.mkv</sys:String>
     <sys:String x:Key="SelectSubtitleFile">Select subtitle file</sys:String>
     <sys:String x:Key="SelectSubtitleFileFilter">SupRip Text|*.srt|WebVTT|*.vtt|SubStation Alpha|*.ssa|Advanced SubStation Alpha|*.ass</sys:String>
-    <sys:String x:Key="ContentDialogBtnOk">OK</sys:String>
-    <sys:String x:Key="ContentDialogBtnCancel">Cancel</sys:String>
     <sys:String x:Key="SaveImageFile">Save file</sys:String>
     <sys:String x:Key="SaveImageFileFilter">PNG Image file (*.png)|*.png|JPEG Image file (*.jpg)|*.jpg</sys:String>
+    <sys:String x:Key="SelectWhisperInputFile">Select file</sys:String>
+    <sys:String x:Key="SelectWhisperInputFileFilter">MPEG-4 Part 14|*.mp4|Matroska Video|*.mkv|Matroska Audio|*.mka|MPEG-4 Part 3|*.m4a|AAC|*.aac|MPEG-1 Layer 3|*.mp3|WAVE|*.wav|Ogg Vorbis|*.ogg|FLAC|*.flac|Opus|*.opus</sys:String>
     <!-- Message -->
     <sys:String x:Key="MsgUnderConstruction">Under construction...</sys:String>
     <sys:String x:Key="MsgStartDownloading">Start downloading {0}.</sys:String>
@@ -304,8 +320,7 @@
     <sys:String x:Key="MsgUpdateAppendSeconds">Append seconds have been updated.</sys:String>
     <sys:String x:Key="MsgInputAValidNumber">Please input a valid number.</sys:String>
     <sys:String x:Key="MsgPathIsNotExists">Target folder is not exists.</sys:String>
-    <sys:String x:Key="MsgSwitchTheme">Switch theme to {0}.</sys:String>
-    <sys:String x:Key="MsgUpdateUserAgent">User agent have been updated.</sys:String>
+    <sys:String x:Key="MsgUpdateUserAgent">User-Agent have been updated.</sys:String>
     <sys:String x:Key="MsgConfirmExitApp">Would you like to save the existing clip list to the temp clip list file and exit the application?</sys:String>
     <sys:String x:Key="MsgDiscordRichPresenceConnectedPipe">[{0}]: Connected pipe: {1}</sys:String>
     <sys:String x:Key="MsgDiscordRichPresenceFailedPipe">[{0}]: Failed pipe: {1}</sys:String>
@@ -354,4 +369,30 @@
     <sys:String x:Key="MsgPlayAClipFirst">Please, play a clip first.</sys:String>
     <sys:String x:Key="MsgLibMpvIsNotLoaded">Libmpv not loaded.</sys:String>
     <sys:String x:Key="MsgMediaIsNotLoaded">No media loaded.</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsNotExists">Model file {0} does not exist, downloading the model file is in progress...</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsDownloaded">Model file {0} has been downloaded.</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsFound">Found model file {0}.</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeCanceled">Transcribe job has been canceled.</sys:String>
+    <sys:String x:Key="MsgSelectAValidVideoOrAudioFile">An error occurred: Please select a valid video or audio file.</sys:String>
+    <sys:String x:Key="MsgJobHasCanceled">Job has been canceled.</sys:String>
+    <sys:String x:Key="MsgWhisperModelFileNotFound">An error occurred: The model file used does not exist or the download failed.</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageCanceled">The language detects operation has been canceled.</sys:String>
+    <sys:String x:Key="MsgWhisperRemoveTempFileByYourSelf">Please go to "{0}" to delete temp file by yourself.</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageStarting">Starting detect the language...</sys:String>
+    <sys:String x:Key="MsgWhisperUsedModel">Model used: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperUsedQuantizationType">Quantization used: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageFailed">Language detects failed.</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageResult">Language detects result: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTotalElapsed">Total Elapsed: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTempFileDeleted">Temporary files deleted: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeStarting">Starting Transcribe...</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeUsedLanguage">The language used: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeUsedSamplingStrategyType">Sampling strategy used: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeEnableOpenCCS2TWP">Enable OpenCC S2TWP: {0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeContent">Transcribed content:</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeFinished">Transcribe finished.</sys:String>
+    <sys:String x:Key="MsgWhisperStartToCreateSubtitleFile">Start creating {0} subtitle file...</sys:String>
+    <sys:String x:Key="MsgWhisperSubtitleFileCreated">{0} subtitle file created: {1}</sys:String>
+    <sys:String x:Key="MsgSelectB23Playlist">Please select a Bilibili playlist.</sys:String>
+    <sys:String x:Key="MsgUpdateSecChUa">Sec-CH-UA has been updated.</sys:String>
 </ResourceDictionary>

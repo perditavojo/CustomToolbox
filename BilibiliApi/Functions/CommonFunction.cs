@@ -1,7 +1,7 @@
 ﻿using CustomToolbox.BilibiliApi.Sets;
 using System.Net.Http;
 
-namespace CustomToolbox.BilibiliApi.Funcs;
+namespace CustomToolbox.BilibiliApi.Functions;
 
 /// <summary>
 /// 通用函式

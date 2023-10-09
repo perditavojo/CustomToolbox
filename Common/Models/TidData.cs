@@ -8,7 +8,7 @@ namespace CustomToolbox.Common.Models;
 /// <summary>
 /// 類別：tid 資料
 /// </summary>
-internal class TidData
+public class TidData
 {
     [JsonPropertyName("tid")]
     [Description("tid")]

@@ -31,9 +31,6 @@
     <sys:String x:Key="StatePlaying">正在播放</sys:String>
     <sys:String x:Key="StatePause">暫停播放</sys:String>
     <sys:String x:Key="StateStop">停止播放</sys:String>
-    <sys:String x:Key="SaveAndExit">儲存並結束</sys:String>
-    <sys:String x:Key="ExitDirectly">直接結束</sys:String>
-    <sys:String x:Key="Cancel">取消</sys:String>
     <sys:String x:Key="VideoDataChannel">頻道：</sys:String>
     <sys:String x:Key="VideoDataUploader">上傳者：</sys:String>
     <sys:String x:Key="VideoDataUploadDate">上傳時間：</sys:String>
@@ -51,6 +48,8 @@
     <sys:String x:Key="YtdlSharpData" xml:space="preserve"> 資料：{0}</sys:String>
     <sys:String x:Key="ClipPlayer">短片播放器</sys:String>
     <sys:String x:Key="TimestampEditor">時間標記編輯器</sys:String>
+    <sys:String x:Key="Yes">是</sys:String>
+    <sys:String x:Key="No">否</sys:String>
     <!-- 字串模板 -->
     <sys:String x:Key="TemplateMaintainer">[維護者：{0}]</sys:String>
     <sys:String x:Key="TemplateDiscordRichPresenceOnPresenceUpdate">[{0}][{1}（{2}）]：（{3}）{4}</sys:String>
@@ -61,6 +60,7 @@
     <sys:String x:Key="TemplateXabeFFmpegConversionResult" xml:space="preserve">[Xabe.FFmpeg] 作業完成。&#x0a;開始時間：{0}&#x0a;結束時間：{1}&#x0a;耗時：{2}&#x0a;使用的參數：{3}</sys:String>
     <sys:String x:Key="TemplateUpdateStarTimeOfClipTo">已更新短片「{0}」的開始時間至「{1}」。</sys:String>
     <sys:String x:Key="TemplateUpdateEndTimeOfClipTo">已更新短片「{0}」的結束時間至「{1}」。</sys:String>
+    <sys:String x:Key="TemplateWhipserDetectLaunguageResult">{0}（{1}）</sys:String>
     <!-- 控制項 -->
     <sys:String x:Key="MIFile">檔案</sys:String>
     <sys:String x:Key="MILoadClipListFile">載入短片清單檔案</sys:String>
@@ -104,6 +104,8 @@
     <sys:String x:Key="BtnLoadClipList">載入短片清單</sys:String>
     <sys:String x:Key="GBB23ClipListGenerator">Bilibili 短片清單產生器</sys:String>
     <sys:String x:Key="LB23UserMID">使用者 mid</sys:String>
+    <sys:String x:Key="BtnB23CopyMID">複製 MID</sys:String>
+    <sys:String x:Key="BtnB23CopyMIDToolTip">從 "網路播放清單" 複製 MID（僅支援 Bilibili 的播放清單）</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrases">排除字詞</sys:String>
     <sys:String x:Key="LB23ClipListExcludedPhrasesToolTip">一行一個排除字詞</sys:String>
     <sys:String x:Key="CBB23ClipListExportJsonc">匯出成 *.jsonc</sys:String>
@@ -133,9 +135,6 @@
     <sys:String x:Key="BtnYtscToolTakeScreenshot">儲存截圖</sys:String>
     <sys:String x:Key="GBAppOptions">應用程式選項</sys:String>
     <sys:String x:Key="LLanguages">語系</sys:String>
-    <sys:String x:Key="LThemes">主題</sys:String>
-    <sys:String x:Key="CBILightTheme">淺色</sys:String>
-    <sys:String x:Key="CBIDarkTheme">深色</sys:String>
     <sys:String x:Key="LUserAgent">使用者代理字串</sys:String>
     <sys:String x:Key="BtnMyUserAgent">查詢使用者代理字串</sys:String>
     <sys:String x:Key="LUnsupportedDomains">不支援的域名</sys:String>
@@ -186,13 +185,15 @@
     <sys:String x:Key="BtnReCreateMpvConf">重新建立 mpv.conf</sys:String>
     <sys:String x:Key="BtnDLLibMpv">下載 libmpv</sys:String>
     <sys:String x:Key="BtnDLYtDlHookLua">下載 ytdl__hook.lua</sys:String>
-    <sys:String x:Key="GBFolders">資料夾</sys:String>
-    <sys:String x:Key="BtnOpenBinsFolder">開啟 Bins 資料夾</sys:String>
-    <sys:String x:Key="BtnOpenConfigFolder">開啟設定檔資料夾</sys:String>
-    <sys:String x:Key="BtnOpenDownloadsFolder">開啟 Downloads 資料夾</sys:String>
-    <sys:String x:Key="BtnOpenCliplistsFolder">開啟 ClipLists 資料夾</sys:String>
-    <sys:String x:Key="BtnOpenLogsFolder">開啟 Logs 資料夾</sys:String>
-    <sys:String x:Key="BtnOpenLyricsFolder">開啟 Lyrics 資料夾</sys:String>
+    <sys:String x:Key="MIFoldersMenu">資料夾</sys:String>
+    <sys:String x:Key="MIOpenBinsFolder">開啟 Bins 資料夾</sys:String>
+    <sys:String x:Key="MIOpenConfigFolder">開啟設定檔資料夾</sys:String>
+    <sys:String x:Key="MIOpenDownloadsFolder">開啟 Downloads 資料夾</sys:String>
+    <sys:String x:Key="MIOpenCliplistsFolder">開啟 ClipLists 資料夾</sys:String>
+    <sys:String x:Key="MIOpenLogsFolder">開啟 Logs 資料夾</sys:String>
+    <sys:String x:Key="MIOpenLyricsFolder">開啟 Lyrics 資料夾</sys:String>
+    <sys:String x:Key="MIOpenTempFolder">開啟 Temp 資料夾</sys:String>
+    <sys:String x:Key="MIOpenModelsFolder">開啟 Models 資料夾</sys:String>
     <sys:String x:Key="DGClipList">短片清單</sys:String>
     <sys:String x:Key="ClipDataVideoUrlOrID">影片 ID／網址</sys:String>
     <sys:String x:Key="ClipDataNo">編號</sys:String>
@@ -213,11 +214,26 @@
     <sys:String x:Key="MIRandomPlayClip">隨機播放短片</sys:String>
     <sys:String x:Key="MIReorderClipList">隨機排列短片清單</sys:String>
     <sys:String x:Key="MIClearClipList">清除短片清單</sys:String>
-    <sys:String x:Key="TBLog">日誌紀錄</sys:String>
+    <sys:String x:Key="RTBLog">日誌紀錄</sys:String>
     <sys:String x:Key="MIClearLog">清除日誌紀錄</sys:String>
     <sys:String x:Key="MIExportLog">匯出日誌紀錄</sys:String>
     <sys:String x:Key="LVersionPrefix">版本：</sys:String>
     <sys:String x:Key="LYtDlpVersionPrefix">yt-dlp 版本：</sys:String>
+    <sys:String x:Key="GBWhisperFunctions">Whisper</sys:String>
+    <sys:String x:Key="LWhisperModel">模型</sys:String>
+    <sys:String x:Key="LWhisperQuantization">量化</sys:String>
+    <sys:String x:Key="LWhisperSamplingStrategy">取樣策略</sys:String>
+    <sys:String x:Key="CBWhisperSamplingStrategyTooltip">Default 就是使用 Greedy</sys:String>
+    <sys:String x:Key="LWhisperTranscribeLanguage">轉譯語言</sys:String>
+    <sys:String x:Key="LWhisperBeamSize">Beam size（僅 Beam search 使用）</sys:String>
+    <sys:String x:Key="LWhisperPatience">Patience（僅 Beam search 使用）</sys:String>
+    <sys:String x:Key="LWhisperBestOf">Best Of（僅 Greedy 使用）</sys:String>
+    <sys:String x:Key="CBWhisperSpeedUp2x">啟用 SpeedUp2x</sys:String>
+    <sys:String x:Key="CBWhisperSpeedUp2xTooltip">啟用 SpeedUp2x 有可能會降低轉譯的品質</sys:String>
+    <sys:String x:Key="CBWhisperTranslateToEnglish">翻譯成英文</sys:String>
+    <sys:String x:Key="CBWhisperExportWebVTTAlso">同時輸出 WebVTT 字幕檔</sys:String>
+    <sys:String x:Key="BtnWhisperDetectVideoLanguage">偵測影片語言</sys:String>
+    <sys:String x:Key="BtnWhisperTranscribeVideo">轉譯影片</sys:String>
     <!-- 對話視窗 -->
     <sys:String x:Key="LoadClipListSelectFile">選擇檔案</sys:String>
     <sys:String x:Key="LoadClipListFilter">JSON 檔案（*.json）|*.json|JSON 檔案（含備註）|*.jsonc|時間標記文字檔案（*.txt）|*.txt</sys:String>
@@ -226,13 +242,13 @@
     <sys:String x:Key="SelectProfilePath">選擇路徑</sys:String>
     <sys:String x:Key="ExportLogFilter">文字檔（*.txt）|.txt</sys:String>
     <sys:String x:Key="SelectVideoFile">選擇視訊檔案</sys:String>
-    <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska|*.mkv</sys:String>
+    <sys:String x:Key="SelectVideoFileFilter">MPEG-4 Part 14|*.mp4|Matroska 視訊檔|*.mkv</sys:String>
     <sys:String x:Key="SelectSubtitleFile">選擇字幕檔案</sys:String>
     <sys:String x:Key="SelectSubtitleFileFilter">SupRip Text|*.srt|WebVTT|*.vtt|SubStation Alpha|*.ssa|Advanced SubStation Alpha|*.ass</sys:String>
-    <sys:String x:Key="ContentDialogBtnOk">確認</sys:String>
-    <sys:String x:Key="ContentDialogBtnCancel">取消</sys:String>
     <sys:String x:Key="SaveImageFile">儲存檔案</sys:String>
     <sys:String x:Key="SaveImageFileFilter">PNG 影像檔 (*.png)|*.png|JPEG 影像檔 (*.jpg)|*.jpg</sys:String>
+    <sys:String x:Key="SelectWhisperInputFile">選擇檔案</sys:String>
+    <sys:String x:Key="SelectWhisperInputFileFilter">MPEG-4 Part 14|*.mp4|Matroska 視訊檔|*.mkv|Matroska 音訊檔|*.mka|MPEG-4 Part 3|*.m4a|AAC|*.aac|MPEG-1 Layer 3|*.mp3|WAVE|*.wav|Ogg Vorbis|*.ogg|FLAC|*.flac|Opus|*.opus</sys:String>
     <!-- 訊息 -->
     <sys:String x:Key="MsgUnderConstruction">功能建置中……</sys:String>
     <sys:String x:Key="MsgStartDownloading">開始下載 {0}。</sys:String>
@@ -305,7 +321,6 @@
     <sys:String x:Key="MsgUpdateAppendSeconds">已更新附加秒數。</sys:String>
     <sys:String x:Key="MsgInputAValidNumber">請輸入有效的數值。</sys:String>
     <sys:String x:Key="MsgPathIsNotExists">目標資料夾不存在。</sys:String>
-    <sys:String x:Key="MsgSwitchTheme">變更主題至{0}。</sys:String>
     <sys:String x:Key="MsgUpdateUserAgent">已更新使用者代理字串。</sys:String>
     <sys:String x:Key="MsgConfirmExitApp">您想將目前的短片清單，儲存至短片清單暫存檔案，並結束本應用程式嗎？</sys:String>
     <sys:String x:Key="MsgDiscordRichPresenceConnectedPipe">[{0}]：已連接的管道：{1}</sys:String>
@@ -355,4 +370,30 @@
     <sys:String x:Key="MsgPlayAClipFirst">請先播放短片。</sys:String>
     <sys:String x:Key="MsgLibMpvIsNotLoaded">未載入 libmpv。</sys:String>
     <sys:String x:Key="MsgMediaIsNotLoaded">未載入多媒體。</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsNotExists">模型檔案 {0} 不存在，正在開始下載該模型檔案……</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsDownloaded">已下載模型檔案 {0}。</sys:String>
+    <sys:String x:Key="MsgWhisperModelIsFound">已找到模型檔案 {0}。</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeCanceled">已取消轉譯作業。</sys:String>
+    <sys:String x:Key="MsgSelectAValidVideoOrAudioFile">發生錯誤：請選擇有效的視訊或音訊檔案。</sys:String>
+    <sys:String x:Key="MsgJobHasCanceled">已取消作業。</sys:String>
+    <sys:String x:Key="MsgWhisperModelFileNotFound">發生錯誤：使用的模型檔案不存在或下載失敗。</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageCanceled">已取消偵測語言作業。</sys:String>
+    <sys:String x:Key="MsgWhisperRemoveTempFileByYourSelf">請自行至「{0}」刪除暫存檔案。</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageStarting">正在開始偵測語言作業……</sys:String>
+    <sys:String x:Key="MsgWhisperUsedModel">使用的模型：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperUsedQuantizationType">使用的量化：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageFailed">識別失敗。</sys:String>
+    <sys:String x:Key="MsgWhisperDetectLanguageResult">偵測語言結果：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTotalElapsed">總共耗時：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTempFileDeleted">已刪除暫時檔案：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeStarting">正在開始轉譯作業……</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeUsedLanguage">使用的語言：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeUsedSamplingStrategyType">使用的抽樣策略：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeEnableOpenCCS2TWP">啟用 OpenCC S2TWP：{0}</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeContent">轉譯的內容：</sys:String>
+    <sys:String x:Key="MsgWhisperTranscribeFinished">轉譯完成。</sys:String>
+    <sys:String x:Key="MsgWhisperStartToCreateSubtitleFile">開始建立 {0} 字幕檔……</sys:String>
+    <sys:String x:Key="MsgWhisperSubtitleFileCreated">已建立 {0} 字幕檔：{1}</sys:String>
+    <sys:String x:Key="MsgSelectB23Playlist">請選擇 Bilibili 的播放清單。</sys:String>
+    <sys:String x:Key="MsgUpdateSecChUa">已更新 Sec-CH-UA。</sys:String>
 </ResourceDictionary>

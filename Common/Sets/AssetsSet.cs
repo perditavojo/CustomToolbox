@@ -5,7 +5,7 @@ namespace CustomToolbox.Common.Sets;
 /// <summary>
 /// 資產組
 /// </summary>
-internal class AssetsSet
+public class AssetsSet
 {
     /// <summary>
     /// 資產：正在播放

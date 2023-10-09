@@ -75,7 +75,7 @@ public class ClipPlayer
         // 當 newIndex 等於 -1 時，即表示目前播放的短片已從短篇清單中刪除。
         if (newIndex == -1)
         {
-            // TODO: 2022-12-03 待考慮是否要調整程式的行為。
+            // TODO: 2022/12/3 待考慮是否要調整程式的行為。
 
             // 當 Index 的值還在 dataSource 的範圍內時，則繼續使用 Index 的值。
             // 注意！這行為有可能會造成播放項目會有跳躍的情況。

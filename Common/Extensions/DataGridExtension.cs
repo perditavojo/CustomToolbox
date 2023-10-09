@@ -2,6 +2,7 @@
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Models.ImportPlaylist;
 using CustomToolbox.Common.Sets;
+using Serilog.Events;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +14,7 @@ namespace CustomToolbox.Common.Extensions;
 /// <summary>
 /// DataGrid 的擴充方法
 /// </summary>
-internal static class DataGridExtension
+public static class DataGridExtension
 {
     /// <summary>
     /// WMain
@@ -71,18 +72,22 @@ internal static class DataGridExtension
                 }
                 catch (Exception ex)
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
 
             }));
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -130,17 +135,21 @@ internal static class DataGridExtension
                 }
                 catch (Exception ex)
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }));
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -193,17 +202,21 @@ internal static class DataGridExtension
                 }
                 catch (Exception ex)
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }));
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -256,17 +269,21 @@ internal static class DataGridExtension
                 }
                 catch (Exception ex)
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }));
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -319,17 +336,21 @@ internal static class DataGridExtension
                 }
                 catch (Exception ex)
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }));
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -556,17 +577,21 @@ internal static class DataGridExtension
                 }
                 catch (Exception ex)
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }));
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -613,17 +638,21 @@ internal static class DataGridExtension
                 }
                 catch (Exception ex)
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }));
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -650,17 +679,21 @@ internal static class DataGridExtension
                 }
                 catch (Exception ex)
                 {
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgErrorOccured,
-                        ex.ToString()));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgErrorOccured,
+                            ex.GetExceptionMessage()),
+                        logEventLevel: LogEventLevel.Error);
                 }
             }));
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

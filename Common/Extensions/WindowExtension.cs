@@ -6,7 +6,7 @@ namespace CustomToolbox.Common.Extensions;
 /// <summary>
 /// Window 的擴充方法
 /// </summary>
-internal static class WindowExtension
+public static class WindowExtension
 {
     /// <summary>
     /// Window 是否正在顯示

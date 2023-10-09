@@ -6,9 +6,9 @@ using CustomToolbox.Common.Sets;
 using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Utils;
 using H.NotifyIcon.Core;
-using ModernWpf.Controls;
 using Mpv.NET.API;
 using Mpv.NET.Player;
+using Serilog.Events;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Globalization;
@@ -75,9 +75,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -100,7 +102,7 @@ public partial class WMain
                 {
                     string message = MsgSet.MsgInvalidVideoIDOrUrl;
 
-                    WriteLog(message);
+                    WriteLog(message: message);
 
                     TaskbarIconUtil.ShowNotify(
                         message,
@@ -122,7 +124,9 @@ public partial class WMain
                 else if (path.Contains("youtube") ||
                     path.Contains("youtu.be"))
                 {
-                    // YouTube 網址格式來源：https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
+                    // YouTube 網址格式來源。
+                    // Source: https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
+                    // Author: rodrigoborgesdeoliveira
 
                     MPPlayer.YouTubeDlVideoQuality = CustomFunction
                         .GetYTQuality(Properties.Settings.Default.MpvNetLibYTQualityIndex);
@@ -192,18 +196,22 @@ public partial class WMain
                     }
                     catch (Exception ex)
                     {
-                        WriteLog(MsgSet.GetFmtStr(
-                            MsgSet.MsgErrorOccured,
-                            ex.ToString()));
+                        WriteLog(
+                            message: MsgSet.GetFmtStr(
+                                MsgSet.MsgErrorOccured,
+                                ex.GetExceptionMessage()),
+                            logEventLevel: LogEventLevel.Error);
                     }
                 });
             }
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -226,8 +234,7 @@ public partial class WMain
 
                         UpdateClipPlayer(ClipPlayerStatus.Paused, CPPlayer.ClipData);
 
-                        BtnPause.Label = MsgSet.Resume;
-                        BtnPause.Icon = new SymbolIcon(Symbol.Play);
+                        BtnPause.Content = MsgSet.Resume;
 
                         TaskbarIconUtil.UpdateMIPauseHeader(true);
 
@@ -239,8 +246,7 @@ public partial class WMain
 
                         UpdateClipPlayer(ClipPlayerStatus.Playing, CPPlayer.ClipData);
 
-                        BtnPause.Label = MsgSet.Pause;
-                        BtnPause.Icon = new SymbolIcon(Symbol.Pause);
+                        BtnPause.Content = MsgSet.Pause;
 
                         TaskbarIconUtil.UpdateMIPauseHeader(false);
 
@@ -258,9 +264,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -277,9 +285,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -295,11 +305,10 @@ public partial class WMain
             {
                 MPPlayer.Volume = isMuted ? 0 : Properties.Settings.Default.MpvNetLibVolume;
 
-                BtnMute.Label = isMuted ? MsgSet.Unmute : MsgSet.Mute;
-                BtnMute.Icon = isMuted ? new SymbolIcon(Symbol.Volume) : new SymbolIcon(Symbol.Mute);
+                BtnMute.Content = isMuted ? MsgSet.Unmute : MsgSet.Mute;
 
                 // 更新 TaskbarIcon 的 MIMute 的 Header。
-                TaskbarIconUtil.UpdateMIMuteHeader(BtnMute.Label.ToString(), isMuted);
+                TaskbarIconUtil.UpdateMIMuteHeader(BtnMute.Content.ToString());
 
                 Control[] ctrlSet =
                 {
@@ -315,14 +324,16 @@ public partial class WMain
                     message,
                     NotificationIcon.Info);
 
-                WriteLog(message);
+                WriteLog(message: message);
             }
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -334,13 +345,23 @@ public partial class WMain
     {
         try
         {
-            Dispatcher.BeginInvoke(() => CBNoVideo.IsChecked = enable);
+            Dispatcher.BeginInvoke(() =>
+            {
+                // 2023/10/3 當設定是非啟用時，才可以被短片清單中的短片設定值影響。
+                // CBNoVideo 是總控制開關。
+                if (!Properties.Settings.Default.MpvNetLibNoVideo)
+                {
+                    CBNoVideo.IsChecked = enable;
+                }
+            });
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -523,9 +544,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -557,9 +580,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -598,9 +623,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -619,9 +646,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 

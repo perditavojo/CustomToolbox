@@ -1,8 +1,9 @@
 ﻿using CustomToolbox.Common;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
-using ModernWpf;
+using Serilog.Events;
 using System.Drawing.Text;
 using System.IO;
 using System.Windows.Controls;
@@ -142,9 +143,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -297,16 +300,18 @@ public partial class WMain
 
                 optionSet.WriteConfigFile(VariableSet.YtDlpConfPath);
 
-                WriteLog(MsgSet.GetFmtStr(
+                WriteLog(message: MsgSet.GetFmtStr(
                     MsgSet.MsgUpdated,
                     VariableSet.YtDlpConfName));
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -324,40 +329,16 @@ public partial class WMain
                 CBLanguages.ItemsSource = listLang;
                 CBLanguages.DisplayMemberPath = nameof(LangData.LangName);
                 CBLanguages.SelectedValuePath = nameof(LangData.LangCode);
-
                 CBLanguages.SelectedValue = Properties.Settings.Default.AppLangCode;
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
-        }
-    }
-
-    /// <summary>
-    /// 初始化 CBThemes
-    /// </summary>
-    private void InitCBThemes()
-    {
-        try
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                ApplicationTheme appTheme = AppThemeUtil.GetAppTheme();
-
-                ComboBoxItem? targetItem = CBThemes.Items.Cast<ComboBoxItem>()
-                    .FirstOrDefault(n => n.Tag.ToString() == appTheme.ToString());
-
-                CBThemes.SelectedItem = targetItem;
-            }));
-        }
-        catch (Exception ex)
-        {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -382,9 +363,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -435,9 +418,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -466,9 +451,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -497,9 +484,11 @@ public partial class WMain
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

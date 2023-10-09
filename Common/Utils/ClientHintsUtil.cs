@@ -6,7 +6,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// Client Hints 工具
 /// </summary>
-internal class ClientHintsUtil
+public class ClientHintsUtil
 {
     /// <summary>
     /// Client Hints

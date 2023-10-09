@@ -5,7 +5,7 @@ namespace CustomToolbox.Common.Sets;
 /// <summary>
 /// 訊息組
 /// </summary>
-internal class MsgSet
+public class MsgSet
 {
     #region 應用程式
 
@@ -161,27 +161,6 @@ internal class MsgSet
         string.Empty;
 
     /// <summary>
-    /// 字詞：儲存並結束
-    /// </summary>
-    public static readonly string SaveAndExit = Application.Current
-        .FindResource("SaveAndExit").ToString() ??
-        string.Empty;
-
-    /// <summary>
-    /// 字詞：直接結束
-    /// </summary>
-    public static readonly string ExitDirectly = Application.Current
-        .FindResource("ExitDirectly").ToString() ??
-        string.Empty;
-
-    /// <summary>
-    /// 字詞：取消
-    /// </summary>
-    public static readonly string Cancel = Application.Current
-        .FindResource("Cancel").ToString() ??
-        string.Empty;
-
-    /// <summary>
     /// 字詞：頻道：
     /// </summary>
     public static readonly string VideoDataChannel = Application.Current
@@ -286,6 +265,20 @@ internal class MsgSet
         .FindResource("YtdlSharpData").ToString() ??
         string.Empty;
 
+    /// <summary>
+    /// 字詞：是
+    /// </summary>
+    public static readonly string Yes = Application.Current
+        .FindResource("Yes").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字詞：否
+    /// </summary>
+    public static readonly string No = Application.Current
+        .FindResource("No").ToString() ??
+        string.Empty;
+
     #endregion
 
     #region 字串模板
@@ -351,6 +344,13 @@ internal class MsgSet
     /// </summary>
     public static readonly string TemplateUpdateEndTimeOfClipTo = Application.Current
         .FindResource("TemplateUpdateEndTimeOfClipTo").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 字串模板：{0}（{1}）
+    /// </summary>
+    public static readonly string TemplateWhipserDetectLaunguageResult = Application.Current
+        .FindResource("TemplateWhipserDetectLaunguageResult").ToString() ??
         string.Empty;
 
     #endregion
@@ -425,10 +425,24 @@ internal class MsgSet
         string.Empty;
 
     /// <summary>
-    /// 對話視窗：MPEG-4 Part 14|*.mp4|Matroska|*.mkv
+    /// 對話視窗：MPEG-4 Part 14|*.mp4|Matroska 視訊檔|*.mkv
     /// </summary>
     public static readonly string SelectVideoFileFilter = Application.Current
         .FindResource("SelectVideoFileFilter").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 對話視窗：選擇檔案
+    /// </summary>
+    public static readonly string SelectWhisperInputFile = Application.Current
+        .FindResource("SelectWhisperInputFile").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 對話視窗：MPEG-4 Part 14|*.mp4|Matroska 視訊檔|*.mkv|Matroska 音訊檔|*.mka|MPEG-4 Part 3|*.m4a|AAC|*.aac|MPEG-1 Layer 3|*.mp3|WAVE|*.wav|Ogg Vorbis|*.ogg|FLAC|*.flac|Opus|*.opus
+    /// </summary>
+    public static readonly string SelectWhisperInputFileFilter = Application.Current
+        .FindResource("SelectWhisperInputFileFilter").ToString() ??
         string.Empty;
 
     /// <summary>
@@ -443,20 +457,6 @@ internal class MsgSet
     /// </summary>
     public static readonly string SelectSubtitleFileFilter = Application.Current
         .FindResource("SelectSubtitleFileFilter").ToString() ??
-        string.Empty;
-
-    /// <summary>
-    /// 對話視窗：確認按鈕
-    /// </summary>
-    public static readonly string ContentDialogBtnOk = Application.Current
-        .FindResource("ContentDialogBtnOk").ToString() ??
-        string.Empty;
-
-    /// <summary>
-    /// 對話視窗：取消按鈕
-    /// </summary>
-    public static readonly string ContentDialogBtnCancel = Application.Current
-        .FindResource("ContentDialogBtnCancel").ToString() ??
         string.Empty;
 
     /// <summary>
@@ -967,13 +967,6 @@ internal class MsgSet
         string.Empty;
 
     /// <summary>
-    /// 訊息：變更主題至{0}。
-    /// </summary>
-    public static readonly string MsgSwitchTheme = Application.Current
-        .FindResource("MsgSwitchTheme").ToString() ??
-        string.Empty;
-
-    /// <summary>
     /// 訊息：已更新使用者代理字串。
     /// </summary>
     public static readonly string MsgUpdateUserAgent = Application.Current
@@ -1314,6 +1307,188 @@ internal class MsgSet
     /// </summary>
     public static readonly string MsgMediaIsNotLoaded = Application.Current
         .FindResource("MsgMediaIsNotLoaded").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：模型檔案 {0} 不存在，正在開始下載該模型檔案……
+    /// </summary>
+    public static readonly string MsgWhisperModelIsNotExists = Application.Current
+        .FindResource("MsgWhisperModelIsNotExists").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已下載模型檔案 {0}。
+    /// </summary>
+    public static readonly string MsgWhisperModelIsDownloaded = Application.Current
+        .FindResource("MsgWhisperModelIsDownloaded").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已找到模型檔案 {0}。
+    /// </summary>
+    public static readonly string MsgWhisperModelIsFound = Application.Current
+        .FindResource("MsgWhisperModelIsFound").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已取消轉譯作業。
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeCanceled = Application.Current
+        .FindResource("MsgWhisperTranscribeCanceled").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：發生錯誤：請選擇有效的視訊或音訊檔案。
+    /// </summary>
+    public static readonly string MsgSelectAValidVideoOrAudioFile = Application.Current
+        .FindResource("MsgSelectAValidVideoOrAudioFile").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已取消作業。
+    /// </summary>
+    public static readonly string MsgJobHasCanceled = Application.Current
+        .FindResource("MsgJobHasCanceled").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：發生錯誤：使用的模型檔案不存在或下載失敗。
+    /// </summary>
+    public static readonly string MsgWhisperModelFileNotFound = Application.Current
+        .FindResource("MsgWhisperModelFileNotFound").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已取消偵測語言作業。
+    /// </summary>
+    public static readonly string MsgWhisperDetectLanguageCanceled = Application.Current
+        .FindResource("MsgWhisperDetectLanguageCanceled").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：請自行至「{0}」刪除暫存檔案。
+    /// </summary>
+    public static readonly string MsgWhisperRemoveTempFileByYourSelf = Application.Current
+        .FindResource("MsgWhisperRemoveTempFileByYourSelf").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：正在開始偵測語言作業……
+    /// </summary>
+    public static readonly string MsgWhisperDetectLanguageStarting = Application.Current
+        .FindResource("MsgWhisperDetectLanguageStarting").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：使用的模型：{0}
+    /// </summary>
+    public static readonly string MsgWhisperUsedModel = Application.Current
+        .FindResource("MsgWhisperUsedModel").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：使用的量化：{0}
+    /// </summary>
+    public static readonly string MsgWhisperUsedQuantizationType = Application.Current
+        .FindResource("MsgWhisperUsedQuantizationType").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：識別失敗。
+    /// </summary>
+    public static readonly string MsgWhisperDetectLanguageFailed = Application.Current
+        .FindResource("MsgWhisperDetectLanguageFailed").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：偵測語言結果：{0}
+    /// </summary>
+    public static readonly string MsgWhisperDetectLanguageResult = Application.Current
+        .FindResource("MsgWhisperDetectLanguageResult").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：總共耗時：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTotalElapsed = Application.Current
+        .FindResource("MsgWhisperTotalElapsed").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已刪除暫時檔案：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTempFileDeleted = Application.Current
+        .FindResource("MsgWhisperTempFileDeleted").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：正在開始轉譯作業……
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeStarting = Application.Current
+        .FindResource("MsgWhisperTranscribeStarting").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：使用的語言：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeUsedLanguage = Application.Current
+        .FindResource("MsgWhisperTranscribeUsedLanguage").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：使用的抽樣策略：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeUsedSamplingStrategyType = Application.Current
+        .FindResource("MsgWhisperTranscribeUsedSamplingStrategyType").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：啟用 OpenCC S2TWP：{0}
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeEnableOpenCCS2TWP = Application.Current
+        .FindResource("MsgWhisperTranscribeEnableOpenCCS2TWP").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：轉譯的內容：
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeContent = Application.Current
+        .FindResource("MsgWhisperTranscribeContent").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：轉譯完成。
+    /// </summary>
+    public static readonly string MsgWhisperTranscribeFinished = Application.Current
+        .FindResource("MsgWhisperTranscribeFinished").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：開始建立 {0} 字幕檔……
+    /// </summary>
+    public static readonly string MsgWhisperStartToCreateSubtitleFile = Application.Current
+        .FindResource("MsgWhisperStartToCreateSubtitleFile").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已建立 {0} 字幕檔：{1}
+    /// </summary>
+    public static readonly string MsgWhisperSubtitleFileCreated = Application.Current
+        .FindResource("MsgWhisperSubtitleFileCreated").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：請選擇 Bilibili 的播放清單。
+    /// </summary>
+    public static readonly string MsgSelectB23Playlist = Application.Current
+        .FindResource("MsgSelectB23Playlist").ToString() ??
+        string.Empty;
+
+    /// <summary>
+    /// 訊息：已更新 Sec-CH-UA。
+    /// </summary>
+    public static readonly string MsgUpdateSecChUa = Application.Current
+        .FindResource("MsgUpdateSecChUa").ToString() ??
         string.Empty;
 
     #endregion

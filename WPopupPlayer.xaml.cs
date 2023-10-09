@@ -1,5 +1,7 @@
-﻿using CustomToolbox.Common.Sets;
+﻿using CustomToolbox.Common.Extensions;
+using CustomToolbox.Common.Sets;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
+using Serilog.Events;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Forms.Integration;
@@ -70,9 +72,11 @@ public partial class WPopupPlayer : Window
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -91,9 +95,11 @@ public partial class WPopupPlayer : Window
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -108,9 +114,11 @@ public partial class WPopupPlayer : Window
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

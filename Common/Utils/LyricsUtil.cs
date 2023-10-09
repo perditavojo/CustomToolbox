@@ -1,7 +1,9 @@
-﻿using CustomToolbox.Common.Models;
+﻿using CustomToolbox.Common.Extensions;
+using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using Downloader;
 using OpenCCNET;
+using Serilog.Events;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -11,12 +13,23 @@ namespace CustomToolbox.Common.Utils;
 
 /// <summary>
 /// LyRiCs 工具
-/// <para>來源：https://github.com/YoutubeClipPlaylist/YoutubeClipPlaylist/blob/master/src/Helper/LyricHelper.ts </para>
-/// <para>來源：https://www.cnblogs.com/Wayou/p/sync_lyric_with_html5_audio.html </para>
-/// <para>來源：https://github.com/AioiLight/LRCDotNet/blob/master/LRCDotNet/Parser.cs </para>
-/// <para>來源：https://github.com/OpportunityLiu/LrcParser </para>
+/// <para>Source: https://github.com/YoutubeClipPlaylist/YoutubeClipPlaylist/blob/master/src/Helper/LyricHelper.ts</para>
+/// <para>Author: 陳鈞</para>
+/// <para>License: MIT License</para>
+/// <para>MIT License: https://github.com/YoutubeClipPlaylist/YoutubeClipPlaylist/blob/master/LICENSE</para>
+/// <para>Source: https://www.cnblogs.com/Wayou/p/sync_lyric_with_html5_audio.html</para>
+/// <para>Author: 刘哇勇</para>
+/// <para>License: CC BY-NC-SA</para>
+/// <para>Source: https://github.com/AioiLight/LRCDotNet/blob/master/LRCDotNet/Parser.cs</para>
+/// <para>Author: AioiLight</para>
+/// <para>License: MIT License</para>
+/// <para>MIT License: https://github.com/AioiLight/LRCDotNet/blob/master/LICENSE</para>
+/// <para>Source: https://github.com/OpportunityLiu/LrcParser</para>
+/// <para>Author: OpportunityLiu</para>
+/// <para>License: Apache License 2.0</para>
+/// <para>Apache License 2.0: https://github.com/OpportunityLiu/LrcParser/blob/master/LICENSE</para>
 /// </summary>
-internal partial class LyricsUtil
+public partial class LyricsUtil
 {
     /// <summary>
     /// WMain
@@ -156,9 +169,11 @@ internal partial class LyricsUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         return path;

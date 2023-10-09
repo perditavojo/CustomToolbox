@@ -8,7 +8,7 @@ namespace CustomToolbox.Common.Models;
 /// <summary>
 /// 類別：歌詞資料
 /// </summary>
-internal class LyricData
+public class LyricData
 {
     [JsonPropertyName("time")]
     [Description("時間")]

@@ -1,22 +1,27 @@
 ﻿using Application = System.Windows.Application;
 using Contorl = System.Windows.Controls.Control;
+using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Sets;
 using H.NotifyIcon;
 using Mpv.NET.Player;
+using RichTextBox = System.Windows.Controls.RichTextBox;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.RichTextBox.Themes;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Enumeration;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using TextBox = System.Windows.Controls.TextBox;
+using System.Windows.Threading;
 
 namespace CustomToolbox.Common;
 
 /// <summary>
 /// 自定義函式
 /// </summary>
-internal class CustomFunction
+public class CustomFunction
 {
     /// <summary>
     /// WMain
@@ -24,9 +29,9 @@ internal class CustomFunction
     private static WMain? _WMain = null;
 
     /// <summary>
-    /// TBLog
+    /// RTBLog
     /// </summary>
-    private static TextBox? _TBLog = null;
+    private static RichTextBox? _RTBLog = null;
 
     /// <summary>
     /// 初始化
@@ -35,12 +40,15 @@ internal class CustomFunction
     public static void Init(WMain wMain)
     {
         _WMain = wMain;
-        _TBLog = _WMain.TBLog;
+        _RTBLog = _WMain.RTBLog;
+
+        SetSeriLog();
     }
 
     /// <summary>
     /// 取得 YouTube 影片網址的影片 ID
-    /// <para>來源：https://gist.github.com/takien/4077195 </para>
+    /// <para>Source: https://gist.github.com/takien/4077195</para>
+    /// <para>Author: takien</para>
     /// </summary>
     /// <param name="url">字串，網址</param>
     /// <returns>字串，影片 ID</returns>
@@ -104,7 +112,10 @@ internal class CustomFunction
 
     /// <summary>
     /// EnumerateFiles
-    /// <para>來源：https://stackoverflow.com/a/72291652 </para>
+    /// <para>Source: https://stackoverflow.com/a/72291652</para>
+    /// <para>Author: Yevhen Cherkes</para>
+    /// <para>License: CC BY-SA 4.0</para>
+    /// <para>CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/</para>
     /// </summary>
     /// <param name="path">字串，路徑</param>
     /// <param name="searchPatterns">字串，搜尋模式</param>
@@ -166,10 +177,12 @@ internal class CustomFunction
     /// 寫紀錄
     /// </summary>
     /// <param name="message">字串，訊息</param>
-    /// <param name="title">字串，應用程式的名稱，預設值為空白</param>
-    public static void WriteLog(string message, string title = "")
+    /// <param name="logEventLevel">LogEventLevel，預設值為 LogEventLevel.Information</param>
+    public static void WriteLog(
+        string message,
+        LogEventLevel logEventLevel = LogEventLevel.Information)
     {
-        if (_TBLog == null)
+        if (_RTBLog == null)
         {
             return;
         }
@@ -179,21 +192,57 @@ internal class CustomFunction
             return;
         }
 
-        Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-        {
-            try
+        Application.Current.Dispatcher.BeginInvoke(
+            method: new Action(() =>
             {
-                string newMessage = $"[{DateTime.Now}] {message}{Environment.NewLine}";
+                try
+                {
+                    switch (logEventLevel)
+                    {
+                        case LogEventLevel.Verbose:
+                            Log.Verbose(message);
 
-                _TBLog.AppendText(newMessage);
-                _TBLog.CaretIndex = _TBLog.Text.Length;
-                _TBLog.ScrollToEnd();
-            }
-            catch (Exception ex)
-            {
-                _WMain?.ShowMsgBox(ex.ToString(), title);
-            }
-        }));
+                            break;
+
+                        case LogEventLevel.Debug:
+                            Log.Debug(message);
+
+                            break;
+
+                        case LogEventLevel.Information:
+                            Log.Information(message);
+
+                            break;
+
+                        case LogEventLevel.Warning:
+                            Log.Warning(message);
+
+                            break;
+
+                        case LogEventLevel.Error:
+                            Log.Error(message);
+
+                            break;
+
+                        case LogEventLevel.Fatal:
+                            Log.Fatal(message);
+
+                            break;
+
+                        default:
+                            Log.Information(message);
+
+                            break;
+                    }
+
+                    _RTBLog.ScrollToEnd();
+                }
+                catch (Exception ex)
+                {
+                    _WMain?.ShowMsgBox(ex.GetExceptionMessage());
+                }
+            }),
+            priority: DispatcherPriority.Background);
     }
 
     /// <summary>
@@ -301,9 +350,11 @@ internal class CustomFunction
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -347,9 +398,11 @@ internal class CustomFunction
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         return Visibility.Visible;
@@ -357,6 +410,11 @@ internal class CustomFunction
 
     /// <summary>
     /// 開啟資料夾
+    /// <para>Source: https://stackoverflow.com/a/1132559</para>
+    /// <para>Author: OregonGhost</para>
+    /// <para>Author: idbrii</para>
+    /// <para>License: CC BY-SA 4.0</para>
+    /// <para>CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/</para>
     /// </summary>
     /// <param name="path">字串，路徑</param>
     public static void OpenFolder(string path)
@@ -365,14 +423,13 @@ internal class CustomFunction
         {
             if (!Directory.Exists(path))
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                _WMain?.WriteLog(message: MsgSet.GetFmtStr(
                     MsgSet.MsgErrorOccured,
                     MsgSet.MsgPathIsNotExists));
 
                 return;
             }
 
-            // 來源：https://stackoverflow.com/a/1132559
             Process.Start(new ProcessStartInfo()
             {
                 FileName = path,
@@ -382,9 +439,11 @@ internal class CustomFunction
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -395,6 +454,26 @@ internal class CustomFunction
     public static string GetUserAgent()
     {
         // 2023-01-04 Bilibili 的 API 會依據使用者代理字串來封鎖連線。
-        return $"{Properties.Settings.Default.UserAgent} {DateTime.Now:yyyyMMddHHmm}";
+        return $"{Properties.Settings.Default.UserAgent}";
+    }
+
+    /// <summary>
+    /// 設定 SeriLog
+    /// </summary>
+    private static void SetSeriLog()
+    {
+        //if (_RTBLog != null)
+        //{
+        //    // 調高以避免自動換行。
+        //    _RTBLog.Document.PageWidth = 1920;
+        //}
+
+        // 設定 Serilog。
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.RichTextBox(
+                richTextBoxControl: _RTBLog,
+                outputTemplate: "[{Timestamp:yyyy/MM/dd HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                theme: RichTextBoxConsoleTheme.Colored)
+            .CreateLogger();
     }
 }

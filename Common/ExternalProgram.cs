@@ -3,21 +3,24 @@ using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using Label = System.Windows.Controls.Label;
-using ProgressBar = ModernWpf.Controls.ProgressBar;
+using ProgressBar = System.Windows.Controls.ProgressBar;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using Whisper.net.Ggml;
 using Xabe.FFmpeg.Events;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Options;
-using System.Globalization;
+using CustomToolbox.Common.Extensions;
+using Serilog.Events;
 
 namespace CustomToolbox.Common;
 
 /// <summary>
 /// 外部程式
 /// </summary>
-internal class ExternalProgram
+public class ExternalProgram
 {
     /// <summary>
     /// WMain
@@ -79,9 +82,10 @@ internal class ExternalProgram
                 {
                     Directory.CreateDirectory(folder);
 
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgCreated,
-                        folder));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgCreated,
+                            folder));
                 }
             }
 
@@ -96,9 +100,10 @@ internal class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.YtDlpExecName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.YtDlpExecName));
 
                 // 當今天的日期晚於設定檔中的日期時。
                 if (DateTime.Now.Date > Properties.Settings.Default.YtDlpCheckTime.Date)
@@ -109,9 +114,10 @@ internal class ExternalProgram
                 {
                     SetYtDlpVersion();
 
-                    _WMain?.WriteLog(MsgSet.GetFmtStr(
-                        MsgSet.MsgYtDlpNotice,
-                        $"{Properties.Settings.Default.YtDlpCheckTime:yyyy/MM/dd HH:mm:ss}"));
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgYtDlpNotice,
+                            $"{Properties.Settings.Default.YtDlpCheckTime:yyyy/MM/dd HH:mm:ss}"));
                 }
             }
 
@@ -126,24 +132,26 @@ internal class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.YtDlpConfName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.YtDlpConfName));
             }
 
             #endregion
 
             #region 檢查 FFmpeg
 
-            if ((!File.Exists(VariableSet.FFmpegPath) ||
-                !File.Exists(VariableSet.FFprobePath)) ||
+            if (!File.Exists(VariableSet.FFmpegPath) ||
+                !File.Exists(VariableSet.FFprobePath) ||
                 isForceDownload)
             {
                 await DownloaderUtil.DownloadFFmpeg();
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
                         MsgSet.MsgFound,
                         $"{VariableSet.FFmpegExecName}, " +
                         $"{VariableSet.FFprobeExecName}"));
@@ -160,9 +168,10 @@ internal class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.SubCharencParametersTxtFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.SubCharencParametersTxtFileName));
             }
 
             #endregion
@@ -176,9 +185,10 @@ internal class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.Aria2ExecName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.Aria2ExecName));
             }
 
             #endregion
@@ -192,9 +202,10 @@ internal class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.MpvConfFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.MpvConfFileName));
             }
 
             #endregion
@@ -208,9 +219,10 @@ internal class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.LibMpvDllFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.LibMpvDllFileName));
             }
 
             #endregion
@@ -224,9 +236,10 @@ internal class ExternalProgram
             }
             else
             {
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgFound,
-                    VariableSet.YtDlHookLuaFileName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgFound,
+                        VariableSet.YtDlHookLuaFileName));
             }
 
             #endregion
@@ -235,9 +248,11 @@ internal class ExternalProgram
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -306,18 +321,20 @@ internal class ExternalProgram
         {
             File.Delete(VariableSet.MpvConfPath);
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgDeleted,
-                VariableSet.MpvConfFileName));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgDeleted,
+                    VariableSet.MpvConfFileName));
         }
 
         using StreamWriter streamWriter = new(VariableSet.MpvConfPath, false);
 
         streamWriter.Write(VariableSet.MpvConfTemplate);
 
-        _WMain?.WriteLog(MsgSet.GetFmtStr(
-            MsgSet.MsgCreated,
-            VariableSet.MpvConfFileName));
+        _WMain?.WriteLog(
+            message: MsgSet.GetFmtStr(
+                MsgSet.MsgCreated,
+                VariableSet.MpvConfFileName));
     }
 
     /// <summary>
@@ -334,9 +351,10 @@ internal class ExternalProgram
             {
                 File.Delete(VariableSet.YtDlpConfPath);
 
-                _WMain?.WriteLog(MsgSet.GetFmtStr(
-                    MsgSet.MsgDeleted,
-                    VariableSet.YtDlpConfName));
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgDeleted,
+                        VariableSet.YtDlpConfName));
             }
 
             OptionSet optionSet = new()
@@ -353,7 +371,7 @@ internal class ExternalProgram
 
             optionSet.WriteConfigFile(VariableSet.YtDlpConfPath);
 
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
+            _WMain?.WriteLog(message: MsgSet.GetFmtStr(
                 MsgSet.MsgCreated,
                 VariableSet.YtDlpConfName));
         }
@@ -663,8 +681,9 @@ internal class ExternalProgram
         // 轉換成取樣率為 16 kHz 的 WAV 檔案。
         IConversion conversion = FFmpeg.Conversions.New()
             .AddStream(audioStreams)
-            // 參考來源：https://github.com/tigros/Whisperer/blob/dcdbcd8c9b01c06016272e4a6784774768b7b316/whisperer/Form1.cs#L220
-            // TODO: 2023-03-20 需要再觀察下列參數適不適合。
+            // Source: https://github.com/tigros/Whisperer/blob/dcdbcd8c9b01c06016272e4a6784774768b7b316/whisperer/Form1.cs#L220
+            // Author: tigros
+            // TODO: 2023/3/20 需要再觀察下列參數適不適合。
             .AddParameter("-vn -ar 16000 -ab 32k -af volume=1.75")
             .SetOutputFormat(Format.wav)
             .SetOutput(outputPath)
@@ -745,21 +764,89 @@ internal class ExternalProgram
             }
         }));
 
-        _WMain?.WriteLog(MsgSet.GetFmtStr(
-            MsgSet.TemplateXabeFFmpegConversionResult,
-            conversionResult.StartTime.ToString(),
-            conversionResult.EndTime.ToString(),
-            conversionResult.Duration.ToString(),
-            conversionResult.Arguments));
+        _WMain?.WriteLog(
+            message: MsgSet.GetFmtStr(
+                MsgSet.TemplateXabeFFmpegConversionResult,
+                conversionResult.StartTime.ToString(),
+                conversionResult.EndTime.ToString(),
+                conversionResult.Duration.ToString(),
+                conversionResult.Arguments));
+    }
+
+    /// <summary>
+    /// 檢查模型檔案
+    /// </summary>
+    /// <param name="ggmlType">GgmlType，預設值為 GgmlType.Small</param>
+    /// <param name="ggmlType">QuantizationType，預設值為 GgmlType.NoQuantization</param>
+    /// <param name="cancellationToken">CancellationToken</param>
+    /// <returns>Task&lt;string&gt;，模型檔案的路徑</returns>
+    public static async Task<string> CheckModelFile(
+        GgmlType ggmlType = GgmlType.Small,
+        QuantizationType quantizationType = QuantizationType.NoQuantization,
+        CancellationToken cancellationToken = default)
+    {
+        string modelFilePath = Path.Combine(
+            VariableSet.ModelsFolderPath,
+            WhisperUtil.GetModelFileName(ggmlType, quantizationType)),
+            modelFileName = Path.GetFileName(modelFilePath);
+
+        try
+        {
+            // 判斷模型檔案是否存在。
+            if (!File.Exists(modelFilePath))
+            {
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperModelIsNotExists,
+                        modelFileName));
+
+                using Stream stream = await WhisperGgmlDownloader.GetGgmlModelAsync(
+                    ggmlType,
+                    quantizationType,
+                    cancellationToken);
+                using FileStream fileStream = File.OpenWrite(modelFilePath);
+
+                await stream.CopyToAsync(fileStream, cancellationToken).ContinueWith(task =>
+                {
+                    _WMain?.WriteLog(
+                        message: MsgSet.GetFmtStr(
+                            MsgSet.MsgWhisperModelIsDownloaded,
+                            modelFileName));
+                }, cancellationToken);
+            }
+            else
+            {
+                _WMain?.WriteLog(
+                    message: MsgSet.GetFmtStr(
+                        MsgSet.MsgWhisperModelIsFound,
+                        modelFileName));
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgWhisperTranscribeCanceled,
+                    modelFileName));
+        }
+        catch (Exception ex)
+        {
+            modelFilePath = string.Empty;
+
+            _WMain?.ShowMsgBox(ex.GetExceptionMessage());
+        }
+
+        return modelFilePath;
     }
 
     private static void Conversion_OnDataReceived(object sender, DataReceivedEventArgs e)
     {
         if (!string.IsNullOrEmpty(e.Data))
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.TemplateXabeFFmpegOnDataReceived,
-                e.Data));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.TemplateXabeFFmpegOnDataReceived,
+                    e.Data));
         }
     }
 

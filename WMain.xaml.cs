@@ -6,8 +6,9 @@ using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using H.NotifyIcon;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using ModernWpf.Controls.Primitives;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
+using RichTextBox = System.Windows.Controls.RichTextBox;
+using Serilog.Events;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Windows;
@@ -36,9 +37,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -46,17 +49,22 @@ public partial class WMain : Window
     {
         try
         {
-            // 先攔截事件。
-            e.Cancel = true;
+            if (!IsByPassingWindowClosingEventCancel)
+            {
+                // 先攔截事件。
+                e.Cancel = true;
 
-            // 關閉應用程式。
-            ShutdownApp(sender);
+                // 關閉應用程式。
+                ShutdownApp(sender);
+            }
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -75,10 +83,19 @@ public partial class WMain : Window
                 return;
             }
 
-            // 避免在非指定的 TextBox 內輸入內容時觸發快速鍵。
+            // 避免在非指定的 RichTextBox 內輸入內容時觸發快速鍵。
+            if (e.OriginalSource is RichTextBox richTextBox)
+            {
+                if (richTextBox != null && richTextBox != RTBLog)
+                {
+                    return;
+                }
+            }
+
+            // 避免在 TextBox 內輸入內容時觸發快速鍵。
             if (e.OriginalSource is TextBox textBox)
             {
-                if (textBox != null && textBox != TBLog)
+                if (textBox != null)
                 {
                     return;
                 }
@@ -127,16 +144,11 @@ public partial class WMain : Window
                                 WPPPlayer.WindowStyle = WindowStyle.None;
                                 WPPPlayer.WindowState = WindowState.Normal;
                                 WPPPlayer.WindowState = WindowState.Maximized;
-
-                                // 不關閉的話會無法完全的全螢幕化。
-                                WindowHelper.SetUseModernWindowStyle(WPPPlayer, false);
                             }
                             else
                             {
                                 WPPPlayer.WindowStyle = WindowStyle.SingleBorderWindow;
                                 WPPPlayer.WindowState = WindowState.Normal;
-
-                                WindowHelper.SetUseModernWindowStyle(WPPPlayer, true);
                             }
                         }
                     }));
@@ -249,19 +261,21 @@ public partial class WMain : Window
                         {
                             clipData.StartTime = TimeSpan.FromSeconds(newSeconds);
 
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.TemplateUpdateStarTimeOfClipTo,
-                                clipData.Name ?? string.Empty,
-                                clipData.StartTime.ToString()));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.TemplateUpdateStarTimeOfClipTo,
+                                    clipData.Name ?? string.Empty,
+                                    clipData.StartTime.ToString()));
                         }
                         else if (e.Key == Key.I)
                         {
                             clipData.EndTime = TimeSpan.FromSeconds(newSeconds);
 
-                            WriteLog(MsgSet.GetFmtStr(
-                                MsgSet.TemplateUpdateEndTimeOfClipTo,
-                                clipData.Name ?? string.Empty,
-                                clipData.EndTime.ToString()));
+                            WriteLog(
+                                message: MsgSet.GetFmtStr(
+                                    MsgSet.TemplateUpdateEndTimeOfClipTo,
+                                    clipData.Name ?? string.Empty,
+                                    clipData.EndTime.ToString()));
                         }
                     }
 
@@ -272,9 +286,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

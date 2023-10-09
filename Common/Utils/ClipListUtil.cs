@@ -1,7 +1,9 @@
-﻿using CustomToolbox.Common.Models.NetPlaylist;
+﻿using CustomToolbox.Common.Extensions;
+using CustomToolbox.Common.Models.NetPlaylist;
 using CustomToolbox.Common.Models;
 using CustomToolbox.Common.Sets;
 using Downloader;
+using Serilog.Events;
 using System.IO;
 using System.Text.Json;
 
@@ -10,7 +12,7 @@ namespace CustomToolbox.Common.Utils;
 /// <summary>
 /// 短片清單工具
 /// </summary>
-internal class ClipListUtil
+public class ClipListUtil
 {
     /// <summary>
     /// WMain
@@ -116,9 +118,11 @@ internal class ClipListUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         outputList.Insert(0, new ClipListData(MsgSet.SelectPlease, string.Empty));
@@ -153,9 +157,11 @@ internal class ClipListUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         outputList.Insert(0, new ClipListData(MsgSet.SelectPlease, string.Empty));
@@ -189,9 +195,11 @@ internal class ClipListUtil
         }
         catch (Exception ex)
         {
-            _WMain?.WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            _WMain?.WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
 
         return outputList;

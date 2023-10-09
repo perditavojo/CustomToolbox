@@ -13,15 +13,20 @@ using H.NotifyIcon;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Path = System.IO.Path;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using Serilog.Events;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
 using TabControl = System.Windows.Controls.TabControl;
 
 namespace CustomToolbox;
@@ -73,9 +78,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -161,9 +168,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -175,7 +184,7 @@ public partial class WMain : Window
 
             if (dataSource == null || dataSource.Count <= 0)
             {
-                WriteLog(MsgSet.MsgCanNotSaveClipList);
+                WriteLog(message: MsgSet.MsgCanNotSaveClipList);
 
                 return;
             }
@@ -390,11 +399,151 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
+
+    #region 資料夾
+
+    public void MIOpenBinsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.BinsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    public void MIOpenConfigFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            // 來源：https://stackoverflow.com/a/7069366
+            string configFilePath = ConfigurationManager
+                .OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath,
+                fileName = Path.GetFileName(configFilePath),
+                folderPath = Path.GetFullPath(configFilePath).Replace(fileName, string.Empty);
+
+            CustomFunction.OpenFolder(folderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    public void MIOpenDownloadsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.DownloadsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    public void MIOpenCliplistsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.ClipListsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    public void MIOpenLogsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.LogsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    public void MIOpenLyricsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.LyricsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    public void MIOpenTempFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.TempFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    public void MIOpenModelsFolder_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            CustomFunction.OpenFolder(VariableSet.ModelsFolderPath);
+        }
+        catch (Exception ex)
+        {
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
+        }
+    }
+
+    #endregion
 
     public void MIExit_Click(object sender, RoutedEventArgs e)
     {
@@ -411,9 +560,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -437,9 +588,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -466,9 +619,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -493,9 +648,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -530,9 +687,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -542,10 +701,10 @@ public partial class WMain : Window
         {
             // 2022-12-12 暫時先不利用。
 
-            TabControl control = (TabControl)sender;
-            TabItem tabItem = (TabItem)control.SelectedItem;
+            TabControl? control = (TabControl)sender;
+            TabItem? tabItem = (TabItem?)control?.SelectedItem;
 
-            string value = tabItem.Name;
+            string value = tabItem?.Name ?? string.Empty;
 
             switch (value)
             {
@@ -565,9 +724,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -586,9 +747,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -620,9 +783,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -644,9 +809,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -675,9 +842,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -693,7 +862,9 @@ public partial class WMain : Window
                 MIBatchDLClips,
                 BtnGenerateB23ClipList,
                 BtnBurnInSubtitle,
-                BtnSplitVideo
+                BtnSplitVideo,
+                BtnWhisperDetectVideoLanguage,
+                BtnWhisperTranscribeVideo
             };
 
             Control[] ctrlSet2 =
@@ -723,9 +894,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -745,7 +918,9 @@ public partial class WMain : Window
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
-                    BtnSplitVideo
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
                 };
 
                 Control[] ctrlSet2 =
@@ -802,9 +977,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -824,7 +1001,9 @@ public partial class WMain : Window
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
-                    BtnSplitVideo
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
                 };
 
                 Control[] ctrlSet2 =
@@ -911,9 +1090,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -933,7 +1114,9 @@ public partial class WMain : Window
                     MIDeleteSourceFile,
                     BtnGenerateB23ClipList,
                     BtnBurnInSubtitle,
-                    BtnSplitVideo
+                    BtnSplitVideo,
+                    BtnWhisperDetectVideoLanguage,
+                    BtnWhisperTranscribeVideo
                 };
 
                 Control[] ctrlSet2 =
@@ -1021,9 +1204,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1049,9 +1234,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1077,9 +1264,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1105,9 +1294,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1133,9 +1324,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1147,9 +1340,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1161,9 +1356,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1175,9 +1372,11 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1187,16 +1386,18 @@ public partial class WMain : Window
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                TBLog.Clear();
+                RTBLog.Document.Blocks.Clear();
 
                 WriteLog(MsgSet.MsgLogCleared);
             }));
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
@@ -1218,9 +1419,13 @@ public partial class WMain : Window
 
                 if (result == true)
                 {
+                    string textContent = new TextRange(
+                        RTBLog.Document.ContentStart,
+                        RTBLog.Document.ContentEnd).Text;
+
                     File.WriteAllText(
                         saveFileDialog.FileName,
-                        TBLog.Text);
+                        textContent);
 
                     WriteLog(MsgSet.GetFmtStr(
                         MsgSet.MsgExportLogTo,
@@ -1230,37 +1435,34 @@ public partial class WMain : Window
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 
-    private void TSClipPlayerMode_Toggled(object sender, RoutedEventArgs e)
+    private void RTBLog_TextChanged(object sender, TextChangedEventArgs e)
     {
         try
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                CPPlayer.Mode = TSClipPlayerMode.IsOn ?
-                    ClipPlayerMode.TimestampEditor :
-                    ClipPlayerMode.ClipPlayer;
+            // Source: https://learn.microsoft.com/en-us/answers/questions/22612/wpf-auto-width-for-flowdocuments-content
+            // Author: Alex Li-MSFT
+            double pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip,
+                formattedTextWidth = RTBLog.Document
+                    .GetFormattedText(pixelsPerDip)
+                    .WidthIncludingTrailingWhitespace;
 
-                if (TSClipPlayerMode.IsOn)
-                {
-                    WriteLog(MsgSet.MsgSwitchToTimestampEditorMode);
-                }
-                else
-                {
-                    WriteLog(MsgSet.MsgSwitchToClipPlayerMode);
-                }
-            }));
+            RTBLog.Document.PageWidth = formattedTextWidth + 20;
         }
         catch (Exception ex)
         {
-            WriteLog(MsgSet.GetFmtStr(
-                MsgSet.MsgErrorOccured,
-                ex.ToString()));
+            WriteLog(
+                message: MsgSet.GetFmtStr(
+                    MsgSet.MsgErrorOccured,
+                    ex.GetExceptionMessage()),
+                logEventLevel: LogEventLevel.Error);
         }
     }
 }

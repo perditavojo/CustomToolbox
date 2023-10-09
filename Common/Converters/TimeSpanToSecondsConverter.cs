@@ -12,7 +12,7 @@ class TimeSpanToSecondsConverter : IValueConverter
     {
         if (value is TimeSpan timeSpan)
         {
-            return timeSpan.TotalSeconds;
+            value = timeSpan.TotalSeconds;
         }
 
         return value;

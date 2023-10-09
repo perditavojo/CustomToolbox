@@ -10,7 +10,7 @@ namespace CustomToolbox.Common.Sets;
 /// <summary>
 /// 變數組
 /// </summary>
-internal class VariableSet
+public class VariableSet
 {
     /// <summary>
     /// 根路徑
@@ -194,7 +194,10 @@ internal class VariableSet
 
     /// <summary>
     /// *.jsonc 的標頭
-    /// <para>來源：https://github.com/YoutubeClipPlaylist/Playlists/blob/BasePlaylist/Template/TemplateSongList.jsonc </para>
+    /// <para>Source: https://github.com/YoutubeClipPlaylist/Playlists/blob/BasePlaylist/Template/TemplateSongList.jsonc</para>
+    /// <para>Author: 陳鈞</para>
+    /// <para>License: MIT License</para>
+    /// <para>MIT License: https://github.com/YoutubeClipPlaylist/Playlists/blob/master/LICENSE</para>
     /// </summary>
     public static readonly string JsoncHeader = $"/**{Environment.NewLine}" +
         $" * 歌單格式為JSON with Comments{Environment.NewLine}" +
@@ -234,11 +237,15 @@ internal class VariableSet
     /// <summary>
     /// 共用的 JsonSerializerOptions
     /// </summary>
+    [SuppressMessage("Usage", "CA2211:非常數欄位不應可見", Justification = "<暫止>")]
     public static JsonSerializerOptions SharedJSOptions = new()
     {
         // 忽略掉註解。
         ReadCommentHandling = JsonCommentHandling.Skip,
-        // 來源：https://stackoverflow.com/a/59260196
+        // Source: https://stackoverflow.com/a/59260196
+        // Author: ahsonkhan
+        // License: CC BY-SA 4.0
+        // CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/
         Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
         WriteIndented = true
     };
