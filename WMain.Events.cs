@@ -12,6 +12,7 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using H.NotifyIcon;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using Path = System.IO.Path;
+using RichTextBox = System.Windows.Controls.RichTextBox;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Serilog.Events;
 using System.Collections.ObjectModel;
@@ -1447,14 +1448,22 @@ public partial class WMain : Window
     {
         try
         {
+            RichTextBox? richTextBox = (RichTextBox?)sender;
+
+            if (richTextBox == null)
+            {
+                return;
+            }
+
             // Source: https://learn.microsoft.com/en-us/answers/questions/22612/wpf-auto-width-for-flowdocuments-content
             // Author: Alex Li-MSFT
             double pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip,
-                formattedTextWidth = RTBLog.Document
+                formattedTextWidth = richTextBox.Document
                     .GetFormattedText(pixelsPerDip)
                     .WidthIncludingTrailingWhitespace;
 
-            RTBLog.Document.PageWidth = formattedTextWidth + 20;
+            richTextBox.Document.PageWidth = formattedTextWidth + 20;
+            richTextBox.ScrollToEnd();
         }
         catch (Exception ex)
         {
