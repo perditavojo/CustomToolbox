@@ -2395,8 +2395,16 @@ public class OperationSet
             {
                 if (_PBProgress != null)
                 {
-                    _PBProgress.Value = porgress;
-                    _PBProgress.ToolTip = $"{porgress}%";
+                    if (porgress >= 100)
+                    {
+                        _PBProgress.Value = porgress;
+                        _PBProgress.ToolTip = $"{porgress}%";
+                    }
+                    else
+                    {
+                        _PBProgress.Value = 0.0d;
+                        _PBProgress.ToolTip = string.Empty;
+                    }
                 }
             }),
             priority: DispatcherPriority.Background);
