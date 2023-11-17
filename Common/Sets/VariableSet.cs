@@ -254,11 +254,11 @@ public class VariableSet
     /// 允許的附檔名（播放清單檔案）
     /// </summary>
     public static readonly string[] AllowedExts =
-    {
+    [
         ".txt",
         ".json",
         ".jsonc"
-    };
+    ];
 
     /// <summary>
     /// 時間標記資訊
@@ -298,7 +298,7 @@ public class VariableSet
 
     /// <summary>
     /// Regex 判斷 ASCII 換行字元
-    /// <para>來源：https://social.msdn.microsoft.com/Forums/en-US/34ddba13-d352-4a55-b144-1cf75c2f954d/form-view-c-how-to-replace-carriage-return-with-ltbrgt?forum=aspwebformsdata </para>
+    /// <para>來源：https://social.msdn.microsoft.com/Forums/en-US/34ddba13-d352-4a55-b144-1cf75c2f954d/form-view-c-how-to-replace-carriage-return-with-ltbrgt?forum=aspwebformsdata</para>
     /// </summary>
     [SuppressMessage("GeneratedRegex", "SYSLIB1045:轉換為 'GeneratedRegexAttribute'。", Justification = "<暫止>")]
     public static readonly Regex RegexAscii = new(@"(\r\n|\r|\n)+");

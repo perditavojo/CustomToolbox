@@ -61,7 +61,7 @@ public partial class LyricsUtil
         try
         {
             // 從網址取得檔案名稱。
-            string fileName = url[(url.LastIndexOf("/") + 1)..];
+            string fileName = url[(url.LastIndexOf('/') + 1)..];
 
             if (string.IsNullOrEmpty(fileName))
             {
@@ -104,7 +104,7 @@ public partial class LyricsUtil
                         Regex regex = new("\\[(?<m>\\d+):(?<s>\\d+)([:.](?<ms>\\d+))*\\]");
 
                         // 暫存用的字串列表。
-                        List<string> tempList = new();
+                        List<string> tempList = [];
 
                         // 前處理字串。（忽略 ID tags）
                         foreach (string line in lines)
@@ -119,7 +119,7 @@ public partial class LyricsUtil
                             }
                         }
 
-                        List<LyricData> outputList = new();
+                        List<LyricData> outputList = [];
 
                         foreach (string item in tempList)
                         {

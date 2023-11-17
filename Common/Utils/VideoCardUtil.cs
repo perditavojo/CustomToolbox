@@ -23,7 +23,7 @@ public class VideoCardUtil
     /// <returns>List&lt;VideoCard&gt;</returns>
     public static List<VideoCardData> GetDeviceList()
     {
-        List<VideoCardData> deviceList = new();
+        List<VideoCardData> deviceList = [];
 
         ManagementObjectSearcher managementObjectSearcher = new("SELECT * FROM Win32_VideoController");
 

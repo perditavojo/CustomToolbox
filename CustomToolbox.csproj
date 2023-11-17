@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
@@ -11,7 +11,7 @@
 	<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
 	<ApplicationIcon>Resources\app_icon.ico</ApplicationIcon>
 	<DebugType>embedded</DebugType>
-	<Version>1.1.1</Version>
+	<Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,12 +22,12 @@
     <PackageReference Include="H.NotifyIcon.Wpf" Version="2.0.118" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
     <PackageReference Include="Humanizer" Version="2.14.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="Microsoft.Playwright" Version="1.39.0" />
     <PackageReference Include="Mpv.NET" Version="1.2.0" />
     <PackageReference Include="OpenCCNET" Version="1.0.2" />
-    <PackageReference Include="Serilog" Version="3.0.1" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.RichTextBox.Wpf" Version="1.1.0" />
     <PackageReference Include="SevenZipExtractor" Version="1.0.17" />
     <PackageReference Include="Whisper.net" Version="1.4.7" />

@@ -54,7 +54,7 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="UserAgent" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36</Value>
+      <Value Profile="(Default)">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</Value>
     </Setting>
     <Setting Name="RDGContentRow1Height" Type="System.Windows.GridLength" Scope="User">
       <Value Profile="(Default)">2*</Value>
@@ -159,10 +159,10 @@
       <Value Profile="(Default)">mpv-dev-x86_64-20211212-git-0e76372.7z</Value>
     </Setting>
     <Setting Name="Aria2Version" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">1.36.0</Value>
+      <Value Profile="(Default)">1.37.0</Value>
     </Setting>
     <Setting Name="SecChUa" Type="System.String" Scope="User">
-      <Value Profile="(Default)">"Google Chrome";v="117", "Not;A=Brand";v="8", "Chromium";v="117"</Value>
+      <Value Profile="(Default)">"Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"</Value>
     </Setting>
     <Setting Name="SecChUaMobile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">?0</Value>

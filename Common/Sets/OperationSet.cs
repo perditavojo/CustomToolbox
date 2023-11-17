@@ -99,7 +99,7 @@ public class OperationSet
                     Environment.NewLine +
                     $"{MsgSet.VideoDataFormats}{Environment.NewLine}";
 
-                List<List<object>> tableFormats = new();
+                List<List<object>> tableFormats = [];
 
                 if (videoData.Formats.Length > 0)
                 {
@@ -190,8 +190,8 @@ public class OperationSet
                             }
                         }
 
-                        tableFormats.Add(new List<object>
-                        {
+                        tableFormats.Add(
+                        [
                             formatData.Format,
                             formatData.Extension,
                             frameRate,
@@ -206,7 +206,7 @@ public class OperationSet
                             audioSamplingRate,
                             formatData.ContainerFormat,
                             formatData.DynamicRange
-                        });
+                        ]);
                     }
 
                     // 因為排版問題，此處字串不提供 i18n 化，強制使用英文。
@@ -287,7 +287,7 @@ public class OperationSet
                 string.Join(
                     "_",
                     $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
-                    Array.Empty<string>());
+                    []);
 
             YoutubeDL ytdl = ExternalProgram.GetYoutubeDL();
 
@@ -362,7 +362,7 @@ public class OperationSet
 
                 _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadFailure);
 
-                if (runResult.ErrorOutput.Any())
+                if (runResult.ErrorOutput.Length != 0)
                 {
                     string errMsg = string.Join(
                         Environment.NewLine,
@@ -412,7 +412,7 @@ public class OperationSet
                 string.Join(
                     "_",
                     $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
-                    Array.Empty<string>());
+                    []);
 
             YoutubeDL ytdl = ExternalProgram.GetYoutubeDL();
 
@@ -452,7 +452,7 @@ public class OperationSet
                         string.Join(
                             "_",
                             $"{childClipData.No}.{childClipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
-                            Array.Empty<string>());
+                            []);
 
                     // 計算間隔秒數。
                     double durationSeconds = childClipData.EndTime.TotalSeconds -
@@ -517,7 +517,7 @@ public class OperationSet
 
                 _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadFailure);
 
-                if (runResult.ErrorOutput.Any())
+                if (runResult.ErrorOutput.Length != 0)
                 {
                     string errMsg = string.Join(
                         Environment.NewLine,
@@ -572,7 +572,7 @@ public class OperationSet
                     string.Join(
                         "_",
                         $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
-                        Array.Empty<string>());
+                        []);
 
                 YoutubeDL ytdl = ExternalProgram.GetYoutubeDL();
 
@@ -647,7 +647,7 @@ public class OperationSet
 
                     _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadFailure);
 
-                    if (runResult.ErrorOutput.Any())
+                    if (runResult.ErrorOutput.Length != 0)
                     {
                         string errMsg = string.Join(
                             Environment.NewLine,
@@ -962,7 +962,7 @@ public class OperationSet
                     string.Join(
                         "_",
                         $"{clipData.No}.{clipData.Name}".Split(Path.GetInvalidFileNameChars()) ??
-                        Array.Empty<string>());
+                        []);
 
                 await DoFFmpegTask(
                     videoFilePath: videoFilePath,
@@ -1026,7 +1026,7 @@ public class OperationSet
                 return;
             }
 
-            List<TidData> tidDataSet = new();
+            List<TidData> tidDataSet = [];
 
             TList? tlist = receivedTList.Data;
 
@@ -1059,7 +1059,7 @@ public class OperationSet
                     MsgSet.MsgPrepToProduceClipListFile,
                     mid));
 
-            List<ClipData> originDataSource = new();
+            List<ClipData> originDataSource = [];
 
             int no = 1;
 
@@ -1076,7 +1076,7 @@ public class OperationSet
                         tidData.TID.ToString()));
 
                 // 取得分頁資訊。
-                ReceivedObject<Page> receivedPage = await SpaceFunction.GetPage(httpClient, mid, tid);
+                ReceivedObject<Page> receivedPage = await SpaceFunction.GetPage(httpClient!, mid, tid);
 
                 if (receivedPage.Code != 0)
                 {
@@ -1115,7 +1115,7 @@ public class OperationSet
                             pages.ToString()));
 
                     ReceivedObject<List<VList>> receivedVLists = await SpaceFunction.GetVList(
-                        httpClient,
+                        httpClient!,
                         mid,
                         tid,
                         pn,
@@ -1271,18 +1271,18 @@ public class OperationSet
                     Share = FileShare.ReadWrite
                 });
 
-            List<List<object>> newDataSource = new();
+            List<List<object>> newDataSource = [];
 
             foreach (ClipData clipData in originDataSource)
             {
-                newDataSource.Add(new List<object>
-                {
+                newDataSource.Add(
+                [
                     clipData.VideoUrlOrID ?? string.Empty,
                     clipData.StartTime.TotalSeconds,
                     clipData.EndTime.TotalSeconds,
                     clipData.Name ?? string.Empty,
                     clipData.SubtitleFileUrl ?? string.Empty
-                });
+                ]);
             }
 
             object outDataSource = exportJsonc ? newDataSource : originDataSource;
@@ -1861,7 +1861,7 @@ public class OperationSet
 
             string tempFilePath = await Task.Run(async () =>
             {
-                List<SegmentData> segmentDataSet = new();
+                List<SegmentData> segmentDataSet = [];
 
                 string wavfilePath = await DoConvertToWavFile(
                         inputFilePath,

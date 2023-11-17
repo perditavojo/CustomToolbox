@@ -450,17 +450,17 @@ public class TaskbarIconUtil
         try
         {
             Control[] ctrlSet1 =
-            {
+            [
                 MIPlayClip
-            };
+            ];
 
             Control[] ctrlSet2 =
-            {
+            [
                 MIPrevious,
                 MINext,
                 MIPause,
                 MIStop
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet1, enable);
             CustomFunction.BatchSetEnabled(ctrlSet2, !enable);

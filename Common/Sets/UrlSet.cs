@@ -62,7 +62,7 @@ public class UrlSet
 
     /// <summary>
     /// sub_charenc_parameters.txt 的下載網址
-    /// <para>來源：https://trac.ffmpeg.org/attachment/ticket/2431/sub_charenc_parameters.txt </para>
+    /// <para>來源：https://trac.ffmpeg.org/attachment/ticket/2431/sub_charenc_parameters.txt</para>
     /// </summary>
     public static readonly string SubCharencParametersTxtUrl = "https://trac.ffmpeg.org/raw-attachment/ticket/2431/sub_charenc_parameters.txt";
 

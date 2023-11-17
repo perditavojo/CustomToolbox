@@ -101,7 +101,7 @@ public partial class App : Application
 
     /// <summary>
     /// 初始化 UnhandledException 的 EventHandler
-    /// <para>參考：https://blog.csdn.net/Iron_Ye/article/details/82913025 </para>
+    /// <para>參考：https://blog.csdn.net/Iron_Ye/article/details/82913025</para>
     /// </summary>
     private static void InitUnhandledExceptionEventHandler()
     {
