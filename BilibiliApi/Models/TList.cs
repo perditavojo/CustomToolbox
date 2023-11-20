@@ -639,19 +639,21 @@ public class TList
     [JsonPropertyName("21")]
     public Tag21? Tag21 { get; set; }
 
-    /// <summary>
-    /// 生活 -> 美食圈 (food)
-    /// </summary>
-    [Obsolete("重新導向")]
-    [JsonPropertyName("76")]
-    public Tag76? Tag76Redirect { get; set; }
+    // 2023/11/20 因為會與其他 JsonPropertyName 碰撞，故而註解。
+    ///// <summary>
+    ///// 生活 -> 美食圈 (food)
+    ///// </summary>
+    //[Obsolete("重新導向")]
+    //[JsonPropertyName("76")]
+    //public Tag76? Tag76Redirect { get; set; }
 
-    /// <summary>
-    /// 生活 -> 動物圈 (animal)
-    /// </summary>
-    [Obsolete("重新導向")]
-    [JsonPropertyName("75")]
-    public Tag75? Tag75Redirect { get; set; }
+    // 2023/11/20 因為會與其他 JsonPropertyName 碰撞，故而註解。
+    ///// <summary>
+    ///// 生活 -> 動物圈 (animal)
+    ///// </summary>
+    //[Obsolete("重新導向")]
+    //[JsonPropertyName("75")]
+    //public Tag75? Tag75Redirect { get; set; }
 
     /// <summary>
     /// 生活 -> 運動 (sports)
@@ -660,12 +662,13 @@ public class TList
     [JsonPropertyName("163")]
     public Tag163? Tag163 { get; set; }
 
-    /// <summary>
-    /// 生活 -> 汽車 (automobile)
-    /// </summary>
-    [Obsolete("重新導向")]
-    [JsonPropertyName("176")]
-    public Tag176? Tag176Redirect { get; set; }
+    // 2023/11/20 因為會與其他 JsonPropertyName 碰撞，故而註解。
+    ///// <summary>
+    ///// 生活 -> 汽車 (automobile)
+    ///// </summary>
+    //[Obsolete("重新導向")]
+    //[JsonPropertyName("176")]
+    //public Tag176? Tag176Redirect { get; set; }
 
     /// <summary>
     /// 生活 -> 其他 (other)
@@ -834,12 +837,13 @@ public class TList
     [JsonPropertyName("159")]
     public Tag159? Tag159 { get; set; }
 
-    /// <summary>
-    /// 時尚 -> 健身 (aerobics)
-    /// </summary>
-    [Obsolete("重新導向")]
-    [JsonPropertyName("164")]
-    public Tag164? Tag164Redirect { get; set; }
+    // 2023/11/20 因為會與其他 JsonPropertyName 碰撞，故而註解。
+    ///// <summary>
+    ///// 時尚 -> 健身 (aerobics)
+    ///// </summary>
+    //[Obsolete("重新導向")]
+    //[JsonPropertyName("164")]
+    //public Tag164? Tag164Redirect { get; set; }
 
     /// <summary>
     /// 時尚 -> 風尚標 (trends)
