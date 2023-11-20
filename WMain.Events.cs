@@ -239,7 +239,7 @@ public partial class WMain : Window
 
                         break;
                     case 2:
-                        List<TimestampSongData> outputDataSource1 = new();
+                        List<TimestampSongData> outputDataSource1 = [];
 
                         foreach (ClipData clipData in dataSource)
                         {
@@ -260,7 +260,7 @@ public partial class WMain : Window
 
                         break;
                     case 3:
-                        List<SecondsSongData> outputDataSource2 = new();
+                        List<SecondsSongData> outputDataSource2 = [];
 
                         foreach (ClipData clipData in dataSource)
                         {
@@ -281,18 +281,18 @@ public partial class WMain : Window
 
                         break;
                     case 4:
-                        List<List<object>> outputDataSource3 = new();
+                        List<List<object>> outputDataSource3 = [];
 
                         foreach (ClipData clipData in dataSource)
                         {
-                            outputDataSource3.Add(new List<object>
-                            {
+                            outputDataSource3.Add(
+                            [
                                 clipData.VideoUrlOrID ?? string.Empty,
                                 clipData.StartTime.TotalSeconds,
                                 clipData.EndTime.TotalSeconds,
                                 clipData.Name ?? string.Empty,
                                 clipData.SubtitleFileUrl ?? string.Empty
-                            });
+                            ]);
                         }
 
                         await JsonSerializer.SerializeAsync(
@@ -856,7 +856,7 @@ public partial class WMain : Window
         try
         {
             Control[] ctrlSet1 =
-            {
+            [
                 MIFetchClip,
                 MIDLClip,
                 MIDLClipsByTheSameUrl,
@@ -866,12 +866,12 @@ public partial class WMain : Window
                 BtnSplitVideo,
                 BtnWhisperDetectVideoLanguage,
                 BtnWhisperTranscribeVideo
-            };
+            ];
 
             Control[] ctrlSet2 =
-            {
+            [
                 MICancel
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet1, false);
             CustomFunction.BatchSetEnabled(ctrlSet2, true);
@@ -910,7 +910,7 @@ public partial class WMain : Window
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
-                {
+                [
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
@@ -922,12 +922,12 @@ public partial class WMain : Window
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
                     BtnWhisperTranscribeVideo
-                };
+                ];
 
                 Control[] ctrlSet2 =
-                {
+                [
                     MICancel
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);
@@ -993,7 +993,7 @@ public partial class WMain : Window
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
-                {
+                [
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
@@ -1005,12 +1005,12 @@ public partial class WMain : Window
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
                     BtnWhisperTranscribeVideo
-                };
+                ];
 
                 Control[] ctrlSet2 =
-                {
+                [
                     MICancel
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);
@@ -1021,7 +1021,7 @@ public partial class WMain : Window
                 {
                     List<ClipData>? clipDatas = GetClipDataRelatedItems(clipData);
 
-                    if (clipDatas == null || !clipDatas.Any())
+                    if (clipDatas == null || clipDatas.Count == 0)
                     {
                         ShowMsgBox(MsgSet.MsgCantFindTheSameUrlClips);
 
@@ -1106,7 +1106,7 @@ public partial class WMain : Window
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
-                {
+                [
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
@@ -1118,19 +1118,19 @@ public partial class WMain : Window
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
                     BtnWhisperTranscribeVideo
-                };
+                ];
 
                 Control[] ctrlSet2 =
-                {
+                [
                     MICancel
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);
 
                 List<IOrderedEnumerable<ClipData>> clipDatas = GetGroupedAllClipDatas();
 
-                if (!clipDatas.Any())
+                if (clipDatas.Count == 0)
                 {
                     ShowMsgBox(MsgSet.MsgClipListNoData);
 
@@ -1164,7 +1164,7 @@ public partial class WMain : Window
 
                 foreach (IOrderedEnumerable<ClipData> orderedClipDatas in clipDatas)
                 {
-                    List<ClipData> tempClipDatas = orderedClipDatas.ToList();
+                    List<ClipData> tempClipDatas = [.. orderedClipDatas];
 
                     ClipData? clipData = tempClipDatas.FirstOrDefault();
 

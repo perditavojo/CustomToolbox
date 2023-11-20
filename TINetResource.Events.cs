@@ -132,10 +132,10 @@ public partial class WMain
                     }
                     else if (localData.Name != MsgSet.SelectPlease)
                     {
-                        DoLoadClipLists(new List<string>()
-                        {
+                        DoLoadClipLists(
+                        [
                             localData.Path
-                        });
+                        ]);
 
                         if (CBLocalClipLists.Items.Count > 0)
                         {
@@ -166,9 +166,9 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 Control[] ctrlSet =
-                {
+                [
                     CBNetPlaylists
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet, false);
 
@@ -255,7 +255,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
-                {
+                [
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
@@ -269,12 +269,12 @@ public partial class WMain
                     TBB23ClipListExcludedPhrases,
                     CBB23ClipListExportJsonc,
                     CBB23ClipListCheckUrl
-                };
+                ];
 
                 Control[] ctrlSet2 =
-                {
+                [
                     MICancel
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);

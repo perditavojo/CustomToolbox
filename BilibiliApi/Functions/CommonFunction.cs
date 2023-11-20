@@ -91,9 +91,11 @@ public class CommonFunction
         {
             if (url.Contains('/'))
             {
+                char[] separators = ['/'];
+
                 string[] tempArray = url
                     .Split(
-                        new char[] { '/' },
+                        separators,
                         StringSplitOptions.RemoveEmptyEntries);
 
                 url = tempArray[0];

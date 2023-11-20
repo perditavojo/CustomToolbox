@@ -1265,7 +1265,7 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnForceDLDeps,
                 BtnDlYtDlp,
                 BtnUpdateYtDlp,
@@ -1293,7 +1293,7 @@ public partial class WMain
                 BtnBurnInSubtitle,
                 BtnSplitVideo,
                 MICancel
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
 
@@ -1329,12 +1329,12 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnDlYtDlp,
                 BtnUpdateYtDlp,
                 MIFetchClip,
                 MIDLClip
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
 
@@ -1357,12 +1357,12 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnDlYtDlp,
                 BtnUpdateYtDlp,
                 MIFetchClip,
                 MIDLClip
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
 
@@ -1385,9 +1385,9 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnReCreateYtDlpConf
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
             ExternalProgram.GetOptionSet(forceCreate: true);
@@ -1408,11 +1408,11 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnDLFFmpeg,
                 BtnBurnInSubtitle,
                 BtnSplitVideo
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
 
@@ -1435,9 +1435,9 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnDLSubCharencParametersTxt
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
 
@@ -1466,9 +1466,9 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnDLAria2
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
 
@@ -1491,7 +1491,7 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnReCreateMpvConf,
                 BtnDLLibMpv,
                 BtnDLYtDlHookLua,
@@ -1502,7 +1502,7 @@ public partial class WMain
                 BtnStop,
                 BtnMute,
                 CBNoVideo
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
 
@@ -1526,7 +1526,7 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnReCreateMpvConf,
                 BtnDLLibMpv,
                 BtnDLYtDlHookLua,
@@ -1540,7 +1540,7 @@ public partial class WMain
                 CBYTQuality,
                 CBPlaybackSpeed,
                 BtnMute
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
 
@@ -1566,7 +1566,7 @@ public partial class WMain
         try
         {
             Control[] ctrlSet =
-            {
+            [
                 BtnReCreateMpvConf,
                 BtnDLLibMpv,
                 BtnDLYtDlHookLua,
@@ -1577,7 +1577,7 @@ public partial class WMain
                 BtnStop,
                 BtnMute,
                 CBNoVideo
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet, false);
 

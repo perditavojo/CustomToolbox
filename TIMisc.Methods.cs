@@ -110,11 +110,13 @@ public partial class WMain
 
                 if (!string.IsNullOrEmpty(optionSet.CookiesFromBrowser))
                 {
+                    char[] separators = [':'];
+
                     // 格式：BROWSER[+KEYRING][:PROFILE][::CONTAINER]
                     // 0：網頁瀏覽器、1：磁碟機代號、2：網頁瀏覽器設定檔路徑、4：容器。
                     string[] parameters = optionSet.CookiesFromBrowser
                         .Split(
-                            new char[] { ':' },
+                            separators,
                             StringSplitOptions.RemoveEmptyEntries);
 
                     CBBrowserName.Text = parameters[0];
@@ -351,9 +353,11 @@ public partial class WMain
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
+                char[] separators = [';'];
+
                 string[] tempValue = Properties.Settings.Default
                     .NetPlaylistUnsupportedDomains.Split(
-                        new char[] { ';' },
+                        separators,
                         StringSplitOptions.RemoveEmptyEntries);
 
                 string value = string.Join(Environment.NewLine, tempValue);
@@ -437,7 +441,7 @@ public partial class WMain
             {
                 using InstalledFontCollection installedFontCollection = new();
 
-                List<string> dataSource = new();
+                List<string> dataSource = [];
 
                 for (int i = 0; i < installedFontCollection.Families.Length; i++)
                 {
@@ -473,9 +477,10 @@ public partial class WMain
                     return;
                 }
 
-                List<string> dataSource = File
-                    .ReadAllLines(VariableSet.SubCharencParametersTxtPath)
-                    .ToList();
+                List<string> dataSource =
+                [
+                    .. File.ReadAllLines(VariableSet.SubCharencParametersTxtPath)
+                ];
 
                 CBEncodingList.ItemsSource = dataSource;
                 CBEncodingList.Text = AppLangUtil

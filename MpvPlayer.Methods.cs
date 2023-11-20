@@ -311,10 +311,10 @@ public partial class WMain
                 TaskbarIconUtil.UpdateMIMuteHeader(BtnMute.Content.ToString());
 
                 Control[] ctrlSet =
-                {
+                [
                     SVolume,
                     LVolume
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet, !isMuted);
 
@@ -561,17 +561,17 @@ public partial class WMain
         try
         {
             Control[] ctrlSet1 =
-            {
+            [
                 BtnPlay
-            };
+            ];
 
             Control[] ctrlSet2 =
-            {
+            [
                 BtnPrevious,
                 BtnNext,
                 BtnPause,
                 BtnStop
-            };
+            ];
 
             CustomFunction.BatchSetEnabled(ctrlSet1, enable);
             CustomFunction.BatchSetEnabled(ctrlSet2, !enable);

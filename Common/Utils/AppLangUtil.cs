@@ -35,7 +35,7 @@ public class AppLangUtil
     {
         string message = string.Empty;
 
-        List<LangData> outputList = new();
+        List<LangData> outputList = [];
 
         try
         {
@@ -46,7 +46,7 @@ public class AppLangUtil
                 outputList.Add(defaultLangData);
             }
 
-            string[] patterns = { "*.xaml" };
+            string[] patterns = ["*.xaml"];
 
             IEnumerable<string> files = CustomFunction.EnumerateFiles(
                 VariableSet.LangsFolderPath,
@@ -123,15 +123,15 @@ public class AppLangUtil
             {
                 // 暫存應用程式在 Application.Current.Resources.MergedDictionaries
                 // 內的 ResourceDictionary。
-                List<ResourceDictionary> listResDict = new();
-
-                // 只排除語系的 ResourceDictionary。
-                listResDict.AddRange(Application.Current.Resources
-                    .MergedDictionaries
-                    .Where(n => string.IsNullOrEmpty(GetLangCode(n))));
-
-                // 加入 targetLangData 的 ResDict。
-                listResDict.Add(targetLangData.ResDict);
+                List<ResourceDictionary> listResDict =
+                [
+                    // 只排除語系的 ResourceDictionary。
+                    .. Application.Current.Resources
+                        .MergedDictionaries
+                        .Where(n => string.IsNullOrEmpty(GetLangCode(n))),
+                    // 加入 targetLangData 的 ResDict。
+                    targetLangData.ResDict
+                ];
 
                 // 清除原本的 Application.Current.Resources.MergedDictionaries。
                 // ※因為只刪除一個後再加入會造成找不到資源檔的問題。

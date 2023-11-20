@@ -234,9 +234,10 @@ public partial class WMain
                 string langCode = AppLangUtil.GetLangCode(curResDict);
 
                 string[] targetLangArray =
-                {
-                    "en-US", "en-GB"
-                };
+                [
+                    "en-US",
+                    "en-GB"
+                ];
 
                 if (targetLangArray.Contains(langCode))
                 {
@@ -445,10 +446,11 @@ public partial class WMain
     {
         if (clipData != null)
         {
-            return GlobalDataSet
-                .Where(n => n.VideoUrlOrID == clipData.VideoUrlOrID)
-                .OrderBy(n => n.No)
-                .ToList();
+            return
+            [
+                .. GlobalDataSet.Where(n => n.VideoUrlOrID == clipData.VideoUrlOrID)
+                    .OrderBy(n => n.No)
+            ];
         }
 
         return null;
@@ -460,9 +462,10 @@ public partial class WMain
     /// <returns>List&lt;ClipData&gt;</returns>
     private List<ClipData> GetAllClipDatas()
     {
-        return GlobalDataSet
-            .OrderBy(n => n.No)
-            .ToList();
+        return
+        [
+            .. GlobalDataSet.OrderBy(n => n.No)
+        ];
     }
 
     /// <summary>
@@ -752,7 +755,7 @@ public partial class WMain
     /// <returns>List&lt;ClipData&gt;</returns>
     private List<ClipData> GetSortedGlobalDataSet()
     {
-        List<ClipData> sortedGlobalDataSet = new();
+        List<ClipData> sortedGlobalDataSet = [];
 
         // 來源：https://stackoverflow.com/a/7333624
         ICollectionView collectionView = CollectionViewSource

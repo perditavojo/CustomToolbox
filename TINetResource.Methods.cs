@@ -188,11 +188,11 @@ public partial class WMain
                 logEventLevel: LogEventLevel.Error);
         }
 
-        return new string[]
-        {
+        return
+        [
             lrcFileUrl,
             offsetSeconds
-        };
+        ];
     }
 
     /// <summary>
@@ -204,9 +204,11 @@ public partial class WMain
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
+                char[] separators = [';'];
+
                 string[] tempValue = Properties.Settings.Default
                     .B23ClipListExcludedPhrases.Split(
-                        new char[] { ';' },
+                        separators,
                         StringSplitOptions.RemoveEmptyEntries);
 
                 string value = string.Join(Environment.NewLine, tempValue);

@@ -33,7 +33,7 @@ public partial class WMain
                     return;
                 }
 
-                if (value.StartsWith("@"))
+                if (value.StartsWith('@'))
                 {
                     control.Text = PlaywrightUtil.GetYTChannelID($"{UrlSet.YTUrl}{value}");
 
@@ -174,7 +174,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
-                {
+                [
                     TBYtChannelID,
                     TBCustomSubscriberAmount,
                     DPCustomDate,
@@ -185,15 +185,15 @@ public partial class WMain
                     CBIsDevelopmentMode,
                     BtnYtscToolReset,
                     BtnYtscToolTakeScreenshot
-                };
+                ];
 
                 if (CBUseTranslate.IsEnabled)
                 {
-                    List<Control> tempList = ctrlSet1.ToList();
+                    List<Control> tempList = [.. ctrlSet1];
 
                     tempList.Add(CBUseTranslate);
 
-                    ctrlSet1 = tempList.ToArray();
+                    ctrlSet1 = [.. tempList];
                 }
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);

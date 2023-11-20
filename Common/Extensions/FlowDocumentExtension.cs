@@ -48,10 +48,7 @@ public static class FlowDocumentExtension
     /// <exception cref="ArgumentNullException"></exception>
     public static FormattedText GetFormattedText(this FlowDocument flowDocument, double pixelsPerDip)
     {
-        if (flowDocument == null)
-        {
-            throw new ArgumentNullException(nameof(flowDocument));
-        }
+        ArgumentNullException.ThrowIfNull(flowDocument);
 
         Typeface typeface = new(
             fontFamily: flowDocument.FontFamily,

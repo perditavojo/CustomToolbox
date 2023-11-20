@@ -190,8 +190,10 @@ public class PlaywrightUtil
         {
             try
             {
+                string[] args = ["install", "chromium"];
+
                 // 安裝 Playwright 的瀏覽器。
-                int exitCode = Program.Main(new[] { "install", "chromium" });
+                int exitCode = Program.Main(args);
 
                 if (exitCode != 0)
                 {
@@ -230,7 +232,7 @@ public class PlaywrightUtil
         {
             foreach (string browser in browsersNode.GetSubKeyNames())
             {
-                if (browser.ToLower().Contains(browserName.ToLower()))
+                if (browser.Contains(browserName, StringComparison.CurrentCultureIgnoreCase))
                 {
                     isInstalled = true;
 

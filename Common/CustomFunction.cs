@@ -130,7 +130,7 @@ public class CustomFunction
             .Where(fileName => searchPatterns
             .Any(pattern =>
             {
-                if (!pattern.StartsWith("*"))
+                if (!pattern.StartsWith('*'))
                 {
                     pattern = $"*{pattern}";
                 }
@@ -156,8 +156,10 @@ public class CustomFunction
             return result;
         }
 
+        char[] separators = [';'];
+
         string[] domains = value!.Split(
-            new char[] { ';' },
+            separators,
             StringSplitOptions.RemoveEmptyEntries);
 
         foreach (string domain in domains)

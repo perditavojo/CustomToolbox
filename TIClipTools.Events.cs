@@ -71,7 +71,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
-                {
+                [
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
@@ -81,12 +81,12 @@ public partial class WMain
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
                     BtnWhisperTranscribeVideo
-                };
+                ];
 
                 Control[] ctrlSet2 =
-                {
+                [
                     MICancel
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);
@@ -223,7 +223,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
-                {
+                [
                     DGClipList,
                     MIFetchClip,
                     MIDLClip,
@@ -236,12 +236,12 @@ public partial class WMain
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
                     BtnWhisperTranscribeVideo
-                };
+                ];
 
                 Control[] ctrlSet2 =
-                {
+                [
                     MICancel
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);
@@ -250,9 +250,9 @@ public partial class WMain
 
                 bool useHardwareAcceleration = false;
 
-                List<ClipData> clipDatas = GlobalDataSet.ToList();
+                List<ClipData> clipDatas = [.. GlobalDataSet];
 
-                if (!clipDatas.Any())
+                if (clipDatas.Count == 0)
                 {
                     ShowMsgBox(MsgSet.MsgClipListNoData);
 
@@ -852,7 +852,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
-                {
+                [
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
@@ -862,15 +862,15 @@ public partial class WMain
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
                     BtnWhisperTranscribeVideo
-                };
+                ];
 
                 Control[] ctrlSet2 =
-                {
+                [
                     MICancel
-                };
+                ];
 
                 Control[] ctrlSet3 =
-                {
+                [
                     CBWhisperModel,
                     CBWhisperQuantization,
                     CBWhisperSamplingStrategy,
@@ -881,7 +881,7 @@ public partial class WMain
                     CBWhisperSpeedUp2x,
                     CBWhisperTranslateToEnglish,
                     CBWhisperExportWebVTTAlso
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);
@@ -993,7 +993,7 @@ public partial class WMain
             Dispatcher.BeginInvoke(new Action(async () =>
             {
                 Control[] ctrlSet1 =
-                {
+                [
                     MIFetchClip,
                     MIDLClip,
                     MIDLClipsByTheSameUrl,
@@ -1003,15 +1003,15 @@ public partial class WMain
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
                     BtnWhisperTranscribeVideo
-                };
+                ];
 
                 Control[] ctrlSet2 =
-                {
+                [
                     MICancel
-                };
+                ];
 
                 Control[] ctrlSet3 =
-                {
+                [
                     CBWhisperModel,
                     CBWhisperQuantization,
                     CBWhisperSamplingStrategy,
@@ -1022,7 +1022,7 @@ public partial class WMain
                     CBWhisperSpeedUp2x,
                     CBWhisperTranslateToEnglish,
                     CBWhisperExportWebVTTAlso
-                };
+                ];
 
                 CustomFunction.BatchSetEnabled(ctrlSet1, false);
                 CustomFunction.BatchSetEnabled(ctrlSet2, true);

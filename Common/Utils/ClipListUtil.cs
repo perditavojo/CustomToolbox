@@ -34,16 +34,16 @@ public class ClipListUtil
     /// <returns>Task&lt;List&lt;ClipListData&gt;&gt;</returns>
     public static async Task<List<ClipListData>> GetNetPlaylists()
     {
-        List<ClipListData> outputList = new();
+        List<ClipListData> outputList = [];
 
         try
         {
             string[] urls =
-            {
+            [
                 PlaylistUrlSet.YCPPlaylistsJsonUrl,
                 PlaylistUrlSet.FCPPlaylistsJsonUrl,
                 PlaylistUrlSet.FCPB23PlaylistsJsonUrl
-            };
+            ];
 
             foreach (string url in urls)
             {
@@ -64,7 +64,7 @@ public class ClipListUtil
 
                     // 過濾資料。
                     dataSet = dataSet.Where(n => !string.IsNullOrEmpty(n.Name) &&
-                        !n.Name.ToLower().Contains("backup") &&
+                        !n.Name.Contains("backup", StringComparison.CurrentCultureIgnoreCase) &&
                         !string.IsNullOrEmpty(n.NameDisplay) &&
                         !string.IsNullOrEmpty(n.Route) &&
                         n.Tag != null &&
@@ -136,7 +136,7 @@ public class ClipListUtil
     /// <returns>Task&lt;List&lt;ClipListData&gt;&gt;</returns>
     public static List<ClipListData> GetLocalClipLists()
     {
-        List<ClipListData> outputList = new();
+        List<ClipListData> outputList = [];
 
         try
         {
@@ -175,7 +175,7 @@ public class ClipListUtil
     /// <returns>Task&lt;List&lt;List&lt;object&gt;&gt;&gt;</returns>
     public static async Task<List<List<object>>> GetNetPlaylist(string url)
     {
-        List<List<object>> outputList = new();
+        List<List<object>> outputList = [];
 
         try
         {

@@ -66,7 +66,7 @@ public class ExternalProgram
             #region 檢查資料夾
 
             string[] folders =
-            {
+            [
                 VariableSet.BinsFolderPath,
                 VariableSet.DownloadsFolderPath,
                 VariableSet.ClipListsFolderPath,
@@ -74,7 +74,7 @@ public class ExternalProgram
                 VariableSet.LyricsFolderPath,
                 VariableSet.TempFolderPath,
                 VariableSet.ModelsFolderPath
-            };
+            ];
 
             foreach (string folder in folders)
             {
@@ -523,7 +523,7 @@ public class ExternalProgram
         }
         else
         {
-            List<IStream> streams = new();
+            List<IStream> streams = [];
 
             if (!isAudioOnly)
             {

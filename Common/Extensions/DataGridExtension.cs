@@ -377,13 +377,15 @@ public static class DataGridExtension
 
                     bool canProcess = false;
 
-                    List<TimestampSongData> dataSource = new();
+                    List<TimestampSongData> dataSource = [];
 
                     TimestampSongData? tempTimestampSongData = null;
 
                     int timestampCount = 0, currentIndex = 0;
 
                     string videoID = string.Empty;
+
+                    char[] separators = ['｜'];
 
                     foreach (string currentLine in lines)
                     {
@@ -467,7 +469,7 @@ public static class DataGridExtension
                             else
                             {
                                 string[] timestampSet = currentLine.Split(
-                                    new char[] { '｜' },
+                                    separators,
                                     StringSplitOptions.RemoveEmptyEntries);
 
                                 if (timestampSet.Length > 0 &&
@@ -597,7 +599,7 @@ public static class DataGridExtension
 
     /// <summary>
     /// 排序
-    /// <para>來源：https://stackoverflow.com/a/19952233 </para>
+    /// <para>來源：https://stackoverflow.com/a/19952233</para>
     /// </summary>
     /// <param name="dataGrid">DataGrid</param>
     /// <param name="columnIndex">數值，欄位的索引值，預設值為 0</param>
