@@ -82,4 +82,28 @@ public class EnumSet
         /// </summary>
         BeamSearch
     }
+
+    /// <summary>
+    /// yt-dlp 更新頻道類型
+    /// </summary>
+    public enum YtDlpUpdateChannelType
+    {
+        /// <summary>
+        /// 穩定版（stable）
+        /// </summary>
+        Stable,
+        /// <summary>
+        /// 每夜版（nightly）
+        /// </summary>
+        Nightly,
+        /// <summary>
+        /// Git 倉庫 master 分支版（master）
+        /// </summary>
+        Master,
+        /// <summary>
+        /// 自定義（需要自行輸入標籤）
+        /// <para>範例：stable@2023.07.06</para>
+        /// </summary>
+        Custom
+    }
 }

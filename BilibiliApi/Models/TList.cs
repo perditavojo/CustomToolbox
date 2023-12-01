@@ -639,6 +639,12 @@ public class TList
     [JsonPropertyName("21")]
     public Tag21? Tag21 { get; set; }
 
+    /// <summary>
+    /// 生活 -> 親子 (parenting)
+    /// </summary>
+    [JsonPropertyName("254")]
+    public Tag254? Tag254 { get; set; }
+
     // 2023/11/20 因為會與其他 JsonPropertyName 碰撞，故而註解。
     ///// <summary>
     ///// 生活 -> 美食圈 (food)

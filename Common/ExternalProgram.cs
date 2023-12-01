@@ -268,7 +268,81 @@ public class ExternalProgram
         _WMain?.WriteLog(result);
 
         // 當 yt-dlp 更新後，才需要提示要更新 FFmpeg。
-        if (result.Contains("Updated yt-dlp to version"))
+        if (result.Contains("Updated yt-dlp to"))
+        {
+            _WMain?.WriteLog(MsgSet.MsgUpdateFFmpeg);
+        }
+
+        Properties.Settings.Default.YtDlpCheckTime = DateTime.Now;
+        Properties.Settings.Default.Save();
+
+        SetYtDlpVersion();
+    }
+
+    /// <summary>
+    /// 更新 yt-dlp 至
+    /// <para>自定義標籤的範例：stable@2023.07.06</para>
+    /// </summary>
+    /// <param name="ytDlpUpdateChannelType">YtDlpUpdateChannelType，預設值為 YtDlpUpdateChannelType.Stable</param>
+    /// <param name="customTag">字串，自定義的標籤，預設值為空白</param>
+    public static async void UpdateYtDlpTo(
+        YtDlpUpdateChannelType ytDlpUpdateChannelType = YtDlpUpdateChannelType.Stable,
+        string customTag = "")
+    {
+        YoutubeDL ytdl = GetYoutubeDL();
+
+        string result = await ytdl.RunUpdateTo(ytDlpUpdateChannelType, customTag);
+
+        // 2023/12/1 
+        // yt-dlp 並不會真的因為使用 --update-to 就可以隨意跨頻道降版本，
+        // 當目標頻道的版本號低於目前的頻道版本號，就不會降版。
+
+        string[] arrayMessages = result.Split('｜', StringSplitOptions.RemoveEmptyEntries);
+
+        // 判斷訊息在拆分後是否有多於或等於 2 則訊息。
+        if (arrayMessages.Length >= 2)
+        {
+            // 取得目標的版本號。
+            string? strTargetVersion = (arrayMessages
+                .FirstOrDefault(n => n.Contains("Latest version: "))
+                ?.Replace("Latest version: ", string.Empty))?
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .FirstOrDefault()
+                ?.Trim() ??
+                string.Empty;
+
+            // 取得目前的版本號。
+            string? strCurrentVsrsion = (arrayMessages
+                .FirstOrDefault(n => n.Contains("yt-dlp is up to date ("))
+                ?.Replace("yt-dlp is up to date (", string.Empty))
+                ?.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .FirstOrDefault()
+                ?.Trim() ??
+                string.Empty;
+
+            // 判斷兩個版本號是否一致。
+            if (!string.IsNullOrEmpty(strTargetVersion) &&
+                !string.IsNullOrEmpty(strCurrentVsrsion) &&
+                strTargetVersion != strCurrentVsrsion)
+            {
+                // TODO: 2023/12/1 輸出版本號。
+                _WMain?.WriteLog(strTargetVersion);
+                _WMain?.WriteLog(strCurrentVsrsion);
+
+                // 再次執行一次 UpdateYtDlpTo() 方法。
+                UpdateYtDlpTo(YtDlpUpdateChannelType.Custom, strTargetVersion);
+
+                return;
+            }
+        }
+
+        // 只輸出最後的訊息。
+        result = arrayMessages.LastOrDefault() ?? string.Empty;
+
+        _WMain?.WriteLog(result);
+
+        // 當 yt-dlp 更新後，才需要提示要更新 FFmpeg。
+        if (result.Contains("Updated yt-dlp to"))
         {
             _WMain?.WriteLog(MsgSet.MsgUpdateFFmpeg);
         }

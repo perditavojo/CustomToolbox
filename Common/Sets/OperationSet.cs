@@ -1634,6 +1634,7 @@ public class OperationSet
     /// <param name="beamSize">beamSize，用於 SamplingStrategyType.BeamSearch，預設值為 5</param>
     /// <param name="patience">patience，用於 SamplingStrategyType.BeamSearch，預設值為 -0.1f</param>
     /// <param name="bestOf">bestOf，用於 SamplingStrategyType.Greedy，預設值為 1</param>
+    /// <param name="prompt">字串，提示詞，預設值為空白</param>
     /// <param name="cancellationToken">CancellationToken</param>
     /// <returns>Task</returns>
     public static async Task DoDetectLanguage(
@@ -1648,6 +1649,7 @@ public class OperationSet
         int beamSize = 5,
         float patience = -0.1f,
         int bestOf = 1,
+        string prompt = "",
         CancellationToken cancellationToken = default)
     {
         Stopwatch stopWatch = new();
@@ -1714,6 +1716,11 @@ public class OperationSet
                 if (enableSpeedUp2x)
                 {
                     whisperProcessorBuilder.WithSpeedUp2x();
+                }
+
+                if (!string.IsNullOrEmpty(prompt))
+                {
+                    whisperProcessorBuilder.WithPrompt(prompt);
                 }
 
                 WhisperProcessor whisperProcessor = WhisperUtil.GetWhisperProcessor(
@@ -1835,6 +1842,7 @@ public class OperationSet
     /// <param name="beamSize">beamSize，用於 SamplingStrategyType.BeamSearch，預設值為 5</param>
     /// <param name="patience">patience，用於 SamplingStrategyType.BeamSearch，預設值為 -0.1f</param>
     /// <param name="bestOf">bestOf，用於 SamplingStrategyType.Greedy，預設值為 1</param>
+    /// <param name="prompt">字串，提示詞，預設值為空白</param>
     /// <param name="cancellationToken">CancellationToken</param>
     /// <returns>Task</returns>
     public static async Task DoTranscribe(
@@ -1849,6 +1857,7 @@ public class OperationSet
         int beamSize = 5,
         float patience = -0.1f,
         int bestOf = 1,
+        string prompt = "",
         CancellationToken cancellationToken = default)
     {
         Stopwatch stopWatch = new();
@@ -1930,6 +1939,11 @@ public class OperationSet
                 if (enableSpeedUp2x)
                 {
                     whisperProcessorBuilder.WithSpeedUp2x();
+                }
+
+                if (!string.IsNullOrEmpty(prompt))
+                {
+                    whisperProcessorBuilder.WithPrompt(prompt);
                 }
 
                 WhisperProcessor whisperProcessor = WhisperUtil.GetWhisperProcessor(
