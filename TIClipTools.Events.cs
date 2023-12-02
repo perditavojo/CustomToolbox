@@ -968,7 +968,7 @@ public partial class WMain
                         beamSize: beamSize,
                         patience: patience,
                         bestOf: bestOf,
-                        // TODO: 2023/12/1 提示詞功能。
+                        // TODO: 2023/12/1 待決定是否要提供輸入提示詞的功能。
                         prompt: string.Empty,
                         cancellationToken: GetGlobalCT());
                 }
@@ -1110,7 +1110,7 @@ public partial class WMain
                         beamSize: beamSize,
                         patience: patience,
                         bestOf: bestOf,
-                        // TODO: 2023/12/1 提示詞功能。
+                        // TODO: 2023/12/1 待決定是否要提供輸入提示詞的功能。
                         prompt: string.Empty,
                         cancellationToken: GetGlobalCT());
                 }

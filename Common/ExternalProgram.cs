@@ -305,8 +305,8 @@ public class ExternalProgram
             // 取得目標的版本號。
             string? strTargetVersion = (arrayMessages
                 .FirstOrDefault(n => n.Contains("Latest version: "))
-                ?.Replace("Latest version: ", string.Empty))?
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                ?.Replace("Latest version: ", string.Empty))
+                ?.Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .FirstOrDefault()
                 ?.Trim() ??
                 string.Empty;
@@ -325,7 +325,7 @@ public class ExternalProgram
                 !string.IsNullOrEmpty(strCurrentVsrsion) &&
                 strTargetVersion != strCurrentVsrsion)
             {
-                // TODO: 2023/12/1 輸出版本號。
+                // TODO: 2023/12/1 輸出兩個版本號。
                 _WMain?.WriteLog(strTargetVersion);
                 _WMain?.WriteLog(strCurrentVsrsion);
 

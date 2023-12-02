@@ -3,9 +3,9 @@ using System.Text.Json.Serialization;
 namespace CustomToolbox.BilibiliApi.Models.VideoZone.Life;
 
 /// <summary>
-/// 生活 -> 日常 (daily)
+/// 生活 -> 親子 (parenting)
 /// </summary>
-public class Tag21
+public class Tag254
 {
     [JsonPropertyName("tid")]
     public int Tid { get; set; }

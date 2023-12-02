@@ -91,5 +91,4 @@
 
 ## 四、注意事項
 
-1. 在發佈時請勿勾選`啟用 ReadyToRun 編譯`選項，這會造成應用程式在啟動時崩潰。
-2. 請在發布後將 `Microsoft.Playwright.dll.bak` 重新命名成 `Microsoft.Playwright.dll`。
+1. 請在發布後將 `Microsoft.Playwright.dll.bak` 重新命名成 `Microsoft.Playwright.dll`。
