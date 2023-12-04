@@ -302,15 +302,6 @@ public class ExternalProgram
         // 判斷訊息在拆分後是否有多於或等於 2 則訊息。
         if (arrayMessages.Length >= 2)
         {
-            // 取得目標的版本號。
-            string? strTargetVersion = (arrayMessages
-                .FirstOrDefault(n => n.Contains("Latest version: "))
-                ?.Replace("Latest version: ", string.Empty))
-                ?.Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .FirstOrDefault()
-                ?.Trim() ??
-                string.Empty;
-
             // 取得目前的版本號。
             string? strCurrentVsrsion = (arrayMessages
                 .FirstOrDefault(n => n.Contains("yt-dlp is up to date ("))
@@ -318,16 +309,24 @@ public class ExternalProgram
                 ?.Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .FirstOrDefault()
                 ?.Trim() ??
-                string.Empty;
+                string.Empty,
+                // 取得目標的版本號。
+                strTargetVersion = (arrayMessages
+                    .FirstOrDefault(n => n.Contains("Latest version: "))
+                    ?.Replace("Latest version: ", string.Empty))
+                    ?.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                    .FirstOrDefault()
+                    ?.Trim() ??
+                    string.Empty;
 
             // 判斷兩個版本號是否一致。
             if (!string.IsNullOrEmpty(strTargetVersion) &&
                 !string.IsNullOrEmpty(strCurrentVsrsion) &&
                 strTargetVersion != strCurrentVsrsion)
             {
-                // TODO: 2023/12/1 輸出兩個版本號。
-                _WMain?.WriteLog(strTargetVersion);
+                // 2023/12/1 輸出兩個版本號。
                 _WMain?.WriteLog(strCurrentVsrsion);
+                _WMain?.WriteLog(strTargetVersion);
 
                 // 再次執行一次 UpdateYtDlpTo() 方法。
                 UpdateYtDlpTo(YtDlpUpdateChannelType.Custom, strTargetVersion);
@@ -336,7 +335,7 @@ public class ExternalProgram
             }
         }
 
-        // 只輸出最後的訊息。
+        // 只輸出最後（最新）一筆的訊息。
         result = arrayMessages.LastOrDefault() ?? string.Empty;
 
         _WMain?.WriteLog(result);

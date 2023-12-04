@@ -29,7 +29,7 @@ public static class YoutubeDLExtension
 
         youtubeDLProcess.OutputReceived += delegate (object? o, DataReceivedEventArgs e)
         {
-            // 後補分隔符號。
+            // 後補分隔訊息用的符號。
             if (!string.IsNullOrEmpty(output))
             {
                 output += "｜";
@@ -38,10 +38,10 @@ public static class YoutubeDLExtension
             output += e.Data ?? string.Empty;  
         };
 
-        // 有些訊息會出在 ErrorReceived。
+        // 有些訊息只會出現在 ErrorReceived。
         youtubeDLProcess.ErrorReceived += delegate (object? o, DataReceivedEventArgs e)
         {
-            // 後補分隔符號。
+            // 後補分隔訊息用的符號。
             if (!string.IsNullOrEmpty(output))
             {
                 output += "｜";
@@ -52,7 +52,7 @@ public static class YoutubeDLExtension
 
         OptionSet optionSet = new();
 
-        string updateChannelType = ytDlpUpdateChannelType switch
+        string strUpdateChannelType = ytDlpUpdateChannelType switch
         {
             YtDlpUpdateChannelType.Stable => ytDlpUpdateChannelType.GetLowerString(),
             YtDlpUpdateChannelType.Nightly => ytDlpUpdateChannelType.GetLowerString(),
@@ -61,12 +61,14 @@ public static class YoutubeDLExtension
             _ => YtDlpUpdateChannelType.Stable.GetLowerString()
         };
 
-        if (string.IsNullOrEmpty(updateChannelType))
+        // Fallback 機制，用於避免在 ytDlpUpdateChannelType
+        // 為 YtDlpUpdateChannelType.Custom 時，但 customTag 為空字串的情況。
+        if (string.IsNullOrEmpty(strUpdateChannelType))
         {
-            updateChannelType = YtDlpUpdateChannelType.Stable.GetLowerString();
+            strUpdateChannelType = YtDlpUpdateChannelType.Stable.GetLowerString();
         }
 
-        optionSet.AddCustomOption("--update-to", updateChannelType);
+        optionSet.AddCustomOption("--update-to", strUpdateChannelType);
 
         await youtubeDLProcess.RunAsync(null, optionSet);
 
