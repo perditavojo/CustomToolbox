@@ -490,7 +490,7 @@
                                     Header="{DynamicResource GBWhisperFunctions}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
-                                    Height="294"
+                                    Height="314"
                                     Width="450">
                                     <Grid>
                                         <Label x:Name="LWhisperModel" 
@@ -512,7 +512,8 @@
                                             <ComboBoxItem x:Name="CBIModelMedium" Content="Medium"/>
                                             <ComboBoxItem x:Name="CBIModelMediumEn" Content="Medium En"/>
                                             <ComboBoxItem x:Name="CBIModelLargeV1" Content="Large V1"/>
-                                            <ComboBoxItem x:Name="CBIModelLarge" Content="Large"/>
+                                            <ComboBoxItem x:Name="CBIModelLargeV2" Content="Large V2"/>
+                                            <ComboBoxItem x:Name="CBIModelLargeV3" Content="Large V3"/>
                                         </ComboBox>
                                         <Label x:Name="LWhisperQuantization" 
                                             Margin="0,56,0,0"
@@ -527,7 +528,6 @@
                                             <ComboBoxItem x:Name="CBIQuantizationNoQuantization" Content="No Quantization"/>
                                             <ComboBoxItem x:Name="CBIQuantizationQ4_0" Content="Q4_0"/>
                                             <ComboBoxItem x:Name="CBIQuantizationQ4_1" Content="Q4_1"/>
-                                            <ComboBoxItem x:Name="CBIQuantizationQ4_2" Content="Q4_2"/>
                                             <ComboBoxItem x:Name="CBIQuantizationQ5_0" Content="Q5_0"/>
                                             <ComboBoxItem x:Name="CBIQuantizationQ5_1" Content="Q5_1"/>
                                             <ComboBoxItem x:Name="CBIQuantizationQ8_0" Content="Q8_0"/>
@@ -718,13 +718,13 @@
                                             Unchecked="CBWhisperExportWebVTTAlso_Unchecked"/>
                                         <Button x:Name="BtnWhisperDetectVideoLanguage" 
                                             Content="{DynamicResource BtnWhisperDetectVideoLanguage}"
-                                            Margin="-1,235,0,0"
+                                            Margin="205,235,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnWhisperDetectVideoLanguage_Click"/>
                                         <Button x:Name="BtnWhisperTranscribeVideo" 
                                             Content="{DynamicResource BtnWhisperTranscribeVideo}"
-                                            Margin="205,235,0,0"
+                                            Margin="205,262,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Click="BtnWhisperTranscribeVideo_Click"/>

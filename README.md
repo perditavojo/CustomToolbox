@@ -2,7 +2,7 @@
 
 自定義工具箱是一款整合數個功能的整合型應用程式。
 
-## 二、文件、相依性檔案以及網路資源
+## 一、文件、相依性檔案以及網路資源
 
 ### 1. 文件
 
@@ -16,7 +16,7 @@
    - [GNU General Public License v2.0](https://github.com/aria2/aria2/blob/master/COPYING)
    - [LICENSE.OpenSSL](https://github.com/aria2/aria2/blob/master/LICENSE.OpenSSL)
 - [libmpv](https://sourceforge.net/projects/mpv-player-windows/files/libmpv/)
-  - 限定：mpv-dev-x86_64-20211212-git-0e76372.7z
+  - ※限定：`mpv-dev-x86_64-20211212-git-0e76372.7z`
   - [mpv-winbuild-cmake](https://github.com/shinchiro/mpv-winbuild-cmake)
 - [sub_charenc_parameters.txt](https://trac.ffmpeg.org/attachment/ticket/2431/sub_charenc_parameters.txt)
 - [yt-dlp/FFmpeg-Builds](https://github.com/yt-dlp/FFmpeg-Builds)
@@ -38,11 +38,7 @@
 - [YoutubeClipPlaylist/Playlists](https://github.com/YoutubeClipPlaylist/Playlists)
   - [MIT 授權條款](https://github.com/YoutubeClipPlaylist/Playlists/blob/master/LICENSE)
 
-## 三、授權資訊
-
-因 [Xabe.FFmpeg](https://github.com/tomaszzmuda/Xabe.FFmpeg) 函式庫[授權合約](https://ffmpeg.xabe.net/license.html)的限制，此 GitHub 倉庫內，`沒有標註來源`的內容，皆採用 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) 授權條款釋出，反之皆以其來源之授權條款為準。
-
-> 使用的函式庫
+## 二、使用的函式庫
 
 - [adoconnection/SevenZipExtractor](https://github.com/adoconnection/SevenZipExtractor)
    - Copyright (c) 2017 Alexander Selishchev
@@ -89,7 +85,10 @@
    - Copyright (c) 2023 sandrohanea
    - [MIT 授權條款](https://github.com/sandrohanea/whisper.net/blob/main/LICENSE)
 
-## 四、注意事項
+## 三、注意事項
 
-1. 在發佈時請勿勾選`啟用 ReadyToRun 編譯`選項，這會造成應用程式在啟動時崩潰。
-2. 請在發布後將 `Microsoft.Playwright.dll.bak` 重新命名成 `Microsoft.Playwright.dll`。
+1. 請在發布後將 `Microsoft.Playwright.dll.bak` 重新命名成 `Microsoft.Playwright.dll`。
+
+## 四、授權資訊
+
+因 [Xabe.FFmpeg](https://github.com/tomaszzmuda/Xabe.FFmpeg) 函式庫[授權合約](https://ffmpeg.xabe.net/license.html)的限制，此 GitHub 倉庫內，`沒有標註來源`的內容，皆採用 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) 授權條款釋出，反之皆以其來源之授權條款為準。

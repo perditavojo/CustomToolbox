@@ -45,7 +45,8 @@ public class WhisperUtil
             "Medium" => GgmlType.Medium,
             "Medium En" => GgmlType.MediumEn,
             "Large V1" => GgmlType.LargeV1,
-            "Large" => GgmlType.Large,
+            "Large V2" => GgmlType.LargeV2,
+            "Large V3" => GgmlType.LargeV3,
             _ => GgmlType.Base
         };
     }
@@ -62,7 +63,6 @@ public class WhisperUtil
             "No Quantization" => QuantizationType.NoQuantization,
             "Q4_0" => QuantizationType.Q4_0,
             "Q4_1" => QuantizationType.Q4_1,
-            "Q4_2" => QuantizationType.Q4_2,
             "Q5_0" => QuantizationType.Q5_0,
             "Q5_1" => QuantizationType.Q5_1,
             "Q8_0" => QuantizationType.Q8_0,
@@ -91,7 +91,8 @@ public class WhisperUtil
             GgmlType.Medium => "ggml-medium",
             GgmlType.MediumEn => "ggml-medium.en",
             GgmlType.LargeV1 => "ggml-large-v1",
-            GgmlType.Large => "ggml-large",
+            GgmlType.LargeV2 => "ggml-large-v2",
+            GgmlType.LargeV3 => "ggml-large-v3",
             _ => string.Empty
         },
         subFileName = quantizationType switch
@@ -99,7 +100,6 @@ public class WhisperUtil
             QuantizationType.NoQuantization => string.Empty,
             QuantizationType.Q4_0 => "q4_0",
             QuantizationType.Q4_1 => "q4_1",
-            QuantizationType.Q4_2 => "q4_2",
             QuantizationType.Q5_0 => "q5_0",
             QuantizationType.Q5_1 => "q5_1",
             QuantizationType.Q8_0 => "q8_0",
