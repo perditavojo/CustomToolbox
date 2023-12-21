@@ -2404,6 +2404,7 @@ public class OperationSet
     /// <param name="porgress">數值，進度</param>
     private static void WhisperDotNet_OnProgress(int porgress)
     {
+        // TODO: 2023/12/21 會有 whisper.net 執行完成後 _PBProgress 不會正常清除的問題。
         Application.Current.Dispatcher.BeginInvoke(
             method: new Action(() =>
             {

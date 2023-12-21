@@ -657,7 +657,6 @@ public partial class WMain
         try
         {
             // 僅 Greedy 演歲法會使用此參數。
-
             TextBox? textBox = (TextBox)sender;
 
             if (textBox == null)

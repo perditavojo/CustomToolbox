@@ -452,6 +452,20 @@ public class ExternalProgram
         OptionSet loadedOptionSet = OptionSet
             .LoadConfigFile(VariableSet.YtDlpConfPath);
 
+        #region 每次載入時都更新一次相關的路徑
+
+        loadedOptionSet.FfmpegLocation = VariableSet.FFmpegPath;
+        loadedOptionSet.Output = VariableSet.YtDlpDefaultOutput;
+
+        if (loadedOptionSet.DownloaderArgs.Values.Contains("aria2c:--allow-overwrite=true"))
+        {
+            loadedOptionSet.Downloader = new MultiValue<string>(VariableSet.Aria2Path);
+        }    
+
+        loadedOptionSet.WriteConfigFile(VariableSet.YtDlpConfPath);
+
+        #endregion
+
         return loadedOptionSet;
     }
 
