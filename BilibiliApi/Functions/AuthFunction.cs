@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using CustomToolbox.BilibiliApi.Extensions;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Nodes;
@@ -18,9 +19,70 @@ public class AuthFunction
     /// </summary>
     private static readonly int[] MixinKeyEncodeTable =
     [
-        46, 47, 18, 2, 53, 8, 23, 32, 15, 50, 10, 31, 58, 3, 45, 35, 27, 43, 5, 49, 33, 9, 42, 19, 29, 28, 14, 39,
-        12, 38, 41, 13, 37, 48, 7, 16, 24, 55, 40, 61, 26, 17, 0, 1, 60, 51, 30, 4, 22, 25, 54, 21, 56, 59, 6, 63,
-        57, 62, 11, 36, 20, 34, 44, 52
+        46,
+        47,
+        18,
+        2,
+        53,
+        8,
+        23,
+        32,
+        15,
+        50,
+        10,
+        31,
+        58,
+        3,
+        45,
+        35,
+        27,
+        43,
+        5,
+        49,
+        33,
+        9,
+        42,
+        19,
+        29,
+        28,
+        14,
+        39,
+        12,
+        38,
+        41,
+        13,
+        37,
+        48,
+        7,
+        16,
+        24,
+        55,
+        40,
+        61,
+        26,
+        17,
+        0,
+        1,
+        60,
+        51,
+        30,
+        4,
+        22,
+        25,
+        54,
+        21,
+        56,
+        59,
+        6,
+        63,
+        57,
+        62,
+        11,
+        36,
+        20,
+        34,
+        44,
+        52
     ];
 
     /// <summary>
@@ -126,16 +188,8 @@ public class AuthFunction
         (string imgKey, string subKey) = await GetWbiKeys(httpClient);
         (string strB_3, string _) = await GetBuvids(httpClient);
 
-        IEnumerable<string>? cookies = null;
-
-        try
-        {
-            cookies = httpClient.DefaultRequestHeaders.GetValues("Cookie");
-        }
-        catch
-        {
-            // 不做任何事。
-        }
+        httpClient.DefaultRequestHeaders
+            .TryGetValues("Cookie", out IEnumerable<string>? cookies);
 
         if (cookies == null)
         {
@@ -153,6 +207,24 @@ public class AuthFunction
                 httpClient.DefaultRequestHeaders.Add("Cookie", targetCookies);
             }
         }
+
+        // TODO: 2023/12/27 因應 -352 風險校驗失敗。（待持續觀察）
+        // 參考：https://github.com/SocialSisterYi/bilibili-API-collect/issues/868
+
+        // 來源：https://github.com/Nemo2011/bilibili-api/issues/595#issuecomment-1859074892
+        httpClient.DefaultRequestHeaders.UserAgent.Clear();
+        httpClient.DefaultRequestHeaders.UserAgent.TryParseAdd("Mozilla/5.0");
+
+        // 記錄到的滑鼠的移動軌跡。
+        parameters.Add("dm_img_list", "[]");
+        // 網頁瀏覽器的 WebGL 版本。
+        parameters.Add(
+            "dm_img_str",
+            "WebGL 1.0 (OpenGL ES 2.0 Chromium)".ToBase64String());
+        // 顯示卡的資訊。
+        parameters.Add(
+            "dm_cover_img_str",
+            "ANGLE (Intel, Intel(R) UHD Graphics 630 (0x00003E9B) Direct3D11 vs_5_0 ps_5_0, D3D11)Google Inc.".ToBase64String());
 
         Dictionary<string, string> finalParameters = await EncodeWbi(
             parameters,

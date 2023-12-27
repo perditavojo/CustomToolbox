@@ -265,6 +265,7 @@ public partial class WMain
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
                     BtnWhisperTranscribeVideo,
+                    BtnYtscToolTakeScreenshot,
                     TBB23UserMID,
                     TBB23ClipListExcludedPhrases,
                     CBB23ClipListExportJsonc,

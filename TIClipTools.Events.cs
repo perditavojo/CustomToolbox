@@ -860,7 +860,8 @@ public partial class WMain
                     BtnBurnInSubtitle,
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
-                    BtnWhisperTranscribeVideo
+                    BtnWhisperTranscribeVideo,
+                    BtnYtscToolTakeScreenshot
                 ];
 
                 Control[] ctrlSet2 =
@@ -1003,7 +1004,8 @@ public partial class WMain
                     BtnBurnInSubtitle,
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
-                    BtnWhisperTranscribeVideo
+                    BtnWhisperTranscribeVideo,
+                    BtnYtscToolTakeScreenshot
                 ];
 
                 Control[] ctrlSet2 =

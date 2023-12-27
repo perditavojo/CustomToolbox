@@ -19,6 +19,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using Whisper.net;
 using Whisper.net.Ggml;
 using Whisper.net.Wave;
@@ -26,7 +27,6 @@ using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
-using System.Windows.Threading;
 
 namespace CustomToolbox.Common.Sets;
 
@@ -1772,6 +1772,8 @@ public class OperationSet
 
                 await whisperProcessor.DisposeAsync();
 
+                ResetControls();
+
                 if (!isTaskCanceled)
                 {
                     stopWatch.Stop();
@@ -1983,6 +1985,8 @@ public class OperationSet
                 }
 
                 await whisperProcessor.DisposeAsync();
+
+                ResetControls();
 
                 if (!isTaskCanceled)
                 {
@@ -2404,22 +2408,13 @@ public class OperationSet
     /// <param name="porgress">數值，進度</param>
     private static void WhisperDotNet_OnProgress(int porgress)
     {
-        // TODO: 2023/12/21 會有 whisper.net 執行完成後 _PBProgress 不會正常清除的問題。
         Application.Current.Dispatcher.BeginInvoke(
             method: new Action(() =>
             {
                 if (_PBProgress != null)
                 {
-                    if (porgress >= 100)
-                    {
-                        _PBProgress.Value = porgress;
-                        _PBProgress.ToolTip = $"{porgress}%";
-                    }
-                    else
-                    {
-                        _PBProgress.Value = 0.0d;
-                        _PBProgress.ToolTip = string.Empty;
-                    }
+                    _PBProgress.Value = porgress;
+                    _PBProgress.ToolTip = $"{porgress}%";
                 }
             }),
             priority: DispatcherPriority.Background);
