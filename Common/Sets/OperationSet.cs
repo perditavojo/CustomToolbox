@@ -309,10 +309,10 @@ public class OperationSet
 
             if (runResult.Success)
             {
+                ResetControls();
+
                 _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadSucceed);
                 _WMain?.WriteLog(runResult.Data);
-
-                ResetControls();
 
                 // 計算間隔秒數。
                 double durationSeconds = clipData.EndTime.TotalSeconds -
@@ -374,6 +374,8 @@ public class OperationSet
         }
         catch (Exception ex)
         {
+            ResetControls();
+
             _WMain?.WriteLog(ex.Message);
         }
     }
@@ -434,10 +436,10 @@ public class OperationSet
 
             if (runResult.Success)
             {
+                ResetControls();
+
                 _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadSucceed);
                 _WMain?.WriteLog(runResult.Data);
-
-                ResetControls();
 
                 foreach (ClipData childClipData in clipDatas)
                 {
@@ -529,6 +531,8 @@ public class OperationSet
         }
         catch (Exception ex)
         {
+            ResetControls();
+
             _WMain?.WriteLog(ex.Message);
         }
     }
@@ -594,10 +598,10 @@ public class OperationSet
 
                 if (runResult.Success)
                 {
+                    ResetControls();
+
                     _WMain?.WriteLog(MsgSet.MsgYtDlpDownloadSucceed);
                     _WMain?.WriteLog(runResult.Data);
-
-                    ResetControls();
 
                     // 計算間隔秒數。
                     double durationSeconds = clipData.EndTime.TotalSeconds -
@@ -663,6 +667,8 @@ public class OperationSet
         }
         catch (Exception ex)
         {
+            ResetControls();
+
             _WMain?.WriteLog(
                 message: MsgSet.GetFmtStr(
                     MsgSet.MsgErrorOccured,
@@ -1775,8 +1781,6 @@ public class OperationSet
 
                 await whisperProcessor.DisposeAsync();
 
-                ResetControls();
-
                 if (!isTaskCanceled)
                 {
                     stopWatch.Stop();
@@ -1800,6 +1804,8 @@ public class OperationSet
                         MsgSet.MsgWhisperTempFileDeleted,
                         tempFilePath));
             }
+
+            ResetControls();
         }
         catch (OperationCanceledException)
         {
@@ -1817,6 +1823,8 @@ public class OperationSet
         }
         catch (Exception ex)
         {
+            ResetControls();
+
             stopWatch.Stop();
 
             _WMain?.WriteLog(message: MsgSet.MsgWhisperDetectLanguageCanceled);
@@ -1989,8 +1997,6 @@ public class OperationSet
 
                 await whisperProcessor.DisposeAsync();
 
-                ResetControls();
-
                 if (!isTaskCanceled)
                 {
                     stopWatch.Stop();
@@ -2029,6 +2035,8 @@ public class OperationSet
                         MsgSet.MsgWhisperTempFileDeleted,
                         tempFilePath));
             }
+
+            ResetControls();
         }
         catch (OperationCanceledException)
         {
@@ -2046,6 +2054,8 @@ public class OperationSet
         }
         catch (Exception ex)
         {
+            ResetControls();
+
             stopWatch.Stop();
 
             _WMain?.WriteLog(message: MsgSet.MsgWhisperTranscribeCanceled);
@@ -2336,7 +2346,15 @@ public class OperationSet
 
                 if (tempFrag != fragPart)
                 {
-                    _WMain?.WriteLog(value);
+                    // 2023/12/28 因為這類型的訊息很容易造成應用程式卡死，
+                    // 所以不使用 _WMain?.WriteLog() 方法直接輸出訊息。
+                    //_WMain?.WriteLog(message: value);
+
+                    if (_LOperation != null)
+                    {
+                        _LOperation.Content = value;
+                        _LOperation.ToolTip = value;
+                    }
 
                     tempFrag = fragPart;
                 }
@@ -2357,7 +2375,7 @@ public class OperationSet
     /// <summary>
     /// 重設控制項
     /// </summary>
-    private static async void ResetControls()
+    public static async void ResetControls()
     {
         try
         {

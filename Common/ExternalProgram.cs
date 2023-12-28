@@ -457,7 +457,7 @@ public class ExternalProgram
         loadedOptionSet.FfmpegLocation = VariableSet.FFmpegPath;
         loadedOptionSet.Output = VariableSet.YtDlpDefaultOutput;
 
-        if (loadedOptionSet.DownloaderArgs.Values.Contains("aria2c:--allow-overwrite=true"))
+        if (loadedOptionSet.DownloaderArgs?.Values?.Contains("aria2c:--allow-overwrite=true") == true)
         {
             loadedOptionSet.Downloader = new MultiValue<string>(VariableSet.Aria2Path);
         }    

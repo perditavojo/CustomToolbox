@@ -613,8 +613,7 @@ public partial class WMain : Window
                     GlobalCT = null;
 
                     // 重設控制項。
-                    PBProgress.Value = 0;
-                    LOperation.Content = string.Empty;
+                    OperationSet.ResetControls();
                 }
             }));
         }
