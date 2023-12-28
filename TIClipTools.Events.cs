@@ -657,7 +657,6 @@ public partial class WMain
         try
         {
             // 僅 Greedy 演歲法會使用此參數。
-
             TextBox? textBox = (TextBox)sender;
 
             if (textBox == null)
@@ -861,7 +860,8 @@ public partial class WMain
                     BtnBurnInSubtitle,
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
-                    BtnWhisperTranscribeVideo
+                    BtnWhisperTranscribeVideo,
+                    BtnYtscToolTakeScreenshot
                 ];
 
                 Control[] ctrlSet2 =
@@ -1004,7 +1004,8 @@ public partial class WMain
                     BtnBurnInSubtitle,
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
-                    BtnWhisperTranscribeVideo
+                    BtnWhisperTranscribeVideo,
+                    BtnYtscToolTakeScreenshot
                 ];
 
                 Control[] ctrlSet2 =

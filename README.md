@@ -40,6 +40,9 @@
 
 ## 二、使用的函式庫
 
+- [AngleSharp/AngleSharp](https://github.com/AngleSharp/AngleSharp)
+   - Copyright (c) 2013 - 2023 AngleSharp
+   - [MIT 授權條款](https://github.com/AngleSharp/AngleSharp/blob/devel/LICENSE)
 - [adoconnection/SevenZipExtractor](https://github.com/adoconnection/SevenZipExtractor)
    - Copyright (c) 2017 Alexander Selishchev
    - [MIT 授權條款](https://github.com/adoconnection/SevenZipExtractor/blob/master/LICENSE)

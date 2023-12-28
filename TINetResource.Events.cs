@@ -265,6 +265,7 @@ public partial class WMain
                     BtnSplitVideo,
                     BtnWhisperDetectVideoLanguage,
                     BtnWhisperTranscribeVideo,
+                    BtnYtscToolTakeScreenshot,
                     TBB23UserMID,
                     TBB23ClipListExcludedPhrases,
                     CBB23ClipListExportJsonc,
@@ -298,10 +299,12 @@ public partial class WMain
                 }
 
                 await OperationSet.DoGenerateB23ClipList(
-                    GetHttpClient(),
-                    TBB23UserMID.Text,
-                    CBB23ClipListExportJsonc.IsChecked ?? false,
-                    CBB23ClipListCheckUrl.IsChecked ?? false,
+                    httpClient: GetHttpClient(),
+                    mid: TBB23UserMID.Text,
+                    exportJsonc: CBB23ClipListExportJsonc.IsChecked ?? false,
+                    checkUrl: CBB23ClipListCheckUrl.IsChecked ?? false,
+                    // 2023/12/28 預設保持 false。
+                    useDLMethodV2: false,
                     GetGlobalCT());
 
                 // 重設控制項。

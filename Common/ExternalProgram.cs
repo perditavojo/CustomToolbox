@@ -1,9 +1,11 @@
 ﻿using Application = System.Windows.Application;
+using CustomToolbox.Common.Extensions;
 using static CustomToolbox.Common.Sets.EnumSet;
 using CustomToolbox.Common.Sets;
 using CustomToolbox.Common.Utils;
 using Label = System.Windows.Controls.Label;
 using ProgressBar = System.Windows.Controls.ProgressBar;
+using Serilog.Events;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -12,8 +14,6 @@ using Xabe.FFmpeg.Events;
 using Xabe.FFmpeg;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Options;
-using CustomToolbox.Common.Extensions;
-using Serilog.Events;
 
 namespace CustomToolbox.Common;
 
@@ -295,7 +295,7 @@ public class ExternalProgram
 
         // 2023/12/1 
         // yt-dlp 並不會真的因為使用 --update-to 就可以隨意跨頻道降版本，
-        // 當目標頻道的版本號低於目前的頻道版本號，就不會降版。
+        // 當目標頻道的版本號低於目前的頻道版本號，就不會降版，需要自定義版本號才會降版。
 
         string[] arrayMessages = result.Split('｜', StringSplitOptions.RemoveEmptyEntries);
 
@@ -451,6 +451,20 @@ public class ExternalProgram
 
         OptionSet loadedOptionSet = OptionSet
             .LoadConfigFile(VariableSet.YtDlpConfPath);
+
+        #region 每次載入時都更新一次相關的路徑
+
+        loadedOptionSet.FfmpegLocation = VariableSet.FFmpegPath;
+        loadedOptionSet.Output = VariableSet.YtDlpDefaultOutput;
+
+        if (loadedOptionSet.DownloaderArgs?.Values?.Contains("aria2c:--allow-overwrite=true") == true)
+        {
+            loadedOptionSet.Downloader = new MultiValue<string>(VariableSet.Aria2Path);
+        }    
+
+        loadedOptionSet.WriteConfigFile(VariableSet.YtDlpConfPath);
+
+        #endregion
 
         return loadedOptionSet;
     }

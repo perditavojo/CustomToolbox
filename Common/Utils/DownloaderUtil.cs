@@ -542,7 +542,7 @@ public class DownloaderUtil
 
         if (httpClient != null)
         {
-            // 2023-09-22 Bilibili Buvid3 參考來源：
+            // 2023/9/22 Bilibili Buvid3 參考來源：
             // https://github.com/SocialSisterYi/bilibili-API-collect/issues/788
             // https://github.com/SocialSisterYi/bilibili-API-collect/issues/790
             // https://github.com/SocialSisterYi/bilibili-API-collect/issues/795
@@ -564,12 +564,16 @@ public class DownloaderUtil
 
         ClientHintsUtil.SetClientHints(headerCollection);
 
+        // TODO: 2023/12/27 因應 -352 風險校驗失敗。（待持續觀察）
+        // 參考：https://github.com/SocialSisterYi/bilibili-API-collect/issues/868
+
         // 當使用者代理字串值不為空時才設定。
         if (!string.IsNullOrEmpty(Properties.Settings.Default.UserAgent))
         {
             downloadConfiguration.RequestConfiguration = new RequestConfiguration()
             {
-                UserAgent = CustomFunction.GetUserAgent(),
+                // 來源：https://github.com/Nemo2011/bilibili-api/issues/595#issuecomment-1859074892
+                UserAgent = "Mozilla/5.0",
                 Referer = "https://www.bilibili.com",
                 Headers = headerCollection
             };
@@ -579,6 +583,8 @@ public class DownloaderUtil
             // 使用預設的 RequestConfiguration。
             downloadConfiguration.RequestConfiguration = new RequestConfiguration()
             {
+                // 來源：https://github.com/Nemo2011/bilibili-api/issues/595#issuecomment-1859074892
+                UserAgent = "Mozilla/5.0",
                 Referer = "https://www.bilibili.com",
                 Headers = headerCollection
             };
