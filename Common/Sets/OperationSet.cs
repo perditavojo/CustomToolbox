@@ -996,6 +996,7 @@ public class OperationSet
     /// <param name="exportJsonc">布林值，是否匯出 *.jsonc 格式，預設值為 false</param>
     /// <param name="httpClient">HttpClient，預設值為 null</param>
     /// <param name="checkUrl">布林值，是否檢查影片的網址，預設值為 false</param>
+    /// <param name="useDLMethodV2">布林值，是否使用 Ver. 2（Downloader 函式庫）的下載方式，預設值為 false</param>
     /// <param name="ct">CancellationToken</param>
     /// <returns>Task</returns>
     public static async Task DoGenerateB23ClipList(
@@ -1003,6 +1004,7 @@ public class OperationSet
         string mid,
         bool exportJsonc = false,
         bool checkUrl = false,
+        bool useDLMethodV2 = false,
         CancellationToken ct = default)
     {
         try
@@ -1015,7 +1017,9 @@ public class OperationSet
             }
 
             // 取標籤資訊。
-            ReceivedObject<TList> receivedTList = await SpaceFunction.GetTList(httpClient, mid);
+            ReceivedObject<TList> receivedTList = useDLMethodV2 == false ?
+                await SpaceFunction.GetTList(httpClient, mid) :
+                await SpaceFunction.GetTListV2(httpClient, mid);
 
             if (receivedTList.Code != 0)
             {
@@ -1076,7 +1080,9 @@ public class OperationSet
                         tidData.TID.ToString()));
 
                 // 取得分頁資訊。
-                ReceivedObject<Page> receivedPage = await SpaceFunction.GetPage(httpClient!, mid, tid);
+                ReceivedObject<Page> receivedPage = useDLMethodV2 == false ?
+                    await SpaceFunction.GetPage(httpClient!, mid, tid) :
+                    await SpaceFunction.GetPageV2(httpClient!, mid, tid);
 
                 if (receivedPage.Code != 0)
                 {
@@ -1114,12 +1120,9 @@ public class OperationSet
                             pn.ToString(),
                             pages.ToString()));
 
-                    ReceivedObject<List<VList>> receivedVLists = await SpaceFunction.GetVList(
-                        httpClient!,
-                        mid,
-                        tid,
-                        pn,
-                        ps);
+                    ReceivedObject<List<VList>> receivedVLists = useDLMethodV2 == false ?
+                        await SpaceFunction.GetVList(httpClient!, mid, tid, pn, ps) :
+                        await SpaceFunction.GetVListV2(httpClient!, mid, tid, pn, ps);
 
                     if (receivedVLists.Code != 0 ||
                         receivedVLists.Data == null)
@@ -1147,7 +1150,7 @@ public class OperationSet
                         string url = $"https://b23.tv/{vlist?.Bvid}/p1",
                             title = vlist?.Title ?? string.Empty;
 
-                        // 2023-02-24 有可能會造成觸發 Bilibili 網站的安全機制。
+                        // 2023/2/24 有可能會造成觸發 Bilibili 網站的安全機制。
                         // 主要用於排除拜年紀的影片。
                         if (httpClient != null && checkUrl)
                         {

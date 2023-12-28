@@ -1,6 +1,6 @@
 ﻿using CheckBox = System.Windows.Controls.CheckBox;
-using Control = System.Windows.Controls.Control;
 using ComboBox = System.Windows.Controls.ComboBox;
+using Control = System.Windows.Controls.Control;
 using CustomToolbox.Common;
 using CustomToolbox.Common.Extensions;
 using CustomToolbox.Common.Utils;

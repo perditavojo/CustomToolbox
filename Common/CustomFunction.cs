@@ -455,7 +455,7 @@ public class CustomFunction
     /// <returns>字串</returns>
     public static string GetUserAgent()
     {
-        // 2023-01-04 Bilibili 的 API 會依據使用者代理字串來封鎖連線。
+        // 2023/1/4 Bilibili 的 API 會依據使用者代理字串來封鎖連線。
         return $"{Properties.Settings.Default.UserAgent}";
     }
 
